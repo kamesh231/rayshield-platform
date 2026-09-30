@@ -1,0 +1,117 @@
+{
+ "operationId": "getService",
+ "access": "read",
+ "status": 200,
+ "headers": {
+  "X-Window-From": "1789956000",
+  "X-Window-To": "1790560800",
+  "X-Data-As-Of": "1790560680"
+ },
+ "body": {
+  "service": {
+   "ai_service": "Salesforce Einstein",
+   "category": "CRM · embedded",
+   "icon": null,
+   "separability": "embedded",
+   "confidence": "confirmed",
+   "hits": 980,
+   "bytes": 40405400,
+   "users": 40,
+   "risk_score": 22,
+   "jurisdiction": "US",
+   "ever_agentic": false,
+   "sandbox_candidate": false,
+   "agent_sdks": null,
+   "collector_count": 2,
+   "first_seen": 1775008800,
+   "last_seen": 1790559700,
+   "personal_account": false,
+   "oauth_scopes": null,
+   "service_id": "salesforce-einstein",
+   "vendor": "Salesforce",
+   "embedded_in": "Salesforce",
+   "status": "approved",
+   "reviewed_by": "Tan Wei Ling",
+   "reviewed_at": 1775422800,
+   "endpoints": 42,
+   "is_new": false
+  },
+  "description": "AI features inside the sanctioned Salesforce org.",
+  "top_endpoints": [
+   {
+    "endpoint_id": "ep_LT-VN-0412",
+    "host": "LT-VN-0412",
+    "ip": "10.40.21.23",
+    "type": "laptop",
+    "user": "Thanh Nguyen",
+    "department": "Vendor Engineering (contractors)",
+    "hits": 81,
+    "last_seen": 1790560507
+   },
+   {
+    "endpoint_id": "ep_vm-etl-nightly-03",
+    "host": "vm-etl-nightly-03",
+    "ip": "10.60.49.107",
+    "type": "vm",
+    "user": "svc-etl",
+    "department": "Service accounts (CI / ETL)",
+    "hits": 9,
+    "last_seen": 1790560452
+   },
+   {
+    "endpoint_id": "ep_LT-SG-3833",
+    "host": "LT-SG-3833",
+    "ip": "10.40.25.135",
+    "type": "laptop",
+    "user": "Serena Seah",
+    "department": "Engineering — Payments",
+    "hits": 47,
+    "last_seen": 1790560479
+   },
+   {
+    "endpoint_id": "ep_LT-SG-8688",
+    "host": "LT-SG-8688",
+    "ip": "10.40.11.216",
+    "type": "laptop",
+    "user": "Lakshmi Kwok",
+    "department": "Engineering — Payments",
+    "hits": 118,
+    "last_seen": 1790559804
+   },
+   {
+    "endpoint_id": "ep_LT-SG-8766",
+    "host": "LT-SG-8766",
+    "ip": "10.40.36.205",
+    "type": "laptop",
+    "user": "Priyanka Foo",
+    "department": "Engineering — Payments",
+    "hits": 27,
+    "last_seen": 1790559436
+   },
+   {
+    "endpoint_id": "ep_LT-SG-1144",
+    "host": "LT-SG-1144",
+    "ip": "10.40.26.20",
+    "type": "laptop",
+    "user": "Priyanka Low",
+    "department": "Engineering — Payments",
+    "hits": 40,
+    "last_seen": 1790560278
+   }
+  ],
+  "status_history": [
+   {
+    "status": "unlabelled",
+    "by": "system",
+    "at": 1775008800,
+    "note": null
+   },
+   {
+    "status": "approved",
+    "by": "Tan Wei Ling",
+    "at": 1775422800,
+    "note": null
+   }
+  ]
+ }
+}

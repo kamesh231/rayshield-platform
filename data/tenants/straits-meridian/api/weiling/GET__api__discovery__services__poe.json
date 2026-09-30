@@ -1,0 +1,56 @@
+{
+ "operationId": "getService",
+ "access": "read",
+ "status": 200,
+ "headers": {
+  "X-Window-From": "1789956000",
+  "X-Window-To": "1790560800",
+  "X-Data-As-Of": "1790560680"
+ },
+ "body": {
+  "service": {
+   "ai_service": "Poe",
+   "category": "Assistant aggregator",
+   "icon": null,
+   "separability": "distinct",
+   "confidence": "confirmed",
+   "hits": 95,
+   "bytes": 3916850,
+   "users": 4,
+   "risk_score": 61,
+   "jurisdiction": "US",
+   "ever_agentic": false,
+   "sandbox_candidate": false,
+   "agent_sdks": null,
+   "collector_count": 2,
+   "first_seen": 1785376800,
+   "last_seen": 1790560585,
+   "personal_account": false,
+   "oauth_scopes": null,
+   "service_id": "poe",
+   "vendor": "Quora",
+   "embedded_in": null,
+   "status": "unapproved",
+   "reviewed_by": "Arjun Menon",
+   "reviewed_at": 1785790800,
+   "endpoints": 4,
+   "is_new": false
+  },
+  "description": "Aggregates multiple model providers.",
+  "top_endpoints": [],
+  "status_history": [
+   {
+    "status": "unlabelled",
+    "by": "system",
+    "at": 1785376800,
+    "note": null
+   },
+   {
+    "status": "unapproved",
+    "by": "Arjun Menon",
+    "at": 1785790800,
+    "note": null
+   }
+  ]
+ }
+}

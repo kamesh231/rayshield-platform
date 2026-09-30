@@ -1,0 +1,758 @@
+openapi: 3.0.3
+info:
+  title: RayShield Console API — v2.2 gaps (Control, MCP Bridge, runtime blast radius, rate limits)
+  version: "2.2.0-draft"
+  license: { name: Proprietary, url: "https://rayshield.example/terms" }
+  description: |
+    # What this file is
+    The API GAPS the console needs after the **27 Sep mock review** with Prasanna.
+    It does NOT restate the whole surface — it references the two specs already shared and adds only
+    what is new or changed, so this is fast to review and build against.
+
+    ## Reference chain (read in this order)
+    1. **v2.0.0 — `openapi.yml`** (the shared, IMPLEMENTED backend on aegis-fleet-api :8091).
+       This file EXTENDS it. Every path here is either `x-status: new` (does not exist yet) or
+       `x-status: extended` (exists in v2.0.0, add the listed fields — nothing renamed or removed).
+    2. **v2.1.0-draft — `rayshield-console-api-v1.yml`** (console v1: Home, Discover, Protect, Usage;
+       Control parked). This file UN-PARKS Control and adds the 27 Sep items on top of it. Auth,
+       pagination (`cursor`/`limit`), window headers (`X-Window-*`, `X-Data-As-Of`) and the `Error`
+       shape are defined there and reused verbatim — see `x-reuses`.
+
+    ## What 27 Sep changed (the scope of this file)
+    - **Discover → MCP & Skills** (Core-gated): MCPs and skills observed per endpoint. Requires the
+      Core binary; when Core is absent the endpoints return `core_installed:false` so the UI can show
+      "Available with the Core package" instead of empty data.
+    - **Control — Groups & Policies**: group-level CUE assignment (new in backend) and a group-level,
+      tool-agnostic **MCP policy** gate, independent of CUE files.
+    - **Control — CUEs**: GUI-editor CRUD with base-CUE inheritance (inherited fields are locked),
+      egress + MCP-server + DLP design-time fields, and version visibility (latest + how many
+      endpoints run older). CUE version-control history is deferred (see `x-deferred`).
+    - **Control — MCP Bridge**: bring-your-own-MCP onboarding (add → scan → approve → selectable in
+      CUEs). Supersedes the raw `/v1/mcps` surface in v2.0.0 for the console (see `x-reuses`).
+    - **Protect — runtime blast radius**: reactive execution graph (endpoint → CUE → MCP sandbox →
+      data → DLP outcome), aggregated risky roots + per-execution tree, backed by the graph DB
+      Prasanna is migrating to. This REPLACES the design-time `/api/blast-radius` in v2.0.0, which is
+      deprecated here.
+    - **Cross-cutting — rate limits**: every operation now advertises a limit class; `429` +
+      `Retry-After` + `X-RateLimit-*` headers are standard. See `x-rate-limits` below.
+
+    ## Not in this file (deferred / out of MVP — do not build for 30 Sep)
+    Shield↔Core correlation, CUE version-control history UI, time-bound MCP access with expiry,
+    CVE-style MCP scoring, plugins/connectors beyond MCPs+skills, proactive design-time blast radius.
+
+    ## Rate limits (`x-rate-limits`) — PROPOSED, per authenticated console token unless noted
+    | class        | limit          | applies to                                              |
+    |--------------|----------------|----------------------------------------------------------|
+    | read         | 120 / min      | all GET console reads                                    |
+    | write        | 30 / min       | POST/PUT/PATCH/DELETE console writes                     |
+    | heavy        | 20 / min       | blast-radius graph, exports, MCP scans (compute-bound)   |
+    | auth         | 5 / 15 min     | login attempts (per email+IP) — defined in v2.1.0        |
+    | ingest       | 6000 / min     | sensor/device ingest (per DEVICE token, not console)     |
+    Each response carries `X-RateLimit-Limit`, `X-RateLimit-Remaining`, `X-RateLimit-Reset` (epoch s).
+    On breach: `429` with `Retry-After` (seconds) and `Error.code = RATE_LIMITED`.
+
+servers:
+  - url: https://aegis.northwind.internal:8091
+    description: Pilot — one Aegis Server per customer (hostname confirmed per customer)
+
+security:
+  - bearerAuth: []            # same JWT scheme as v2.1.0 (components.securitySchemes.bearerAuth)
+
+x-reuses:
+  from_v2_1_0:
+    securityScheme: bearerAuth
+    parameters: [From, To, Cursor, Limit]
+    headers: [X-Window-From, X-Window-To, X-Data-As-Of, X-Next-Cursor, X-Total-Count]
+    responses: [BadRequest, Unauthorized, Forbidden, NotFound]
+    schemas: [Error, GroupRef, GovernanceStatus]
+  supersedes_in_v2_0_0:
+    - "/v1/mcps and /v1/mcps/{id} → use Control MCP Bridge paths below (same records, console-shaped)"
+    - "/api/blast-radius (design-time CUE static analysis) → DEPRECATED; use Protect runtime graph below"
+
+tags:
+  - name: Discover · MCP
+    description: MCP & Skills observed per endpoint (Core-gated). New 27 Sep.
+  - name: Control · Groups
+    description: Groups, group→CUE assignment, group-level MCP policy gate.
+  - name: Control · CUE
+    description: CUE files as a GUI editor — CRUD, inheritance, versions.
+  - name: Control · MCP Bridge
+    description: Bring-your-own-MCP onboarding — add, scan, approve, enforce.
+  - name: Protect · Blast Radius
+    description: Runtime execution graph (risky/blocked runs), backed by the graph DB.
+
+components:
+  # bearerAuth, From/To/Cursor/Limit, X-* headers and the four error responses are defined in
+  # v2.1.0 (rayshield-console-api-v1.yml) and reused. Redefined here only so THIS file lints alone.
+  securitySchemes:
+    bearerAuth: { type: http, scheme: bearer, bearerFormat: JWT }
+
+  headers:
+    X-RateLimit-Limit:     { description: "Requests allowed in the current window for this class", schema: { type: integer } }
+    X-RateLimit-Remaining: { description: "Requests left in the current window", schema: { type: integer } }
+    X-RateLimit-Reset:     { description: "Epoch seconds when the window resets", schema: { type: integer, format: int64 } }
+    X-Next-Cursor:         { description: "Opaque cursor for the next page; absent on the last page", schema: { type: string } }
+    X-Total-Count:         { description: "Rows matching the filters (omit if expensive)", schema: { type: integer } }
+
+  parameters:
+    From:   { name: from,   in: query, required: false, description: "Window start, epoch seconds. Default to − 7d.", schema: { type: integer, format: int64 } }
+    To:     { name: to,     in: query, required: false, description: "Window end, epoch seconds. Default now.",       schema: { type: integer, format: int64 } }
+    Cursor: { name: cursor, in: query, required: false, description: "X-Next-Cursor from the previous page.",         schema: { type: string } }
+    Limit:  { name: limit,  in: query, required: false, description: "Page size. Default 50, max 200.",               schema: { type: integer, minimum: 1, maximum: 200, default: 50 } }
+
+  responses:
+    BadRequest:   { description: Invalid parameter,        content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } } }
+    Unauthorized: { description: Missing/expired token,     content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } } }
+    Forbidden:    { description: Role may not do this,      content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } } }
+    NotFound:     { description: No such resource,          content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } } }
+    TooManyRequests:
+      description: Rate limit exceeded for this class
+      headers:
+        Retry-After:           { description: "Seconds to wait before retrying", schema: { type: integer } }
+        X-RateLimit-Limit:     { $ref: '#/components/headers/X-RateLimit-Limit' }
+        X-RateLimit-Remaining: { $ref: '#/components/headers/X-RateLimit-Remaining' }
+        X-RateLimit-Reset:     { $ref: '#/components/headers/X-RateLimit-Reset' }
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Error' }
+          example: { error: "Rate limit exceeded. Retry in 12s.", code: RATE_LIMITED, request_id: req_9k2 }
+    CoreRequired:
+      description: |
+        The data needs the Core binary and Core is not installed on the relevant endpoint(s).
+        Body carries `core_installed:false` so the UI shows "Available with the Core package".
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              core_installed: { type: boolean, example: false }
+              message:        { type: string, example: "Install Core to scan MCPs and skills on this endpoint." }
+              endpoints_without_core: { type: integer, example: 133 }
+
+  schemas:
+    Error:
+      type: object
+      required: [error]
+      properties:
+        error:      { type: string }
+        code:       { type: string, enum: [WINDOW_TOO_LARGE, INVALID_CURSOR, INVALID_PARAMETER, UNAUTHENTICATED, FORBIDDEN, NOT_FOUND, RATE_LIMITED, CORE_REQUIRED, VALIDATION_FAILED] }
+        request_id: { type: string }
+    GroupRef:
+      type: object
+      nullable: true
+      properties:
+        id:   { type: string }
+        name: { type: string, example: "Engineering — EU" }
+    GovernanceStatus:
+      type: string
+      enum: [approved, unapproved, prohibited, under_review, beta, unlabelled]
+
+    # ── Discover · MCP & Skills ──────────────────────────────────────────────
+    DiscoveredMcp:
+      type: object
+      description: One MCP configured/seen on an endpoint (Core scan).
+      properties:
+        mcp_id:        { type: string, description: "Stable id; matches Control · MCP Bridge when onboarded" }
+        name:          { type: string, example: redis }
+        kind:          { type: string, enum: [local, remote] }
+        endpoint_id:   { type: string, description: "Same id Discover/Protect use" }
+        host:          { type: string, example: LT-4821 }
+        tool:          { type: string, nullable: true, example: claude-code, description: "AI tool it is wired into" }
+        bridge_state:  { type: string, enum: [onboarded, unonboarded, blocked], description: "Onboarded via MCP Bridge?" }
+        risk_tier:     { type: string, nullable: true, enum: [low, medium, high, null] }
+        flags:         { type: array, items: { type: string }, description: "e.g. unapproved, vulnerable, writes-secrets" }
+        first_seen:    { type: integer, format: int64 }
+        last_seen:     { type: integer, format: int64 }
+    DiscoveredSkill:
+      type: object
+      properties:
+        skill_id:    { type: string }
+        name:        { type: string, example: "web-scraper" }
+        endpoint_id: { type: string }
+        tool:        { type: string, nullable: true }
+        source:      { type: string, enum: [builtin, user, unknown] }
+        flags:       { type: array, items: { type: string } }
+        last_seen:   { type: integer, format: int64 }
+
+    # ── Control · Groups & Policy ────────────────────────────────────────────
+    Group:
+      type: object
+      properties:
+        id:               { type: string }
+        name:             { type: string, example: "Engineering — EU" }
+        member_count:     { type: integer, description: "endpoints/users in the group" }
+        assigned_cue_id:  { type: string, nullable: true, description: "CUE deployed to this group" }
+        assigned_cue_name: { type: string, nullable: true }
+        recert_due:       { type: integer, format: int64, nullable: true, description: "recertification date" }
+        mcp_policy_id:    { type: string, nullable: true }
+    McpPolicy:
+      type: object
+      description: Group-level, tool-agnostic MCP gate. Independent of CUE files.
+      properties:
+        group_id:  { type: string }
+        allow:     { type: array, items: { type: string }, description: "onboarded mcp_ids allowed for the group" }
+        deny:      { type: array, items: { type: string } }
+        updated_by: { type: string, nullable: true }
+        updated_at: { type: integer, format: int64, nullable: true }
+
+    # ── Control · CUE ────────────────────────────────────────────────────────
+    CueSummary:
+      type: object
+      description: Row in the CUE list.
+      properties:
+        id:                 { type: string }
+        name:               { type: string, example: "Claude Code — Engineering" }
+        tool:               { type: string, example: claude-code }
+        scope:              { type: string, enum: [user, group, tool] }
+        scope_ref:          { type: string, nullable: true, description: "user id / group id / tool name" }
+        base_cue_id:        { type: string, nullable: true, description: "inherited base, if any" }
+        latest_version:     { type: integer }
+        endpoints_current:  { type: integer, description: "endpoints on the latest version" }
+        endpoints_on_older: { type: integer, description: "endpoints still running an older version" }
+        state:              { type: string, enum: [draft, published] }
+        updated_by:         { type: string, nullable: true }
+        updated_at:         { type: integer, format: int64 }
+    CueField:
+      type: object
+      description: A field in the GUI editor. `inherited:true` fields are LOCKED (from base_cue).
+      properties:
+        value:     { }
+        inherited: { type: boolean, default: false }
+        source:    { type: string, nullable: true, description: "base CUE name when inherited" }
+    CueDetail:
+      type: object
+      description: |
+        The GUI-of-the-CUE. Design-time fields only. Writable mounts are NOT here — they are a
+        runtime `--src`/`--writable` parameter and are deliberately excluded.
+      properties:
+        id:            { type: string }
+        name:          { type: string }
+        tool:          { type: string }
+        scope:         { type: string, enum: [user, group, tool] }
+        scope_ref:     { type: string, nullable: true }
+        base_cue_id:   { type: string, nullable: true }
+        version:       { type: integer }
+        state:         { type: string, enum: [draft, published] }
+        egress_allow:  { type: array, items: { $ref: '#/components/schemas/CueField' }, description: "egress allow-list entries" }
+        mcp_servers:   { type: array, items: { $ref: '#/components/schemas/CueField' }, description: "onboarded mcp_ids only" }
+        dlp_rules:     { type: array, items: { $ref: '#/components/schemas/CueField' } }
+        internal_tools: { type: array, items: { $ref: '#/components/schemas/CueField' }, description: "e.g. web-scraper, get-weather" }
+
+    # ── Control · MCP Bridge ─────────────────────────────────────────────────
+    BridgeMcp:
+      type: object
+      description: Console-shaped MCP record (same store as v2.0.0 /v1/mcps).
+      properties:
+        id:              { type: string }
+        name:            { type: string }
+        source:          { type: string, example: "github:org/redis-mcp" }
+        kind:            { type: string, enum: [local, remote] }
+        status:          { type: string, enum: [scanning, approved, blocked] }
+        risk_score:      { type: integer, nullable: true }
+        risk_tier:       { type: string, nullable: true, enum: [low, medium, high, null] }
+        capabilities:    { type: object, nullable: true }
+        findings:        { type: object, nullable: true }
+        approved_by:     { type: string, nullable: true }
+        approved_reason: { type: string, nullable: true }
+        groups_with_access: { type: array, items: { $ref: '#/components/schemas/GroupRef' } }
+        created_at:      { type: integer, format: int64 }
+
+    # ── Protect · Blast Radius (runtime graph) ───────────────────────────────
+    BlastRoot:
+      type: object
+      description: One risky/blocked execution as a root node in the aggregated view.
+      properties:
+        execution_id: { type: string }
+        ts:           { type: integer, format: int64 }
+        owner:        { type: string, nullable: true }
+        host:         { type: string }
+        cue_name:     { type: string }
+        tool:         { type: string, example: claude-code }
+        worst_outcome: { type: string, enum: [blocked, flagged, recorded] }
+        dlp_label:    { type: string, nullable: true, example: "PII movement" }
+        node_count:   { type: integer }
+    BlastGraph:
+      type: object
+      description: One execution as a tree — endpoint → CUE → MCP sandbox → data → DLP outcome.
+      properties:
+        execution_id: { type: string }
+        nodes:
+          type: array
+          items:
+            type: object
+            properties:
+              id:    { type: string }
+              kind:  { type: string, enum: [endpoint, cue, mcp_sandbox, credential, data, dlp_outcome] }
+              label: { type: string }
+              detail: { type: string, nullable: true }
+              verdict: { type: string, nullable: true, enum: [allow, block, flag, record, null] }
+        edges:
+          type: array
+          items:
+            type: object
+            properties:
+              from: { type: string }
+              to:   { type: string }
+
+paths:
+  # ═══════════════════ Discover · MCP & Skills (Core-gated) ═══════════════════
+  /api/discovery/mcps:
+    get:
+      tags: [Discover · MCP]
+      operationId: listDiscoveredMcps
+      summary: MCPs observed across endpoints (Core scan) — flags unapproved/vulnerable
+      description: Core-gated. If no endpoint in scope has Core, returns 200 with `core_installed:false` (see CoreRequired).
+      x-status: new
+      x-min-role: viewer
+      x-rate-limit: read
+      x-screen: "Discover → MCP & Skills"
+      parameters:
+        - { $ref: '#/components/parameters/From' }
+        - { $ref: '#/components/parameters/To' }
+        - { name: flag, in: query, required: false, schema: { type: string, enum: [unapproved, vulnerable, unonboarded] } }
+        - { $ref: '#/components/parameters/Cursor' }
+        - { $ref: '#/components/parameters/Limit' }
+      responses:
+        '200':
+          description: OK (list) or Core-absent placeholder
+          headers:
+            X-RateLimit-Remaining: { $ref: '#/components/headers/X-RateLimit-Remaining' }
+            X-Next-Cursor:         { $ref: '#/components/headers/X-Next-Cursor' }
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - { type: array, items: { $ref: '#/components/schemas/DiscoveredMcp' } }
+                  - { type: object, properties: { core_installed: { type: boolean }, endpoints_without_core: { type: integer } } }
+              example:
+                - { mcp_id: redis, name: redis, kind: local, endpoint_id: ep_LT-4821, host: LT-4821, tool: claude-code, bridge_state: onboarded, risk_tier: medium, flags: [], first_seen: 1790345230, last_seen: 1790409482 }
+                - { mcp_id: gh-unknown, name: github-mcp, kind: remote, endpoint_id: ep_LT-2210, host: LT-2210, tool: cursor, bridge_state: unonboarded, risk_tier: high, flags: [unapproved, unonboarded], first_seen: 1790402000, last_seen: 1790409000 }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '429': { $ref: '#/components/responses/TooManyRequests' }
+  /api/discovery/mcps/{endpoint_id}:
+    get:
+      tags: [Discover · MCP]
+      operationId: getEndpointMcps
+      summary: MCP + skills breakdown for one endpoint (drill-down)
+      x-status: new
+      x-min-role: viewer
+      x-rate-limit: read
+      x-screen: "Discover → Endpoints → endpoint drill-down"
+      parameters:
+        - { name: endpoint_id, in: path, required: true, schema: { type: string } }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              example:
+                endpoint_id: ep_LT-4821
+                core_installed: true
+                mcps: [ { mcp_id: redis, name: redis, kind: local, bridge_state: onboarded, risk_tier: medium, flags: [] } ]
+                skills: [ { skill_id: web-scraper, name: web-scraper, tool: claude-code, source: user, flags: [], last_seen: 1790409482 } ]
+        '404': { $ref: '#/components/responses/NotFound' }
+        '409': { $ref: '#/components/responses/CoreRequired' }
+        '429': { $ref: '#/components/responses/TooManyRequests' }
+  /api/discovery/skills:
+    get:
+      tags: [Discover · MCP]
+      operationId: listDiscoveredSkills
+      summary: Skills observed across endpoints (Core scan)
+      x-status: new
+      x-min-role: viewer
+      x-rate-limit: read
+      x-screen: "Discover → MCP & Skills"
+      parameters:
+        - { $ref: '#/components/parameters/From' }
+        - { $ref: '#/components/parameters/To' }
+        - { $ref: '#/components/parameters/Cursor' }
+        - { $ref: '#/components/parameters/Limit' }
+      responses:
+        '200': { description: OK, content: { application/json: { schema: { type: array, items: { $ref: '#/components/schemas/DiscoveredSkill' } } } } }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '429': { $ref: '#/components/responses/TooManyRequests' }
+
+  # ═══════════════════ Control · Groups & Policy ═══════════════════
+  /api/control/groups:
+    get:
+      tags: [Control · Groups]
+      operationId: listGroups
+      summary: Groups with member count, assigned CUE and recert date
+      x-status: new
+      x-min-role: security
+      x-rate-limit: read
+      x-screen: "Control → Groups & policies"
+      responses:
+        '200': { description: OK, content: { application/json: { schema: { type: array, items: { $ref: '#/components/schemas/Group' } } } } }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '429': { $ref: '#/components/responses/TooManyRequests' }
+    post:
+      tags: [Control · Groups]
+      operationId: createGroup
+      summary: Create a group
+      x-status: new
+      x-min-role: admin
+      x-rate-limit: write
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { type: object, required: [name], properties: { name: { type: string }, member_endpoint_ids: { type: array, items: { type: string } } } }
+      responses:
+        '200': { description: Created, content: { application/json: { schema: { $ref: '#/components/schemas/Group' } } } }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '429': { $ref: '#/components/responses/TooManyRequests' }
+  /api/control/groups/{id}/cue:
+    put:
+      tags: [Control · Groups]
+      operationId: assignGroupCue
+      summary: Assign (deploy) a CUE to a group — NEW backend support agreed 27 Sep
+      description: Group-level CUE assignment did not exist in the backend; Prasanna agreed to add it.
+      x-status: new
+      x-min-role: admin
+      x-rate-limit: write
+      x-screen: "Control → Groups & policies → assign CUE"
+      parameters: [ { name: id, in: path, required: true, schema: { type: string } } ]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { type: object, required: [cue_id], properties: { cue_id: { type: string } } }
+      responses:
+        '200': { description: Assigned; push queued to the group's endpoints, content: { application/json: { schema: { type: object, properties: { group_id: {type: string}, cue_id: {type: string}, endpoints_targeted: {type: integer} } } } } }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '429': { $ref: '#/components/responses/TooManyRequests' }
+  /api/control/groups/{id}/mcp-policy:
+    get:
+      tags: [Control · Groups]
+      operationId: getGroupMcpPolicy
+      summary: Group-level MCP gate (tool-agnostic), independent of CUE files
+      x-status: new
+      x-min-role: security
+      x-rate-limit: read
+      parameters: [ { name: id, in: path, required: true, schema: { type: string } } ]
+      responses:
+        '200': { description: OK, content: { application/json: { schema: { $ref: '#/components/schemas/McpPolicy' } } } }
+        '404': { $ref: '#/components/responses/NotFound' }
+    put:
+      tags: [Control · Groups]
+      operationId: setGroupMcpPolicy
+      summary: Set the group's allowed/denied MCPs — applies across Claude/Gemini/any tool
+      x-status: new
+      x-min-role: admin
+      x-rate-limit: write
+      x-screen: "Control → Groups & policies → MCP policy"
+      parameters: [ { name: id, in: path, required: true, schema: { type: string } } ]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { type: object, properties: { allow: { type: array, items: { type: string } }, deny: { type: array, items: { type: string } } } }
+      responses:
+        '200': { description: OK, content: { application/json: { schema: { $ref: '#/components/schemas/McpPolicy' } } } }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '429': { $ref: '#/components/responses/TooManyRequests' }
+
+  # ═══════════════════ Control · CUE (GUI editor) ═══════════════════
+  /api/control/cues:
+    get:
+      tags: [Control · CUE]
+      operationId: listCues
+      summary: CUE list — latest version + endpoints on older versions
+      x-status: new
+      x-min-role: security
+      x-rate-limit: read
+      x-screen: "Control → CUEs"
+      parameters:
+        - { name: scope, in: query, required: false, schema: { type: string, enum: [user, group, tool] } }
+        - { name: q, in: query, required: false, schema: { type: string } }
+        - { $ref: '#/components/parameters/Cursor' }
+        - { $ref: '#/components/parameters/Limit' }
+      responses:
+        '200': { description: OK, content: { application/json: { schema: { type: array, items: { $ref: '#/components/schemas/CueSummary' } } } } }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '429': { $ref: '#/components/responses/TooManyRequests' }
+    post:
+      tags: [Control · CUE]
+      operationId: createCue
+      summary: Create a CUE (optionally inherit a base CUE — inherited fields are LOCKED)
+      description: |
+        If `base_cue_id` is set, the new CUE inherits its fields; inherited fields are returned with
+        `inherited:true` and cannot be changed in this CUE. Handwritten CUE is accepted via `raw_cue`
+        and schema-validated (400 VALIDATION_FAILED on failure). Server signs the CUE (signing pending).
+      x-status: new
+      x-min-role: admin
+      x-rate-limit: write
+      x-screen: "Control → CUEs → new"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name, tool, scope]
+              properties:
+                name:        { type: string }
+                tool:        { type: string }
+                scope:       { type: string, enum: [user, group, tool] }
+                scope_ref:   { type: string, nullable: true }
+                base_cue_id: { type: string, nullable: true }
+                egress_allow: { type: array, items: { type: string } }
+                mcp_servers: { type: array, items: { type: string }, description: "onboarded mcp_ids only" }
+                dlp_rules:   { type: array, items: { type: string } }
+                raw_cue:     { type: string, nullable: true, description: "advanced: handwritten CUE, schema-validated" }
+      responses:
+        '200': { description: Created (draft), content: { application/json: { schema: { $ref: '#/components/schemas/CueDetail' } } } }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '429': { $ref: '#/components/responses/TooManyRequests' }
+  /api/control/cues/{id}:
+    get:
+      tags: [Control · CUE]
+      operationId: getCue
+      summary: CUE detail for the GUI editor (design-time fields; no writable mounts)
+      x-status: new
+      x-min-role: security
+      x-rate-limit: read
+      parameters: [ { name: id, in: path, required: true, schema: { type: string } } ]
+      responses:
+        '200': { description: OK, content: { application/json: { schema: { $ref: '#/components/schemas/CueDetail' } } } }
+        '404': { $ref: '#/components/responses/NotFound' }
+    put:
+      tags: [Control · CUE]
+      operationId: updateCue
+      summary: Edit a CUE's editable (non-inherited) fields — creates a new draft version
+      x-status: new
+      x-min-role: admin
+      x-rate-limit: write
+      parameters: [ { name: id, in: path, required: true, schema: { type: string } } ]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { type: object, properties: { egress_allow: { type: array, items: { type: string } }, mcp_servers: { type: array, items: { type: string } }, dlp_rules: { type: array, items: { type: string } } } }
+      responses:
+        '200': { description: OK, content: { application/json: { schema: { $ref: '#/components/schemas/CueDetail' } } } }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '429': { $ref: '#/components/responses/TooManyRequests' }
+    delete:
+      tags: [Control · CUE]
+      operationId: deleteCue
+      summary: Delete a CUE (blocked if assigned to a group/user)
+      x-status: new
+      x-min-role: admin
+      x-rate-limit: write
+      parameters: [ { name: id, in: path, required: true, schema: { type: string } } ]
+      responses:
+        '200': { description: Deleted, content: { application/json: { schema: { type: object, properties: { deleted: {type: boolean} } } } } }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /api/control/cues/{id}/publish:
+    post:
+      tags: [Control · CUE]
+      operationId: publishCue
+      summary: Publish the draft — signs it and queues push to targeted endpoints
+      x-status: new
+      x-min-role: admin
+      x-rate-limit: write
+      x-screen: "Control → CUEs → publish"
+      parameters: [ { name: id, in: path, required: true, schema: { type: string } } ]
+      responses:
+        '200': { description: Published, content: { application/json: { schema: { type: object, properties: { id: {type: string}, version: {type: integer}, endpoints_targeted: {type: integer} } } } } }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '429': { $ref: '#/components/responses/TooManyRequests' }
+  /api/control/cues/{id}/versions:
+    get:
+      tags: [Control · CUE]
+      operationId: listCueVersions
+      summary: Version list (latest + which endpoints run older) — history UI deferred post-30 Sep
+      x-status: new
+      x-deferred: "full version-control history/rollback is post-30 Sep; this list is read-only"
+      x-min-role: security
+      x-rate-limit: read
+      parameters: [ { name: id, in: path, required: true, schema: { type: string } } ]
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              example:
+                - { version: 3, state: published, published_at: 1790406000, endpoints: 100 }
+                - { version: 2, state: superseded, published_at: 1789200000, endpoints: 17 }
+        '404': { $ref: '#/components/responses/NotFound' }
+
+  # ═══════════════════ Control · MCP Bridge ═══════════════════
+  /api/control/mcp-bridge:
+    get:
+      tags: [Control · MCP Bridge]
+      operationId: listBridgeMcps
+      summary: Sandboxed-MCP catalog with status and group access (supersedes /v1/mcps for the console)
+      x-status: new
+      x-reuses: "same store as v2.0.0 GET /v1/mcps"
+      x-min-role: security
+      x-rate-limit: read
+      x-screen: "Control → MCP Bridge"
+      parameters:
+        - { name: status, in: query, required: false, schema: { type: string, enum: [scanning, approved, blocked] } }
+      responses:
+        '200': { description: OK, content: { application/json: { schema: { type: array, items: { $ref: '#/components/schemas/BridgeMcp' } } } } }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '429': { $ref: '#/components/responses/TooManyRequests' }
+    post:
+      tags: [Control · MCP Bridge]
+      operationId: onboardMcp
+      summary: Onboard an MCP (bring-your-own) — kicks off a security scan (status=scanning)
+      description: Add → scan → approve. Only onboarded MCPs are selectable in CUEs and group policy.
+      x-status: new
+      x-min-role: admin
+      x-rate-limit: heavy
+      x-screen: "Control → MCP Bridge → onboard"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name, source, kind]
+              properties:
+                name:   { type: string }
+                source: { type: string, example: "github:org/redis-mcp" }
+                kind:   { type: string, enum: [local, remote] }
+                url:    { type: string, nullable: true, description: "remote MCP target" }
+      responses:
+        '200': { description: Onboarding started, content: { application/json: { schema: { $ref: '#/components/schemas/BridgeMcp' } } } }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '429': { $ref: '#/components/responses/TooManyRequests' }
+  /api/control/mcp-bridge/{id}:
+    get:
+      tags: [Control · MCP Bridge]
+      operationId: getBridgeMcp
+      summary: MCP detail — scan findings, capabilities, risk, group access
+      x-status: new
+      x-min-role: security
+      x-rate-limit: read
+      parameters: [ { name: id, in: path, required: true, schema: { type: string } } ]
+      responses:
+        '200': { description: OK, content: { application/json: { schema: { $ref: '#/components/schemas/BridgeMcp' } } } }
+        '404': { $ref: '#/components/responses/NotFound' }
+    patch:
+      tags: [Control · MCP Bridge]
+      operationId: decideBridgeMcp
+      summary: Approve / block an onboarded MCP (records who + reason)
+      x-status: new
+      x-reuses: "same effect as v2.0.0 PATCH /v1/mcps/{id}"
+      x-min-role: admin
+      x-rate-limit: write
+      x-screen: "Control → MCP Bridge → approve/block"
+      parameters: [ { name: id, in: path, required: true, schema: { type: string } } ]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { type: object, properties: { status: { type: string, enum: [approved, blocked] }, approved_reason: { type: string } } }
+      responses:
+        '200': { description: OK, content: { application/json: { schema: { $ref: '#/components/schemas/BridgeMcp' } } } }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '429': { $ref: '#/components/responses/TooManyRequests' }
+    delete:
+      tags: [Control · MCP Bridge]
+      operationId: removeBridgeMcp
+      summary: Remove an MCP from the catalog
+      x-status: new
+      x-min-role: admin
+      x-rate-limit: write
+      parameters: [ { name: id, in: path, required: true, schema: { type: string } } ]
+      responses:
+        '200': { description: Deleted, content: { application/json: { schema: { type: object, properties: { deleted: {type: boolean} } } } } }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /api/control/mcp-bridge/{id}/scan:
+    get:
+      tags: [Control · MCP Bridge]
+      operationId: getBridgeScan
+      summary: Poll onboarding scan status/findings
+      x-status: new
+      x-min-role: security
+      x-rate-limit: read
+      parameters: [ { name: id, in: path, required: true, schema: { type: string } } ]
+      responses:
+        '200': { description: OK, content: { application/json: { schema: { type: object, properties: { status: {type: string, enum: [scanning, approved, blocked]}, risk_score: {type: integer, nullable: true}, findings: {type: object, nullable: true} } } } } }
+        '404': { $ref: '#/components/responses/NotFound' }
+
+  # ═══════════════════ Protect · Blast Radius (runtime graph) ═══════════════════
+  /api/protect/blast-radius:
+    get:
+      tags: [Protect · Blast Radius]
+      operationId: listBlastRoots
+      summary: Aggregated risky/blocked executions as root nodes (the org-wide graph)
+      description: |
+        Replaces the design-time `/api/blast-radius` (v2.0.0), which is deprecated. Runtime only —
+        MVP shows DLP-blocked/flagged executions. Backed by the graph DB Prasanna is migrating to.
+      x-status: new
+      x-replaces: "/api/blast-radius (v2.0.0, design-time — deprecated)"
+      x-min-role: viewer
+      x-rate-limit: heavy
+      x-screen: "Protect → Blast radius (from Home '249 detections' + Open blast radius)"
+      parameters:
+        - { $ref: '#/components/parameters/From' }
+        - { $ref: '#/components/parameters/To' }
+        - { name: outcome, in: query, required: false, schema: { type: string, enum: [blocked, flagged, recorded] } }
+        - { $ref: '#/components/parameters/Cursor' }
+        - { $ref: '#/components/parameters/Limit' }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema: { type: array, items: { $ref: '#/components/schemas/BlastRoot' } }
+              example:
+                - { execution_id: exec_01J9Z, ts: 1790409482, owner: Kamesh, host: LT-4821, cue_name: "Cloud Code — Eng", tool: claude-code, worst_outcome: flagged, dlp_label: "PII movement", node_count: 6 }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '429': { $ref: '#/components/responses/TooManyRequests' }
+  /api/protect/executions/{execution_id}/graph:
+    get:
+      tags: [Protect · Blast Radius]
+      operationId: getBlastGraph
+      summary: One execution as a tree — endpoint → CUE → MCP sandbox → data → DLP outcome
+      x-status: new
+      x-min-role: viewer
+      x-rate-limit: heavy
+      x-screen: "Protect → Blast radius → execution tree"
+      parameters:
+        - { name: execution_id, in: path, required: true, schema: { type: string } }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/BlastGraph' }
+              example:
+                execution_id: exec_01J9Z
+                nodes:
+                  - { id: n1, kind: endpoint, label: "LT-4821 · Kamesh", detail: null, verdict: null }
+                  - { id: n2, kind: cue, label: "Cloud Code CUE", detail: "Engineering", verdict: allow }
+                  - { id: n3, kind: mcp_sandbox, label: "Postgres MCP (Aegis Bridge)", detail: null, verdict: allow }
+                  - { id: n4, kind: credential, label: ".env credentials", detail: "local .env", verdict: allow }
+                  - { id: n5, kind: data, label: "ledger query", detail: "returned ledger rows", verdict: allow }
+                  - { id: n6, kind: dlp_outcome, label: "PII movement flagged", detail: "DLP rule PII-01", verdict: flag }
+                edges:
+                  - { from: n1, to: n2 }
+                  - { from: n2, to: n3 }
+                  - { from: n3, to: n4 }
+                  - { from: n4, to: n5 }
+                  - { from: n5, to: n6 }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '429': { $ref: '#/components/responses/TooManyRequests' }
+
+  # ═══════════════════ Deprecation notice ═══════════════════
+  /api/blast-radius:
+    get:
+      tags: [Protect · Blast Radius]
+      operationId: blastRadiusDesignTimeDeprecated
+      deprecated: true
+      summary: "[DEPRECATED] design-time CUE static analysis — removed from Control per 27 Sep"
+      description: Kept only so the change is explicit. The console no longer calls this. Use the runtime graph above.
+      x-status: extended
+      responses:
+        '410': { description: Gone — replaced by /api/protect/blast-radius }

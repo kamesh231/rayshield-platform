@@ -1,0 +1,78 @@
+{
+ "operationId": "getCue",
+ "access": "read",
+ "status": 200,
+ "headers": {},
+ "body": {
+  "id": "cue_digital_v2",
+  "name": "Claude Code — Digital Banking",
+  "tool": "claude-code",
+  "scope": "group",
+  "scope_ref": "grp_digital_eng",
+  "base_cue_id": "cue_bank_baseline",
+  "version": 2,
+  "state": "published",
+  "egress_allow": [
+   {
+    "value": "api.anthropic.com",
+    "inherited": true,
+    "source": "Claude Code — Bank baseline"
+   },
+   {
+    "value": "registry.npmjs.org",
+    "inherited": true,
+    "source": "Claude Code — Bank baseline"
+   },
+   {
+    "value": "pypi.org",
+    "inherited": true,
+    "source": "Claude Code — Bank baseline"
+   },
+   {
+    "value": "github.straitsmeridian.example",
+    "inherited": true,
+    "source": "Claude Code — Bank baseline"
+   },
+   {
+    "value": "api.mobile-sandbox.straitsmeridian.example",
+    "inherited": false,
+    "source": null
+   }
+  ],
+  "mcp_servers": [
+   {
+    "value": "github-enterprise",
+    "inherited": false,
+    "source": null
+   },
+   {
+    "value": "jira",
+    "inherited": false,
+    "source": null
+   }
+  ],
+  "dlp_rules": [
+   {
+    "value": "dlp-card-pan",
+    "inherited": true,
+    "source": "Claude Code — Bank baseline"
+   },
+   {
+    "value": "dlp-nric",
+    "inherited": true,
+    "source": "Claude Code — Bank baseline"
+   },
+   {
+    "value": "dlp-secrets",
+    "inherited": true,
+    "source": "Claude Code — Bank baseline"
+   },
+   {
+    "value": "dlp-swift-mt",
+    "inherited": true,
+    "source": "Claude Code — Bank baseline"
+   }
+  ],
+  "internal_tools": []
+ }
+}

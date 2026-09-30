@@ -1,0 +1,11 @@
+{
+ "operationId": "deleteCue",
+ "access": "deny",
+ "status": 403,
+ "headers": {},
+ "body": {
+  "error": "Role 'developer' (Rahul Iyer) cannot call deleteCue.",
+  "code": "FORBIDDEN",
+  "request_id": "req_y59KT_PM"
+ }
+}

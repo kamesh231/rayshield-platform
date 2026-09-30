@@ -1,0 +1,24 @@
+{
+ "operationId": "listCueVersions",
+ "access": "read",
+ "status": 200,
+ "headers": {},
+ "body": [
+  {
+   "version": 2,
+   "state": "published",
+   "published_at": 1789524000,
+   "published_by": "Tan Wei Ling",
+   "change": "+ MCP jira",
+   "endpoints": 79
+  },
+  {
+   "version": 1,
+   "state": "superseded",
+   "published_at": 1784080800,
+   "published_by": "Tan Wei Ling",
+   "change": "inherits Bank baseline · + MCP github-enterprise",
+   "endpoints": 9
+  }
+ ]
+}

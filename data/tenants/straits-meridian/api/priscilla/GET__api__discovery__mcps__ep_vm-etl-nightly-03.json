@@ -1,0 +1,12 @@
+{
+ "operationId": "getEndpointMcps",
+ "access": "read",
+ "status": 200,
+ "headers": {},
+ "body": {
+  "endpoint_id": "ep_vm-etl-nightly-03",
+  "core_installed": true,
+  "mcps": [],
+  "skills": []
+ }
+}

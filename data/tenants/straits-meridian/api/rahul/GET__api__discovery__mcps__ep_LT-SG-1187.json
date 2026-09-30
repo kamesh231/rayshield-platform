@@ -1,0 +1,11 @@
+{
+ "operationId": "getEndpointMcps",
+ "access": "self",
+ "status": 403,
+ "headers": {},
+ "body": {
+  "error": "Role 'developer' (Rahul Iyer) cannot call getEndpointMcps.",
+  "code": "FORBIDDEN",
+  "request_id": "req_DmInsZqn"
+ }
+}

@@ -1,0 +1,108 @@
+{
+ "operationId": "listCues",
+ "access": "read",
+ "status": 200,
+ "headers": {
+  "X-Total-Count": "7"
+ },
+ "body": [
+  {
+   "id": "cue_bank_baseline",
+   "name": "Claude Code — Bank baseline",
+   "tool": "claude-code",
+   "scope": "tool",
+   "scope_ref": "claude-code",
+   "base_cue_id": null,
+   "latest_version": 5,
+   "endpoints_current": 231,
+   "endpoints_on_older": 0,
+   "state": "published",
+   "updated_by": "Tan Wei Ling",
+   "updated_at": 1789351200
+  },
+  {
+   "id": "cue_payments_v3",
+   "name": "Claude Code — Payments Engineering",
+   "tool": "claude-code",
+   "scope": "group",
+   "scope_ref": "grp_payments_eng",
+   "base_cue_id": "cue_bank_baseline",
+   "latest_version": 3,
+   "endpoints_current": 41,
+   "endpoints_on_older": 6,
+   "state": "published",
+   "updated_by": "Tan Wei Ling",
+   "updated_at": 1789783200
+  },
+  {
+   "id": "cue_digital_v2",
+   "name": "Claude Code — Digital Banking",
+   "tool": "claude-code",
+   "scope": "group",
+   "scope_ref": "grp_digital_eng",
+   "base_cue_id": "cue_bank_baseline",
+   "latest_version": 2,
+   "endpoints_current": 79,
+   "endpoints_on_older": 9,
+   "state": "published",
+   "updated_by": "Tan Wei Ling",
+   "updated_at": 1789524000
+  },
+  {
+   "id": "cue_data_v2",
+   "name": "Gemini CLI — Data & Analytics",
+   "tool": "gemini-cli",
+   "scope": "group",
+   "scope_ref": "grp_data",
+   "base_cue_id": null,
+   "latest_version": 2,
+   "endpoints_current": 34,
+   "endpoints_on_older": 2,
+   "state": "published",
+   "updated_by": "Priscilla Goh",
+   "updated_at": 1789178400
+  },
+  {
+   "id": "cue_soc_v1",
+   "name": "Claude Code — Cyber Defence",
+   "tool": "claude-code",
+   "scope": "group",
+   "scope_ref": "grp_soc",
+   "base_cue_id": "cue_bank_baseline",
+   "latest_version": 1,
+   "endpoints_current": 14,
+   "endpoints_on_older": 0,
+   "state": "published",
+   "updated_by": "Arjun Menon",
+   "updated_at": 1787968800
+  },
+  {
+   "id": "cue_contractors_v1",
+   "name": "Codex CLI — Vendor contractors",
+   "tool": "codex-cli",
+   "scope": "group",
+   "scope_ref": "grp_contractors",
+   "base_cue_id": null,
+   "latest_version": 1,
+   "endpoints_current": 22,
+   "endpoints_on_older": 0,
+   "state": "published",
+   "updated_by": "Tan Wei Ling",
+   "updated_at": 1788832800
+  },
+  {
+   "id": "cue_payments_v4_draft",
+   "name": "Claude Code — Payments Engineering",
+   "tool": "claude-code",
+   "scope": "group",
+   "scope_ref": "grp_payments_eng",
+   "base_cue_id": "cue_bank_baseline",
+   "latest_version": 4,
+   "endpoints_current": 0,
+   "endpoints_on_older": 0,
+   "state": "draft",
+   "updated_by": "Arjun Menon",
+   "updated_at": 1790557200
+  }
+ ]
+}

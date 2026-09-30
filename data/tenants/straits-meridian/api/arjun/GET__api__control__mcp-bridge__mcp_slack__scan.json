@@ -1,0 +1,16 @@
+{
+ "operationId": "getBridgeScan",
+ "access": "read",
+ "status": 200,
+ "headers": {},
+ "body": {
+  "status": "blocked",
+  "risk_score": 77,
+  "findings": {
+   "high": 1,
+   "medium": 1,
+   "low": 0,
+   "summary": "Customer data in channels"
+  }
+ }
+}

@@ -1,0 +1,92 @@
+{
+ "operationId": "getSessionActivity",
+ "access": "read",
+ "status": 200,
+ "headers": {},
+ "body": {
+  "session": "sbx_8d6e0af47d65",
+  "header": {
+   "device_id": "b32e2009-f4f2-4f2e-b2e6-2632e7bdf2a9",
+   "host": "LT-SG-3310",
+   "owner": "Marcus Lee",
+   "department": "Engineering — Digital Banking",
+   "group": {
+    "id": "grp_digital_eng",
+    "name": "Engineering — Digital Banking"
+   },
+   "tool": "claude-code",
+   "outcome": "stopped",
+   "started": 1790542935,
+   "last_seen": 1790544518
+  },
+  "origin": {
+   "source": "sandbox",
+   "writable": true,
+   "profile": "claude-code",
+   "workspace": "~/src/payments-api",
+   "identity": "spiffe://straitsmeridian.example/user/marcus.lee",
+   "initial_prompt": "refactor the batch parser and regenerate the tests"
+  },
+  "boot": {
+   "count": 10,
+   "items": [
+    {
+     "label": "egress allow",
+     "count": 5
+    },
+    {
+     "label": "mcps",
+     "count": 2
+    },
+    {
+     "label": "dlp rules",
+     "count": 3
+    }
+   ]
+  },
+  "activity": [
+   {
+    "cat": "prompt",
+    "kind": "turn",
+    "label": "refactor the batch parser and regenerate the tests",
+    "detail": "model turn",
+    "count": 1,
+    "verdict": "allow",
+    "severity": null,
+    "first_ts": 1790542940,
+    "last_ts": 1790542940,
+    "rule_id": null,
+    "reason": null,
+    "owasp": null
+   },
+   {
+    "cat": "file_read",
+    "kind": "read",
+    "label": "Read files under ./src",
+    "detail": null,
+    "count": 4,
+    "verdict": "allow",
+    "severity": null,
+    "first_ts": 1790542975,
+    "last_ts": 1790543025,
+    "rule_id": null,
+    "reason": null,
+    "owasp": null
+   },
+   {
+    "cat": "stopped",
+    "kind": "budget",
+    "label": "Budget hard-stop reached",
+    "detail": null,
+    "count": 1,
+    "verdict": "stopped",
+    "severity": null,
+    "first_ts": 1790544518,
+    "last_ts": 1790544518,
+    "rule_id": null,
+    "reason": "per-user 24h cap",
+    "owasp": null
+   }
+  ]
+ }
+}

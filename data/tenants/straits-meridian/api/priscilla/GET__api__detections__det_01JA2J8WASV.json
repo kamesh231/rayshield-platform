@@ -1,0 +1,57 @@
+{
+ "operationId": "getDetection",
+ "access": "redacted",
+ "status": 200,
+ "headers": {},
+ "body": {
+  "detection_id": "det_01JA2J8WASV",
+  "ts": 1790330828,
+  "rule_id": "UNDISCLOSED-ACTION",
+  "rule_label": "Undisclosed action",
+  "severity": "medium",
+  "disposition": "recorded",
+  "device_id": "dffa7dc4-b5ca-453d-9af6-9c23d89b14de",
+  "host": "LT-SG-9530",
+  "owner": "Terence Sim",
+  "owner_kind": "person",
+  "department": "Engineering — Digital Banking",
+  "group": {
+   "id": "grp_digital_eng",
+   "name": "Engineering — Digital Banking"
+  },
+  "session_id": "sbx_509f5fd57d76",
+  "teaser": "Undisclosed action · agent actions",
+  "description": "The agent did more than it declared; the engine cross-checks the declared manifest against what it observed.",
+  "owasp": null,
+  "signal": "guest",
+  "classification": "regulated data",
+  "backend": "aegis-engine 0.9.6",
+  "evidence": {
+   "type": "undisclosed_action",
+   "decoded_command": null,
+   "sensitive_content": null,
+   "exfil": null,
+   "egress_spike": null,
+   "persistence": null,
+   "undisclosed_action": null
+  },
+  "chain": [
+   {
+    "ts": 1790330828,
+    "label": "Undisclosed action",
+    "detail": null,
+    "is_current": true,
+    "is_detection": true,
+    "severity": "medium",
+    "disposition": "recorded"
+   }
+  ],
+  "signature": {
+   "alg": "ed25519",
+   "key_id": "aegis-smb-2026-09",
+   "value": "MEUCIQfd636u5wdofu…",
+   "signed_at": 1790330829,
+   "verify_hint": "aegis verify det_01JA2J8WASV"
+  }
+ }
+}

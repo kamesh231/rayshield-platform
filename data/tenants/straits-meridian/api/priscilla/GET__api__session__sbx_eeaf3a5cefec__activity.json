@@ -1,0 +1,92 @@
+{
+ "operationId": "getSessionActivity",
+ "access": "redacted",
+ "status": 200,
+ "headers": {},
+ "body": {
+  "session": "sbx_eeaf3a5cefec",
+  "header": {
+   "device_id": "d742380f-43b1-4c63-9dbf-988133b13c4f",
+   "host": "LT-VN-0412",
+   "owner": "Thanh Nguyen",
+   "department": "Vendor Engineering (contractors)",
+   "group": {
+    "id": "grp_contractors",
+    "name": "Vendor Engineering (contractors)"
+   },
+   "tool": "codex-cli",
+   "outcome": "detected",
+   "started": 1790527803,
+   "last_seen": 1790529438
+  },
+  "origin": {
+   "source": "sandbox",
+   "writable": true,
+   "profile": "codex-cli",
+   "workspace": "~/src/settlement-recon",
+   "identity": "spiffe://straitsmeridian.example/user/thanh.nguyen",
+   "initial_prompt": null
+  },
+  "boot": {
+   "count": 10,
+   "items": [
+    {
+     "label": "egress allow",
+     "count": 5
+    },
+    {
+     "label": "mcps",
+     "count": 2
+    },
+    {
+     "label": "dlp rules",
+     "count": 3
+    }
+   ]
+  },
+  "activity": [
+   {
+    "cat": "prompt",
+    "kind": "turn",
+    "label": "fix the failing build in settlement-recon",
+    "detail": null,
+    "count": 1,
+    "verdict": "allow",
+    "severity": null,
+    "first_ts": 1790527808,
+    "last_ts": 1790527808,
+    "rule_id": null,
+    "reason": null,
+    "owasp": null
+   },
+   {
+    "cat": "file_read",
+    "kind": "read",
+    "label": "Read files under ./src",
+    "detail": null,
+    "count": 4,
+    "verdict": "allow",
+    "severity": null,
+    "first_ts": 1790527843,
+    "last_ts": 1790527893,
+    "rule_id": null,
+    "reason": null,
+    "owasp": null
+   },
+   {
+    "cat": "detection",
+    "kind": "EXFIL",
+    "label": "Data exfiltration",
+    "detail": "mobile-app-src.tar.gz · 18.4 MB → paste.ee (blocked by CUE egress)",
+    "count": 1,
+    "verdict": "block",
+    "severity": "critical",
+    "first_ts": 1790528400,
+    "last_ts": 1790528400,
+    "rule_id": "EXFIL",
+    "reason": "mobile-app-src.tar.gz · 18.4 MB → paste.ee (blocked by CUE egress)",
+    "owasp": "ASI05"
+   }
+  ]
+ }
+}

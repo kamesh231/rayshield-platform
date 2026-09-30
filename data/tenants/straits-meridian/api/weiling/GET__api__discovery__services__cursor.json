@@ -1,0 +1,56 @@
+{
+ "operationId": "getService",
+ "access": "read",
+ "status": 200,
+ "headers": {
+  "X-Window-From": "1789956000",
+  "X-Window-To": "1790560800",
+  "X-Data-As-Of": "1790560680"
+ },
+ "body": {
+  "service": {
+   "ai_service": "Cursor",
+   "category": "Coding",
+   "icon": null,
+   "separability": "distinct",
+   "confidence": "confirmed",
+   "hits": 1420,
+   "bytes": 58546600,
+   "users": 17,
+   "risk_score": 38,
+   "jurisdiction": "US",
+   "ever_agentic": false,
+   "sandbox_candidate": false,
+   "agent_sdks": null,
+   "collector_count": 2,
+   "first_seen": 1786672800,
+   "last_seen": 1790559260,
+   "personal_account": false,
+   "oauth_scopes": null,
+   "service_id": "cursor",
+   "vendor": "Anysphere",
+   "embedded_in": null,
+   "status": "beta",
+   "reviewed_by": "Arjun Menon",
+   "reviewed_at": 1787086800,
+   "endpoints": 18,
+   "is_new": false
+  },
+  "description": "AI code editor. Beta for 18 Digital Banking engineers.",
+  "top_endpoints": [],
+  "status_history": [
+   {
+    "status": "unlabelled",
+    "by": "system",
+    "at": 1786672800,
+    "note": null
+   },
+   {
+    "status": "beta",
+    "by": "Arjun Menon",
+    "at": 1787086800,
+    "note": null
+   }
+  ]
+ }
+}

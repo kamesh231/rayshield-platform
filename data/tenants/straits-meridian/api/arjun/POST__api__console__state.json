@@ -1,0 +1,11 @@
+{
+ "operationId": "saveConsoleState",
+ "access": "deny",
+ "status": 403,
+ "headers": {},
+ "body": {
+  "error": "Role 'security' (Arjun Menon) cannot call saveConsoleState.",
+  "code": "FORBIDDEN",
+  "request_id": "req_vGwGFYxm"
+ }
+}

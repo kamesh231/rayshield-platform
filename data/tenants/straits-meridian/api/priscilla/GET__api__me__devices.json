@@ -1,0 +1,33 @@
+{
+ "operationId": "listMyDevices",
+ "access": "self",
+ "status": 200,
+ "headers": {},
+ "body": [
+  {
+   "id": "e0702984-bbe6-44bb-b840-2949a4b182c9",
+   "device_name": "LT-SG-0101",
+   "status": "active",
+   "health_score": 92,
+   "risk_level": "low",
+   "blocks_24h": 1,
+   "last_heartbeat": 1790560764,
+   "endpoint_id": "ep_LT-SG-0101",
+   "ip": "10.40.59.161",
+   "type": "laptop",
+   "owner": "Priscilla Goh",
+   "owner_kind": "person",
+   "department": null,
+   "group": null,
+   "agent_state": "enforcing",
+   "agent_version": "0.9.6",
+   "tools": [
+    "claude-code"
+   ],
+   "allowed": 402,
+   "blocked": 9,
+   "recorded": 30,
+   "os": "macOS 15.0"
+  }
+ ]
+}

@@ -1,0 +1,25 @@
+{
+ "operationId": "listDeviceEvents",
+ "access": "read",
+ "status": 200,
+ "headers": {},
+ "body": [
+  {
+   "id": "9b2d4396-1922-4c66-a6a4-956f4f301953",
+   "ts": 1790534880,
+   "identity": "hannah.lim",
+   "device": "LT-SG-5133",
+   "app": "api.deepseek.com",
+   "action": "detection",
+   "target": "network request",
+   "source": "sandbox",
+   "decision": "block",
+   "reason": "api.deepseek.com · DeepSeek is labelled Prohibited (blocked)",
+   "rule_id": "PROHIBITED-SERVICE",
+   "session_id": "sbx_9d5d7b2b4f46",
+   "tool": null,
+   "channel": "browser_app",
+   "enforced_by": "detector"
+  }
+ ]
+}

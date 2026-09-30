@@ -1,0 +1,57 @@
+{
+ "operationId": "getDetection",
+ "access": "redacted",
+ "status": 200,
+ "headers": {},
+ "body": {
+  "detection_id": "det_01JA41ZXGFW",
+  "ts": 1790344800,
+  "rule_id": "PROHIBITED-SERVICE",
+  "rule_label": "Prohibited AI service",
+  "severity": "high",
+  "disposition": "blocked",
+  "device_id": "7f67d461-462d-4e68-ae25-f7367ce71cf4",
+  "host": "LT-SG-2648",
+  "owner": "Ahmad Sim",
+  "owner_kind": "person",
+  "department": "Treasury & Markets",
+  "group": {
+   "id": "grp_treasury",
+   "name": "Treasury & Markets"
+  },
+  "session_id": "sbx_3126bc579896",
+  "teaser": "Prohibited AI service · network request",
+  "description": "Traffic to a service labelled Prohibited in Discover (data residency).",
+  "owasp": null,
+  "signal": "wire",
+  "classification": "transfer",
+  "backend": "aegis-engine 0.9.6",
+  "evidence": {
+   "type": "exfil",
+   "decoded_command": null,
+   "sensitive_content": null,
+   "exfil": null,
+   "egress_spike": null,
+   "persistence": null,
+   "undisclosed_action": null
+  },
+  "chain": [
+   {
+    "ts": 1790344800,
+    "label": "Prohibited AI service",
+    "detail": null,
+    "is_current": true,
+    "is_detection": true,
+    "severity": "high",
+    "disposition": "blocked"
+   }
+  ],
+  "signature": {
+   "alg": "ed25519",
+   "key_id": "aegis-smb-2026-09",
+   "value": "MEUCIQ1xk4ksa1srir…",
+   "signed_at": 1790344801,
+   "verify_hint": "aegis verify det_01JA41ZXGFW"
+  }
+ }
+}

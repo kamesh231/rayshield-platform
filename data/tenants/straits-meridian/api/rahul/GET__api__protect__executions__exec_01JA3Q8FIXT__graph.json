@@ -1,0 +1,75 @@
+{
+ "operationId": "getBlastGraph",
+ "access": "self",
+ "status": 200,
+ "headers": {},
+ "body": {
+  "execution_id": "exec_01JA3Q8FIXT",
+  "nodes": [
+   {
+    "id": "n1",
+    "kind": "endpoint",
+    "label": "LT-SG-2231 · Rahul Iyer",
+    "detail": "Engineering — Payments",
+    "verdict": null
+   },
+   {
+    "id": "n2",
+    "kind": "cue",
+    "label": "Payments Engineering v3",
+    "detail": "Claude Code — Payments Engineering",
+    "verdict": "allow"
+   },
+   {
+    "id": "n3",
+    "kind": "mcp_sandbox",
+    "label": "github-enterprise (Aegis Bridge)",
+    "detail": "sbx-gh-2231",
+    "verdict": "allow"
+   },
+   {
+    "id": "n4",
+    "kind": "credential",
+    "label": "Bridge vault token",
+    "detail": "GitHub token held by the Aegis Bridge",
+    "verdict": "allow"
+   },
+   {
+    "id": "n5",
+    "kind": "data",
+    "label": "settlement-recon · customers.json fixture",
+    "detail": "get_file tests/fixtures/customers.json",
+    "verdict": "flag"
+   },
+   {
+    "id": "n6",
+    "kind": "dlp_outcome",
+    "label": "Blocked before prompt left the sandbox",
+    "detail": "Flagged 14 NRICs (e.g. S•••••••D) in a test fixture sent as context. Blocked.",
+    "verdict": "block"
+   }
+  ],
+  "edges": [
+   {
+    "from": "n1",
+    "to": "n2"
+   },
+   {
+    "from": "n2",
+    "to": "n3"
+   },
+   {
+    "from": "n3",
+    "to": "n4"
+   },
+   {
+    "from": "n4",
+    "to": "n5"
+   },
+   {
+    "from": "n5",
+    "to": "n6"
+   }
+  ]
+ }
+}

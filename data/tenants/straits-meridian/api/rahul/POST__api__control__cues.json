@@ -1,0 +1,11 @@
+{
+ "operationId": "createCue",
+ "access": "deny",
+ "status": 403,
+ "headers": {},
+ "body": {
+  "error": "Role 'developer' (Rahul Iyer) cannot call createCue.",
+  "code": "FORBIDDEN",
+  "request_id": "req_-NfJF4Mi"
+ }
+}

@@ -1,0 +1,344 @@
+{
+ "operationId": "getUsageGraph",
+ "access": "read",
+ "status": 200,
+ "headers": {
+  "X-Window-From": "1789956000",
+  "X-Window-To": "1790560800",
+  "X-Data-As-Of": "1790560680"
+ },
+ "body": {
+  "left": [
+   {
+    "id": "user:farhan.wong",
+    "label": "Farhan Wong",
+    "sub": "Cyber Defence (SOC)",
+    "hits": 461
+   },
+   {
+    "id": "user:serena.ang",
+    "label": "Serena Ang",
+    "sub": "Treasury & Markets",
+    "hits": 460
+   },
+   {
+    "id": "user:hafiz.toh",
+    "label": "Hafiz Toh",
+    "sub": "Engineering — Digital Banking",
+    "hits": 459
+   },
+   {
+    "id": "user:rachel.ismail",
+    "label": "Rachel Ismail",
+    "sub": "Retail Banking Operations",
+    "hits": 457
+   },
+   {
+    "id": "user:chloe.chan",
+    "label": "Chloe Chan",
+    "sub": "Retail Banking Operations",
+    "hits": 453
+   },
+   {
+    "id": "user:darren.chong",
+    "label": "Darren Chong",
+    "sub": "Engineering — Digital Banking",
+    "hits": 451
+   },
+   {
+    "id": "user:faizal.seah",
+    "label": "Faizal Seah",
+    "sub": "Corporate Strategy",
+    "hits": 451
+   },
+   {
+    "id": "user:min.jun.nair",
+    "label": "Min Jun Nair",
+    "sub": "Treasury & Markets",
+    "hits": 450
+   },
+   {
+    "id": "user:kenji.watanabe",
+    "label": "Kenji Watanabe",
+    "sub": "Treasury & Markets",
+    "hits": 449
+   },
+   {
+    "id": "user:joanne.ng",
+    "label": "Joanne Ng",
+    "sub": "Retail Banking Operations",
+    "hits": 449
+   },
+   {
+    "id": "user:priyanka.quek",
+    "label": "Priyanka Quek",
+    "sub": "Retail Banking Operations",
+    "hits": 447
+   },
+   {
+    "id": "user:khanh.hoang",
+    "label": "Khanh Hoang",
+    "sub": "Vendor Engineering (contractors)",
+    "hits": 447
+   }
+  ],
+  "right": [
+   {
+    "id": "claude-code",
+    "label": "Claude Code",
+    "status": "approved",
+    "hits": 1063
+   },
+   {
+    "id": "anthropic-api",
+    "label": "Anthropic Claude (API)",
+    "status": "approved",
+    "hits": 669
+   },
+   {
+    "id": "m365-copilot",
+    "label": "Microsoft 365 Copilot",
+    "status": "approved",
+    "hits": 240
+   },
+   {
+    "id": "grammarly-business",
+    "label": "Grammarly Business",
+    "status": "approved",
+    "hits": 428
+   },
+   {
+    "id": "azure-openai",
+    "label": "Azure OpenAI",
+    "status": "approved",
+    "hits": 339
+   },
+   {
+    "id": "databricks-assistant",
+    "label": "Databricks Assistant",
+    "status": "approved",
+    "hits": 856
+   },
+   {
+    "id": "salesforce-einstein",
+    "label": "Salesforce Einstein",
+    "status": "approved",
+    "hits": 495
+   },
+   {
+    "id": "gemini-workspace",
+    "label": "Gemini (Workspace)",
+    "status": "approved",
+    "hits": 300
+   },
+   {
+    "id": "notion-ai",
+    "label": "Notion AI",
+    "status": "approved",
+    "hits": 150
+   },
+   {
+    "id": "zoom-ai",
+    "label": "Zoom AI Companion",
+    "status": "approved",
+    "hits": 178
+   },
+   {
+    "id": "amazon-bedrock",
+    "label": "Amazon Bedrock",
+    "status": "approved",
+    "hits": 134
+   },
+   {
+    "id": "chatgpt-enterprise",
+    "label": "ChatGPT Enterprise",
+    "status": "approved",
+    "hits": 89
+   },
+   {
+    "id": "github-copilot",
+    "label": "GitHub Copilot",
+    "status": "approved",
+    "hits": 46
+   },
+   {
+    "id": "codex-cli",
+    "label": "Codex CLI",
+    "status": "unlabelled",
+    "hits": 447
+   }
+  ],
+  "edges": [
+   {
+    "from": "user:farhan.wong",
+    "to": "claude-code",
+    "hits": 153
+   },
+   {
+    "from": "user:farhan.wong",
+    "to": "anthropic-api",
+    "hits": 122
+   },
+   {
+    "from": "user:farhan.wong",
+    "to": "m365-copilot",
+    "hits": 92
+   },
+   {
+    "from": "user:farhan.wong",
+    "to": "grammarly-business",
+    "hits": 61
+   },
+   {
+    "from": "user:farhan.wong",
+    "to": "azure-openai",
+    "hits": 33
+   },
+   {
+    "from": "user:serena.ang",
+    "to": "azure-openai",
+    "hits": 306
+   },
+   {
+    "from": "user:serena.ang",
+    "to": "grammarly-business",
+    "hits": 154
+   },
+   {
+    "from": "user:hafiz.toh",
+    "to": "claude-code",
+    "hits": 459
+   },
+   {
+    "from": "user:rachel.ismail",
+    "to": "anthropic-api",
+    "hits": 228
+   },
+   {
+    "from": "user:rachel.ismail",
+    "to": "databricks-assistant",
+    "hits": 152
+   },
+   {
+    "from": "user:rachel.ismail",
+    "to": "grammarly-business",
+    "hits": 77
+   },
+   {
+    "from": "user:chloe.chan",
+    "to": "databricks-assistant",
+    "hits": 226
+   },
+   {
+    "from": "user:chloe.chan",
+    "to": "salesforce-einstein",
+    "hits": 151
+   },
+   {
+    "from": "user:chloe.chan",
+    "to": "anthropic-api",
+    "hits": 76
+   },
+   {
+    "from": "user:darren.chong",
+    "to": "claude-code",
+    "hits": 451
+   },
+   {
+    "from": "user:faizal.seah",
+    "to": "salesforce-einstein",
+    "hits": 225
+   },
+   {
+    "from": "user:faizal.seah",
+    "to": "databricks-assistant",
+    "hits": 150
+   },
+   {
+    "from": "user:faizal.seah",
+    "to": "anthropic-api",
+    "hits": 76
+   },
+   {
+    "from": "user:min.jun.nair",
+    "to": "gemini-workspace",
+    "hits": 300
+   },
+   {
+    "from": "user:min.jun.nair",
+    "to": "notion-ai",
+    "hits": 150
+   },
+   {
+    "from": "user:kenji.watanabe",
+    "to": "databricks-assistant",
+    "hits": 179
+   },
+   {
+    "from": "user:kenji.watanabe",
+    "to": "anthropic-api",
+    "hits": 134
+   },
+   {
+    "from": "user:kenji.watanabe",
+    "to": "m365-copilot",
+    "hits": 89
+   },
+   {
+    "from": "user:kenji.watanabe",
+    "to": "grammarly-business",
+    "hits": 47
+   },
+   {
+    "from": "user:joanne.ng",
+    "to": "databricks-assistant",
+    "hits": 149
+   },
+   {
+    "from": "user:joanne.ng",
+    "to": "salesforce-einstein",
+    "hits": 119
+   },
+   {
+    "from": "user:joanne.ng",
+    "to": "grammarly-business",
+    "hits": 89
+   },
+   {
+    "from": "user:joanne.ng",
+    "to": "m365-copilot",
+    "hits": 59
+   },
+   {
+    "from": "user:joanne.ng",
+    "to": "anthropic-api",
+    "hits": 33
+   },
+   {
+    "from": "user:priyanka.quek",
+    "to": "zoom-ai",
+    "hits": 178
+   },
+   {
+    "from": "user:priyanka.quek",
+    "to": "amazon-bedrock",
+    "hits": 134
+   },
+   {
+    "from": "user:priyanka.quek",
+    "to": "chatgpt-enterprise",
+    "hits": 89
+   },
+   {
+    "from": "user:priyanka.quek",
+    "to": "github-copilot",
+    "hits": 46
+   },
+   {
+    "from": "user:khanh.hoang",
+    "to": "codex-cli",
+    "hits": 447
+   }
+  ]
+ }
+}

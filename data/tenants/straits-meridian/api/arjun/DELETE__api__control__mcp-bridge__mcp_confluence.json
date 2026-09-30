@@ -1,0 +1,11 @@
+{
+ "operationId": "removeBridgeMcp",
+ "access": "deny",
+ "status": 403,
+ "headers": {},
+ "body": {
+  "error": "Role 'security' (Arjun Menon) cannot call removeBridgeMcp.",
+  "code": "FORBIDDEN",
+  "request_id": "req_AfZuW_0D"
+ }
+}

@@ -1,0 +1,961 @@
+{
+ "operationId": "listDetections",
+ "access": "read",
+ "status": 200,
+ "headers": {
+  "X-Total-Count": "58",
+  "X-Next-Cursor": "bzo1MA"
+ },
+ "body": [
+  {
+   "detection_id": "det_01JA4K9PAN1",
+   "ts": 1790553600,
+   "rule_id": "CARD-PAN",
+   "rule_label": "Card number (PAN) in agent context",
+   "severity": "critical",
+   "disposition": "escalated",
+   "device_id": "a497c981-1b88-4af4-b21f-6d94c7af60ef",
+   "host": "LT-SG-2231",
+   "owner": "Rahul Iyer",
+   "owner_kind": "person",
+   "department": "Engineering — Payments",
+   "group": {
+    "id": "grp_payments_eng",
+    "name": "Engineering — Payments"
+   },
+   "session_id": "sbx_7c21e9a04b3f",
+   "teaser": "cards.txn_ledger · 1,240 rows with PAN + NRIC columns → api.anthropic.com (blocked before transmission)"
+  },
+  {
+   "detection_id": "det_01JA78AN6YA",
+   "ts": 1790542080,
+   "rule_id": "PII-NRIC",
+   "rule_label": "NRIC / FIN in agent context",
+   "severity": "critical",
+   "disposition": "escalated",
+   "device_id": "194ef8f9-561c-4ea1-b882-cc794f93b079",
+   "host": "LT-SG-4402",
+   "owner": "Jia Hui Ong",
+   "owner_kind": "person",
+   "department": "Data & Analytics",
+   "group": {
+    "id": "grp_data",
+    "name": "Data & Analytics"
+   },
+   "session_id": "sbx_2976a8d6d6b2",
+   "teaser": "customer_360.party · 612 rows with NRIC column via warehouse-mcp (blocked)"
+  },
+  {
+   "detection_id": "det_01JAW09W37K",
+   "ts": 1790535600,
+   "rule_id": "SWIFT-MSG",
+   "rule_label": "SWIFT payment message in agent context",
+   "severity": "high",
+   "disposition": "blocked",
+   "device_id": "caf1348f-1ef7-4a01-9619-b1374bf4452d",
+   "host": "LT-SG-5120",
+   "owner": "Benjamin Chua",
+   "owner_kind": "person",
+   "department": "Treasury & Markets",
+   "group": {
+    "id": "grp_treasury",
+    "name": "Treasury & Markets"
+   },
+   "session_id": "sbx_8971ab664fd6",
+   "teaser": "MT103 customer credit transfer pasted into a prompt (blocked)"
+  },
+  {
+   "detection_id": "det_01JAT8PZQXX",
+   "ts": 1790534880,
+   "rule_id": "PROHIBITED-SERVICE",
+   "rule_label": "Prohibited AI service",
+   "severity": "high",
+   "disposition": "blocked",
+   "device_id": "1f00e17c-459f-415b-84ef-e5e2bdf0b3d0",
+   "host": "LT-SG-5133",
+   "owner": "Hannah Lim",
+   "owner_kind": "person",
+   "department": "Treasury & Markets",
+   "group": {
+    "id": "grp_treasury",
+    "name": "Treasury & Markets"
+   },
+   "session_id": "sbx_9d5d7b2b4f46",
+   "teaser": "api.deepseek.com · DeepSeek is labelled Prohibited (blocked)"
+  },
+  {
+   "detection_id": "det_01JAJYW1HFH",
+   "ts": 1790528400,
+   "rule_id": "EXFIL",
+   "rule_label": "Data exfiltration",
+   "severity": "critical",
+   "disposition": "escalated",
+   "device_id": "d742380f-43b1-4c63-9dbf-988133b13c4f",
+   "host": "LT-VN-0412",
+   "owner": "Thanh Nguyen",
+   "owner_kind": "person",
+   "department": "Vendor Engineering (contractors)",
+   "group": {
+    "id": "grp_contractors",
+    "name": "Vendor Engineering (contractors)"
+   },
+   "session_id": "sbx_eeaf3a5cefec",
+   "teaser": "mobile-app-src.tar.gz · 18.4 MB → paste.ee (blocked by CUE egress)"
+  },
+  {
+   "detection_id": "det_01JAQHS2XAT",
+   "ts": 1790521200,
+   "rule_id": "SECRET-IN-PROMPT",
+   "rule_label": "Secret in prompt",
+   "severity": "high",
+   "disposition": "blocked",
+   "device_id": "51bf4dc8-0d42-4671-8d09-cdf5d7c7621c",
+   "host": "vm-ci-build-214",
+   "owner": "svc-ci",
+   "owner_kind": "service",
+   "department": "Service accounts (CI / ETL)",
+   "group": {
+    "id": "grp_svc",
+    "name": "Service accounts (CI / ETL)"
+   },
+   "session_id": "sbx_b57f026e3fa3",
+   "teaser": "deploy/keys/prod-deploy.pem · private key in file content (blocked)"
+  },
+  {
+   "detection_id": "det_01JADSAZ3TJ",
+   "ts": 1790511682,
+   "rule_id": "SWIFT-MSG",
+   "rule_label": "SWIFT payment message in agent context",
+   "severity": "high",
+   "disposition": "blocked",
+   "device_id": "c097e8e0-00f1-4b59-9688-a74af1904496",
+   "host": "LT-SG-3679",
+   "owner": "Wen Hui Lim",
+   "owner_kind": "person",
+   "department": "Engineering — Digital Banking",
+   "group": {
+    "id": "grp_digital_eng",
+    "name": "Engineering — Digital Banking"
+   },
+   "session_id": "sbx_9342d9469700",
+   "teaser": "pacs.008 message in a test file (blocked)"
+  },
+  {
+   "detection_id": "det_01JA6MQ6S00",
+   "ts": 1790511550,
+   "rule_id": "PII-NRIC",
+   "rule_label": "NRIC / FIN in agent context",
+   "severity": "critical",
+   "disposition": "blocked",
+   "device_id": "c097e8e0-00f1-4b59-9688-a74af1904496",
+   "host": "LT-SG-3679",
+   "owner": "Wen Hui Lim",
+   "owner_kind": "person",
+   "department": "Engineering — Digital Banking",
+   "group": {
+    "id": "grp_digital_eng",
+    "name": "Engineering — Digital Banking"
+   },
+   "session_id": "sbx_9342d9469700",
+   "teaser": "NRIC values in tool result (blocked)"
+  },
+  {
+   "detection_id": "det_01JA1246TMA",
+   "ts": 1790507009,
+   "rule_id": "CARD-PAN",
+   "rule_label": "Card number (PAN) in agent context",
+   "severity": "critical",
+   "disposition": "blocked",
+   "device_id": "44000bf8-2fe5-4216-8d91-f1d8bbb90c77",
+   "host": "LT-SG-5371",
+   "owner": "Ahmad Kumar",
+   "owner_kind": "person",
+   "department": "Engineering — Payments",
+   "group": {
+    "id": "grp_payments_eng",
+    "name": "Engineering — Payments"
+   },
+   "session_id": "sbx_04927a136779",
+   "teaser": "card PAN in query result (blocked)"
+  },
+  {
+   "detection_id": "det_01JAY5K5JG3",
+   "ts": 1790506912,
+   "rule_id": "CARD-PAN",
+   "rule_label": "Card number (PAN) in agent context",
+   "severity": "critical",
+   "disposition": "blocked",
+   "device_id": "44000bf8-2fe5-4216-8d91-f1d8bbb90c77",
+   "host": "LT-SG-5371",
+   "owner": "Ahmad Kumar",
+   "owner_kind": "person",
+   "department": "Engineering — Payments",
+   "group": {
+    "id": "grp_payments_eng",
+    "name": "Engineering — Payments"
+   },
+   "session_id": "sbx_04927a136779",
+   "teaser": "card PAN in query result (blocked)"
+  },
+  {
+   "detection_id": "det_01JAHP1054E",
+   "ts": 1790487360,
+   "rule_id": "PROHIBITED-SERVICE",
+   "rule_label": "Prohibited AI service",
+   "severity": "high",
+   "disposition": "blocked",
+   "device_id": "dc377906-8fde-46a1-acd7-943be5203c19",
+   "host": "LT-SG-8279",
+   "owner": "Nadia Low",
+   "owner_kind": "person",
+   "department": "Treasury & Markets",
+   "group": {
+    "id": "grp_treasury",
+    "name": "Treasury & Markets"
+   },
+   "session_id": "sbx_e478b6149e4e",
+   "teaser": "api.deepseek.com · DeepSeek is labelled Prohibited (blocked)"
+  },
+  {
+   "detection_id": "det_01JAG4Y8J3M",
+   "ts": 1790476632,
+   "rule_id": "SENSITIVE-ACCESS",
+   "rule_label": "Sensitive file access",
+   "severity": "medium",
+   "disposition": "blocked",
+   "device_id": "f75d429f-747d-424c-8317-870eba721c76",
+   "host": "LT-SG-3544",
+   "owner": "Hafiz Pillai",
+   "owner_kind": "person",
+   "department": "Engineering — Digital Banking",
+   "group": {
+    "id": "grp_digital_eng",
+    "name": "Engineering — Digital Banking"
+   },
+   "session_id": "sbx_9b01006ecb31",
+   "teaser": "~/.aws/credentials read"
+  },
+  {
+   "detection_id": "det_01JARNRNKZT",
+   "ts": 1790467200,
+   "rule_id": "PII-NRIC",
+   "rule_label": "NRIC / FIN in agent context",
+   "severity": "critical",
+   "disposition": "blocked",
+   "device_id": "a497c981-1b88-4af4-b21f-6d94c7af60ef",
+   "host": "LT-SG-2231",
+   "owner": "Rahul Iyer",
+   "owner_kind": "person",
+   "department": "Engineering — Payments",
+   "group": {
+    "id": "grp_payments_eng",
+    "name": "Engineering — Payments"
+   },
+   "session_id": "sbx_f8e952641d62",
+   "teaser": "tests/fixtures/customers.json · 14 NRIC values in a test fixture (blocked)"
+  },
+  {
+   "detection_id": "det_01JAW9NKK6J",
+   "ts": 1790452800,
+   "rule_id": "SECRET-IN-PROMPT",
+   "rule_label": "Secret in prompt",
+   "severity": "high",
+   "disposition": "blocked",
+   "device_id": "18fcef06-5ea0-4b62-89d0-7868e89ab483",
+   "host": "vm-dev-rahul-07",
+   "owner": "Rahul Iyer",
+   "owner_kind": "person",
+   "department": "Engineering — Payments",
+   "group": {
+    "id": "grp_payments_eng",
+    "name": "Engineering — Payments"
+   },
+   "session_id": "sbx_298fafe63451",
+   "teaser": "~/.config/settlement/credentials · connection string with password (blocked)"
+  },
+  {
+   "detection_id": "det_01JAR6TSCGA",
+   "ts": 1790444969,
+   "rule_id": "SECRET-IN-PROMPT",
+   "rule_label": "Secret in prompt",
+   "severity": "high",
+   "disposition": "blocked",
+   "device_id": "9c68f690-207e-487b-8115-a73a893ccb9f",
+   "host": "LT-VN-6679",
+   "owner": "Linh Hoang",
+   "owner_kind": "person",
+   "department": "Vendor Engineering (contractors)",
+   "group": {
+    "id": "grp_contractors",
+    "name": "Vendor Engineering (contractors)"
+   },
+   "session_id": "sbx_d13d627495d9",
+   "teaser": "notes.md · bearer token (blocked)"
+  },
+  {
+   "detection_id": "det_01JASV178W7",
+   "ts": 1790439840,
+   "rule_id": "PROHIBITED-SERVICE",
+   "rule_label": "Prohibited AI service",
+   "severity": "high",
+   "disposition": "blocked",
+   "device_id": "079cb142-c0d7-4fbf-89db-f88958a81eae",
+   "host": "LT-SG-2492",
+   "owner": "Kelvin Sim",
+   "owner_kind": "person",
+   "department": "Treasury & Markets",
+   "group": {
+    "id": "grp_treasury",
+    "name": "Treasury & Markets"
+   },
+   "session_id": "sbx_5fa0c326ed40",
+   "teaser": "api.deepseek.com · DeepSeek is labelled Prohibited (blocked)"
+  },
+  {
+   "detection_id": "det_01JA3DFP6S4",
+   "ts": 1790416639,
+   "rule_id": "SENSITIVE-ACCESS",
+   "rule_label": "Sensitive file access",
+   "severity": "medium",
+   "disposition": "blocked",
+   "device_id": "83245f0b-7d16-4d8d-8384-0d1610bfa365",
+   "host": "vm-dev-nurul-19",
+   "owner": "Nurul Ang",
+   "owner_kind": "person",
+   "department": "Engineering — Payments",
+   "group": {
+    "id": "grp_payments_eng",
+    "name": "Engineering — Payments"
+   },
+   "session_id": "sbx_567a8fc70143",
+   "teaser": "prod.env~ read"
+  },
+  {
+   "detection_id": "det_01JAWVA88QB",
+   "ts": 1790414572,
+   "rule_id": "SECRET-IN-PROMPT",
+   "rule_label": "Secret in prompt",
+   "severity": "high",
+   "disposition": "blocked",
+   "device_id": "ef8a16ba-28cc-495c-b296-d5e6faf2d738",
+   "host": "LT-SG-5261",
+   "owner": "Ahmad Nair",
+   "owner_kind": "person",
+   "department": "Engineering — Digital Banking",
+   "group": {
+    "id": "grp_digital_eng",
+    "name": "Engineering — Digital Banking"
+   },
+   "session_id": "sbx_c16d9b94d5b2",
+   "teaser": ".env · API token (blocked)"
+  },
+  {
+   "detection_id": "det_01JAADC3RBB",
+   "ts": 1790392320,
+   "rule_id": "PROHIBITED-SERVICE",
+   "rule_label": "Prohibited AI service",
+   "severity": "high",
+   "disposition": "blocked",
+   "device_id": "9b6d9dd2-3961-4121-822f-fc1109e3300a",
+   "host": "LT-SG-9509",
+   "owner": "Serena Ang",
+   "owner_kind": "person",
+   "department": "Treasury & Markets",
+   "group": {
+    "id": "grp_treasury",
+    "name": "Treasury & Markets"
+   },
+   "session_id": "sbx_41fb8e787152",
+   "teaser": "api.deepseek.com · DeepSeek is labelled Prohibited (blocked)"
+  },
+  {
+   "detection_id": "det_01JA2MGSTQ0",
+   "ts": 1790377989,
+   "rule_id": "SENSITIVE-ACCESS",
+   "rule_label": "Sensitive file access",
+   "severity": "medium",
+   "disposition": "blocked",
+   "device_id": "c78a95c7-fe61-4af2-9d30-d190059bbcee",
+   "host": "LT-SG-2413",
+   "owner": "Ahmad Ng",
+   "owner_kind": "person",
+   "department": "Engineering — Digital Banking",
+   "group": {
+    "id": "grp_digital_eng",
+    "name": "Engineering — Digital Banking"
+   },
+   "session_id": "sbx_6c7901ce8c88",
+   "teaser": "prod.env~ read"
+  },
+  {
+   "detection_id": "det_01JAJXZ7YGV",
+   "ts": 1790370861,
+   "rule_id": "SECRET-IN-PROMPT",
+   "rule_label": "Secret in prompt",
+   "severity": "high",
+   "disposition": "blocked",
+   "device_id": "97f62412-9f18-47d7-a731-70529293081d",
+   "host": "vm-etl-nightly-83",
+   "owner": "svc-etl",
+   "owner_kind": "service",
+   "department": "Service accounts (CI / ETL)",
+   "group": {
+    "id": "grp_svc",
+    "name": "Service accounts (CI / ETL)"
+   },
+   "session_id": "sbx_0dc8181c577a",
+   "teaser": "notes.md · bearer token (blocked)"
+  },
+  {
+   "detection_id": "det_01JA41ZXGFW",
+   "ts": 1790344800,
+   "rule_id": "PROHIBITED-SERVICE",
+   "rule_label": "Prohibited AI service",
+   "severity": "high",
+   "disposition": "blocked",
+   "device_id": "7f67d461-462d-4e68-ae25-f7367ce71cf4",
+   "host": "LT-SG-2648",
+   "owner": "Ahmad Sim",
+   "owner_kind": "person",
+   "department": "Treasury & Markets",
+   "group": {
+    "id": "grp_treasury",
+    "name": "Treasury & Markets"
+   },
+   "session_id": "sbx_3126bc579896",
+   "teaser": "api.deepseek.com · DeepSeek is labelled Prohibited (blocked)"
+  },
+  {
+   "detection_id": "det_01JAC7MHYM9",
+   "ts": 1790340213,
+   "rule_id": "SENSITIVE-ACCESS",
+   "rule_label": "Sensitive file access",
+   "severity": "medium",
+   "disposition": "blocked",
+   "device_id": "648a4e4e-35b6-4a5f-8ab5-422d3e8d0693",
+   "host": "LT-SG-5376",
+   "owner": "Kavitha Yeo",
+   "owner_kind": "person",
+   "department": "Engineering — Digital Banking",
+   "group": {
+    "id": "grp_digital_eng",
+    "name": "Engineering — Digital Banking"
+   },
+   "session_id": "sbx_9cb614e490c2",
+   "teaser": "prod.env~ read"
+  },
+  {
+   "detection_id": "det_01JA2P7HDAF",
+   "ts": 1790338175,
+   "rule_id": "SECRET-IN-PROMPT",
+   "rule_label": "Secret in prompt",
+   "severity": "high",
+   "disposition": "blocked",
+   "device_id": "34532ef9-df53-4a70-8035-44764826c738",
+   "host": "LT-SG-2105",
+   "owner": "Hafiz Foo",
+   "owner_kind": "person",
+   "department": "Engineering — Digital Banking",
+   "group": {
+    "id": "grp_digital_eng",
+    "name": "Engineering — Digital Banking"
+   },
+   "session_id": "sbx_3045da26955d",
+   "teaser": "config.yaml · access key (blocked)"
+  },
+  {
+   "detection_id": "det_01JAB36A67Y",
+   "ts": 1790333740,
+   "rule_id": "SENSITIVE-ACCESS",
+   "rule_label": "Sensitive file access",
+   "severity": "medium",
+   "disposition": "blocked",
+   "device_id": "e7daa7b7-cad6-45f2-8413-10ca32999fc0",
+   "host": "LT-SG-8873",
+   "owner": "Serena Kwok",
+   "owner_kind": "person",
+   "department": "Engineering — Digital Banking",
+   "group": {
+    "id": "grp_digital_eng",
+    "name": "Engineering — Digital Banking"
+   },
+   "session_id": "sbx_271e2861b520",
+   "teaser": "prod.env~ read"
+  },
+  {
+   "detection_id": "det_01JA2J8WASV",
+   "ts": 1790330828,
+   "rule_id": "UNDISCLOSED-ACTION",
+   "rule_label": "Undisclosed action",
+   "severity": "medium",
+   "disposition": "recorded",
+   "device_id": "dffa7dc4-b5ca-453d-9af6-9c23d89b14de",
+   "host": "LT-SG-9530",
+   "owner": "Terence Sim",
+   "owner_kind": "person",
+   "department": "Engineering — Digital Banking",
+   "group": {
+    "id": "grp_digital_eng",
+    "name": "Engineering — Digital Banking"
+   },
+   "session_id": "sbx_509f5fd57d76",
+   "teaser": "declared 4 · observed 6"
+  },
+  {
+   "detection_id": "det_01JAT9KJZT8",
+   "ts": 1790315558,
+   "rule_id": "SENSITIVE-ACCESS",
+   "rule_label": "Sensitive file access",
+   "severity": "medium",
+   "disposition": "blocked",
+   "device_id": "dffa7dc4-b5ca-453d-9af6-9c23d89b14de",
+   "host": "LT-SG-9530",
+   "owner": "Terence Sim",
+   "owner_kind": "person",
+   "department": "Engineering — Digital Banking",
+   "group": {
+    "id": "grp_digital_eng",
+    "name": "Engineering — Digital Banking"
+   },
+   "session_id": "sbx_0e0283e7283c",
+   "teaser": "~/.aws/credentials read"
+  },
+  {
+   "detection_id": "det_01JAB2DBQ4J",
+   "ts": 1790297280,
+   "rule_id": "PROHIBITED-SERVICE",
+   "rule_label": "Prohibited AI service",
+   "severity": "high",
+   "disposition": "blocked",
+   "device_id": "3dc9771c-486e-4ff2-b501-2f196d1724e7",
+   "host": "LT-SG-3082",
+   "owner": "Nadia Toh",
+   "owner_kind": "person",
+   "department": "Treasury & Markets",
+   "group": {
+    "id": "grp_treasury",
+    "name": "Treasury & Markets"
+   },
+   "session_id": "sbx_3175148da66b",
+   "teaser": "api.deepseek.com · DeepSeek is labelled Prohibited (blocked)"
+  },
+  {
+   "detection_id": "det_01JAEMJDC8D",
+   "ts": 1790295257,
+   "rule_id": "PII-NRIC",
+   "rule_label": "NRIC / FIN in agent context",
+   "severity": "critical",
+   "disposition": "blocked",
+   "device_id": "73f07335-f250-452b-a27a-e8fcff599a47",
+   "host": "LT-SG-1377",
+   "owner": "Hui Min Soh",
+   "owner_kind": "person",
+   "department": "Engineering — Digital Banking",
+   "group": {
+    "id": "grp_digital_eng",
+    "name": "Engineering — Digital Banking"
+   },
+   "session_id": "sbx_475a666846b6",
+   "teaser": "NRIC values in tool result (blocked)"
+  },
+  {
+   "detection_id": "det_01JATVN6ZER",
+   "ts": 1790295139,
+   "rule_id": "PII-NRIC",
+   "rule_label": "NRIC / FIN in agent context",
+   "severity": "critical",
+   "disposition": "blocked",
+   "device_id": "73f07335-f250-452b-a27a-e8fcff599a47",
+   "host": "LT-SG-1377",
+   "owner": "Hui Min Soh",
+   "owner_kind": "person",
+   "department": "Engineering — Digital Banking",
+   "group": {
+    "id": "grp_digital_eng",
+    "name": "Engineering — Digital Banking"
+   },
+   "session_id": "sbx_475a666846b6",
+   "teaser": "NRIC values in tool result (blocked)"
+  },
+  {
+   "detection_id": "det_01JAM5GQ094",
+   "ts": 1790294599,
+   "rule_id": "UNDISCLOSED-ACTION",
+   "rule_label": "Undisclosed action",
+   "severity": "medium",
+   "disposition": "recorded",
+   "device_id": "f99daebb-417b-410a-bb69-a112856766a6",
+   "host": "LT-SG-7008",
+   "owner": "Kelvin Tay",
+   "owner_kind": "person",
+   "department": "Engineering — Digital Banking",
+   "group": {
+    "id": "grp_digital_eng",
+    "name": "Engineering — Digital Banking"
+   },
+   "session_id": "sbx_754e64a852ba",
+   "teaser": "declared 5 · observed 6"
+  },
+  {
+   "detection_id": "det_01JA92VSSMB",
+   "ts": 1790289224,
+   "rule_id": "SECRET-IN-PROMPT",
+   "rule_label": "Secret in prompt",
+   "severity": "high",
+   "disposition": "blocked",
+   "device_id": "a65e7111-5b2d-4a17-aad3-a933ce0f06b6",
+   "host": "vm-etl-nightly-03",
+   "owner": "svc-etl",
+   "owner_kind": "service",
+   "department": "Service accounts (CI / ETL)",
+   "group": {
+    "id": "grp_svc",
+    "name": "Service accounts (CI / ETL)"
+   },
+   "session_id": "sbx_05d281247cdc",
+   "teaser": ".env · API token (blocked)"
+  },
+  {
+   "detection_id": "det_01JA9DSSTMZ",
+   "ts": 1790287290,
+   "rule_id": "CARD-PAN",
+   "rule_label": "Card number (PAN) in agent context",
+   "severity": "critical",
+   "disposition": "blocked",
+   "device_id": "da864b31-bee5-4b9b-aa9a-09da32e37f7b",
+   "host": "LT-VN-0419",
+   "owner": "Minh Pham",
+   "owner_kind": "person",
+   "department": "Vendor Engineering (contractors)",
+   "group": {
+    "id": "grp_contractors",
+    "name": "Vendor Engineering (contractors)"
+   },
+   "session_id": "sbx_ae4f9544a796",
+   "teaser": "card PAN in query result (blocked)"
+  },
+  {
+   "detection_id": "det_01JAGM8Q7C3",
+   "ts": 1790287200,
+   "rule_id": "EXFIL",
+   "rule_label": "Data exfiltration",
+   "severity": "critical",
+   "disposition": "blocked",
+   "device_id": "da864b31-bee5-4b9b-aa9a-09da32e37f7b",
+   "host": "LT-VN-0419",
+   "owner": "Minh Pham",
+   "owner_kind": "person",
+   "department": "Vendor Engineering (contractors)",
+   "group": {
+    "id": "grp_contractors",
+    "name": "Vendor Engineering (contractors)"
+   },
+   "session_id": "sbx_ae4f9544a796",
+   "teaser": "app-config.zip · 2.1 MB → transfer.sh (blocked)"
+  },
+  {
+   "detection_id": "det_01JAAV9Y4P0",
+   "ts": 1790284561,
+   "rule_id": "UNDISCLOSED-ACTION",
+   "rule_label": "Undisclosed action",
+   "severity": "medium",
+   "disposition": "recorded",
+   "device_id": "581066ec-e314-4638-adc5-30cac7213b99",
+   "host": "LT-SG-3766",
+   "owner": "Serena Tan",
+   "owner_kind": "person",
+   "department": "Engineering — Digital Banking",
+   "group": {
+    "id": "grp_digital_eng",
+    "name": "Engineering — Digital Banking"
+   },
+   "session_id": "sbx_b371edd50bd4",
+   "teaser": "declared 5 · observed 6"
+  },
+  {
+   "detection_id": "det_01JAGQC7PMV",
+   "ts": 1790279413,
+   "rule_id": "SENSITIVE-ACCESS",
+   "rule_label": "Sensitive file access",
+   "severity": "medium",
+   "disposition": "recorded",
+   "device_id": "4176878c-06ef-41b0-9161-fea082d6104d",
+   "host": "LT-SG-7094",
+   "owner": "Priyanka Kumar",
+   "owner_kind": "person",
+   "department": "Data & Analytics",
+   "group": {
+    "id": "grp_data",
+    "name": "Data & Analytics"
+   },
+   "session_id": "sbx_35addf6b1c12",
+   "teaser": "id_ed25519 read"
+  },
+  {
+   "detection_id": "det_01JAC8BX7F3",
+   "ts": 1790250671,
+   "rule_id": "UNDISCLOSED-ACTION",
+   "rule_label": "Undisclosed action",
+   "severity": "medium",
+   "disposition": "recorded",
+   "device_id": "34532ef9-df53-4a70-8035-44764826c738",
+   "host": "LT-SG-2105",
+   "owner": "Hafiz Foo",
+   "owner_kind": "person",
+   "department": "Engineering — Digital Banking",
+   "group": {
+    "id": "grp_digital_eng",
+    "name": "Engineering — Digital Banking"
+   },
+   "session_id": "sbx_26c22c86112f",
+   "teaser": "declared 5 · observed 7"
+  },
+  {
+   "detection_id": "det_01JAMHEG2Y7",
+   "ts": 1790249760,
+   "rule_id": "PROHIBITED-SERVICE",
+   "rule_label": "Prohibited AI service",
+   "severity": "high",
+   "disposition": "blocked",
+   "device_id": "f5172a8e-51c0-4cbb-ba94-84af12e23426",
+   "host": "LT-SG-9327",
+   "owner": "Deepa Teo",
+   "owner_kind": "person",
+   "department": "Treasury & Markets",
+   "group": {
+    "id": "grp_treasury",
+    "name": "Treasury & Markets"
+   },
+   "session_id": "sbx_08062ad61abb",
+   "teaser": "kimi.moonshot.cn · Kimi is labelled Prohibited (blocked)"
+  },
+  {
+   "detection_id": "det_01JABX5Q0GY",
+   "ts": 1790242862,
+   "rule_id": "SENSITIVE-ACCESS",
+   "rule_label": "Sensitive file access",
+   "severity": "medium",
+   "disposition": "blocked",
+   "device_id": "d18b057d-a569-4e5e-a383-143830048c42",
+   "host": "LT-SG-9212",
+   "owner": "Xin Yi Lau",
+   "owner_kind": "person",
+   "department": "Engineering — Payments",
+   "group": {
+    "id": "grp_payments_eng",
+    "name": "Engineering — Payments"
+   },
+   "session_id": "sbx_9ada762dabbe",
+   "teaser": "id_ed25519 read"
+  },
+  {
+   "detection_id": "det_01JAJJ3E4X8",
+   "ts": 1790238761,
+   "rule_id": "SECRET-IN-PROMPT",
+   "rule_label": "Secret in prompt",
+   "severity": "high",
+   "disposition": "recorded",
+   "device_id": "469b5905-cebd-4747-b00e-b353e37bd678",
+   "host": "LT-SG-7146",
+   "owner": "Grace Chong",
+   "owner_kind": "person",
+   "department": "Engineering — Digital Banking",
+   "group": {
+    "id": "grp_digital_eng",
+    "name": "Engineering — Digital Banking"
+   },
+   "session_id": "sbx_6710617f4e2a",
+   "teaser": "config.yaml · access key (blocked)"
+  },
+  {
+   "detection_id": "det_01JA0DRDB2E",
+   "ts": 1790237511,
+   "rule_id": "UNDISCLOSED-ACTION",
+   "rule_label": "Undisclosed action",
+   "severity": "medium",
+   "disposition": "recorded",
+   "device_id": "bfb1c8f2-2873-452e-b5b4-ab9879f4eaa3",
+   "host": "LT-SG-7861",
+   "owner": "Farhan Wong",
+   "owner_kind": "person",
+   "department": "Cyber Defence (SOC)",
+   "group": {
+    "id": "grp_soc",
+    "name": "Cyber Defence (SOC)"
+   },
+   "session_id": "sbx_bae095987849",
+   "teaser": "declared 4 · observed 6"
+  },
+  {
+   "detection_id": "det_01JA05DEQHE",
+   "ts": 1790202240,
+   "rule_id": "PROHIBITED-SERVICE",
+   "rule_label": "Prohibited AI service",
+   "severity": "high",
+   "disposition": "blocked",
+   "device_id": "718dc3b5-0ece-4969-a3de-d2e3f61ccbcb",
+   "host": "LT-SG-1300",
+   "owner": "Shu Fen Sim",
+   "owner_kind": "person",
+   "department": "Treasury & Markets",
+   "group": {
+    "id": "grp_treasury",
+    "name": "Treasury & Markets"
+   },
+   "session_id": "sbx_283c05479126",
+   "teaser": "kimi.moonshot.cn · Kimi is labelled Prohibited (blocked)"
+  },
+  {
+   "detection_id": "det_01JAGS2DYTG",
+   "ts": 1790171442,
+   "rule_id": "SWIFT-MSG",
+   "rule_label": "SWIFT payment message in agent context",
+   "severity": "high",
+   "disposition": "blocked",
+   "device_id": "a497c981-1b88-4af4-b21f-6d94c7af60ef",
+   "host": "LT-SG-2231",
+   "owner": "Rahul Iyer",
+   "owner_kind": "person",
+   "department": "Engineering — Payments",
+   "group": {
+    "id": "grp_payments_eng",
+    "name": "Engineering — Payments"
+   },
+   "session_id": "sbx_cc12d9ff240b",
+   "teaser": "pacs.008 message in a test file (blocked)"
+  },
+  {
+   "detection_id": "det_01JAF1HRB0Q",
+   "ts": 1790154720,
+   "rule_id": "PROHIBITED-SERVICE",
+   "rule_label": "Prohibited AI service",
+   "severity": "high",
+   "disposition": "blocked",
+   "device_id": "3b818ed2-4daf-481f-af0c-bd237932e859",
+   "host": "LT-SG-5712",
+   "owner": "Aisha Low",
+   "owner_kind": "person",
+   "department": "Treasury & Markets",
+   "group": {
+    "id": "grp_treasury",
+    "name": "Treasury & Markets"
+   },
+   "session_id": "sbx_882e030c4e0c",
+   "teaser": "kimi.moonshot.cn · Kimi is labelled Prohibited (blocked)"
+  },
+  {
+   "detection_id": "det_01JAFT5VFS9",
+   "ts": 1790126853,
+   "rule_id": "PII-NRIC",
+   "rule_label": "NRIC / FIN in agent context",
+   "severity": "critical",
+   "disposition": "blocked",
+   "device_id": "695a4372-7e2e-48ca-9b31-f692866c8a95",
+   "host": "LT-SG-7344",
+   "owner": "Hui Min Hassan",
+   "owner_kind": "person",
+   "department": "Engineering — Digital Banking",
+   "group": {
+    "id": "grp_digital_eng",
+    "name": "Engineering — Digital Banking"
+   },
+   "session_id": "sbx_cb0aa016c099",
+   "teaser": "NRIC values in tool result (blocked)"
+  },
+  {
+   "detection_id": "det_01JA0WB0QVG",
+   "ts": 1790126728,
+   "rule_id": "PII-NRIC",
+   "rule_label": "NRIC / FIN in agent context",
+   "severity": "critical",
+   "disposition": "blocked",
+   "device_id": "695a4372-7e2e-48ca-9b31-f692866c8a95",
+   "host": "LT-SG-7344",
+   "owner": "Hui Min Hassan",
+   "owner_kind": "person",
+   "department": "Engineering — Digital Banking",
+   "group": {
+    "id": "grp_digital_eng",
+    "name": "Engineering — Digital Banking"
+   },
+   "session_id": "sbx_cb0aa016c099",
+   "teaser": "NRIC values in tool result (blocked)"
+  },
+  {
+   "detection_id": "det_01JA4GBGQQ9",
+   "ts": 1790107200,
+   "rule_id": "PROHIBITED-SERVICE",
+   "rule_label": "Prohibited AI service",
+   "severity": "high",
+   "disposition": "blocked",
+   "device_id": "dbc964c1-beb7-458b-8f87-4d2cbfbc4109",
+   "host": "LT-SG-5680",
+   "owner": "Harith Toh",
+   "owner_kind": "person",
+   "department": "Treasury & Markets",
+   "group": {
+    "id": "grp_treasury",
+    "name": "Treasury & Markets"
+   },
+   "session_id": "sbx_e9def1afa1b3",
+   "teaser": "chat.qwen.ai · Qwen Chat is labelled Prohibited (blocked)"
+  },
+  {
+   "detection_id": "det_01JA6CHT6BK",
+   "ts": 1790105975,
+   "rule_id": "SENSITIVE-ACCESS",
+   "rule_label": "Sensitive file access",
+   "severity": "medium",
+   "disposition": "recorded",
+   "device_id": "5ab919da-ed3d-46f5-af8b-3d7beb07c43b",
+   "host": "vm-dev-yuki-19",
+   "owner": "Yuki Singh",
+   "owner_kind": "person",
+   "department": "Engineering — Digital Banking",
+   "group": {
+    "id": "grp_digital_eng",
+    "name": "Engineering — Digital Banking"
+   },
+   "session_id": "sbx_8bcd693c978e",
+   "teaser": "prod.env~ read"
+  },
+  {
+   "detection_id": "det_01JAS3NMAAJ",
+   "ts": 1790088069,
+   "rule_id": "SENSITIVE-ACCESS",
+   "rule_label": "Sensitive file access",
+   "severity": "medium",
+   "disposition": "blocked",
+   "device_id": "74986367-8039-4e80-b07a-118490699936",
+   "host": "LT-SG-5355",
+   "owner": "Chloe Tan",
+   "owner_kind": "person",
+   "department": "Engineering — Digital Banking",
+   "group": {
+    "id": "grp_digital_eng",
+    "name": "Engineering — Digital Banking"
+   },
+   "session_id": "sbx_464f0b9dff2e",
+   "teaser": "~/.aws/credentials read"
+  },
+  {
+   "detection_id": "det_01JA0QNERSN",
+   "ts": 1790087351,
+   "rule_id": "SENSITIVE-ACCESS",
+   "rule_label": "Sensitive file access",
+   "severity": "medium",
+   "disposition": "blocked",
+   "device_id": "0ddbf9b7-5eb2-4ab9-8979-2fd136921ce6",
+   "host": "LT-SG-4450",
+   "owner": "Serena Chan",
+   "owner_kind": "person",
+   "department": "Engineering — Digital Banking",
+   "group": {
+    "id": "grp_digital_eng",
+    "name": "Engineering — Digital Banking"
+   },
+   "session_id": "sbx_eb65ec44f5fe",
+   "teaser": "~/.aws/credentials read"
+  }
+ ]
+}

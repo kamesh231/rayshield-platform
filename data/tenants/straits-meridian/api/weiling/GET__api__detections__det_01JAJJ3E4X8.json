@@ -1,0 +1,62 @@
+{
+ "operationId": "getDetection",
+ "access": "read",
+ "status": 200,
+ "headers": {},
+ "body": {
+  "detection_id": "det_01JAJJ3E4X8",
+  "ts": 1790238761,
+  "rule_id": "SECRET-IN-PROMPT",
+  "rule_label": "Secret in prompt",
+  "severity": "high",
+  "disposition": "recorded",
+  "device_id": "469b5905-cebd-4747-b00e-b353e37bd678",
+  "host": "LT-SG-7146",
+  "owner": "Grace Chong",
+  "owner_kind": "person",
+  "department": "Engineering — Digital Banking",
+  "group": {
+   "id": "grp_digital_eng",
+   "name": "Engineering — Digital Banking"
+  },
+  "session_id": "sbx_6710617f4e2a",
+  "teaser": "config.yaml · access key (blocked)",
+  "description": "An API key, token, private key or connection string in a prompt or file sent to the model.",
+  "owasp": null,
+  "signal": "guest",
+  "classification": "regulated data",
+  "backend": "aegis-engine 0.9.6",
+  "evidence": {
+   "type": "sensitive_content",
+   "decoded_command": null,
+   "sensitive_content": {
+    "path": ".env",
+    "basis": "API token",
+    "pattern": "high-entropy token",
+    "snippet_redacted": "TOKEN=••••••••"
+   },
+   "exfil": null,
+   "egress_spike": null,
+   "persistence": null,
+   "undisclosed_action": null
+  },
+  "chain": [
+   {
+    "ts": 1790238761,
+    "label": "Secret in prompt",
+    "detail": "config.yaml · access key (blocked)",
+    "is_current": true,
+    "is_detection": true,
+    "severity": "high",
+    "disposition": "recorded"
+   }
+  ],
+  "signature": {
+   "alg": "ed25519",
+   "key_id": "aegis-smb-2026-09",
+   "value": "MEUCIQ1cilio71vudl…",
+   "signed_at": 1790238762,
+   "verify_hint": "aegis verify det_01JAJJ3E4X8"
+  }
+ }
+}

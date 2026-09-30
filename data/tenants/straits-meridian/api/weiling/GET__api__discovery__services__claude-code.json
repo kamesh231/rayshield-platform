@@ -1,0 +1,117 @@
+{
+ "operationId": "getService",
+ "access": "read",
+ "status": 200,
+ "headers": {
+  "X-Window-From": "1789956000",
+  "X-Window-To": "1790560800",
+  "X-Data-As-Of": "1790560680"
+ },
+ "body": {
+  "service": {
+   "ai_service": "Claude Code",
+   "category": "Coding agent",
+   "icon": null,
+   "separability": "distinct",
+   "confidence": "confirmed",
+   "hits": 14650,
+   "bytes": 604019500,
+   "users": 219,
+   "risk_score": 22,
+   "jurisdiction": "US",
+   "ever_agentic": true,
+   "sandbox_candidate": true,
+   "agent_sdks": null,
+   "collector_count": 2,
+   "first_seen": 1776736800,
+   "last_seen": 1790559630,
+   "personal_account": false,
+   "oauth_scopes": null,
+   "service_id": "claude-code",
+   "vendor": "Anthropic",
+   "embedded_in": null,
+   "status": "approved",
+   "reviewed_by": "Priscilla Goh",
+   "reviewed_at": 1777582800,
+   "endpoints": 231,
+   "is_new": false
+  },
+  "description": "Agentic coding CLI. Runs inside Aegis under a signed CUE.",
+  "top_endpoints": [
+   {
+    "endpoint_id": "ep_LT-SG-0142",
+    "host": "LT-SG-0142",
+    "ip": "10.40.42.169",
+    "type": "laptop",
+    "user": "Tan Wei Ling",
+    "department": null,
+    "hits": 140,
+    "last_seen": 1790560307
+   },
+   {
+    "endpoint_id": "ep_LT-SG-4710",
+    "host": "LT-SG-4710",
+    "ip": "10.40.59.149",
+    "type": "laptop",
+    "user": "Arjun Menon",
+    "department": "Cyber Defence (SOC)",
+    "hits": 133,
+    "last_seen": 1790559331
+   },
+   {
+    "endpoint_id": "ep_LT-SG-0101",
+    "host": "LT-SG-0101",
+    "ip": "10.40.59.161",
+    "type": "laptop",
+    "user": "Priscilla Goh",
+    "department": null,
+    "hits": 292,
+    "last_seen": 1790560556
+   },
+   {
+    "endpoint_id": "ep_LT-SG-2231",
+    "host": "LT-SG-2231",
+    "ip": "10.40.13.160",
+    "type": "laptop",
+    "user": "Rahul Iyer",
+    "department": "Engineering — Payments",
+    "hits": 228,
+    "last_seen": 1790560403
+   },
+   {
+    "endpoint_id": "ep_vm-dev-rahul-07",
+    "host": "vm-dev-rahul-07",
+    "ip": "10.60.21.214",
+    "type": "vm",
+    "user": "Rahul Iyer",
+    "department": "Engineering — Payments",
+    "hits": 53,
+    "last_seen": 1790560789
+   },
+   {
+    "endpoint_id": "ep_LT-SG-1187",
+    "host": "LT-SG-1187",
+    "ip": "10.40.55.77",
+    "type": "laptop",
+    "user": "Nur Aisyah",
+    "department": "Engineering — Digital Banking",
+    "hits": 36,
+    "last_seen": 1790550182
+   }
+  ],
+  "status_history": [
+   {
+    "status": "unlabelled",
+    "by": "system",
+    "at": 1776736800,
+    "note": null
+   },
+   {
+    "status": "approved",
+    "by": "Priscilla Goh",
+    "at": 1777582800,
+    "note": null
+   }
+  ]
+ }
+}

@@ -1,0 +1,61 @@
+{
+ "operationId": "getDetection",
+ "access": "read",
+ "status": 200,
+ "headers": {},
+ "body": {
+  "detection_id": "det_01JAGM8Q7C3",
+  "ts": 1790287200,
+  "rule_id": "EXFIL",
+  "rule_label": "Data exfiltration",
+  "severity": "critical",
+  "disposition": "blocked",
+  "device_id": "da864b31-bee5-4b9b-aa9a-09da32e37f7b",
+  "host": "LT-VN-0419",
+  "owner": "Minh Pham",
+  "owner_kind": "person",
+  "department": "Vendor Engineering (contractors)",
+  "group": {
+   "id": "grp_contractors",
+   "name": "Vendor Engineering (contractors)"
+  },
+  "session_id": "sbx_ae4f9544a796",
+  "teaser": "app-config.zip · 2.1 MB → transfer.sh (blocked)",
+  "description": "A transfer of sensitive data toward a destination outside the CUE egress allow-list.",
+  "owasp": "ASI05",
+  "signal": "guest",
+  "classification": "transfer",
+  "backend": "aegis-engine 0.9.6",
+  "evidence": {
+   "type": "exfil",
+   "decoded_command": null,
+   "sensitive_content": null,
+   "exfil": {
+    "destination": "transfer.sh",
+    "bytes": 2202009,
+    "classification": "internal source archive"
+   },
+   "egress_spike": null,
+   "persistence": null,
+   "undisclosed_action": null
+  },
+  "chain": [
+   {
+    "ts": 1790287200,
+    "label": "Data exfiltration",
+    "detail": "app-config.zip · 2.1 MB → transfer.sh (blocked)",
+    "is_current": true,
+    "is_detection": true,
+    "severity": "critical",
+    "disposition": "blocked"
+   }
+  ],
+  "signature": {
+   "alg": "ed25519",
+   "key_id": "aegis-smb-2026-09",
+   "value": "MEUCIQ4pz0utr20dcr…",
+   "signed_at": 1790287201,
+   "verify_hint": "aegis verify det_01JAGM8Q7C3"
+  }
+ }
+}

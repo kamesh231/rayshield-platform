@@ -1,0 +1,11 @@
+{
+ "operationId": "getDetection",
+ "access": "self",
+ "status": 403,
+ "headers": {},
+ "body": {
+  "error": "Role 'developer' (Rahul Iyer) cannot call getDetection.",
+  "code": "FORBIDDEN",
+  "request_id": "req_5csLjv2q"
+ }
+}

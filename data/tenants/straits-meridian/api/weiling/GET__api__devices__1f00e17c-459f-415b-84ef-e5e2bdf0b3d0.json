@@ -1,0 +1,36 @@
+{
+ "operationId": "getDevice",
+ "access": "read",
+ "status": 200,
+ "headers": {
+  "X-Window-From": "1789956000",
+  "X-Window-To": "1790560800",
+  "X-Data-As-Of": "1790560680"
+ },
+ "body": {
+  "id": "1f00e17c-459f-415b-84ef-e5e2bdf0b3d0",
+  "device_name": "LT-SG-5133",
+  "status": "active",
+  "health_score": 98,
+  "risk_level": "low",
+  "blocks_24h": 1,
+  "last_heartbeat": 1790560564,
+  "endpoint_id": "ep_LT-SG-5133",
+  "ip": "10.40.32.67",
+  "type": "laptop",
+  "owner": "Hannah Lim",
+  "owner_kind": "person",
+  "department": "Treasury & Markets",
+  "group": {
+   "id": "grp_treasury",
+   "name": "Treasury & Markets"
+  },
+  "agent_state": "enforcing",
+  "agent_version": "0.9.6",
+  "tools": [],
+  "allowed": 356,
+  "blocked": 5,
+  "recorded": 23,
+  "os": "Windows 11"
+ }
+}

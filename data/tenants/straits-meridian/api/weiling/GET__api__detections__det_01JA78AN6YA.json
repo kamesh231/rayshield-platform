@@ -1,0 +1,62 @@
+{
+ "operationId": "getDetection",
+ "access": "read",
+ "status": 200,
+ "headers": {},
+ "body": {
+  "detection_id": "det_01JA78AN6YA",
+  "ts": 1790542080,
+  "rule_id": "PII-NRIC",
+  "rule_label": "NRIC / FIN in agent context",
+  "severity": "critical",
+  "disposition": "escalated",
+  "device_id": "194ef8f9-561c-4ea1-b882-cc794f93b079",
+  "host": "LT-SG-4402",
+  "owner": "Jia Hui Ong",
+  "owner_kind": "person",
+  "department": "Data & Analytics",
+  "group": {
+   "id": "grp_data",
+   "name": "Data & Analytics"
+  },
+  "session_id": "sbx_2976a8d6d6b2",
+  "teaser": "customer_360.party · 612 rows with NRIC column via warehouse-mcp (blocked)",
+  "description": "A Singapore NRIC or FIN number reached an agent prompt or tool result.",
+  "owasp": null,
+  "signal": "guest",
+  "classification": "regulated data",
+  "backend": "aegis-engine 0.9.6",
+  "evidence": {
+   "type": "sensitive_content",
+   "decoded_command": null,
+   "sensitive_content": {
+    "path": "warehouse-mcp · run_query (customer_360.party)",
+    "basis": "612 NRIC values in the tool result",
+    "pattern": "NRIC checksum",
+    "snippet_redacted": "party_id=P-20931, nric=S•••••••D, segment=MASS"
+   },
+   "exfil": null,
+   "egress_spike": null,
+   "persistence": null,
+   "undisclosed_action": null
+  },
+  "chain": [
+   {
+    "ts": 1790542080,
+    "label": "NRIC / FIN in agent context",
+    "detail": "customer_360.party · 612 rows with NRIC column via warehouse-mcp (blocked)",
+    "is_current": true,
+    "is_detection": true,
+    "severity": "critical",
+    "disposition": "escalated"
+   }
+  ],
+  "signature": {
+   "alg": "ed25519",
+   "key_id": "aegis-smb-2026-09",
+   "value": "MEUCIQ1j1r8pber6o1…",
+   "signed_at": 1790542081,
+   "verify_hint": "aegis verify det_01JA78AN6YA"
+  }
+ }
+}

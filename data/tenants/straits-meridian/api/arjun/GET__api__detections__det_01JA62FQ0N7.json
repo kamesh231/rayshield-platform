@@ -1,0 +1,62 @@
+{
+ "operationId": "getDetection",
+ "access": "read",
+ "status": 200,
+ "headers": {},
+ "body": {
+  "detection_id": "det_01JA62FQ0N7",
+  "ts": 1790021193,
+  "rule_id": "SENSITIVE-ACCESS",
+  "rule_label": "Sensitive file access",
+  "severity": "medium",
+  "disposition": "blocked",
+  "device_id": "7ca83445-cd79-4573-b4d3-bc0444ce609c",
+  "host": "LT-SG-9080",
+  "owner": "Hui Min Ismail",
+  "owner_kind": "person",
+  "department": "Data & Analytics",
+  "group": {
+   "id": "grp_data",
+   "name": "Data & Analytics"
+  },
+  "session_id": "sbx_7c6fe4eb8b83",
+  "teaser": "~/.aws/credentials read",
+  "description": "Access to a secret, judged by file content rather than filename or path.",
+  "owasp": "ASI04",
+  "signal": "guest",
+  "classification": "regulated data",
+  "backend": "aegis-engine 0.9.6",
+  "evidence": {
+   "type": "sensitive_content",
+   "decoded_command": null,
+   "sensitive_content": {
+    "path": "~/.ssh/id_ed25519",
+    "basis": "credential material by content",
+    "pattern": "credential file content",
+    "snippet_redacted": "•••••••• (redacted at source)"
+   },
+   "exfil": null,
+   "egress_spike": null,
+   "persistence": null,
+   "undisclosed_action": null
+  },
+  "chain": [
+   {
+    "ts": 1790021193,
+    "label": "Sensitive file access",
+    "detail": "~/.aws/credentials read",
+    "is_current": true,
+    "is_detection": true,
+    "severity": "medium",
+    "disposition": "blocked"
+   }
+  ],
+  "signature": {
+   "alg": "ed25519",
+   "key_id": "aegis-smb-2026-09",
+   "value": "MEUCIQ1xqiil31d5fr…",
+   "signed_at": 1790021194,
+   "verify_hint": "aegis verify det_01JA62FQ0N7"
+  }
+ }
+}

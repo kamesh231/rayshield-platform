@@ -1,0 +1,25 @@
+{
+ "operationId": "listDeviceEvents",
+ "access": "read",
+ "status": 200,
+ "headers": {},
+ "body": [
+  {
+   "id": "c643a725-d600-4807-ac7e-1c0c4c2825c1",
+   "ts": 1790521200,
+   "identity": "svc-ci",
+   "device": "vm-ci-build-214",
+   "app": "Anthropic Claude (API)",
+   "action": "detection",
+   "target": "file → model prompt",
+   "source": "sandbox",
+   "decision": "block",
+   "reason": "deploy/keys/prod-deploy.pem · private key in file content (blocked)",
+   "rule_id": "SECRET-IN-PROMPT",
+   "session_id": "sbx_b57f026e3fa3",
+   "tool": "claude-code",
+   "channel": "agent",
+   "enforced_by": "dlp"
+  }
+ ]
+}

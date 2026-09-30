@@ -1,0 +1,28 @@
+{
+ "operationId": "listMySessions",
+ "access": "self",
+ "status": 200,
+ "headers": {},
+ "body": [
+  {
+   "sid": "sbx_01b10508af02",
+   "name": "claude-code · settlement-recon",
+   "egress": 9,
+   "actions": 24,
+   "prompts": 4,
+   "dlp": 0,
+   "rules": 0,
+   "denies": 0,
+   "started": 1790388864,
+   "last_seen": 1790391780,
+   "device_id": "e0702984-bbe6-44bb-b840-2949a4b182c9",
+   "host": "LT-SG-0101",
+   "owner": "Priscilla Goh",
+   "department": null,
+   "group": null,
+   "tool": "claude-code",
+   "detections": 0,
+   "outcome": "clean"
+  }
+ ]
+}

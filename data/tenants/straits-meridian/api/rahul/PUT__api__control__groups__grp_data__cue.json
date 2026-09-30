@@ -1,0 +1,11 @@
+{
+ "operationId": "assignGroupCue",
+ "access": "deny",
+ "status": 403,
+ "headers": {},
+ "body": {
+  "error": "Role 'developer' (Rahul Iyer) cannot call assignGroupCue.",
+  "code": "FORBIDDEN",
+  "request_id": "req_q5UR9jc9"
+ }
+}

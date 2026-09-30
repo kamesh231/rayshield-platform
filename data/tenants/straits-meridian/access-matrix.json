@@ -1,0 +1,891 @@
+{
+ "$comment": "Every API operation (v2.1 + v2.2 + proposed /api/me/* and demo settings) × persona. full = read and write; read = read only; redacted = read with x-viewer-redaction applied; self = only the caller’s own devices, sessions and detections; deny = 403 FORBIDDEN. Enforced in src/server.js.",
+ "levels": {
+  "full": "read and write",
+  "read": "read only",
+  "redacted": "read with x-viewer-redaction",
+  "self": "own data only",
+  "deny": "403 FORBIDDEN"
+ },
+ "personas": [
+  "weiling",
+  "arjun",
+  "priscilla",
+  "rahul"
+ ],
+ "operations": [
+  {
+   "operationId": "login",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "spec": "v2.1",
+   "x_min_role": "none",
+   "access": {
+    "weiling": "full",
+    "arjun": "full",
+    "priscilla": "full",
+    "rahul": "full"
+   }
+  },
+  {
+   "operationId": "refresh",
+   "method": "POST",
+   "path": "/api/auth/refresh",
+   "spec": "v2.1",
+   "x_min_role": "none",
+   "access": {
+    "weiling": "full",
+    "arjun": "full",
+    "priscilla": "full",
+    "rahul": "full"
+   }
+  },
+  {
+   "operationId": "logout",
+   "method": "POST",
+   "path": "/api/auth/logout",
+   "spec": "v2.1",
+   "x_min_role": "viewer",
+   "access": {
+    "weiling": "full",
+    "arjun": "full",
+    "priscilla": "full",
+    "rahul": "full"
+   }
+  },
+  {
+   "operationId": "getMe",
+   "method": "GET",
+   "path": "/api/me",
+   "spec": "v2.1",
+   "x_min_role": "viewer",
+   "access": {
+    "weiling": "read",
+    "arjun": "read",
+    "priscilla": "read",
+    "rahul": "self"
+   }
+  },
+  {
+   "operationId": "getHome",
+   "method": "GET",
+   "path": "/api/home",
+   "spec": "v2.1",
+   "x_min_role": "viewer",
+   "access": {
+    "weiling": "read",
+    "arjun": "read",
+    "priscilla": "read",
+    "rahul": "deny"
+   }
+  },
+  {
+   "operationId": "getDiscoverySummary",
+   "method": "GET",
+   "path": "/api/discovery/summary",
+   "spec": "v2.1",
+   "x_min_role": "viewer",
+   "access": {
+    "weiling": "read",
+    "arjun": "read",
+    "priscilla": "read",
+    "rahul": "self"
+   }
+  },
+  {
+   "operationId": "listServices",
+   "method": "GET",
+   "path": "/api/discovery/by_service",
+   "spec": "v2.1",
+   "x_min_role": "viewer",
+   "access": {
+    "weiling": "read",
+    "arjun": "read",
+    "priscilla": "read",
+    "rahul": "self"
+   }
+  },
+  {
+   "operationId": "getService",
+   "method": "GET",
+   "path": "/api/discovery/services/{service_id}",
+   "spec": "v2.1",
+   "x_min_role": "viewer",
+   "access": {
+    "weiling": "read",
+    "arjun": "read",
+    "priscilla": "read",
+    "rahul": "self"
+   }
+  },
+  {
+   "operationId": "setServiceStatus",
+   "method": "PUT",
+   "path": "/api/discovery/services/{service_id}/status",
+   "spec": "v2.1",
+   "x_min_role": "security",
+   "access": {
+    "weiling": "full",
+    "arjun": "full",
+    "priscilla": "full",
+    "rahul": "deny"
+   }
+  },
+  {
+   "operationId": "listDiscoveryEndpoints",
+   "method": "GET",
+   "path": "/api/discovery/by_endpoint",
+   "spec": "v2.1",
+   "x_min_role": "viewer",
+   "access": {
+    "weiling": "read",
+    "arjun": "read",
+    "priscilla": "read",
+    "rahul": "self"
+   }
+  },
+  {
+   "operationId": "getDiscoveryEndpoint",
+   "method": "GET",
+   "path": "/api/discovery/endpoints/{endpoint_id}",
+   "spec": "v2.1",
+   "x_min_role": "viewer",
+   "access": {
+    "weiling": "read",
+    "arjun": "read",
+    "priscilla": "read",
+    "rahul": "self"
+   }
+  },
+  {
+   "operationId": "getUsageGraph",
+   "method": "GET",
+   "path": "/api/discovery/usage-graph",
+   "spec": "v2.1",
+   "x_min_role": "viewer",
+   "access": {
+    "weiling": "read",
+    "arjun": "read",
+    "priscilla": "read",
+    "rahul": "deny"
+   }
+  },
+  {
+   "operationId": "getSensors",
+   "method": "GET",
+   "path": "/api/sensors",
+   "spec": "v2.1",
+   "x_min_role": "viewer",
+   "access": {
+    "weiling": "read",
+    "arjun": "read",
+    "priscilla": "read",
+    "rahul": "deny"
+   }
+  },
+  {
+   "operationId": "getFleetSummary",
+   "method": "GET",
+   "path": "/api/devices/summary",
+   "spec": "v2.1",
+   "x_min_role": "viewer",
+   "access": {
+    "weiling": "read",
+    "arjun": "read",
+    "priscilla": "read",
+    "rahul": "self"
+   }
+  },
+  {
+   "operationId": "listDevices",
+   "method": "GET",
+   "path": "/api/devices",
+   "spec": "v2.1",
+   "x_min_role": "viewer",
+   "access": {
+    "weiling": "read",
+    "arjun": "read",
+    "priscilla": "read",
+    "rahul": "self"
+   }
+  },
+  {
+   "operationId": "getDevice",
+   "method": "GET",
+   "path": "/api/devices/{id}",
+   "spec": "v2.1",
+   "x_min_role": "viewer",
+   "access": {
+    "weiling": "read",
+    "arjun": "read",
+    "priscilla": "read",
+    "rahul": "self"
+   }
+  },
+  {
+   "operationId": "listDeviceEvents",
+   "method": "GET",
+   "path": "/api/devices/{id}/events",
+   "spec": "v2.1",
+   "x_min_role": "viewer",
+   "access": {
+    "weiling": "read",
+    "arjun": "read",
+    "priscilla": "read",
+    "rahul": "self"
+   }
+  },
+  {
+   "operationId": "getDetectionsSummary",
+   "method": "GET",
+   "path": "/api/detections/summary",
+   "spec": "v2.1",
+   "x_min_role": "viewer",
+   "access": {
+    "weiling": "read",
+    "arjun": "read",
+    "priscilla": "read",
+    "rahul": "self"
+   }
+  },
+  {
+   "operationId": "listDetections",
+   "method": "GET",
+   "path": "/api/detections",
+   "spec": "v2.1",
+   "x_min_role": "viewer",
+   "access": {
+    "weiling": "read",
+    "arjun": "read",
+    "priscilla": "redacted",
+    "rahul": "self"
+   }
+  },
+  {
+   "operationId": "getDetection",
+   "method": "GET",
+   "path": "/api/detections/{detection_id}",
+   "spec": "v2.1",
+   "x_min_role": "viewer",
+   "access": {
+    "weiling": "read",
+    "arjun": "read",
+    "priscilla": "redacted",
+    "rahul": "self"
+   }
+  },
+  {
+   "operationId": "listSessions",
+   "method": "GET",
+   "path": "/api/sessions",
+   "spec": "v2.1",
+   "x_min_role": "viewer",
+   "access": {
+    "weiling": "read",
+    "arjun": "read",
+    "priscilla": "read",
+    "rahul": "self"
+   }
+  },
+  {
+   "operationId": "getSessionsSummary",
+   "method": "GET",
+   "path": "/api/sessions/summary",
+   "spec": "v2.1",
+   "x_min_role": "viewer",
+   "access": {
+    "weiling": "read",
+    "arjun": "read",
+    "priscilla": "read",
+    "rahul": "self"
+   }
+  },
+  {
+   "operationId": "getSessionActivity",
+   "method": "GET",
+   "path": "/api/session/{sid}/activity",
+   "spec": "v2.1",
+   "x_min_role": "viewer",
+   "access": {
+    "weiling": "read",
+    "arjun": "read",
+    "priscilla": "redacted",
+    "rahul": "self"
+   }
+  },
+  {
+   "operationId": "getUsageSummary",
+   "method": "GET",
+   "path": "/api/usage/summary",
+   "spec": "v2.1",
+   "x_min_role": "viewer",
+   "access": {
+    "weiling": "read",
+    "arjun": "read",
+    "priscilla": "read",
+    "rahul": "self"
+   }
+  },
+  {
+   "operationId": "getUsageByModel",
+   "method": "GET",
+   "path": "/api/usage/by_model",
+   "spec": "v2.1",
+   "x_min_role": "viewer",
+   "access": {
+    "weiling": "read",
+    "arjun": "read",
+    "priscilla": "read",
+    "rahul": "self"
+   }
+  },
+  {
+   "operationId": "getUsageByGroup",
+   "method": "GET",
+   "path": "/api/usage/by_group",
+   "spec": "v2.1",
+   "x_min_role": "viewer",
+   "access": {
+    "weiling": "read",
+    "arjun": "read",
+    "priscilla": "read",
+    "rahul": "deny"
+   }
+  },
+  {
+   "operationId": "getUsageByUser",
+   "method": "GET",
+   "path": "/api/usage/by_user",
+   "spec": "v2.1",
+   "x_min_role": "viewer",
+   "access": {
+    "weiling": "read",
+    "arjun": "read",
+    "priscilla": "read",
+    "rahul": "self"
+   }
+  },
+  {
+   "operationId": "getUsageBudgets",
+   "method": "GET",
+   "path": "/api/usage/budgets",
+   "spec": "v2.1",
+   "x_min_role": "viewer",
+   "access": {
+    "weiling": "read",
+    "arjun": "read",
+    "priscilla": "read",
+    "rahul": "self"
+   }
+  },
+  {
+   "operationId": "listDiscoveredMcps",
+   "method": "GET",
+   "path": "/api/discovery/mcps",
+   "spec": "v2.2",
+   "x_min_role": "viewer",
+   "access": {
+    "weiling": "read",
+    "arjun": "read",
+    "priscilla": "read",
+    "rahul": "self"
+   }
+  },
+  {
+   "operationId": "getEndpointMcps",
+   "method": "GET",
+   "path": "/api/discovery/mcps/{endpoint_id}",
+   "spec": "v2.2",
+   "x_min_role": "viewer",
+   "access": {
+    "weiling": "read",
+    "arjun": "read",
+    "priscilla": "read",
+    "rahul": "self"
+   }
+  },
+  {
+   "operationId": "listDiscoveredSkills",
+   "method": "GET",
+   "path": "/api/discovery/skills",
+   "spec": "v2.2",
+   "x_min_role": "viewer",
+   "access": {
+    "weiling": "read",
+    "arjun": "read",
+    "priscilla": "read",
+    "rahul": "self"
+   }
+  },
+  {
+   "operationId": "listGroups",
+   "method": "GET",
+   "path": "/api/control/groups",
+   "spec": "v2.2",
+   "x_min_role": "security",
+   "access": {
+    "weiling": "read",
+    "arjun": "read",
+    "priscilla": "read",
+    "rahul": "deny"
+   }
+  },
+  {
+   "operationId": "createGroup",
+   "method": "POST",
+   "path": "/api/control/groups",
+   "spec": "v2.2",
+   "x_min_role": "admin",
+   "access": {
+    "weiling": "full",
+    "arjun": "deny",
+    "priscilla": "deny",
+    "rahul": "deny"
+   }
+  },
+  {
+   "operationId": "assignGroupCue",
+   "method": "PUT",
+   "path": "/api/control/groups/{id}/cue",
+   "spec": "v2.2",
+   "x_min_role": "admin",
+   "access": {
+    "weiling": "full",
+    "arjun": "deny",
+    "priscilla": "full",
+    "rahul": "deny"
+   }
+  },
+  {
+   "operationId": "getGroupMcpPolicy",
+   "method": "GET",
+   "path": "/api/control/groups/{id}/mcp-policy",
+   "spec": "v2.2",
+   "x_min_role": "security",
+   "access": {
+    "weiling": "read",
+    "arjun": "read",
+    "priscilla": "read",
+    "rahul": "deny"
+   }
+  },
+  {
+   "operationId": "setGroupMcpPolicy",
+   "method": "PUT",
+   "path": "/api/control/groups/{id}/mcp-policy",
+   "spec": "v2.2",
+   "x_min_role": "admin",
+   "access": {
+    "weiling": "full",
+    "arjun": "deny",
+    "priscilla": "full",
+    "rahul": "deny"
+   }
+  },
+  {
+   "operationId": "listCues",
+   "method": "GET",
+   "path": "/api/control/cues",
+   "spec": "v2.2",
+   "x_min_role": "security",
+   "access": {
+    "weiling": "read",
+    "arjun": "read",
+    "priscilla": "read",
+    "rahul": "deny"
+   }
+  },
+  {
+   "operationId": "createCue",
+   "method": "POST",
+   "path": "/api/control/cues",
+   "spec": "v2.2",
+   "x_min_role": "admin",
+   "access": {
+    "weiling": "full",
+    "arjun": "deny",
+    "priscilla": "full",
+    "rahul": "deny"
+   }
+  },
+  {
+   "operationId": "getCue",
+   "method": "GET",
+   "path": "/api/control/cues/{id}",
+   "spec": "v2.2",
+   "x_min_role": "security",
+   "access": {
+    "weiling": "read",
+    "arjun": "read",
+    "priscilla": "read",
+    "rahul": "deny"
+   }
+  },
+  {
+   "operationId": "updateCue",
+   "method": "PUT",
+   "path": "/api/control/cues/{id}",
+   "spec": "v2.2",
+   "x_min_role": "admin",
+   "access": {
+    "weiling": "full",
+    "arjun": "deny",
+    "priscilla": "full",
+    "rahul": "deny"
+   }
+  },
+  {
+   "operationId": "deleteCue",
+   "method": "DELETE",
+   "path": "/api/control/cues/{id}",
+   "spec": "v2.2",
+   "x_min_role": "admin",
+   "access": {
+    "weiling": "full",
+    "arjun": "deny",
+    "priscilla": "deny",
+    "rahul": "deny"
+   }
+  },
+  {
+   "operationId": "publishCue",
+   "method": "POST",
+   "path": "/api/control/cues/{id}/publish",
+   "spec": "v2.2",
+   "x_min_role": "admin",
+   "access": {
+    "weiling": "full",
+    "arjun": "deny",
+    "priscilla": "full",
+    "rahul": "deny"
+   }
+  },
+  {
+   "operationId": "listCueVersions",
+   "method": "GET",
+   "path": "/api/control/cues/{id}/versions",
+   "spec": "v2.2",
+   "x_min_role": "security",
+   "access": {
+    "weiling": "read",
+    "arjun": "read",
+    "priscilla": "read",
+    "rahul": "deny"
+   }
+  },
+  {
+   "operationId": "listBridgeMcps",
+   "method": "GET",
+   "path": "/api/control/mcp-bridge",
+   "spec": "v2.2",
+   "x_min_role": "security",
+   "access": {
+    "weiling": "read",
+    "arjun": "read",
+    "priscilla": "read",
+    "rahul": "deny"
+   }
+  },
+  {
+   "operationId": "onboardMcp",
+   "method": "POST",
+   "path": "/api/control/mcp-bridge",
+   "spec": "v2.2",
+   "x_min_role": "admin",
+   "access": {
+    "weiling": "full",
+    "arjun": "deny",
+    "priscilla": "full",
+    "rahul": "deny"
+   }
+  },
+  {
+   "operationId": "getBridgeMcp",
+   "method": "GET",
+   "path": "/api/control/mcp-bridge/{id}",
+   "spec": "v2.2",
+   "x_min_role": "security",
+   "access": {
+    "weiling": "read",
+    "arjun": "read",
+    "priscilla": "read",
+    "rahul": "deny"
+   }
+  },
+  {
+   "operationId": "decideBridgeMcp",
+   "method": "PATCH",
+   "path": "/api/control/mcp-bridge/{id}",
+   "spec": "v2.2",
+   "x_min_role": "admin",
+   "access": {
+    "weiling": "full",
+    "arjun": "deny",
+    "priscilla": "full",
+    "rahul": "deny"
+   }
+  },
+  {
+   "operationId": "removeBridgeMcp",
+   "method": "DELETE",
+   "path": "/api/control/mcp-bridge/{id}",
+   "spec": "v2.2",
+   "x_min_role": "admin",
+   "access": {
+    "weiling": "full",
+    "arjun": "deny",
+    "priscilla": "deny",
+    "rahul": "deny"
+   }
+  },
+  {
+   "operationId": "getBridgeScan",
+   "method": "GET",
+   "path": "/api/control/mcp-bridge/{id}/scan",
+   "spec": "v2.2",
+   "x_min_role": "security",
+   "access": {
+    "weiling": "read",
+    "arjun": "read",
+    "priscilla": "read",
+    "rahul": "deny"
+   }
+  },
+  {
+   "operationId": "listBlastRoots",
+   "method": "GET",
+   "path": "/api/protect/blast-radius",
+   "spec": "v2.2",
+   "x_min_role": "viewer",
+   "access": {
+    "weiling": "read",
+    "arjun": "read",
+    "priscilla": "read",
+    "rahul": "self"
+   }
+  },
+  {
+   "operationId": "getBlastGraph",
+   "method": "GET",
+   "path": "/api/protect/executions/{execution_id}/graph",
+   "spec": "v2.2",
+   "x_min_role": "viewer",
+   "access": {
+    "weiling": "read",
+    "arjun": "read",
+    "priscilla": "read",
+    "rahul": "self"
+   }
+  },
+  {
+   "operationId": "blastRadiusDesignTimeDeprecated",
+   "method": "GET",
+   "path": "/api/blast-radius",
+   "spec": "v2.2",
+   "x_min_role": "viewer",
+   "access": {
+    "weiling": "read",
+    "arjun": "read",
+    "priscilla": "read",
+    "rahul": "deny"
+   }
+  },
+  {
+   "operationId": "getMyAccess",
+   "method": "GET",
+   "path": "/api/me/access",
+   "spec": "me (proposed)",
+   "x_min_role": "self",
+   "access": {
+    "weiling": "self",
+    "arjun": "self",
+    "priscilla": "self",
+    "rahul": "self"
+   }
+  },
+  {
+   "operationId": "listMyMcpRequests",
+   "method": "GET",
+   "path": "/api/me/mcp-requests",
+   "spec": "me (proposed)",
+   "x_min_role": "self",
+   "access": {
+    "weiling": "self",
+    "arjun": "self",
+    "priscilla": "self",
+    "rahul": "self"
+   }
+  },
+  {
+   "operationId": "createMyMcpRequest",
+   "method": "POST",
+   "path": "/api/me/mcp-requests",
+   "spec": "me (proposed)",
+   "x_min_role": "self",
+   "access": {
+    "weiling": "self",
+    "arjun": "self",
+    "priscilla": "self",
+    "rahul": "self"
+   }
+  },
+  {
+   "operationId": "listMyDevices",
+   "method": "GET",
+   "path": "/api/me/devices",
+   "spec": "me (proposed)",
+   "x_min_role": "self",
+   "access": {
+    "weiling": "self",
+    "arjun": "self",
+    "priscilla": "self",
+    "rahul": "self"
+   }
+  },
+  {
+   "operationId": "listMySessions",
+   "method": "GET",
+   "path": "/api/me/sessions",
+   "spec": "me (proposed)",
+   "x_min_role": "self",
+   "access": {
+    "weiling": "self",
+    "arjun": "self",
+    "priscilla": "self",
+    "rahul": "self"
+   }
+  },
+  {
+   "operationId": "listMyDetections",
+   "method": "GET",
+   "path": "/api/me/detections",
+   "spec": "me (proposed)",
+   "x_min_role": "self",
+   "access": {
+    "weiling": "self",
+    "arjun": "self",
+    "priscilla": "self",
+    "rahul": "self"
+   }
+  },
+  {
+   "operationId": "getSettingsSensors",
+   "method": "GET",
+   "path": "/api/settings/sensors",
+   "spec": "demo (proposed)",
+   "x_min_role": "security",
+   "access": {
+    "weiling": "read",
+    "arjun": "read",
+    "priscilla": "read",
+    "rahul": "deny"
+   }
+  },
+  {
+   "operationId": "updateSensor",
+   "method": "PUT",
+   "path": "/api/settings/sensors/{id}",
+   "spec": "demo (proposed)",
+   "x_min_role": "admin",
+   "access": {
+    "weiling": "full",
+    "arjun": "deny",
+    "priscilla": "deny",
+    "rahul": "deny"
+   }
+  },
+  {
+   "operationId": "getSettingsDirectory",
+   "method": "GET",
+   "path": "/api/settings/directory",
+   "spec": "demo (proposed)",
+   "x_min_role": "security",
+   "access": {
+    "weiling": "read",
+    "arjun": "read",
+    "priscilla": "read",
+    "rahul": "deny"
+   }
+  },
+  {
+   "operationId": "updateDirectory",
+   "method": "PUT",
+   "path": "/api/settings/directory",
+   "spec": "demo (proposed)",
+   "x_min_role": "admin",
+   "access": {
+    "weiling": "full",
+    "arjun": "deny",
+    "priscilla": "deny",
+    "rahul": "deny"
+   }
+  },
+  {
+   "operationId": "listConsoleUsers",
+   "method": "GET",
+   "path": "/api/settings/users",
+   "spec": "demo (proposed)",
+   "x_min_role": "security",
+   "access": {
+    "weiling": "read",
+    "arjun": "read",
+    "priscilla": "read",
+    "rahul": "deny"
+   }
+  },
+  {
+   "operationId": "updateConsoleUser",
+   "method": "PUT",
+   "path": "/api/settings/users/{id}",
+   "spec": "demo (proposed)",
+   "x_min_role": "admin",
+   "access": {
+    "weiling": "full",
+    "arjun": "deny",
+    "priscilla": "deny",
+    "rahul": "deny"
+   }
+  },
+  {
+   "operationId": "getConsoleState",
+   "method": "GET",
+   "path": "/api/console/state",
+   "spec": "demo (proposed)",
+   "x_min_role": "security",
+   "access": {
+    "weiling": "read",
+    "arjun": "read",
+    "priscilla": "read",
+    "rahul": "deny"
+   },
+   "note": "Console edits saved by the server (groups, policies, CUEs, settings, device groups)"
+  },
+  {
+   "operationId": "saveConsoleState",
+   "method": "POST",
+   "path": "/api/console/state",
+   "spec": "demo (proposed)",
+   "x_min_role": "admin",
+   "access": {
+    "weiling": "full",
+    "arjun": "deny",
+    "priscilla": "full",
+    "rahul": "deny"
+   },
+   "note": "Each saved area is also checked against the persona permission it needs (e.g. createGroup, settingsWrite, deleteCue)"
+  },
+  {
+   "operationId": "resetDemo",
+   "method": "POST",
+   "path": "/api/demo/reset",
+   "spec": "demo (proposed)",
+   "x_min_role": "admin",
+   "access": {
+    "weiling": "full",
+    "arjun": "deny",
+    "priscilla": "deny",
+    "rahul": "deny"
+   }
+  }
+ ]
+}

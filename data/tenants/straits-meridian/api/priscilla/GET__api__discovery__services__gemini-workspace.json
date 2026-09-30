@@ -1,0 +1,117 @@
+{
+ "operationId": "getService",
+ "access": "read",
+ "status": 200,
+ "headers": {
+  "X-Window-From": "1789956000",
+  "X-Window-To": "1790560800",
+  "X-Data-As-Of": "1790560680"
+ },
+ "body": {
+  "service": {
+   "ai_service": "Gemini (Workspace)",
+   "category": "Assistant",
+   "icon": null,
+   "separability": "embedded",
+   "confidence": "confirmed",
+   "hits": 4100,
+   "bytes": 169043000,
+   "users": 91,
+   "risk_score": 22,
+   "jurisdiction": "US",
+   "ever_agentic": false,
+   "sandbox_candidate": false,
+   "agent_sdks": null,
+   "collector_count": 2,
+   "first_seen": 1780192800,
+   "last_seen": 1790559980,
+   "personal_account": false,
+   "oauth_scopes": null,
+   "service_id": "gemini-workspace",
+   "vendor": "Google",
+   "embedded_in": "Google Workspace",
+   "status": "approved",
+   "reviewed_by": "Priscilla Goh",
+   "reviewed_at": 1781038800,
+   "endpoints": 96,
+   "is_new": false
+  },
+  "description": "Gemini side panel for the Data & Analytics Workspace users.",
+  "top_endpoints": [
+   {
+    "endpoint_id": "ep_LT-SG-0101",
+    "host": "LT-SG-0101",
+    "ip": "10.40.59.161",
+    "type": "laptop",
+    "user": "Priscilla Goh",
+    "department": null,
+    "hits": 146,
+    "last_seen": 1790560556
+   },
+   {
+    "endpoint_id": "ep_vm-dev-rahul-07",
+    "host": "vm-dev-rahul-07",
+    "ip": "10.60.21.214",
+    "type": "vm",
+    "user": "Rahul Iyer",
+    "department": "Engineering — Payments",
+    "hits": 21,
+    "last_seen": 1790560789
+   },
+   {
+    "endpoint_id": "ep_LT-SG-3310",
+    "host": "LT-SG-3310",
+    "ip": "10.40.27.6",
+    "type": "laptop",
+    "user": "Marcus Lee",
+    "department": "Engineering — Digital Banking",
+    "hits": 85,
+    "last_seen": 1790549162
+   },
+   {
+    "endpoint_id": "ep_LT-SG-3391",
+    "host": "LT-SG-3391",
+    "ip": "10.40.33.159",
+    "type": "laptop",
+    "user": "Daniel Koh",
+    "department": "Engineering — Digital Banking",
+    "hits": 144,
+    "last_seen": 1790548936
+   },
+   {
+    "endpoint_id": "ep_LT-SG-5133",
+    "host": "LT-SG-5133",
+    "ip": "10.40.32.67",
+    "type": "laptop",
+    "user": "Hannah Lim",
+    "department": "Treasury & Markets",
+    "hits": 396,
+    "last_seen": 1790560363
+   },
+   {
+    "endpoint_id": "ep_LT-SG-6095",
+    "host": "LT-SG-6095",
+    "ip": "10.40.54.60",
+    "type": "laptop",
+    "user": "Joanne Nair",
+    "department": "Engineering — Payments",
+    "hits": 123,
+    "last_seen": 1790560466
+   }
+  ],
+  "status_history": [
+   {
+    "status": "unlabelled",
+    "by": "system",
+    "at": 1780192800,
+    "note": null
+   },
+   {
+    "status": "approved",
+    "by": "Priscilla Goh",
+    "at": 1781038800,
+    "note": null
+   }
+  ]
+ }
+}

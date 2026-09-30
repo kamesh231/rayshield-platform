@@ -1,0 +1,11 @@
+{
+ "operationId": "getBridgeScan",
+ "access": "deny",
+ "status": 403,
+ "headers": {},
+ "body": {
+  "error": "Role 'developer' (Rahul Iyer) cannot call getBridgeScan.",
+  "code": "FORBIDDEN",
+  "request_id": "req_yv6LRru4"
+ }
+}

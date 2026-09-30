@@ -1,0 +1,63 @@
+{
+ "operationId": "getDiscoveryEndpoint",
+ "access": "read",
+ "status": 200,
+ "headers": {
+  "X-Window-From": "1789956000",
+  "X-Window-To": "1790560800",
+  "X-Data-As-Of": "1790560680"
+ },
+ "body": {
+  "endpoint": {
+   "endpoint": "10.40.55.77",
+   "host": "LT-SG-1187",
+   "endpoint_id": "ep_LT-SG-1187",
+   "device_id": "da503517-b1ec-4f1b-bde1-ded08b45e768",
+   "type": "laptop",
+   "ephemeral": false,
+   "user": "Nur Aisyah",
+   "department": "Engineering — Digital Banking",
+   "identity_source": "idp",
+   "sensor": "sase_zscaler",
+   "first_seen": 1781056800,
+   "last_seen": 1790550182
+  },
+  "services": [
+   {
+    "service_id": "claude-code",
+    "ai_service": "Claude Code",
+    "status": "approved",
+    "hits": 36,
+    "last_seen": 1790550182
+   },
+   {
+    "service_id": "chatgpt-enterprise",
+    "ai_service": "ChatGPT Enterprise",
+    "status": "approved",
+    "hits": 29,
+    "last_seen": 1790550182
+   },
+   {
+    "service_id": "github-copilot",
+    "ai_service": "GitHub Copilot",
+    "status": "approved",
+    "hits": 22,
+    "last_seen": 1790550182
+   },
+   {
+    "service_id": "amazon-bedrock",
+    "ai_service": "Amazon Bedrock",
+    "status": "approved",
+    "hits": 14,
+    "last_seen": 1790550182
+   },
+   {
+    "service_id": "zoom-ai",
+    "ai_service": "Zoom AI Companion",
+    "status": "approved",
+    "hits": 9,
+    "last_seen": 1790550182
+   }
+  ]
+ }
+}

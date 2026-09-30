@@ -1,0 +1,11 @@
+{
+ "operationId": "updateConsoleUser",
+ "access": "deny",
+ "status": 403,
+ "headers": {},
+ "body": {
+  "error": "Role 'developer' (Rahul Iyer) cannot call updateConsoleUser.",
+  "code": "FORBIDDEN",
+  "request_id": "req_3hleji0C"
+ }
+}

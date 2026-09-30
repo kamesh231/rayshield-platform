@@ -1,0 +1,117 @@
+{
+ "operationId": "getService",
+ "access": "read",
+ "status": 200,
+ "headers": {
+  "X-Window-From": "1789956000",
+  "X-Window-To": "1790560800",
+  "X-Data-As-Of": "1790560680"
+ },
+ "body": {
+  "service": {
+   "ai_service": "ChatGPT Enterprise",
+   "category": "Assistant",
+   "icon": null,
+   "separability": "distinct",
+   "confidence": "confirmed",
+   "hits": 11300,
+   "bytes": 465899000,
+   "users": 203,
+   "risk_score": 22,
+   "jurisdiction": "US",
+   "ever_agentic": false,
+   "sandbox_candidate": false,
+   "agent_sdks": null,
+   "collector_count": 2,
+   "first_seen": 1775872800,
+   "last_seen": 1790559580,
+   "personal_account": false,
+   "oauth_scopes": null,
+   "service_id": "chatgpt-enterprise",
+   "vendor": "OpenAI",
+   "embedded_in": null,
+   "status": "approved",
+   "reviewed_by": "Priscilla Goh",
+   "reviewed_at": 1776718800,
+   "endpoints": 214,
+   "is_new": false
+  },
+  "description": "Enterprise workspace with SSO and no training on bank data.",
+  "top_endpoints": [
+   {
+    "endpoint_id": "ep_vm-dev-rahul-07",
+    "host": "vm-dev-rahul-07",
+    "ip": "10.60.21.214",
+    "type": "vm",
+    "user": "Rahul Iyer",
+    "department": "Engineering — Payments",
+    "hits": 13,
+    "last_seen": 1790560789
+   },
+   {
+    "endpoint_id": "ep_LT-SG-1187",
+    "host": "LT-SG-1187",
+    "ip": "10.40.55.77",
+    "type": "laptop",
+    "user": "Nur Aisyah",
+    "department": "Engineering — Digital Banking",
+    "hits": 29,
+    "last_seen": 1790550182
+   },
+   {
+    "endpoint_id": "ep_LT-SG-3310",
+    "host": "LT-SG-3310",
+    "ip": "10.40.27.6",
+    "type": "laptop",
+    "user": "Marcus Lee",
+    "department": "Engineering — Digital Banking",
+    "hits": 114,
+    "last_seen": 1790549162
+   },
+   {
+    "endpoint_id": "ep_LT-VN-0419",
+    "host": "LT-VN-0419",
+    "ip": "10.40.38.191",
+    "type": "laptop",
+    "user": "Minh Pham",
+    "department": "Vendor Engineering (contractors)",
+    "hits": 61,
+    "last_seen": 1790559845
+   },
+   {
+    "endpoint_id": "ep_LT-SG-8337",
+    "host": "LT-SG-8337",
+    "ip": "10.40.48.73",
+    "type": "laptop",
+    "user": "Ethan Soh",
+    "department": "Engineering — Payments",
+    "hits": 117,
+    "last_seen": 1790559627
+   },
+   {
+    "endpoint_id": "ep_LT-SG-4130",
+    "host": "LT-SG-4130",
+    "ip": "10.40.27.219",
+    "type": "laptop",
+    "user": "Farhan Loh",
+    "department": "Engineering — Payments",
+    "hits": 17,
+    "last_seen": 1790559491
+   }
+  ],
+  "status_history": [
+   {
+    "status": "unlabelled",
+    "by": "system",
+    "at": 1775872800,
+    "note": null
+   },
+   {
+    "status": "approved",
+    "by": "Priscilla Goh",
+    "at": 1776718800,
+    "note": null
+   }
+  ]
+ }
+}

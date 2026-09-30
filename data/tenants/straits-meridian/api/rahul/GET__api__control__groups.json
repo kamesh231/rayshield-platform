@@ -1,0 +1,11 @@
+{
+ "operationId": "listGroups",
+ "access": "deny",
+ "status": 403,
+ "headers": {},
+ "body": {
+  "error": "Role 'developer' (Rahul Iyer) cannot call listGroups.",
+  "code": "FORBIDDEN",
+  "request_id": "req__k5nCz5V"
+ }
+}

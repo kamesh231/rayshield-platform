@@ -1,0 +1,19 @@
+{
+ "operationId": "getMe",
+ "access": "read",
+ "status": 200,
+ "headers": {},
+ "body": {
+  "id": "usr_arjun",
+  "name": "Arjun Menon",
+  "email": "arjun.menon@straitsmeridian.example",
+  "role": "security",
+  "org": {
+   "id": "org_straits_meridian",
+   "name": "Straits Meridian Bank"
+  },
+  "title": "SOC Lead, Cyber Defence",
+  "console_role": "Security",
+  "data_scope": "org"
+ }
+}

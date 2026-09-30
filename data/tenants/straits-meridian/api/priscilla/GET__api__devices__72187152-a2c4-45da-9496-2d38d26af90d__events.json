@@ -1,0 +1,7 @@
+{
+ "operationId": "listDeviceEvents",
+ "access": "read",
+ "status": 200,
+ "headers": {},
+ "body": []
+}

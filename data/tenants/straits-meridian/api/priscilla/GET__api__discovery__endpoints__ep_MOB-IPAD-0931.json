@@ -1,0 +1,35 @@
+{
+ "operationId": "getDiscoveryEndpoint",
+ "access": "read",
+ "status": 200,
+ "headers": {
+  "X-Window-From": "1789956000",
+  "X-Window-To": "1790560800",
+  "X-Data-As-Of": "1790560680"
+ },
+ "body": {
+  "endpoint": {
+   "endpoint": "10.90.39.21",
+   "host": "MOB-IPAD-0931",
+   "endpoint_id": "ep_MOB-IPAD-0931",
+   "device_id": null,
+   "type": "other",
+   "ephemeral": false,
+   "user": "Aisha Quek",
+   "department": "Retail Banking Operations",
+   "identity_source": "mdm",
+   "sensor": "pcap",
+   "first_seen": 1778292000,
+   "last_seen": 1790560075
+  },
+  "services": [
+   {
+    "service_id": "azure-openai",
+    "ai_service": "Azure OpenAI",
+    "status": "approved",
+    "hits": 78,
+    "last_seen": 1790560075
+   }
+  ]
+ }
+}

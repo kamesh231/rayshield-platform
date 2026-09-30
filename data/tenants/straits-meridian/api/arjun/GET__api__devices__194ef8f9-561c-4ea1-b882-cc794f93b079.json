@@ -1,0 +1,39 @@
+{
+ "operationId": "getDevice",
+ "access": "read",
+ "status": 200,
+ "headers": {
+  "X-Window-From": "1789956000",
+  "X-Window-To": "1790560800",
+  "X-Data-As-Of": "1790560680"
+ },
+ "body": {
+  "id": "194ef8f9-561c-4ea1-b882-cc794f93b079",
+  "device_name": "LT-SG-4402",
+  "status": "active",
+  "health_score": 97,
+  "risk_level": "low",
+  "blocks_24h": 0,
+  "last_heartbeat": 1790560713,
+  "endpoint_id": "ep_LT-SG-4402",
+  "ip": "10.40.47.164",
+  "type": "laptop",
+  "owner": "Jia Hui Ong",
+  "owner_kind": "person",
+  "department": "Data & Analytics",
+  "group": {
+   "id": "grp_data",
+   "name": "Data & Analytics"
+  },
+  "agent_state": "enforcing",
+  "agent_version": "0.9.6",
+  "tools": [
+   "gemini-cli",
+   "claude-code"
+  ],
+  "allowed": 171,
+  "blocked": 1,
+  "recorded": 11,
+  "os": "macOS 15.0"
+ }
+}

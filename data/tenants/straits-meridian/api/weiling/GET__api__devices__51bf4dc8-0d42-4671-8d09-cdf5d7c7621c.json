@@ -1,0 +1,38 @@
+{
+ "operationId": "getDevice",
+ "access": "read",
+ "status": 200,
+ "headers": {
+  "X-Window-From": "1789956000",
+  "X-Window-To": "1790560800",
+  "X-Data-As-Of": "1790560680"
+ },
+ "body": {
+  "id": "51bf4dc8-0d42-4671-8d09-cdf5d7c7621c",
+  "device_name": "vm-ci-build-214",
+  "status": "active",
+  "health_score": 97,
+  "risk_level": "low",
+  "blocks_24h": 0,
+  "last_heartbeat": 1790560320,
+  "endpoint_id": "ep_vm-ci-build-214",
+  "ip": "10.60.58.106",
+  "type": "vm",
+  "owner": "svc-ci",
+  "owner_kind": "service",
+  "department": "Service accounts (CI / ETL)",
+  "group": {
+   "id": "grp_svc",
+   "name": "Service accounts (CI / ETL)"
+  },
+  "agent_state": "enforcing",
+  "agent_version": "0.9.6",
+  "tools": [
+   "claude-code"
+  ],
+  "allowed": 91,
+  "blocked": 1,
+  "recorded": 2,
+  "os": "Ubuntu 22.04"
+ }
+}

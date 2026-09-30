@@ -1,0 +1,35 @@
+{
+ "operationId": "getDiscoveryEndpoint",
+ "access": "read",
+ "status": 200,
+ "headers": {
+  "X-Window-From": "1789956000",
+  "X-Window-To": "1790560800",
+  "X-Data-As-Of": "1790560680"
+ },
+ "body": {
+  "endpoint": {
+   "endpoint": "10.40.59.149",
+   "host": "LT-SG-4710",
+   "endpoint_id": "ep_LT-SG-4710",
+   "device_id": "43463483-7c37-4958-9d7e-9e1adaecbcd7",
+   "type": "laptop",
+   "ephemeral": false,
+   "user": "Arjun Menon",
+   "department": "Cyber Defence (SOC)",
+   "identity_source": "idp",
+   "sensor": "pcap",
+   "first_seen": 1785549600,
+   "last_seen": 1790559331
+  },
+  "services": [
+   {
+    "service_id": "claude-code",
+    "ai_service": "Claude Code",
+    "status": "approved",
+    "hits": 133,
+    "last_seen": 1790559331
+   }
+  ]
+ }
+}

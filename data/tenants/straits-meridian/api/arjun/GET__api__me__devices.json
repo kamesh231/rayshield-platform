@@ -1,0 +1,36 @@
+{
+ "operationId": "listMyDevices",
+ "access": "self",
+ "status": 200,
+ "headers": {},
+ "body": [
+  {
+   "id": "43463483-7c37-4958-9d7e-9e1adaecbcd7",
+   "device_name": "LT-SG-4710",
+   "status": "active",
+   "health_score": 97,
+   "risk_level": "low",
+   "blocks_24h": 0,
+   "last_heartbeat": 1790560652,
+   "endpoint_id": "ep_LT-SG-4710",
+   "ip": "10.40.59.149",
+   "type": "laptop",
+   "owner": "Arjun Menon",
+   "owner_kind": "person",
+   "department": "Cyber Defence (SOC)",
+   "group": {
+    "id": "grp_soc",
+    "name": "Cyber Defence (SOC)"
+   },
+   "agent_state": "enforcing",
+   "agent_version": "0.9.6",
+   "tools": [
+    "claude-code"
+   ],
+   "allowed": 127,
+   "blocked": 2,
+   "recorded": 6,
+   "os": "macOS 15.0"
+  }
+ ]
+}

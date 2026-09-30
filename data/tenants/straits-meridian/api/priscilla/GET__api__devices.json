@@ -1,0 +1,1335 @@
+{
+ "operationId": "listDevices",
+ "access": "read",
+ "status": 200,
+ "headers": {
+  "X-Window-From": "1789956000",
+  "X-Window-To": "1790560800",
+  "X-Data-As-Of": "1790560680",
+  "X-Total-Count": "392",
+  "X-Next-Cursor": "bzo1MA"
+ },
+ "body": [
+  {
+   "id": "4db96c59-96c9-447a-b9dd-3d06187e72b0",
+   "device_name": "LT-SG-6297",
+   "status": "active",
+   "health_score": 97,
+   "risk_level": "low",
+   "blocks_24h": 2,
+   "last_heartbeat": 1790560603,
+   "endpoint_id": "ep_LT-SG-6297",
+   "ip": "10.40.37.224",
+   "type": "laptop",
+   "owner": "Serena Loh",
+   "owner_kind": "person",
+   "department": "Engineering — Payments",
+   "group": {
+    "id": "grp_payments_eng",
+    "name": "Engineering — Payments"
+   },
+   "agent_state": "enforcing",
+   "agent_version": "0.9.6",
+   "tools": [
+    "claude-code"
+   ],
+   "allowed": 413,
+   "blocked": 11,
+   "recorded": 12
+  },
+  {
+   "id": "28646884-30e2-4f47-a53a-4c7ef50fcb8d",
+   "device_name": "LT-SG-7877",
+   "status": "active",
+   "health_score": 95,
+   "risk_level": "low",
+   "blocks_24h": 2,
+   "last_heartbeat": 1790560763,
+   "endpoint_id": "ep_LT-SG-7877",
+   "ip": "10.40.51.35",
+   "type": "laptop",
+   "owner": "Sheng Lim",
+   "owner_kind": "person",
+   "department": "Technology Risk",
+   "group": null,
+   "agent_state": "enforcing",
+   "agent_version": "0.9.6",
+   "tools": [
+    "claude-code"
+   ],
+   "allowed": 380,
+   "blocked": 11,
+   "recorded": 10
+  },
+  {
+   "id": "c291f68f-676d-4acd-99c9-b95cbc6134ec",
+   "device_name": "LT-SG-3557",
+   "status": "active",
+   "health_score": 94,
+   "risk_level": "low",
+   "blocks_24h": 1,
+   "last_heartbeat": 1790560796,
+   "endpoint_id": "ep_LT-SG-3557",
+   "ip": "10.40.28.26",
+   "type": "laptop",
+   "owner": "Farhan Teo",
+   "owner_kind": "person",
+   "department": "Engineering — Payments",
+   "group": {
+    "id": "grp_payments_eng",
+    "name": "Engineering — Payments"
+   },
+   "agent_state": "enforcing",
+   "agent_version": "0.9.6",
+   "tools": [
+    "claude-code"
+   ],
+   "allowed": 413,
+   "blocked": 10,
+   "recorded": 9
+  },
+  {
+   "id": "fb0ff7b7-3f42-40a5-a08f-941eaf1e7631",
+   "device_name": "LT-SG-4319",
+   "status": "active",
+   "health_score": 92,
+   "risk_level": "low",
+   "blocks_24h": 1,
+   "last_heartbeat": 1790560352,
+   "endpoint_id": "ep_LT-SG-4319",
+   "ip": "10.40.46.213",
+   "type": "laptop",
+   "owner": "Farhan Soh",
+   "owner_kind": "person",
+   "department": "Cyber Defence (SOC)",
+   "group": {
+    "id": "grp_soc",
+    "name": "Cyber Defence (SOC)"
+   },
+   "agent_state": "enforcing",
+   "agent_version": "0.9.6",
+   "tools": [
+    "claude-code"
+   ],
+   "allowed": 360,
+   "blocked": 10,
+   "recorded": 12
+  },
+  {
+   "id": "f2254525-b421-4d43-b2a1-cb05f5c8a438",
+   "device_name": "LT-VN-5208",
+   "status": "active",
+   "health_score": 95,
+   "risk_level": "low",
+   "blocks_24h": 1,
+   "last_heartbeat": 1790560293,
+   "endpoint_id": "ep_LT-VN-5208",
+   "ip": "10.40.3.28",
+   "type": "laptop",
+   "owner": "Khanh Hoang",
+   "owner_kind": "person",
+   "department": "Vendor Engineering (contractors)",
+   "group": {
+    "id": "grp_contractors",
+    "name": "Vendor Engineering (contractors)"
+   },
+   "agent_state": "enforcing",
+   "agent_version": "0.9.6",
+   "tools": [
+    "codex-cli"
+   ],
+   "allowed": 428,
+   "blocked": 10,
+   "recorded": 27
+  },
+  {
+   "id": "dca13a38-24c9-45dc-a62b-af8968fc9362",
+   "device_name": "LT-SG-9388",
+   "status": "active",
+   "health_score": 95,
+   "risk_level": "low",
+   "blocks_24h": 1,
+   "last_heartbeat": 1790560358,
+   "endpoint_id": "ep_LT-SG-9388",
+   "ip": "10.40.22.159",
+   "type": "laptop",
+   "owner": "Siti Nair",
+   "owner_kind": "person",
+   "department": "Finance",
+   "group": null,
+   "agent_state": "enforcing",
+   "agent_version": "0.9.6",
+   "tools": [
+    "claude-code"
+   ],
+   "allowed": 370,
+   "blocked": 10,
+   "recorded": 21
+  },
+  {
+   "id": "e0702984-bbe6-44bb-b840-2949a4b182c9",
+   "device_name": "LT-SG-0101",
+   "status": "active",
+   "health_score": 92,
+   "risk_level": "low",
+   "blocks_24h": 1,
+   "last_heartbeat": 1790560764,
+   "endpoint_id": "ep_LT-SG-0101",
+   "ip": "10.40.59.161",
+   "type": "laptop",
+   "owner": "Priscilla Goh",
+   "owner_kind": "person",
+   "department": null,
+   "group": null,
+   "agent_state": "enforcing",
+   "agent_version": "0.9.6",
+   "tools": [
+    "claude-code"
+   ],
+   "allowed": 402,
+   "blocked": 9,
+   "recorded": 30
+  },
+  {
+   "id": "b32e2009-f4f2-4f2e-b2e6-2632e7bdf2a9",
+   "device_name": "LT-SG-3310",
+   "status": "active",
+   "health_score": 92,
+   "risk_level": "low",
+   "blocks_24h": 1,
+   "last_heartbeat": 1790560672,
+   "endpoint_id": "ep_LT-SG-3310",
+   "ip": "10.40.27.6",
+   "type": "laptop",
+   "owner": "Marcus Lee",
+   "owner_kind": "person",
+   "department": "Engineering — Digital Banking",
+   "group": {
+    "id": "grp_digital_eng",
+    "name": "Engineering — Digital Banking"
+   },
+   "agent_state": "enforcing",
+   "agent_version": "0.9.6",
+   "tools": [
+    "claude-code"
+   ],
+   "allowed": 388,
+   "blocked": 9,
+   "recorded": 13
+  },
+  {
+   "id": "62094bc5-350d-415a-aba3-e873286adbd5",
+   "device_name": "LT-SG-5116",
+   "status": "offline",
+   "health_score": 40,
+   "risk_level": "low",
+   "blocks_24h": 1,
+   "last_heartbeat": 1790551727,
+   "endpoint_id": "ep_LT-SG-5116",
+   "ip": "10.40.2.193",
+   "type": "laptop",
+   "owner": "Priyanka Chan",
+   "owner_kind": "person",
+   "department": "Engineering — Digital Banking",
+   "group": {
+    "id": "grp_digital_eng",
+    "name": "Engineering — Digital Banking"
+   },
+   "agent_state": "offline",
+   "agent_version": "0.9.6",
+   "tools": [
+    "claude-code"
+   ],
+   "allowed": 345,
+   "blocked": 9,
+   "recorded": 25
+  },
+  {
+   "id": "65fa50e8-cc4f-4990-b338-924faaaa844a",
+   "device_name": "LT-SG-6665",
+   "status": "active",
+   "health_score": 98,
+   "risk_level": "low",
+   "blocks_24h": 1,
+   "last_heartbeat": 1790560375,
+   "endpoint_id": "ep_LT-SG-6665",
+   "ip": "10.40.5.245",
+   "type": "laptop",
+   "owner": "Darren Loh",
+   "owner_kind": "person",
+   "department": "Engineering — Digital Banking",
+   "group": {
+    "id": "grp_digital_eng",
+    "name": "Engineering — Digital Banking"
+   },
+   "agent_state": "enforcing",
+   "agent_version": "0.9.6",
+   "tools": [
+    "claude-code"
+   ],
+   "allowed": 395,
+   "blocked": 9,
+   "recorded": 22
+  },
+  {
+   "id": "91de4a43-ed08-4d99-af4c-2ad7b9d2b368",
+   "device_name": "LT-SG-9656",
+   "status": "active",
+   "health_score": 98,
+   "risk_level": "low",
+   "blocks_24h": 1,
+   "last_heartbeat": 1790560319,
+   "endpoint_id": "ep_LT-SG-9656",
+   "ip": "10.40.40.109",
+   "type": "laptop",
+   "owner": "Priyanka Chong",
+   "owner_kind": "person",
+   "department": "Engineering — Digital Banking",
+   "group": {
+    "id": "grp_digital_eng",
+    "name": "Engineering — Digital Banking"
+   },
+   "agent_state": "enforcing",
+   "agent_version": "0.9.6",
+   "tools": [
+    "claude-code"
+   ],
+   "allowed": 333,
+   "blocked": 9,
+   "recorded": 19
+  },
+  {
+   "id": "dffa7dc4-b5ca-453d-9af6-9c23d89b14de",
+   "device_name": "LT-SG-9530",
+   "status": "active",
+   "health_score": 94,
+   "risk_level": "low",
+   "blocks_24h": 1,
+   "last_heartbeat": 1790560724,
+   "endpoint_id": "ep_LT-SG-9530",
+   "ip": "10.40.7.20",
+   "type": "laptop",
+   "owner": "Terence Sim",
+   "owner_kind": "person",
+   "department": "Engineering — Digital Banking",
+   "group": {
+    "id": "grp_digital_eng",
+    "name": "Engineering — Digital Banking"
+   },
+   "agent_state": "enforcing",
+   "agent_version": "0.9.6",
+   "tools": [
+    "claude-code"
+   ],
+   "allowed": 416,
+   "blocked": 9,
+   "recorded": 18
+  },
+  {
+   "id": "7cc3b416-f63a-48c4-b509-1c1b8dd8429f",
+   "device_name": "LT-SG-1843",
+   "status": "active",
+   "health_score": 92,
+   "risk_level": "low",
+   "blocks_24h": 1,
+   "last_heartbeat": 1790560380,
+   "endpoint_id": "ep_LT-SG-1843",
+   "ip": "10.40.48.106",
+   "type": "laptop",
+   "owner": "Serena Quek",
+   "owner_kind": "person",
+   "department": "Data & Analytics",
+   "group": {
+    "id": "grp_data",
+    "name": "Data & Analytics"
+   },
+   "agent_state": "enforcing",
+   "agent_version": "0.9.6",
+   "tools": [
+    "gemini-cli",
+    "claude-code"
+   ],
+   "allowed": 364,
+   "blocked": 9,
+   "recorded": 16
+  },
+  {
+   "id": "89235d3b-ba25-411c-9a93-4f3cc976c73e",
+   "device_name": "LT-SG-4322",
+   "status": "active",
+   "health_score": 94,
+   "risk_level": "low",
+   "blocks_24h": 1,
+   "last_heartbeat": 1790560756,
+   "endpoint_id": "ep_LT-SG-4322",
+   "ip": "10.40.5.87",
+   "type": "laptop",
+   "owner": "Wen Hui Tan",
+   "owner_kind": "person",
+   "department": "Retail Banking Operations",
+   "group": {
+    "id": "grp_retail_ops",
+    "name": "Retail Banking Operations"
+   },
+   "agent_state": "enforcing",
+   "agent_version": "0.9.6",
+   "tools": [],
+   "allowed": 350,
+   "blocked": 9,
+   "recorded": 18
+  },
+  {
+   "id": "074588f0-cd0e-490d-8e00-7440c0cbc02b",
+   "device_name": "LT-SG-9740",
+   "status": "active",
+   "health_score": 98,
+   "risk_level": "low",
+   "blocks_24h": 1,
+   "last_heartbeat": 1790560531,
+   "endpoint_id": "ep_LT-SG-9740",
+   "ip": "10.40.33.214",
+   "type": "laptop",
+   "owner": "Wei Jie Lau",
+   "owner_kind": "person",
+   "department": "Retail Banking Operations",
+   "group": {
+    "id": "grp_retail_ops",
+    "name": "Retail Banking Operations"
+   },
+   "agent_state": "enforcing",
+   "agent_version": "0.9.6",
+   "tools": [],
+   "allowed": 404,
+   "blocked": 9,
+   "recorded": 18
+  },
+  {
+   "id": "8befef56-2748-46da-a2f4-784e25a9de65",
+   "device_name": "LT-SG-8499",
+   "status": "active",
+   "health_score": 91,
+   "risk_level": "low",
+   "blocks_24h": 1,
+   "last_heartbeat": 1790560306,
+   "endpoint_id": "ep_LT-SG-8499",
+   "ip": "10.40.46.201",
+   "type": "laptop",
+   "owner": "Jun Hao Teo",
+   "owner_kind": "person",
+   "department": "Retail Banking Operations",
+   "group": {
+    "id": "grp_retail_ops",
+    "name": "Retail Banking Operations"
+   },
+   "agent_state": "enforcing",
+   "agent_version": "0.9.6",
+   "tools": [],
+   "allowed": 380,
+   "blocked": 9,
+   "recorded": 11
+  },
+  {
+   "id": "923495e8-7211-4b9e-a062-a8ca5b6689ac",
+   "device_name": "LT-VN-4318",
+   "status": "active",
+   "health_score": 97,
+   "risk_level": "low",
+   "blocks_24h": 1,
+   "last_heartbeat": 1790560681,
+   "endpoint_id": "ep_LT-VN-4318",
+   "ip": "10.40.17.76",
+   "type": "laptop",
+   "owner": "Duc Hoang",
+   "owner_kind": "person",
+   "department": "Vendor Engineering (contractors)",
+   "group": {
+    "id": "grp_contractors",
+    "name": "Vendor Engineering (contractors)"
+   },
+   "agent_state": "enforcing",
+   "agent_version": "0.9.6",
+   "tools": [
+    "codex-cli"
+   ],
+   "allowed": 318,
+   "blocked": 9,
+   "recorded": 20
+  },
+  {
+   "id": "a497c981-1b88-4af4-b21f-6d94c7af60ef",
+   "device_name": "LT-SG-2231",
+   "status": "active",
+   "health_score": 97,
+   "risk_level": "low",
+   "blocks_24h": 1,
+   "last_heartbeat": 1790560365,
+   "endpoint_id": "ep_LT-SG-2231",
+   "ip": "10.40.13.160",
+   "type": "laptop",
+   "owner": "Rahul Iyer",
+   "owner_kind": "person",
+   "department": "Engineering — Payments",
+   "group": {
+    "id": "grp_payments_eng",
+    "name": "Engineering — Payments"
+   },
+   "agent_state": "enforcing",
+   "agent_version": "0.9.6",
+   "tools": [
+    "claude-code",
+    "gemini-cli"
+   ],
+   "allowed": 321,
+   "blocked": 8,
+   "recorded": 18
+  },
+  {
+   "id": "55b04988-c076-45e3-bbad-05d2c8d608e3",
+   "device_name": "LT-SG-8098",
+   "status": "active",
+   "health_score": 95,
+   "risk_level": "low",
+   "blocks_24h": 1,
+   "last_heartbeat": 1790560297,
+   "endpoint_id": "ep_LT-SG-8098",
+   "ip": "10.40.10.35",
+   "type": "laptop",
+   "owner": "Jun Hao Singh",
+   "owner_kind": "person",
+   "department": "Engineering — Digital Banking",
+   "group": {
+    "id": "grp_digital_eng",
+    "name": "Engineering — Digital Banking"
+   },
+   "agent_state": "enforcing",
+   "agent_version": "0.9.6",
+   "tools": [
+    "claude-code"
+   ],
+   "allowed": 377,
+   "blocked": 8,
+   "recorded": 15
+  },
+  {
+   "id": "74986367-8039-4e80-b07a-118490699936",
+   "device_name": "LT-SG-5355",
+   "status": "active",
+   "health_score": 96,
+   "risk_level": "low",
+   "blocks_24h": 1,
+   "last_heartbeat": 1790560708,
+   "endpoint_id": "ep_LT-SG-5355",
+   "ip": "10.40.58.119",
+   "type": "laptop",
+   "owner": "Chloe Tan",
+   "owner_kind": "person",
+   "department": "Engineering — Digital Banking",
+   "group": {
+    "id": "grp_digital_eng",
+    "name": "Engineering — Digital Banking"
+   },
+   "agent_state": "enforcing",
+   "agent_version": "0.9.6",
+   "tools": [
+    "claude-code"
+   ],
+   "allowed": 377,
+   "blocked": 8,
+   "recorded": 11
+  },
+  {
+   "id": "fababff8-aa4f-45ae-a990-96c6716b76b0",
+   "device_name": "LT-SG-1702",
+   "status": "active",
+   "health_score": 92,
+   "risk_level": "low",
+   "blocks_24h": 1,
+   "last_heartbeat": 1790560450,
+   "endpoint_id": "ep_LT-SG-1702",
+   "ip": "10.40.14.8",
+   "type": "laptop",
+   "owner": "Nadia Tay",
+   "owner_kind": "person",
+   "department": "Engineering — Digital Banking",
+   "group": {
+    "id": "grp_digital_eng",
+    "name": "Engineering — Digital Banking"
+   },
+   "agent_state": "enforcing",
+   "agent_version": "0.9.6",
+   "tools": [
+    "claude-code"
+   ],
+   "allowed": 312,
+   "blocked": 8,
+   "recorded": 13
+  },
+  {
+   "id": "4906d21b-6402-46ed-890b-2bacaff02c4c",
+   "device_name": "LT-SG-8955",
+   "status": "active",
+   "health_score": 95,
+   "risk_level": "low",
+   "blocks_24h": 1,
+   "last_heartbeat": 1790560734,
+   "endpoint_id": "ep_LT-SG-8955",
+   "ip": "10.40.5.249",
+   "type": "laptop",
+   "owner": "Aravind Ho",
+   "owner_kind": "person",
+   "department": "Engineering — Digital Banking",
+   "group": {
+    "id": "grp_digital_eng",
+    "name": "Engineering — Digital Banking"
+   },
+   "agent_state": "enforcing",
+   "agent_version": "0.9.6",
+   "tools": [
+    "claude-code"
+   ],
+   "allowed": 385,
+   "blocked": 8,
+   "recorded": 15
+  },
+  {
+   "id": "728caee4-e37f-4ddc-8d0d-afa1df8a5f59",
+   "device_name": "LT-SG-8341",
+   "status": "active",
+   "health_score": 95,
+   "risk_level": "low",
+   "blocks_24h": 1,
+   "last_heartbeat": 1790560626,
+   "endpoint_id": "ep_LT-SG-8341",
+   "ip": "10.40.31.130",
+   "type": "laptop",
+   "owner": "Xin Yi Quek",
+   "owner_kind": "person",
+   "department": "Engineering — Digital Banking",
+   "group": {
+    "id": "grp_digital_eng",
+    "name": "Engineering — Digital Banking"
+   },
+   "agent_state": "enforcing",
+   "agent_version": "0.9.6",
+   "tools": [
+    "claude-code"
+   ],
+   "allowed": 419,
+   "blocked": 8,
+   "recorded": 12
+  },
+  {
+   "id": "07b3177c-b2c2-4146-9578-0b1bc87ca8ea",
+   "device_name": "LT-SG-4802",
+   "status": "active",
+   "health_score": 93,
+   "risk_level": "low",
+   "blocks_24h": 1,
+   "last_heartbeat": 1790560287,
+   "endpoint_id": "ep_LT-SG-4802",
+   "ip": "10.40.44.31",
+   "type": "laptop",
+   "owner": "Min Jun Singh",
+   "owner_kind": "person",
+   "department": "Engineering — Digital Banking",
+   "group": {
+    "id": "grp_digital_eng",
+    "name": "Engineering — Digital Banking"
+   },
+   "agent_state": "enforcing",
+   "agent_version": "0.9.6",
+   "tools": [
+    "claude-code"
+   ],
+   "allowed": 399,
+   "blocked": 8,
+   "recorded": 29
+  },
+  {
+   "id": "e92f25f5-9160-4b19-925b-c0ec50c89d46",
+   "device_name": "LT-SG-2974",
+   "status": "active",
+   "health_score": 91,
+   "risk_level": "low",
+   "blocks_24h": 1,
+   "last_heartbeat": 1790560288,
+   "endpoint_id": "ep_LT-SG-2974",
+   "ip": "10.40.55.225",
+   "type": "laptop",
+   "owner": "Wen Hui Kumar",
+   "owner_kind": "person",
+   "department": "Data & Analytics",
+   "group": {
+    "id": "grp_data",
+    "name": "Data & Analytics"
+   },
+   "agent_state": "enforcing",
+   "agent_version": "0.9.6",
+   "tools": [
+    "gemini-cli",
+    "claude-code"
+   ],
+   "allowed": 360,
+   "blocked": 8,
+   "recorded": 18
+  },
+  {
+   "id": "be2ba34f-0bb3-45b4-a3a9-383715547d8a",
+   "device_name": "LT-SG-2314",
+   "status": "active",
+   "health_score": 93,
+   "risk_level": "low",
+   "blocks_24h": 1,
+   "last_heartbeat": 1790560610,
+   "endpoint_id": "ep_LT-SG-2314",
+   "ip": "10.40.54.211",
+   "type": "laptop",
+   "owner": "Sheng Nair",
+   "owner_kind": "person",
+   "department": "Data & Analytics",
+   "group": {
+    "id": "grp_data",
+    "name": "Data & Analytics"
+   },
+   "agent_state": "enforcing",
+   "agent_version": "0.9.6",
+   "tools": [
+    "gemini-cli",
+    "claude-code"
+   ],
+   "allowed": 368,
+   "blocked": 8,
+   "recorded": 15
+  },
+  {
+   "id": "e07ff763-90cb-4216-a71a-688a792550bd",
+   "device_name": "LT-SG-3055",
+   "status": "active",
+   "health_score": 92,
+   "risk_level": "low",
+   "blocks_24h": 1,
+   "last_heartbeat": 1790560310,
+   "endpoint_id": "ep_LT-SG-3055",
+   "ip": "10.40.50.24",
+   "type": "laptop",
+   "owner": "Ahmad Foo",
+   "owner_kind": "person",
+   "department": "Data & Analytics",
+   "group": {
+    "id": "grp_data",
+    "name": "Data & Analytics"
+   },
+   "agent_state": "enforcing",
+   "agent_version": "0.9.6",
+   "tools": [
+    "gemini-cli",
+    "claude-code"
+   ],
+   "allowed": 351,
+   "blocked": 8,
+   "recorded": 9
+  },
+  {
+   "id": "7ca83445-cd79-4573-b4d3-bc0444ce609c",
+   "device_name": "LT-SG-9080",
+   "status": "active",
+   "health_score": 96,
+   "risk_level": "low",
+   "blocks_24h": 1,
+   "last_heartbeat": 1790560667,
+   "endpoint_id": "ep_LT-SG-9080",
+   "ip": "10.40.22.166",
+   "type": "laptop",
+   "owner": "Hui Min Ismail",
+   "owner_kind": "person",
+   "department": "Data & Analytics",
+   "group": {
+    "id": "grp_data",
+    "name": "Data & Analytics"
+   },
+   "agent_state": "enforcing",
+   "agent_version": "0.9.6",
+   "tools": [
+    "gemini-cli",
+    "claude-code"
+   ],
+   "allowed": 338,
+   "blocked": 8,
+   "recorded": 11
+  },
+  {
+   "id": "de198fa2-5550-46a0-acb0-f2caa15d6741",
+   "device_name": "LT-SG-2196",
+   "status": "active",
+   "health_score": 95,
+   "risk_level": "low",
+   "blocks_24h": 1,
+   "last_heartbeat": 1790560794,
+   "endpoint_id": "ep_LT-SG-2196",
+   "ip": "10.40.6.62",
+   "type": "laptop",
+   "owner": "Siti Kumar",
+   "owner_kind": "person",
+   "department": "Data & Analytics",
+   "group": {
+    "id": "grp_data",
+    "name": "Data & Analytics"
+   },
+   "agent_state": "enforcing",
+   "agent_version": "0.9.6",
+   "tools": [
+    "gemini-cli",
+    "claude-code"
+   ],
+   "allowed": 344,
+   "blocked": 8,
+   "recorded": 12
+  },
+  {
+   "id": "696c9f95-f19f-470e-964e-34c3d5815ebc",
+   "device_name": "LT-SG-5243",
+   "status": "active",
+   "health_score": 97,
+   "risk_level": "low",
+   "blocks_24h": 1,
+   "last_heartbeat": 1790560765,
+   "endpoint_id": "ep_LT-SG-5243",
+   "ip": "10.40.53.183",
+   "type": "laptop",
+   "owner": "Grace Toh",
+   "owner_kind": "person",
+   "department": "Cyber Defence (SOC)",
+   "group": {
+    "id": "grp_soc",
+    "name": "Cyber Defence (SOC)"
+   },
+   "agent_state": "enforcing",
+   "agent_version": "0.9.6",
+   "tools": [
+    "claude-code"
+   ],
+   "allowed": 399,
+   "blocked": 8,
+   "recorded": 28
+  },
+  {
+   "id": "4a4fb656-25fb-44dc-98da-d4c8d7570135",
+   "device_name": "LT-SG-2844",
+   "status": "active",
+   "health_score": 71,
+   "risk_level": "low",
+   "blocks_24h": 1,
+   "last_heartbeat": 1790560658,
+   "endpoint_id": "ep_LT-SG-2844",
+   "ip": "10.40.37.214",
+   "type": "laptop",
+   "owner": "Xin Yi Loh",
+   "owner_kind": "person",
+   "department": "Treasury & Markets",
+   "group": {
+    "id": "grp_treasury",
+    "name": "Treasury & Markets"
+   },
+   "agent_state": "record_only",
+   "agent_version": "0.9.6",
+   "tools": [],
+   "allowed": 310,
+   "blocked": 8,
+   "recorded": 12
+  },
+  {
+   "id": "079cb142-c0d7-4fbf-89db-f88958a81eae",
+   "device_name": "LT-SG-2492",
+   "status": "active",
+   "health_score": 95,
+   "risk_level": "low",
+   "blocks_24h": 1,
+   "last_heartbeat": 1790560475,
+   "endpoint_id": "ep_LT-SG-2492",
+   "ip": "10.40.14.162",
+   "type": "laptop",
+   "owner": "Kelvin Sim",
+   "owner_kind": "person",
+   "department": "Treasury & Markets",
+   "group": {
+    "id": "grp_treasury",
+    "name": "Treasury & Markets"
+   },
+   "agent_state": "enforcing",
+   "agent_version": "0.9.6",
+   "tools": [],
+   "allowed": 313,
+   "blocked": 8,
+   "recorded": 17
+  },
+  {
+   "id": "f5172a8e-51c0-4cbb-ba94-84af12e23426",
+   "device_name": "LT-SG-9327",
+   "status": "active",
+   "health_score": 97,
+   "risk_level": "low",
+   "blocks_24h": 1,
+   "last_heartbeat": 1790560360,
+   "endpoint_id": "ep_LT-SG-9327",
+   "ip": "10.40.58.233",
+   "type": "laptop",
+   "owner": "Deepa Teo",
+   "owner_kind": "person",
+   "department": "Treasury & Markets",
+   "group": {
+    "id": "grp_treasury",
+    "name": "Treasury & Markets"
+   },
+   "agent_state": "enforcing",
+   "agent_version": "0.9.6",
+   "tools": [],
+   "allowed": 374,
+   "blocked": 8,
+   "recorded": 28
+  },
+  {
+   "id": "6a22250c-d11b-44aa-af86-a6578efacb4e",
+   "device_name": "LT-SG-4160",
+   "status": "active",
+   "health_score": 98,
+   "risk_level": "low",
+   "blocks_24h": 1,
+   "last_heartbeat": 1790560671,
+   "endpoint_id": "ep_LT-SG-4160",
+   "ip": "10.40.59.84",
+   "type": "laptop",
+   "owner": "Chloe Chan",
+   "owner_kind": "person",
+   "department": "Retail Banking Operations",
+   "group": {
+    "id": "grp_retail_ops",
+    "name": "Retail Banking Operations"
+   },
+   "agent_state": "enforcing",
+   "agent_version": "0.9.6",
+   "tools": [],
+   "allowed": 406,
+   "blocked": 8,
+   "recorded": 24
+  },
+  {
+   "id": "f86bdb08-9179-49bd-a399-0d3d91cf6d57",
+   "device_name": "LT-SG-4780",
+   "status": "active",
+   "health_score": 95,
+   "risk_level": "low",
+   "blocks_24h": 1,
+   "last_heartbeat": 1790560677,
+   "endpoint_id": "ep_LT-SG-4780",
+   "ip": "10.40.47.203",
+   "type": "laptop",
+   "owner": "Kavitha Krishnan",
+   "owner_kind": "person",
+   "department": "Retail Banking Operations",
+   "group": {
+    "id": "grp_retail_ops",
+    "name": "Retail Banking Operations"
+   },
+   "agent_state": "enforcing",
+   "agent_version": "0.9.6",
+   "tools": [],
+   "allowed": 351,
+   "blocked": 8,
+   "recorded": 12
+  },
+  {
+   "id": "7b2b68f3-379f-4da4-9765-5a7cb7f19a68",
+   "device_name": "LT-SG-8399",
+   "status": "active",
+   "health_score": 91,
+   "risk_level": "low",
+   "blocks_24h": 1,
+   "last_heartbeat": 1790560617,
+   "endpoint_id": "ep_LT-SG-8399",
+   "ip": "10.40.36.203",
+   "type": "laptop",
+   "owner": "Aisha Ho",
+   "owner_kind": "person",
+   "department": "Retail Banking Operations",
+   "group": {
+    "id": "grp_retail_ops",
+    "name": "Retail Banking Operations"
+   },
+   "agent_state": "enforcing",
+   "agent_version": "0.9.6",
+   "tools": [],
+   "allowed": 315,
+   "blocked": 8,
+   "recorded": 11
+  },
+  {
+   "id": "54ebf70a-392a-4153-b8a4-08fc5dcc95eb",
+   "device_name": "LT-SG-6095",
+   "status": "active",
+   "health_score": 92,
+   "risk_level": "low",
+   "blocks_24h": 1,
+   "last_heartbeat": 1790560572,
+   "endpoint_id": "ep_LT-SG-6095",
+   "ip": "10.40.54.60",
+   "type": "laptop",
+   "owner": "Joanne Nair",
+   "owner_kind": "person",
+   "department": "Engineering — Payments",
+   "group": {
+    "id": "grp_payments_eng",
+    "name": "Engineering — Payments"
+   },
+   "agent_state": "enforcing",
+   "agent_version": "0.9.6",
+   "tools": [
+    "claude-code"
+   ],
+   "allowed": 389,
+   "blocked": 7,
+   "recorded": 25
+  },
+  {
+   "id": "d18b057d-a569-4e5e-a383-143830048c42",
+   "device_name": "LT-SG-9212",
+   "status": "active",
+   "health_score": 96,
+   "risk_level": "low",
+   "blocks_24h": 1,
+   "last_heartbeat": 1790560426,
+   "endpoint_id": "ep_LT-SG-9212",
+   "ip": "10.40.34.211",
+   "type": "laptop",
+   "owner": "Xin Yi Lau",
+   "owner_kind": "person",
+   "department": "Engineering — Payments",
+   "group": {
+    "id": "grp_payments_eng",
+    "name": "Engineering — Payments"
+   },
+   "agent_state": "enforcing",
+   "agent_version": "0.9.6",
+   "tools": [
+    "claude-code"
+   ],
+   "allowed": 284,
+   "blocked": 7,
+   "recorded": 12
+  },
+  {
+   "id": "ef8a16ba-28cc-495c-b296-d5e6faf2d738",
+   "device_name": "LT-SG-5261",
+   "status": "offline",
+   "health_score": 40,
+   "risk_level": "low",
+   "blocks_24h": 1,
+   "last_heartbeat": 1790544818,
+   "endpoint_id": "ep_LT-SG-5261",
+   "ip": "10.40.27.3",
+   "type": "laptop",
+   "owner": "Ahmad Nair",
+   "owner_kind": "person",
+   "department": "Engineering — Digital Banking",
+   "group": {
+    "id": "grp_digital_eng",
+    "name": "Engineering — Digital Banking"
+   },
+   "agent_state": "offline",
+   "agent_version": "0.9.6",
+   "tools": [
+    "claude-code"
+   ],
+   "allowed": 314,
+   "blocked": 7,
+   "recorded": 23
+  },
+  {
+   "id": "f7679157-8f25-42e1-aa02-a1853d056314",
+   "device_name": "LT-SG-3429",
+   "status": "offline",
+   "health_score": 40,
+   "risk_level": "low",
+   "blocks_24h": 1,
+   "last_heartbeat": 1790497233,
+   "endpoint_id": "ep_LT-SG-3429",
+   "ip": "10.40.52.36",
+   "type": "laptop",
+   "owner": "Deepa Chan",
+   "owner_kind": "person",
+   "department": "Engineering — Digital Banking",
+   "group": {
+    "id": "grp_digital_eng",
+    "name": "Engineering — Digital Banking"
+   },
+   "agent_state": "offline",
+   "agent_version": "0.9.6",
+   "tools": [
+    "claude-code"
+   ],
+   "allowed": 273,
+   "blocked": 7,
+   "recorded": 17
+  },
+  {
+   "id": "2588002c-ff21-49b3-8a96-4ffc080a2249",
+   "device_name": "LT-SG-1270",
+   "status": "active",
+   "health_score": 92,
+   "risk_level": "low",
+   "blocks_24h": 1,
+   "last_heartbeat": 1790560453,
+   "endpoint_id": "ep_LT-SG-1270",
+   "ip": "10.40.18.57",
+   "type": "laptop",
+   "owner": "Darren Chong",
+   "owner_kind": "person",
+   "department": "Engineering — Digital Banking",
+   "group": {
+    "id": "grp_digital_eng",
+    "name": "Engineering — Digital Banking"
+   },
+   "agent_state": "enforcing",
+   "agent_version": "0.9.6",
+   "tools": [
+    "claude-code"
+   ],
+   "allowed": 405,
+   "blocked": 7,
+   "recorded": 16
+  },
+  {
+   "id": "d27e1864-e9ff-4882-868e-541dae1a02f8",
+   "device_name": "LT-SG-5796",
+   "status": "active",
+   "health_score": 98,
+   "risk_level": "low",
+   "blocks_24h": 1,
+   "last_heartbeat": 1790560349,
+   "endpoint_id": "ep_LT-SG-5796",
+   "ip": "10.40.19.130",
+   "type": "laptop",
+   "owner": "Wei Jie Quek",
+   "owner_kind": "person",
+   "department": "Engineering — Digital Banking",
+   "group": {
+    "id": "grp_digital_eng",
+    "name": "Engineering — Digital Banking"
+   },
+   "agent_state": "enforcing",
+   "agent_version": "0.9.6",
+   "tools": [
+    "claude-code"
+   ],
+   "allowed": 392,
+   "blocked": 7,
+   "recorded": 12
+  },
+  {
+   "id": "4d741dca-0a6c-4a19-ad03-3cf397584c90",
+   "device_name": "LT-SG-2906",
+   "status": "active",
+   "health_score": 90,
+   "risk_level": "low",
+   "blocks_24h": 1,
+   "last_heartbeat": 1790560427,
+   "endpoint_id": "ep_LT-SG-2906",
+   "ip": "10.40.53.212",
+   "type": "laptop",
+   "owner": "Nurul Yeo",
+   "owner_kind": "person",
+   "department": "Engineering — Digital Banking",
+   "group": {
+    "id": "grp_digital_eng",
+    "name": "Engineering — Digital Banking"
+   },
+   "agent_state": "enforcing",
+   "agent_version": "0.9.6",
+   "tools": [
+    "claude-code"
+   ],
+   "allowed": 343,
+   "blocked": 7,
+   "recorded": 27
+  },
+  {
+   "id": "897fb1fd-82d6-4ffe-8f55-cabcbd863422",
+   "device_name": "vm-dev-wen-37",
+   "status": "active",
+   "health_score": 92,
+   "risk_level": "low",
+   "blocks_24h": 1,
+   "last_heartbeat": 1790560685,
+   "endpoint_id": "ep_vm-dev-wen-37",
+   "ip": "10.60.52.125",
+   "type": "vm",
+   "owner": "Wen Hui Ng",
+   "owner_kind": "person",
+   "department": "Data & Analytics",
+   "group": {
+    "id": "grp_data",
+    "name": "Data & Analytics"
+   },
+   "agent_state": "enforcing",
+   "agent_version": "0.9.6",
+   "tools": [
+    "gemini-cli",
+    "claude-code"
+   ],
+   "allowed": 256,
+   "blocked": 7,
+   "recorded": 6
+  },
+  {
+   "id": "785a2aed-5f86-4add-9a23-41423007aae2",
+   "device_name": "LT-SG-2363",
+   "status": "active",
+   "health_score": 96,
+   "risk_level": "low",
+   "blocks_24h": 1,
+   "last_heartbeat": 1790560680,
+   "endpoint_id": "ep_LT-SG-2363",
+   "ip": "10.40.9.169",
+   "type": "laptop",
+   "owner": "Priyanka Abdullah",
+   "owner_kind": "person",
+   "department": "Cyber Defence (SOC)",
+   "group": {
+    "id": "grp_soc",
+    "name": "Cyber Defence (SOC)"
+   },
+   "agent_state": "enforcing",
+   "agent_version": "0.9.6",
+   "tools": [
+    "claude-code"
+   ],
+   "allowed": 381,
+   "blocked": 7,
+   "recorded": 12
+  },
+  {
+   "id": "c82d9d43-a1de-4a17-b2e5-8428e36a86c0",
+   "device_name": "LT-SG-1346",
+   "status": "active",
+   "health_score": 93,
+   "risk_level": "low",
+   "blocks_24h": 1,
+   "last_heartbeat": 1790560630,
+   "endpoint_id": "ep_LT-SG-1346",
+   "ip": "10.40.40.142",
+   "type": "laptop",
+   "owner": "Clement Foo",
+   "owner_kind": "person",
+   "department": "Retail Banking Operations",
+   "group": {
+    "id": "grp_retail_ops",
+    "name": "Retail Banking Operations"
+   },
+   "agent_state": "enforcing",
+   "agent_version": "0.9.6",
+   "tools": [],
+   "allowed": 396,
+   "blocked": 7,
+   "recorded": 16
+  },
+  {
+   "id": "582cd352-f96f-41e4-a205-2380ffb9696e",
+   "device_name": "LT-SG-7138",
+   "status": "active",
+   "health_score": 93,
+   "risk_level": "low",
+   "blocks_24h": 1,
+   "last_heartbeat": 1790560756,
+   "endpoint_id": "ep_LT-SG-7138",
+   "ip": "10.40.30.123",
+   "type": "laptop",
+   "owner": "Terence Ismail",
+   "owner_kind": "person",
+   "department": "Retail Banking Operations",
+   "group": {
+    "id": "grp_retail_ops",
+    "name": "Retail Banking Operations"
+   },
+   "agent_state": "enforcing",
+   "agent_version": "0.9.6",
+   "tools": [],
+   "allowed": 317,
+   "blocked": 7,
+   "recorded": 8
+  },
+  {
+   "id": "166d2ebc-d935-47df-b693-f1d97a718a82",
+   "device_name": "LT-SG-9173",
+   "status": "active",
+   "health_score": 96,
+   "risk_level": "low",
+   "blocks_24h": 1,
+   "last_heartbeat": 1790560734,
+   "endpoint_id": "ep_LT-SG-9173",
+   "ip": "10.40.24.189",
+   "type": "laptop",
+   "owner": "Priyanka Quek",
+   "owner_kind": "person",
+   "department": "Retail Banking Operations",
+   "group": {
+    "id": "grp_retail_ops",
+    "name": "Retail Banking Operations"
+   },
+   "agent_state": "enforcing",
+   "agent_version": "0.9.6",
+   "tools": [],
+   "allowed": 426,
+   "blocked": 7,
+   "recorded": 10
+  },
+  {
+   "id": "a23d2bca-515f-4574-8333-5a8726b23881",
+   "device_name": "LT-SG-4446",
+   "status": "active",
+   "health_score": 96,
+   "risk_level": "low",
+   "blocks_24h": 1,
+   "last_heartbeat": 1790560578,
+   "endpoint_id": "ep_LT-SG-4446",
+   "ip": "10.40.45.159",
+   "type": "laptop",
+   "owner": "Hafiz Chan",
+   "owner_kind": "person",
+   "department": "Retail Banking Operations",
+   "group": {
+    "id": "grp_retail_ops",
+    "name": "Retail Banking Operations"
+   },
+   "agent_state": "enforcing",
+   "agent_version": "0.9.6",
+   "tools": [],
+   "allowed": 350,
+   "blocked": 7,
+   "recorded": 18
+  },
+  {
+   "id": "d80f3431-1faf-4a8e-8c62-75795e1a3393",
+   "device_name": "LT-SG-2863",
+   "status": "active",
+   "health_score": 92,
+   "risk_level": "low",
+   "blocks_24h": 1,
+   "last_heartbeat": 1790560688,
+   "endpoint_id": "ep_LT-SG-2863",
+   "ip": "10.40.19.17",
+   "type": "laptop",
+   "owner": "Rachel Ng",
+   "owner_kind": "person",
+   "department": "Retail Banking Operations",
+   "group": {
+    "id": "grp_retail_ops",
+    "name": "Retail Banking Operations"
+   },
+   "agent_state": "enforcing",
+   "agent_version": "0.9.6",
+   "tools": [],
+   "allowed": 382,
+   "blocked": 7,
+   "recorded": 23
+  }
+ ]
+}

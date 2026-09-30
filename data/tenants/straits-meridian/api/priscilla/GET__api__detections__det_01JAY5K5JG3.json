@@ -1,0 +1,57 @@
+{
+ "operationId": "getDetection",
+ "access": "redacted",
+ "status": 200,
+ "headers": {},
+ "body": {
+  "detection_id": "det_01JAY5K5JG3",
+  "ts": 1790506912,
+  "rule_id": "CARD-PAN",
+  "rule_label": "Card number (PAN) in agent context",
+  "severity": "critical",
+  "disposition": "blocked",
+  "device_id": "44000bf8-2fe5-4216-8d91-f1d8bbb90c77",
+  "host": "LT-SG-5371",
+  "owner": "Ahmad Kumar",
+  "owner_kind": "person",
+  "department": "Engineering — Payments",
+  "group": {
+   "id": "grp_payments_eng",
+   "name": "Engineering — Payments"
+  },
+  "session_id": "sbx_04927a136779",
+  "teaser": "Card number (PAN) in agent context · MCP tool result → model prompt",
+  "description": "A card primary account number reached an agent prompt or tool result. DLP inspects the turn before it leaves the sandbox.",
+  "owasp": null,
+  "signal": "guest",
+  "classification": "regulated data",
+  "backend": "aegis-engine 0.9.6",
+  "evidence": {
+   "type": "sensitive_content",
+   "decoded_command": null,
+   "sensitive_content": null,
+   "exfil": null,
+   "egress_spike": null,
+   "persistence": null,
+   "undisclosed_action": null
+  },
+  "chain": [
+   {
+    "ts": 1790506912,
+    "label": "Card number (PAN) in agent context",
+    "detail": null,
+    "is_current": true,
+    "is_detection": true,
+    "severity": "critical",
+    "disposition": "blocked"
+   }
+  ],
+  "signature": {
+   "alg": "ed25519",
+   "key_id": "aegis-smb-2026-09",
+   "value": "MEUCIQrve8wtq63r0z…",
+   "signed_at": 1790506913,
+   "verify_hint": "aegis verify det_01JAY5K5JG3"
+  }
+ }
+}

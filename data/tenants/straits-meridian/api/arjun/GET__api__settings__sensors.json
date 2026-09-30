@@ -1,0 +1,52 @@
+{
+ "operationId": "getSettingsSensors",
+ "access": "read",
+ "status": 200,
+ "headers": {
+  "X-Data-As-Of": "1790560680"
+ },
+ "body": {
+  "endpoint": [
+   {
+    "sensor": "aegis-sandbox",
+    "source": "sandbox",
+    "family": "endpoint",
+    "events": 211840,
+    "blocks": 0,
+    "labels": 14,
+    "last_seen": 1790560780
+   }
+  ],
+  "discovery": [
+   {
+    "sensor": "Shield · pcap",
+    "family": "discovery",
+    "rows": 88727,
+    "services": 27,
+    "last_seen": 1790560680,
+    "endpoints": 366,
+    "hits": 88727,
+    "health": "ok",
+    "description": "Packet capture on the Tampines DC core switch span port"
+   },
+   {
+    "sensor": "Shield · sase_zscaler",
+    "family": "discovery",
+    "rows": 13383,
+    "services": 19,
+    "last_seen": 1790551200,
+    "endpoints": 46,
+    "hits": 13383,
+    "health": "silent",
+    "description": "Zscaler web logs for remote staff via webhook · no data for 2 h 40 m"
+   }
+  ],
+  "directory": {
+   "connected": true,
+   "provider": "Entra ID",
+   "mapped_endpoints": 371,
+   "total_endpoints": 412,
+   "last_sync": 1790559600
+  }
+ }
+}

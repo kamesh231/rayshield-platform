@@ -1,0 +1,62 @@
+{
+ "operationId": "getDetection",
+ "access": "read",
+ "status": 200,
+ "headers": {},
+ "body": {
+  "detection_id": "det_01JAZY3W0FP",
+  "ts": 1789974501,
+  "rule_id": "CARD-PAN",
+  "rule_label": "Card number (PAN) in agent context",
+  "severity": "critical",
+  "disposition": "blocked",
+  "device_id": "c0e01f4c-04d9-4db3-8e88-f9cf2d6f4267",
+  "host": "LT-SG-2843",
+  "owner": "Hafiz Wong",
+  "owner_kind": "person",
+  "department": "Engineering — Payments",
+  "group": {
+   "id": "grp_payments_eng",
+   "name": "Engineering — Payments"
+  },
+  "session_id": "sbx_7a3d99accd0c",
+  "teaser": "card PAN in query result (blocked)",
+  "description": "A card primary account number reached an agent prompt or tool result. DLP inspects the turn before it leaves the sandbox.",
+  "owasp": null,
+  "signal": "guest",
+  "classification": "regulated data",
+  "backend": "aegis-engine 0.9.6",
+  "evidence": {
+   "type": "sensitive_content",
+   "decoded_command": null,
+   "sensitive_content": {
+    "path": "postgres-mcp · query result",
+    "basis": "card PAN in tool result",
+    "pattern": "Luhn-valid 16-digit PAN",
+    "snippet_redacted": "pan=4539 •••• •••• 1187"
+   },
+   "exfil": null,
+   "egress_spike": null,
+   "persistence": null,
+   "undisclosed_action": null
+  },
+  "chain": [
+   {
+    "ts": 1789974501,
+    "label": "Card number (PAN) in agent context",
+    "detail": "card PAN in query result (blocked)",
+    "is_current": true,
+    "is_detection": true,
+    "severity": "critical",
+    "disposition": "blocked"
+   }
+  ],
+  "signature": {
+   "alg": "ed25519",
+   "key_id": "aegis-smb-2026-09",
+   "value": "MEUCIQ15kpjug6bi6d…",
+   "signed_at": 1789974502,
+   "verify_hint": "aegis verify det_01JAZY3W0FP"
+  }
+ }
+}

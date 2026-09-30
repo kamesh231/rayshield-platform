@@ -1,0 +1,12 @@
+{
+  "id": "northwind",
+  "name": "Northwind Capital",
+  "fictional": true,
+  "domain": "northwind.example",
+  "hosts": [
+    "LT-4821",
+    "vm-ci-build-214"
+  ],
+  "console": "public/console",
+  "terminal": "src/terminals/northwind.js"
+}

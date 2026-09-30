@@ -1,0 +1,68 @@
+{
+ "operationId": "getCue",
+ "access": "read",
+ "status": 200,
+ "headers": {},
+ "body": {
+  "id": "cue_soc_v1",
+  "name": "Claude Code — Cyber Defence",
+  "tool": "claude-code",
+  "scope": "group",
+  "scope_ref": "grp_soc",
+  "base_cue_id": "cue_bank_baseline",
+  "version": 1,
+  "state": "published",
+  "egress_allow": [
+   {
+    "value": "api.anthropic.com",
+    "inherited": true,
+    "source": "Claude Code — Bank baseline"
+   },
+   {
+    "value": "registry.npmjs.org",
+    "inherited": true,
+    "source": "Claude Code — Bank baseline"
+   },
+   {
+    "value": "pypi.org",
+    "inherited": true,
+    "source": "Claude Code — Bank baseline"
+   },
+   {
+    "value": "github.straitsmeridian.example",
+    "inherited": true,
+    "source": "Claude Code — Bank baseline"
+   }
+  ],
+  "mcp_servers": [
+   {
+    "value": "jira",
+    "inherited": false,
+    "source": null
+   }
+  ],
+  "dlp_rules": [
+   {
+    "value": "dlp-card-pan",
+    "inherited": true,
+    "source": "Claude Code — Bank baseline"
+   },
+   {
+    "value": "dlp-nric",
+    "inherited": true,
+    "source": "Claude Code — Bank baseline"
+   },
+   {
+    "value": "dlp-secrets",
+    "inherited": true,
+    "source": "Claude Code — Bank baseline"
+   },
+   {
+    "value": "dlp-swift-mt",
+    "inherited": true,
+    "source": "Claude Code — Bank baseline"
+   }
+  ],
+  "internal_tools": []
+ }
+}

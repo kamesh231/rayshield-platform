@@ -1,0 +1,62 @@
+{
+ "operationId": "getDetection",
+ "access": "read",
+ "status": 200,
+ "headers": {},
+ "body": {
+  "detection_id": "det_01JAG4Y8J3M",
+  "ts": 1790476632,
+  "rule_id": "SENSITIVE-ACCESS",
+  "rule_label": "Sensitive file access",
+  "severity": "medium",
+  "disposition": "blocked",
+  "device_id": "f75d429f-747d-424c-8317-870eba721c76",
+  "host": "LT-SG-3544",
+  "owner": "Hafiz Pillai",
+  "owner_kind": "person",
+  "department": "Engineering — Digital Banking",
+  "group": {
+   "id": "grp_digital_eng",
+   "name": "Engineering — Digital Banking"
+  },
+  "session_id": "sbx_9b01006ecb31",
+  "teaser": "~/.aws/credentials read",
+  "description": "Access to a secret, judged by file content rather than filename or path.",
+  "owasp": "ASI04",
+  "signal": "guest",
+  "classification": "regulated data",
+  "backend": "aegis-engine 0.9.6",
+  "evidence": {
+   "type": "sensitive_content",
+   "decoded_command": null,
+   "sensitive_content": {
+    "path": "prod.env~",
+    "basis": "credential material by content",
+    "pattern": "credential file content",
+    "snippet_redacted": "•••••••• (redacted at source)"
+   },
+   "exfil": null,
+   "egress_spike": null,
+   "persistence": null,
+   "undisclosed_action": null
+  },
+  "chain": [
+   {
+    "ts": 1790476632,
+    "label": "Sensitive file access",
+    "detail": "~/.aws/credentials read",
+    "is_current": true,
+    "is_detection": true,
+    "severity": "medium",
+    "disposition": "blocked"
+   }
+  ],
+  "signature": {
+   "alg": "ed25519",
+   "key_id": "aegis-smb-2026-09",
+   "value": "MEUCIQ1xg0pzjdorla…",
+   "signed_at": 1790476633,
+   "verify_hint": "aegis verify det_01JAG4Y8J3M"
+  }
+ }
+}

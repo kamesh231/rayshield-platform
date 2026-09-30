@@ -1,0 +1,50 @@
+{
+ "operationId": "getService",
+ "access": "read",
+ "status": 200,
+ "headers": {
+  "X-Window-From": "1789956000",
+  "X-Window-To": "1790560800",
+  "X-Data-As-Of": "1790560680"
+ },
+ "body": {
+  "service": {
+   "ai_service": "Perplexity",
+   "category": "Search",
+   "icon": null,
+   "separability": "distinct",
+   "confidence": "confirmed",
+   "hits": 240,
+   "bytes": 9895200,
+   "users": 4,
+   "risk_score": 55,
+   "jurisdiction": "US",
+   "ever_agentic": false,
+   "sandbox_candidate": false,
+   "agent_sdks": null,
+   "collector_count": 2,
+   "first_seen": 1790551140,
+   "last_seen": 1790560560,
+   "personal_account": false,
+   "oauth_scopes": null,
+   "service_id": "perplexity",
+   "vendor": "Perplexity",
+   "embedded_in": null,
+   "status": "unlabelled",
+   "reviewed_by": null,
+   "reviewed_at": null,
+   "endpoints": 4,
+   "is_new": true
+  },
+  "description": "AI answer engine. First seen today on 4 endpoints.",
+  "top_endpoints": [],
+  "status_history": [
+   {
+    "status": "unlabelled",
+    "by": "system",
+    "at": 1790551140,
+    "note": null
+   }
+  ]
+ }
+}

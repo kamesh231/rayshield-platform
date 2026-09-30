@@ -1,0 +1,89 @@
+{
+ "operationId": "getUsageByGroup",
+ "access": "read",
+ "status": 200,
+ "headers": {
+  "X-Window-From": "1789956000",
+  "X-Window-To": "1790560800",
+  "X-Data-As-Of": "1790560680"
+ },
+ "body": [
+  {
+   "group": {
+    "id": "grp_digital_eng",
+    "name": "Engineering — Digital Banking"
+   },
+   "tokens": 885123128,
+   "cost_usd": 2610.44,
+   "sessions": 781,
+   "users": 88,
+   "stops": 9
+  },
+  {
+   "group": {
+    "id": "grp_payments_eng",
+    "name": "Engineering — Payments"
+   },
+   "tokens": 640159483,
+   "cost_usd": 1740.12,
+   "sessions": 402,
+   "users": 46,
+   "stops": 6
+  },
+  {
+   "group": {
+    "id": "grp_data",
+    "name": "Data & Analytics"
+   },
+   "tokens": 834112711,
+   "cost_usd": 1391.3,
+   "sessions": 311,
+   "users": 36,
+   "stops": 0
+  },
+  {
+   "group": {
+    "id": "grp_contractors",
+    "name": "Vendor Engineering (contractors)"
+   },
+   "tokens": 559929495,
+   "cost_usd": 903.35,
+   "sessions": 203,
+   "users": 22,
+   "stops": 7
+  },
+  {
+   "group": {
+    "id": "grp_svc",
+    "name": "Service accounts (CI / ETL)"
+   },
+   "tokens": 112847621,
+   "cost_usd": 355.47,
+   "sessions": 141,
+   "users": 26,
+   "stops": 0
+  },
+  {
+   "group": {
+    "id": "grp_soc",
+    "name": "Cyber Defence (SOC)"
+   },
+   "tokens": 92063494,
+   "cost_usd": 290,
+   "sessions": 70,
+   "users": 14,
+   "stops": 0
+  },
+  {
+   "group": {
+    "id": "ungrouped",
+    "name": "Ungrouped"
+   },
+   "tokens": 38793652,
+   "cost_usd": 122.2,
+   "sessions": 26,
+   "users": 12,
+   "stops": 0
+  }
+ ]
+}

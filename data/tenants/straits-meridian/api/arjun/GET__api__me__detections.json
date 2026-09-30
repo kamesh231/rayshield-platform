@@ -1,0 +1,7 @@
+{
+ "operationId": "listMyDetections",
+ "access": "self",
+ "status": 200,
+ "headers": {},
+ "body": []
+}

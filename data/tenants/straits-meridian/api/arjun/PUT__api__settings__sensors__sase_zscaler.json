@@ -1,0 +1,11 @@
+{
+ "operationId": "updateSensor",
+ "access": "deny",
+ "status": 403,
+ "headers": {},
+ "body": {
+  "error": "Role 'security' (Arjun Menon) cannot call updateSensor.",
+  "code": "FORBIDDEN",
+  "request_id": "req_-BjuY6L6"
+ }
+}

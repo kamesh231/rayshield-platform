@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<div style="width:220px;background:#fff;border:1px solid #E4E8EC;border-radius:4px;padding:12px 0;font-family:'IBM Plex Sans',sans-serif;">
+  <div style="padding:8px 16px;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px;color:#0B0E12;margin-bottom:8px;">RayShield Aegis</div>
+
+  <sc-if value="{{isHome}}" hint-placeholder-val="{{false}}"><a href="Home.dc.html" style="display:block;padding:8px 16px;font-size:13.5px;background:#E3F3F1;color:#0B5A61;font-weight:500;border-left:2px solid #0F766E;text-decoration:none;">Home</a></sc-if>
+  <sc-if value="{{isNotHome}}" hint-placeholder-val="{{true}}"><a href="Home.dc.html" style="display:block;padding:8px 16px;font-size:13.5px;color:#3D4652;text-decoration:none;">Home</a></sc-if>
+
+  <sc-if value="{{isDiscoverySection}}"><a href="Discovery%20Overview.dc.html" style="display:block;padding:8px 16px;font-size:13.5px;background:#E3F3F1;color:#0B5A61;font-weight:500;border-left:2px solid #0F766E;text-decoration:none;">Discovery</a></sc-if>
+  <sc-if value="{{isNotDiscoverySection}}" hint-placeholder-val="{{true}}"><a href="Discovery%20Overview.dc.html" style="display:block;padding:8px 16px;font-size:13.5px;color:#3D4652;text-decoration:none;">Discovery</a></sc-if>
+  <sc-if value="{{isDiscoverySection}}">
+    <sc-if value="{{isDiscoveryOverview}}"><a href="Discovery%20Overview.dc.html" style="display:block;padding:8px 16px 8px 28px;font-size:12.5px;color:#0B5A61;font-weight:500;text-decoration:none;">Overview</a></sc-if>
+    <sc-if value="{{isNotDiscoveryOverview}}" hint-placeholder-val="{{true}}"><a href="Discovery%20Overview.dc.html" style="display:block;padding:8px 16px 8px 28px;font-size:12.5px;color:#6B7686;text-decoration:none;">Overview</a></sc-if>
+    <sc-if value="{{isDiscoveryServices}}"><a href="Discovery%20AI%20Services.dc.html" style="display:block;padding:8px 16px 8px 28px;font-size:12.5px;color:#0B5A61;font-weight:500;text-decoration:none;">AI services</a></sc-if>
+    <sc-if value="{{isNotDiscoveryServices}}" hint-placeholder-val="{{true}}"><a href="Discovery%20AI%20Services.dc.html" style="display:block;padding:8px 16px 8px 28px;font-size:12.5px;color:#6B7686;text-decoration:none;">AI services</a></sc-if>
+    <sc-if value="{{isDiscoveryEndpoints}}"><a href="Discovery%20Endpoints.dc.html" style="display:block;padding:8px 16px 8px 28px;font-size:12.5px;color:#0B5A61;font-weight:500;text-decoration:none;">Endpoints</a></sc-if>
+    <sc-if value="{{isNotDiscoveryEndpoints}}" hint-placeholder-val="{{true}}"><a href="Discovery%20Endpoints.dc.html" style="display:block;padding:8px 16px 8px 28px;font-size:12.5px;color:#6B7686;text-decoration:none;">Endpoints</a></sc-if>
+  </sc-if>
+
+  <sc-if value="{{isExecutionSection}}"><a href="Execution%20Fleet%20Overview.dc.html" style="display:block;padding:8px 16px;font-size:13.5px;background:#E3F3F1;color:#0B5A61;font-weight:500;border-left:2px solid #0F766E;text-decoration:none;">Execution</a></sc-if>
+  <sc-if value="{{isNotExecutionSection}}" hint-placeholder-val="{{true}}"><a href="Execution%20Fleet%20Overview.dc.html" style="display:block;padding:8px 16px;font-size:13.5px;color:#3D4652;text-decoration:none;">Execution</a></sc-if>
+  <sc-if value="{{isExecutionSection}}">
+    <sc-if value="{{isExecFleet}}"><a href="Execution%20Fleet%20Overview.dc.html" style="display:block;padding:8px 16px 8px 28px;font-size:12.5px;color:#0B5A61;font-weight:500;text-decoration:none;">Fleet overview</a></sc-if>
+    <sc-if value="{{isNotExecFleet}}" hint-placeholder-val="{{true}}"><a href="Execution%20Fleet%20Overview.dc.html" style="display:block;padding:8px 16px 8px 28px;font-size:12.5px;color:#6B7686;text-decoration:none;">Fleet overview</a></sc-if>
+    <sc-if value="{{isExecEndpoint}}"><a href="Execution%20Endpoint%20Detail.dc.html" style="display:block;padding:8px 16px 8px 28px;font-size:12.5px;color:#0B5A61;font-weight:500;text-decoration:none;">Endpoint detail</a></sc-if>
+    <sc-if value="{{isNotExecEndpoint}}" hint-placeholder-val="{{true}}"><a href="Execution%20Endpoint%20Detail.dc.html" style="display:block;padding:8px 16px 8px 28px;font-size:12.5px;color:#6B7686;text-decoration:none;">Endpoint detail</a></sc-if>
+    <sc-if value="{{isExecMcp}}"><a href="Execution%20MCP%20Approvals.dc.html" style="display:block;padding:8px 16px 8px 28px;font-size:12.5px;color:#0B5A61;font-weight:500;text-decoration:none;">MCP approvals</a></sc-if>
+    <sc-if value="{{isNotExecMcp}}" hint-placeholder-val="{{true}}"><a href="Execution%20MCP%20Approvals.dc.html" style="display:block;padding:8px 16px 8px 28px;font-size:12.5px;color:#6B7686;text-decoration:none;">MCP approvals</a></sc-if>
+  </sc-if>
+
+  <sc-if value="{{isFleetSection}}"><a href="Fleet-Control%20Roles%20and%20Policy.dc.html" style="display:block;padding:8px 16px;font-size:13.5px;background:#E3F3F1;color:#0B5A61;font-weight:500;border-left:2px solid #0F766E;text-decoration:none;">Fleet-Control</a></sc-if>
+  <sc-if value="{{isNotFleetSection}}" hint-placeholder-val="{{true}}"><a href="Fleet-Control%20Roles%20and%20Policy.dc.html" style="display:block;padding:8px 16px;font-size:13.5px;color:#3D4652;text-decoration:none;">Fleet-Control</a></sc-if>
+  <sc-if value="{{isFleetSection}}">
+    <sc-if value="{{isFleetRoles}}"><a href="Fleet-Control%20Roles%20and%20Policy.dc.html" style="display:block;padding:8px 16px 8px 28px;font-size:12.5px;color:#0B5A61;font-weight:500;text-decoration:none;">Roles &amp; policy</a></sc-if>
+    <sc-if value="{{isNotFleetRoles}}" hint-placeholder-val="{{true}}"><a href="Fleet-Control%20Roles%20and%20Policy.dc.html" style="display:block;padding:8px 16px 8px 28px;font-size:12.5px;color:#6B7686;text-decoration:none;">Roles &amp; policy</a></sc-if>
+    <sc-if value="{{isFleetBlast}}"><a href="Fleet-Control%20Blast%20Radius.dc.html" style="display:block;padding:8px 16px 8px 28px;font-size:12.5px;color:#0B5A61;font-weight:500;text-decoration:none;">Blast radius</a></sc-if>
+    <sc-if value="{{isNotFleetBlast}}" hint-placeholder-val="{{true}}"><a href="Fleet-Control%20Blast%20Radius.dc.html" style="display:block;padding:8px 16px 8px 28px;font-size:12.5px;color:#6B7686;text-decoration:none;">Blast radius</a></sc-if>
+  </sc-if>
+
+  <sc-if value="{{isSettings}}"><a href="Settings.dc.html" style="display:block;padding:8px 16px;font-size:13.5px;background:#E3F3F1;color:#0B5A61;font-weight:500;border-left:2px solid #0F766E;text-decoration:none;">Settings</a></sc-if>
+  <sc-if value="{{isNotSettings}}" hint-placeholder-val="{{true}}"><a href="Settings.dc.html" style="display:block;padding:8px 16px;font-size:13.5px;color:#3D4652;text-decoration:none;">Settings</a></sc-if>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:240,&quot;height&quot;:420},&quot;active&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;discovery-overview&quot;,&quot;options&quot;:[&quot;home&quot;,&quot;discovery-overview&quot;,&quot;discovery-services&quot;,&quot;discovery-endpoints&quot;,&quot;execution-fleet&quot;,&quot;execution-endpoint&quot;,&quot;execution-mcp&quot;,&quot;fleet-roles&quot;,&quot;fleet-blast&quot;,&quot;settings&quot;],&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    const a = this.props.active || 'discovery-overview';
+    const disc = a.startsWith('discovery');
+    const exec = a.startsWith('execution');
+    const fleet = a.startsWith('fleet');
+    return {
+      isHome: a === 'home', isNotHome: a !== 'home',
+      isDiscoverySection: disc, isNotDiscoverySection: !disc,
+      isDiscoveryOverview: a === 'discovery-overview', isNotDiscoveryOverview: a !== 'discovery-overview',
+      isDiscoveryServices: a === 'discovery-services', isNotDiscoveryServices: a !== 'discovery-services',
+      isDiscoveryEndpoints: a === 'discovery-endpoints', isNotDiscoveryEndpoints: a !== 'discovery-endpoints',
+      isExecutionSection: exec, isNotExecutionSection: !exec,
+      isExecFleet: a === 'execution-fleet', isNotExecFleet: a !== 'execution-fleet',
+      isExecEndpoint: a === 'execution-endpoint', isNotExecEndpoint: a !== 'execution-endpoint',
+      isExecMcp: a === 'execution-mcp', isNotExecMcp: a !== 'execution-mcp',
+      isFleetSection: fleet, isNotFleetSection: !fleet,
+      isFleetRoles: a === 'fleet-roles', isNotFleetRoles: a !== 'fleet-roles',
+      isFleetBlast: a === 'fleet-blast', isNotFleetBlast: a !== 'fleet-blast',
+      isSettings: a === 'settings', isNotSettings: a !== 'settings',
+    };
+  }
+}
+</script>
+</body>
+</html>

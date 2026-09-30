@@ -1,0 +1,11 @@
+{
+ "operationId": "getBlastGraph",
+ "access": "self",
+ "status": 403,
+ "headers": {},
+ "body": {
+  "error": "Role 'developer' (Rahul Iyer) cannot call getBlastGraph.",
+  "code": "FORBIDDEN",
+  "request_id": "req_S7-MWGi2"
+ }
+}

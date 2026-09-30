@@ -1,0 +1,75 @@
+{
+ "operationId": "getBlastGraph",
+ "access": "read",
+ "status": 200,
+ "headers": {},
+ "body": {
+  "execution_id": "exec_01JA3VDEPLOY",
+  "nodes": [
+   {
+    "id": "n1",
+    "kind": "endpoint",
+    "label": "vm-ci-build-214 · svc-ci",
+    "detail": "Service accounts (CI / ETL)",
+    "verdict": null
+   },
+   {
+    "id": "n2",
+    "kind": "cue",
+    "label": "Bank baseline v5",
+    "detail": "Claude Code — Bank baseline",
+    "verdict": "allow"
+   },
+   {
+    "id": "n3",
+    "kind": "mcp_sandbox",
+    "label": "github-enterprise (Aegis Bridge)",
+    "detail": "sbx-gh-ci214",
+    "verdict": "allow"
+   },
+   {
+    "id": "n4",
+    "kind": "credential",
+    "label": "runner environment",
+    "detail": "GITHUB_TOKEN from the CI runner environment",
+    "verdict": "allow"
+   },
+   {
+    "id": "n5",
+    "kind": "data",
+    "label": "payments-api · prod-deploy.pem",
+    "detail": "get_file deploy/keys/prod-deploy.pem",
+    "verdict": "flag"
+   },
+   {
+    "id": "n6",
+    "kind": "dlp_outcome",
+    "label": "Blocked before prompt left the sandbox",
+    "detail": "Flagged a PEM deploy key in file content sent to the model. Blocked.",
+    "verdict": "block"
+   }
+  ],
+  "edges": [
+   {
+    "from": "n1",
+    "to": "n2"
+   },
+   {
+    "from": "n2",
+    "to": "n3"
+   },
+   {
+    "from": "n3",
+    "to": "n4"
+   },
+   {
+    "from": "n4",
+    "to": "n5"
+   },
+   {
+    "from": "n5",
+    "to": "n6"
+   }
+  ]
+ }
+}

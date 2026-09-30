@@ -1,0 +1,92 @@
+{
+ "operationId": "getSessionActivity",
+ "access": "read",
+ "status": 200,
+ "headers": {},
+ "body": {
+  "session": "sbx_8971ab664fd6",
+  "header": {
+   "device_id": "caf1348f-1ef7-4a01-9619-b1374bf4452d",
+   "host": "LT-SG-5120",
+   "owner": "Benjamin Chua",
+   "department": "Treasury & Markets",
+   "group": {
+    "id": "grp_treasury",
+    "name": "Treasury & Markets"
+   },
+   "tool": "claude-desktop",
+   "outcome": "detected",
+   "started": 1790534783,
+   "last_seen": 1790538049
+  },
+  "origin": {
+   "source": "sandbox",
+   "writable": true,
+   "profile": "claude-desktop",
+   "workspace": "~/src/settlement-recon",
+   "identity": "spiffe://straitsmeridian.example/user/benjamin.chua",
+   "initial_prompt": "fix the failing build in settlement-recon"
+  },
+  "boot": {
+   "count": 10,
+   "items": [
+    {
+     "label": "egress allow",
+     "count": 5
+    },
+    {
+     "label": "mcps",
+     "count": 2
+    },
+    {
+     "label": "dlp rules",
+     "count": 3
+    }
+   ]
+  },
+  "activity": [
+   {
+    "cat": "prompt",
+    "kind": "turn",
+    "label": "fix the failing build in settlement-recon",
+    "detail": "model turn",
+    "count": 1,
+    "verdict": "allow",
+    "severity": null,
+    "first_ts": 1790534788,
+    "last_ts": 1790534788,
+    "rule_id": null,
+    "reason": null,
+    "owasp": null
+   },
+   {
+    "cat": "file_read",
+    "kind": "read",
+    "label": "Read files under ./src",
+    "detail": null,
+    "count": 4,
+    "verdict": "allow",
+    "severity": null,
+    "first_ts": 1790534823,
+    "last_ts": 1790534873,
+    "rule_id": null,
+    "reason": null,
+    "owasp": null
+   },
+   {
+    "cat": "detection",
+    "kind": "SWIFT-MSG",
+    "label": "SWIFT payment message in agent context",
+    "detail": "MT103 customer credit transfer pasted into a prompt (blocked)",
+    "count": 1,
+    "verdict": "block",
+    "severity": "high",
+    "first_ts": 1790535600,
+    "last_ts": 1790535600,
+    "rule_id": "SWIFT-MSG",
+    "reason": "MT103 customer credit transfer pasted into a prompt (blocked)",
+    "owasp": null
+   }
+  ]
+ }
+}

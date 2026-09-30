@@ -1,0 +1,11 @@
+{
+ "operationId": "publishCue",
+ "access": "deny",
+ "status": 403,
+ "headers": {},
+ "body": {
+  "error": "Role 'security' (Arjun Menon) cannot call publishCue.",
+  "code": "FORBIDDEN",
+  "request_id": "req_6U4DaXdN"
+ }
+}

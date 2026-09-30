@@ -1,0 +1,97 @@
+{
+ "operationId": "getUsageByModel",
+ "access": "read",
+ "status": 200,
+ "headers": {
+  "X-Window-From": "1789956000",
+  "X-Window-To": "1790560800",
+  "X-Data-As-Of": "1790560680"
+ },
+ "body": [
+  {
+   "model": "claude-sonnet-5",
+   "provider": "Anthropic",
+   "wire": "api.anthropic.com",
+   "input_tokens": 906993079,
+   "output_tokens": 117031365,
+   "cache_read_tokens": 438867619,
+   "cost_usd": 4608.11,
+   "sessions": 1288,
+   "users": 208,
+   "groups": 6,
+   "top_groups": [
+    {
+     "name": "Engineering — Digital Banking",
+     "cost_usd": 2410.44
+    },
+    {
+     "name": "Engineering — Payments",
+     "cost_usd": 1429.05
+    },
+    {
+     "name": "Service accounts (CI / ETL)",
+     "cost_usd": 355.47
+    }
+   ],
+   "rate_per_mtok": {
+    "input": 3,
+    "output": 15,
+    "cache_read": 0.3
+   }
+  },
+  {
+   "model": "gemini-2.5-pro",
+   "provider": "Google",
+   "wire": "generativelanguage.googleapis.com",
+   "input_tokens": 707115947,
+   "output_tokens": 91240767,
+   "cache_read_tokens": 342152878,
+   "cost_usd": 1902.37,
+   "sessions": 443,
+   "users": 170,
+   "groups": 3,
+   "top_groups": [
+    {
+     "name": "Data & Analytics",
+     "cost_usd": 1391.3
+    },
+    {
+     "name": "Engineering — Payments",
+     "cost_usd": 311.07
+    },
+    {
+     "name": "Engineering — Digital Banking",
+     "cost_usd": 200
+    }
+   ],
+   "rate_per_mtok": {
+    "input": 1.25,
+    "output": 10,
+    "cache_read": 0.31
+   }
+  },
+  {
+   "model": "gpt-5",
+   "provider": "OpenAI",
+   "wire": "api.openai.com",
+   "input_tokens": 346969302,
+   "output_tokens": 44770233,
+   "cache_read_tokens": 167888372,
+   "cost_usd": 902.4,
+   "sessions": 203,
+   "users": 22,
+   "groups": 1,
+   "top_groups": [
+    {
+     "name": "Vendor Engineering (contractors)",
+     "cost_usd": 902.4
+    }
+   ],
+   "rate_per_mtok": {
+    "input": 1.25,
+    "output": 10,
+    "cache_read": 0.125
+   }
+  }
+ ]
+}

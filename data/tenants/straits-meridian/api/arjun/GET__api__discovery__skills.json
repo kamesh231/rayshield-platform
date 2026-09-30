@@ -1,0 +1,467 @@
+{
+ "operationId": "listDiscoveredSkills",
+ "access": "read",
+ "status": 200,
+ "headers": {
+  "X-Total-Count": "79",
+  "X-Next-Cursor": "bzo1MA"
+ },
+ "body": [
+  {
+   "skill_id": "skl_settlement_recon_helper_ltsg2231",
+   "name": "settlement-recon-helper",
+   "endpoint_id": "ep_LT-SG-2231",
+   "tool": "claude-code",
+   "source": "user",
+   "flags": [],
+   "last_seen": 1790557707
+  },
+  {
+   "skill_id": "skl_settlement_recon_helper_vmdevrahul07",
+   "name": "settlement-recon-helper",
+   "endpoint_id": "ep_vm-dev-rahul-07",
+   "tool": "claude-code",
+   "source": "user",
+   "flags": [],
+   "last_seen": 1790557378
+  },
+  {
+   "skill_id": "skl_settlement_recon_helper_ltsg6562",
+   "name": "settlement-recon-helper",
+   "endpoint_id": "ep_LT-SG-6562",
+   "tool": "claude-code",
+   "source": "user",
+   "flags": [],
+   "last_seen": 1790557813
+  },
+  {
+   "skill_id": "skl_settlement_recon_helper_ltsg1961",
+   "name": "settlement-recon-helper",
+   "endpoint_id": "ep_LT-SG-1961",
+   "tool": "claude-code",
+   "source": "user",
+   "flags": [],
+   "last_seen": 1790556271
+  },
+  {
+   "skill_id": "skl_settlement_recon_helper_ltsg6095",
+   "name": "settlement-recon-helper",
+   "endpoint_id": "ep_LT-SG-6095",
+   "tool": "claude-code",
+   "source": "user",
+   "flags": [],
+   "last_seen": 1790555732
+  },
+  {
+   "skill_id": "skl_settlement_recon_helper_ltsg8337",
+   "name": "settlement-recon-helper",
+   "endpoint_id": "ep_LT-SG-8337",
+   "tool": "claude-code",
+   "source": "user",
+   "flags": [],
+   "last_seen": 1790557155
+  },
+  {
+   "skill_id": "skl_settlement_recon_helper_ltsg3833",
+   "name": "settlement-recon-helper",
+   "endpoint_id": "ep_LT-SG-3833",
+   "tool": "claude-code",
+   "source": "user",
+   "flags": [],
+   "last_seen": 1790558815
+  },
+  {
+   "skill_id": "skl_settlement_recon_helper_ltsg1342",
+   "name": "settlement-recon-helper",
+   "endpoint_id": "ep_LT-SG-1342",
+   "tool": "claude-code",
+   "source": "user",
+   "flags": [],
+   "last_seen": 1790559631
+  },
+  {
+   "skill_id": "skl_settlement_recon_helper_ltsg4871",
+   "name": "settlement-recon-helper",
+   "endpoint_id": "ep_LT-SG-4871",
+   "tool": "claude-code",
+   "source": "user",
+   "flags": [],
+   "last_seen": 1790560067
+  },
+  {
+   "skill_id": "skl_settlement_recon_helper_ltsg1865",
+   "name": "settlement-recon-helper",
+   "endpoint_id": "ep_LT-SG-1865",
+   "tool": "claude-code",
+   "source": "user",
+   "flags": [],
+   "last_seen": 1790556613
+  },
+  {
+   "skill_id": "skl_settlement_recon_helper_ltsg4130",
+   "name": "settlement-recon-helper",
+   "endpoint_id": "ep_LT-SG-4130",
+   "tool": "claude-code",
+   "source": "user",
+   "flags": [],
+   "last_seen": 1790558743
+  },
+  {
+   "skill_id": "skl_settlement_recon_helper_ltsg4281",
+   "name": "settlement-recon-helper",
+   "endpoint_id": "ep_LT-SG-4281",
+   "tool": "claude-code",
+   "source": "user",
+   "flags": [],
+   "last_seen": 1790554024
+  },
+  {
+   "skill_id": "skl_web_scraper_ltvn0412",
+   "name": "web-scraper",
+   "endpoint_id": "ep_LT-VN-0412",
+   "tool": "codex-cli",
+   "source": "user",
+   "flags": [
+    "network-egress"
+   ],
+   "last_seen": 1790553689
+  },
+  {
+   "skill_id": "skl_web_scraper_ltvn0419",
+   "name": "web-scraper",
+   "endpoint_id": "ep_LT-VN-0419",
+   "tool": "codex-cli",
+   "source": "user",
+   "flags": [
+    "network-egress"
+   ],
+   "last_seen": 1790557184
+  },
+  {
+   "skill_id": "skl_web_scraper_ltvn6679",
+   "name": "web-scraper",
+   "endpoint_id": "ep_LT-VN-6679",
+   "tool": "codex-cli",
+   "source": "user",
+   "flags": [
+    "network-egress"
+   ],
+   "last_seen": 1790557278
+  },
+  {
+   "skill_id": "skl_xlsx_ltsg1187",
+   "name": "xlsx",
+   "endpoint_id": "ep_LT-SG-1187",
+   "tool": "claude-code",
+   "source": "builtin",
+   "flags": [],
+   "last_seen": 1790560567
+  },
+  {
+   "skill_id": "skl_xlsx_ltsg3310",
+   "name": "xlsx",
+   "endpoint_id": "ep_LT-SG-3310",
+   "tool": "claude-code",
+   "source": "builtin",
+   "flags": [],
+   "last_seen": 1790558798
+  },
+  {
+   "skill_id": "skl_xlsx_ltsg3391",
+   "name": "xlsx",
+   "endpoint_id": "ep_LT-SG-3391",
+   "tool": "claude-code",
+   "source": "builtin",
+   "flags": [],
+   "last_seen": 1790553730
+  },
+  {
+   "skill_id": "skl_xlsx_ltsg1067",
+   "name": "xlsx",
+   "endpoint_id": "ep_LT-SG-1067",
+   "tool": "claude-code",
+   "source": "builtin",
+   "flags": [],
+   "last_seen": 1790555086
+  },
+  {
+   "skill_id": "skl_xlsx_ltsg1377",
+   "name": "xlsx",
+   "endpoint_id": "ep_LT-SG-1377",
+   "tool": "claude-code",
+   "source": "builtin",
+   "flags": [],
+   "last_seen": 1790554445
+  },
+  {
+   "skill_id": "skl_xlsx_ltsg6323",
+   "name": "xlsx",
+   "endpoint_id": "ep_LT-SG-6323",
+   "tool": "claude-code",
+   "source": "builtin",
+   "flags": [],
+   "last_seen": 1790559639
+  },
+  {
+   "skill_id": "skl_xlsx_ltsg2626",
+   "name": "xlsx",
+   "endpoint_id": "ep_LT-SG-2626",
+   "tool": "claude-code",
+   "source": "builtin",
+   "flags": [],
+   "last_seen": 1790555544
+  },
+  {
+   "skill_id": "skl_xlsx_ltsg5116",
+   "name": "xlsx",
+   "endpoint_id": "ep_LT-SG-5116",
+   "tool": "claude-code",
+   "source": "builtin",
+   "flags": [],
+   "last_seen": 1790559229
+  },
+  {
+   "skill_id": "skl_xlsx_ltsg2547",
+   "name": "xlsx",
+   "endpoint_id": "ep_LT-SG-2547",
+   "tool": "claude-code",
+   "source": "builtin",
+   "flags": [],
+   "last_seen": 1790560635
+  },
+  {
+   "skill_id": "skl_xlsx_ltsg5261",
+   "name": "xlsx",
+   "endpoint_id": "ep_LT-SG-5261",
+   "tool": "claude-code",
+   "source": "builtin",
+   "flags": [],
+   "last_seen": 1790557293
+  },
+  {
+   "skill_id": "skl_xlsx_ltsg3429",
+   "name": "xlsx",
+   "endpoint_id": "ep_LT-SG-3429",
+   "tool": "claude-code",
+   "source": "builtin",
+   "flags": [],
+   "last_seen": 1790554683
+  },
+  {
+   "skill_id": "skl_xlsx_ltsg3766",
+   "name": "xlsx",
+   "endpoint_id": "ep_LT-SG-3766",
+   "tool": "claude-code",
+   "source": "builtin",
+   "flags": [],
+   "last_seen": 1790559920
+  },
+  {
+   "skill_id": "skl_xlsx_ltsg8083",
+   "name": "xlsx",
+   "endpoint_id": "ep_LT-SG-8083",
+   "tool": "claude-code",
+   "source": "builtin",
+   "flags": [],
+   "last_seen": 1790559496
+  },
+  {
+   "skill_id": "skl_xlsx_ltsg7008",
+   "name": "xlsx",
+   "endpoint_id": "ep_LT-SG-7008",
+   "tool": "claude-code",
+   "source": "builtin",
+   "flags": [],
+   "last_seen": 1790553977
+  },
+  {
+   "skill_id": "skl_xlsx_ltsg9409",
+   "name": "xlsx",
+   "endpoint_id": "ep_LT-SG-9409",
+   "tool": "claude-code",
+   "source": "builtin",
+   "flags": [],
+   "last_seen": 1790558081
+  },
+  {
+   "skill_id": "skl_xlsx_ltsg8558",
+   "name": "xlsx",
+   "endpoint_id": "ep_LT-SG-8558",
+   "tool": "claude-code",
+   "source": "builtin",
+   "flags": [],
+   "last_seen": 1790555919
+  },
+  {
+   "skill_id": "skl_xlsx_ltsg9503",
+   "name": "xlsx",
+   "endpoint_id": "ep_LT-SG-9503",
+   "tool": "claude-code",
+   "source": "builtin",
+   "flags": [],
+   "last_seen": 1790559060
+  },
+  {
+   "skill_id": "skl_xlsx_ltsg1363",
+   "name": "xlsx",
+   "endpoint_id": "ep_LT-SG-1363",
+   "tool": "claude-code",
+   "source": "builtin",
+   "flags": [],
+   "last_seen": 1790556752
+  },
+  {
+   "skill_id": "skl_xlsx_ltsg9517",
+   "name": "xlsx",
+   "endpoint_id": "ep_LT-SG-9517",
+   "tool": "claude-code",
+   "source": "builtin",
+   "flags": [],
+   "last_seen": 1790557133
+  },
+  {
+   "skill_id": "skl_xlsx_ltsg2428",
+   "name": "xlsx",
+   "endpoint_id": "ep_LT-SG-2428",
+   "tool": "claude-code",
+   "source": "builtin",
+   "flags": [],
+   "last_seen": 1790555580
+  },
+  {
+   "skill_id": "skl_xlsx_ltsg2134",
+   "name": "xlsx",
+   "endpoint_id": "ep_LT-SG-2134",
+   "tool": "claude-code",
+   "source": "builtin",
+   "flags": [],
+   "last_seen": 1790557299
+  },
+  {
+   "skill_id": "skl_xlsx_ltsg6665",
+   "name": "xlsx",
+   "endpoint_id": "ep_LT-SG-6665",
+   "tool": "claude-code",
+   "source": "builtin",
+   "flags": [],
+   "last_seen": 1790560674
+  },
+  {
+   "skill_id": "skl_xlsx_ltsg8098",
+   "name": "xlsx",
+   "endpoint_id": "ep_LT-SG-8098",
+   "tool": "claude-code",
+   "source": "builtin",
+   "flags": [],
+   "last_seen": 1790554424
+  },
+  {
+   "skill_id": "skl_xlsx_ltsg4219",
+   "name": "xlsx",
+   "endpoint_id": "ep_LT-SG-4219",
+   "tool": "claude-code",
+   "source": "builtin",
+   "flags": [],
+   "last_seen": 1790555639
+  },
+  {
+   "skill_id": "skl_xlsx_ltsg4450",
+   "name": "xlsx",
+   "endpoint_id": "ep_LT-SG-4450",
+   "tool": "claude-code",
+   "source": "builtin",
+   "flags": [],
+   "last_seen": 1790556946
+  },
+  {
+   "skill_id": "skl_xlsx_ltsg7146",
+   "name": "xlsx",
+   "endpoint_id": "ep_LT-SG-7146",
+   "tool": "claude-code",
+   "source": "builtin",
+   "flags": [],
+   "last_seen": 1790560774
+  },
+  {
+   "skill_id": "skl_xlsx_ltsg2346",
+   "name": "xlsx",
+   "endpoint_id": "ep_LT-SG-2346",
+   "tool": "claude-code",
+   "source": "builtin",
+   "flags": [],
+   "last_seen": 1790556226
+  },
+  {
+   "skill_id": "skl_xlsx_ltsg9656",
+   "name": "xlsx",
+   "endpoint_id": "ep_LT-SG-9656",
+   "tool": "claude-code",
+   "source": "builtin",
+   "flags": [],
+   "last_seen": 1790555510
+  },
+  {
+   "skill_id": "skl_xlsx_ltsg5896",
+   "name": "xlsx",
+   "endpoint_id": "ep_LT-SG-5896",
+   "tool": "claude-code",
+   "source": "builtin",
+   "flags": [],
+   "last_seen": 1790553716
+  },
+  {
+   "skill_id": "skl_xlsx_ltsg3272",
+   "name": "xlsx",
+   "endpoint_id": "ep_LT-SG-3272",
+   "tool": "claude-code",
+   "source": "builtin",
+   "flags": [],
+   "last_seen": 1790560746
+  },
+  {
+   "skill_id": "skl_xlsx_ltsg4522",
+   "name": "xlsx",
+   "endpoint_id": "ep_LT-SG-4522",
+   "tool": "claude-code",
+   "source": "builtin",
+   "flags": [],
+   "last_seen": 1790560129
+  },
+  {
+   "skill_id": "skl_xlsx_ltsg1270",
+   "name": "xlsx",
+   "endpoint_id": "ep_LT-SG-1270",
+   "tool": "claude-code",
+   "source": "builtin",
+   "flags": [],
+   "last_seen": 1790556094
+  },
+  {
+   "skill_id": "skl_xlsx_ltsg7344",
+   "name": "xlsx",
+   "endpoint_id": "ep_LT-SG-7344",
+   "tool": "claude-code",
+   "source": "builtin",
+   "flags": [],
+   "last_seen": 1790557983
+  },
+  {
+   "skill_id": "skl_xlsx_ltsg7254",
+   "name": "xlsx",
+   "endpoint_id": "ep_LT-SG-7254",
+   "tool": "claude-code",
+   "source": "builtin",
+   "flags": [],
+   "last_seen": 1790560660
+  },
+  {
+   "skill_id": "skl_xlsx_ltsg4801",
+   "name": "xlsx",
+   "endpoint_id": "ep_LT-SG-4801",
+   "tool": "claude-code",
+   "source": "builtin",
+   "flags": [],
+   "last_seen": 1790555507
+  }
+ ]
+}

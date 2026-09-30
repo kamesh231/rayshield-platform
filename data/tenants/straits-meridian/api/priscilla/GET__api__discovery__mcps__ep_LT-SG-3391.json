@@ -1,0 +1,49 @@
+{
+ "operationId": "getEndpointMcps",
+ "access": "read",
+ "status": 200,
+ "headers": {},
+ "body": {
+  "endpoint_id": "ep_LT-SG-3391",
+  "core_installed": true,
+  "mcps": [
+   {
+    "mcp_id": "mcp_github_enterprise",
+    "name": "github-enterprise",
+    "kind": "remote",
+    "bridge_state": "onboarded",
+    "risk_tier": "medium",
+    "flags": []
+   },
+   {
+    "mcp_id": "mcp_jira",
+    "name": "jira",
+    "kind": "remote",
+    "bridge_state": "onboarded",
+    "risk_tier": "low",
+    "flags": []
+   },
+   {
+    "mcp_id": "mcp_filesystem",
+    "name": "filesystem",
+    "kind": "local",
+    "bridge_state": "blocked",
+    "risk_tier": "high",
+    "flags": [
+     "blocked-at-bridge",
+     "still-configured"
+    ]
+   }
+  ],
+  "skills": [
+   {
+    "skill_id": "skl_xlsx_ltsg3391",
+    "name": "xlsx",
+    "tool": "claude-code",
+    "source": "builtin",
+    "flags": [],
+    "last_seen": 1790553730
+   }
+  ]
+ }
+}

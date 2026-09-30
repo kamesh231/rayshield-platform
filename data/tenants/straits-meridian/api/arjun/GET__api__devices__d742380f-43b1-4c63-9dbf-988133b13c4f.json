@@ -1,0 +1,38 @@
+{
+ "operationId": "getDevice",
+ "access": "read",
+ "status": 200,
+ "headers": {
+  "X-Window-From": "1789956000",
+  "X-Window-To": "1790560800",
+  "X-Data-As-Of": "1790560680"
+ },
+ "body": {
+  "id": "d742380f-43b1-4c63-9dbf-988133b13c4f",
+  "device_name": "LT-VN-0412",
+  "status": "active",
+  "health_score": 97,
+  "risk_level": "low",
+  "blocks_24h": 0,
+  "last_heartbeat": 1790560446,
+  "endpoint_id": "ep_LT-VN-0412",
+  "ip": "10.40.21.23",
+  "type": "laptop",
+  "owner": "Thanh Nguyen",
+  "owner_kind": "person",
+  "department": "Vendor Engineering (contractors)",
+  "group": {
+   "id": "grp_contractors",
+   "name": "Vendor Engineering (contractors)"
+  },
+  "agent_state": "enforcing",
+  "agent_version": "0.9.6",
+  "tools": [
+   "codex-cli"
+  ],
+  "allowed": 388,
+  "blocked": 2,
+  "recorded": 26,
+  "os": "Ubuntu 22.04"
+ }
+}

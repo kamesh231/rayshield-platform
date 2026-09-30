@@ -1,0 +1,63 @@
+{
+ "operationId": "getDetection",
+ "access": "self",
+ "status": 200,
+ "headers": {},
+ "body": {
+  "detection_id": "det_01JARNRNKZT",
+  "ts": 1790467200,
+  "rule_id": "PII-NRIC",
+  "rule_label": "NRIC / FIN in agent context",
+  "severity": "critical",
+  "disposition": "blocked",
+  "device_id": "a497c981-1b88-4af4-b21f-6d94c7af60ef",
+  "host": "LT-SG-2231",
+  "owner": "Rahul Iyer",
+  "owner_kind": "person",
+  "department": "Engineering — Payments",
+  "group": {
+   "id": "grp_payments_eng",
+   "name": "Engineering — Payments"
+  },
+  "session_id": "sbx_f8e952641d62",
+  "teaser": "tests/fixtures/customers.json · 14 NRIC values in a test fixture (blocked)",
+  "description": "A Singapore NRIC or FIN number reached an agent prompt or tool result.",
+  "owasp": null,
+  "signal": "guest",
+  "classification": "regulated data",
+  "backend": "aegis-engine 0.9.6",
+  "evidence": {
+   "type": "sensitive_content",
+   "decoded_command": null,
+   "sensitive_content": {
+    "path": "tests/fixtures/customers.json",
+    "basis": "14 NRIC values in a test fixture sent as context",
+    "pattern": "NRIC checksum",
+    "snippet_redacted": "{\"name\":\"C. T.\",\"nric\":\"S•••••••D\"}"
+   },
+   "exfil": null,
+   "egress_spike": null,
+   "persistence": null,
+   "undisclosed_action": null
+  },
+  "chain": [
+   {
+    "ts": 1790467200,
+    "label": "NRIC / FIN in agent context",
+    "detail": "tests/fixtures/customers.json · 14 NRIC values in a test fixture (blocked)",
+    "is_current": true,
+    "is_detection": true,
+    "severity": "critical",
+    "disposition": "blocked"
+   }
+  ],
+  "signature": {
+   "alg": "ed25519",
+   "key_id": "aegis-smb-2026-09",
+   "value": "MEUCIQm7jun46ktixs…",
+   "signed_at": 1790467201,
+   "verify_hint": "aegis verify det_01JARNRNKZT"
+  },
+  "fix_hint": "A test fixture contained real-format NRICs. Replace them with the synthetic generator (make fixtures-synthetic) and re-run."
+ }
+}

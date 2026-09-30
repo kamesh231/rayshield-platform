@@ -1,0 +1,61 @@
+{
+ "operationId": "getDetection",
+ "access": "read",
+ "status": 200,
+ "headers": {},
+ "body": {
+  "detection_id": "det_01JAADC3RBB",
+  "ts": 1790392320,
+  "rule_id": "PROHIBITED-SERVICE",
+  "rule_label": "Prohibited AI service",
+  "severity": "high",
+  "disposition": "blocked",
+  "device_id": "9b6d9dd2-3961-4121-822f-fc1109e3300a",
+  "host": "LT-SG-9509",
+  "owner": "Serena Ang",
+  "owner_kind": "person",
+  "department": "Treasury & Markets",
+  "group": {
+   "id": "grp_treasury",
+   "name": "Treasury & Markets"
+  },
+  "session_id": "sbx_41fb8e787152",
+  "teaser": "api.deepseek.com · DeepSeek is labelled Prohibited (blocked)",
+  "description": "Traffic to a service labelled Prohibited in Discover (data residency).",
+  "owasp": null,
+  "signal": "wire",
+  "classification": "transfer",
+  "backend": "aegis-engine 0.9.6",
+  "evidence": {
+   "type": "exfil",
+   "decoded_command": null,
+   "sensitive_content": null,
+   "exfil": {
+    "destination": "api.deepseek.com",
+    "bytes": 88625,
+    "classification": "prohibited AI service (data residency)"
+   },
+   "egress_spike": null,
+   "persistence": null,
+   "undisclosed_action": null
+  },
+  "chain": [
+   {
+    "ts": 1790392320,
+    "label": "Prohibited AI service",
+    "detail": "api.deepseek.com · DeepSeek is labelled Prohibited (blocked)",
+    "is_current": true,
+    "is_detection": true,
+    "severity": "high",
+    "disposition": "blocked"
+   }
+  ],
+  "signature": {
+   "alg": "ed25519",
+   "key_id": "aegis-smb-2026-09",
+   "value": "MEUCIQ14rypv04w1ad…",
+   "signed_at": 1790392321,
+   "verify_hint": "aegis verify det_01JAADC3RBB"
+  }
+ }
+}

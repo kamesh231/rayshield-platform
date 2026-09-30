@@ -1,0 +1,92 @@
+{
+ "operationId": "getSessionActivity",
+ "access": "self",
+ "status": 200,
+ "headers": {},
+ "body": {
+  "session": "sbx_cc12d9ff240b",
+  "header": {
+   "device_id": "a497c981-1b88-4af4-b21f-6d94c7af60ef",
+   "host": "LT-SG-2231",
+   "owner": "Rahul Iyer",
+   "department": "Engineering — Payments",
+   "group": {
+    "id": "grp_payments_eng",
+    "name": "Engineering — Payments"
+   },
+   "tool": "claude-code",
+   "outcome": "detected",
+   "started": 1790170828,
+   "last_seen": 1790173413
+  },
+  "origin": {
+   "source": "sandbox",
+   "writable": true,
+   "profile": "claude-code",
+   "workspace": "~/src/mobile-app",
+   "identity": "spiffe://straitsmeridian.example/user/rahul.iyer",
+   "initial_prompt": "fix the failing build in mobile-app"
+  },
+  "boot": {
+   "count": 10,
+   "items": [
+    {
+     "label": "egress allow",
+     "count": 5
+    },
+    {
+     "label": "mcps",
+     "count": 2
+    },
+    {
+     "label": "dlp rules",
+     "count": 3
+    }
+   ]
+  },
+  "activity": [
+   {
+    "cat": "prompt",
+    "kind": "turn",
+    "label": "fix the failing build in mobile-app",
+    "detail": "model turn",
+    "count": 1,
+    "verdict": "allow",
+    "severity": null,
+    "first_ts": 1790170833,
+    "last_ts": 1790170833,
+    "rule_id": null,
+    "reason": null,
+    "owasp": null
+   },
+   {
+    "cat": "file_read",
+    "kind": "read",
+    "label": "Read files under ./src",
+    "detail": null,
+    "count": 4,
+    "verdict": "allow",
+    "severity": null,
+    "first_ts": 1790170868,
+    "last_ts": 1790170918,
+    "rule_id": null,
+    "reason": null,
+    "owasp": null
+   },
+   {
+    "cat": "detection",
+    "kind": "SWIFT-MSG",
+    "label": "SWIFT payment message in agent context",
+    "detail": "pacs.008 message in a test file (blocked)",
+    "count": 1,
+    "verdict": "block",
+    "severity": "high",
+    "first_ts": 1790171442,
+    "last_ts": 1790171442,
+    "rule_id": "SWIFT-MSG",
+    "reason": "pacs.008 message in a test file (blocked)",
+    "owasp": null
+   }
+  ]
+ }
+}

@@ -1,0 +1,33 @@
+{
+ "operationId": "getBridgeMcp",
+ "access": "read",
+ "status": 200,
+ "headers": {},
+ "body": {
+  "id": "mcp_confluence",
+  "name": "confluence",
+  "source": "confluence.straitsmeridian.example/mcp",
+  "kind": "remote",
+  "status": "scanning",
+  "risk_score": 24,
+  "risk_tier": "low",
+  "capabilities": {
+   "tools": [
+    "search",
+    "get_page"
+   ],
+   "writes": false
+  },
+  "findings": {
+   "high": 0,
+   "medium": 0,
+   "low": 1,
+   "summary": "Scan complete · read-only · awaiting an Admin or CISO decision",
+   "scan_complete": true
+  },
+  "approved_by": null,
+  "approved_reason": null,
+  "groups_with_access": [],
+  "created_at": 1790550000
+ }
+}

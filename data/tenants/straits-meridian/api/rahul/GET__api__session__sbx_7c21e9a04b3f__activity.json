@@ -1,0 +1,120 @@
+{
+ "operationId": "getSessionActivity",
+ "access": "self",
+ "status": 200,
+ "headers": {},
+ "body": {
+  "session": "sbx_7c21e9a04b3f",
+  "header": {
+   "device_id": "a497c981-1b88-4af4-b21f-6d94c7af60ef",
+   "host": "LT-SG-2231",
+   "owner": "Rahul Iyer",
+   "department": "Engineering — Payments",
+   "group": {
+    "id": "grp_payments_eng",
+    "name": "Engineering — Payments"
+   },
+   "tool": "claude-code",
+   "outcome": "detected",
+   "started": 1790552965,
+   "last_seen": 1790553570
+  },
+  "origin": {
+   "source": "sandbox",
+   "writable": true,
+   "profile": "claude-code",
+   "workspace": "~/src/settlement-recon",
+   "identity": "spiffe://straitsmeridian.example/user/rahul.iyer",
+   "initial_prompt": "find why yesterday's card settlement is off by SGD 1,240"
+  },
+  "boot": {
+   "count": 12,
+   "items": [
+    {
+     "label": "egress allow",
+     "count": 5
+    },
+    {
+     "label": "mcps",
+     "count": 3
+    },
+    {
+     "label": "dlp rules",
+     "count": 4
+    }
+   ]
+  },
+  "activity": [
+   {
+    "cat": "prompt",
+    "kind": "turn",
+    "label": "find why yesterday's card settlement is off by SGD 1,240",
+    "detail": "claude-sonnet-5",
+    "count": 1,
+    "verdict": "allow",
+    "severity": null,
+    "first_ts": 1790553300,
+    "last_ts": 1790553300,
+    "rule_id": null,
+    "reason": null,
+    "owasp": null
+   },
+   {
+    "cat": "file_read",
+    "kind": "read",
+    "label": "Read 4 files under ./recon",
+    "detail": "recon/batch.py …",
+    "count": 4,
+    "verdict": "allow",
+    "severity": null,
+    "first_ts": 1790553340,
+    "last_ts": 1790553340,
+    "rule_id": null,
+    "reason": null,
+    "owasp": null
+   },
+   {
+    "cat": "agent",
+    "kind": "tool_call",
+    "label": "postgres-mcp.query via Aegis Bridge",
+    "detail": "SELECT * FROM cards.txn_ledger WHERE settle_date = current_date - 1",
+    "count": 1,
+    "verdict": "allow",
+    "severity": null,
+    "first_ts": 1790553560,
+    "last_ts": 1790553560,
+    "rule_id": null,
+    "reason": null,
+    "owasp": null
+   },
+   {
+    "cat": "detection",
+    "kind": "CARD-PAN",
+    "label": "Card number (PAN) in agent context",
+    "detail": "1,240 rows · pan=4539 •••• •••• 1187 · nric=S•••••••D",
+    "count": 1,
+    "verdict": "block",
+    "severity": "critical",
+    "first_ts": 1790553600,
+    "last_ts": 1790553600,
+    "rule_id": "CARD-PAN",
+    "reason": "Blocked before the prompt left the sandbox (dlp-card-pan, dlp-nric)",
+    "owasp": null
+   },
+   {
+    "cat": "blocked",
+    "kind": "egress",
+    "label": "Egress to pastebin.com",
+    "detail": "pastebin.com:443",
+    "count": 1,
+    "verdict": "block",
+    "severity": null,
+    "first_ts": 1790553625,
+    "last_ts": 1790553625,
+    "rule_id": null,
+    "reason": "Not in the CUE allow-list",
+    "owasp": null
+   }
+  ]
+ }
+}

@@ -1,0 +1,11 @@
+{
+ "operationId": "createGroup",
+ "access": "deny",
+ "status": 403,
+ "headers": {},
+ "body": {
+  "error": "Role 'developer' (Rahul Iyer) cannot call createGroup.",
+  "code": "FORBIDDEN",
+  "request_id": "req_nsZw05_o"
+ }
+}

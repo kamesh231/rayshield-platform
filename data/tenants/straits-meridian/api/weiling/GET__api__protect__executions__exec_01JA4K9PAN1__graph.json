@@ -1,0 +1,75 @@
+{
+ "operationId": "getBlastGraph",
+ "access": "read",
+ "status": 200,
+ "headers": {},
+ "body": {
+  "execution_id": "exec_01JA4K9PAN1",
+  "nodes": [
+   {
+    "id": "n1",
+    "kind": "endpoint",
+    "label": "LT-SG-2231 · Rahul Iyer",
+    "detail": "Engineering — Payments",
+    "verdict": null
+   },
+   {
+    "id": "n2",
+    "kind": "cue",
+    "label": "Payments Engineering v3",
+    "detail": "Claude Code — Payments Engineering",
+    "verdict": "allow"
+   },
+   {
+    "id": "n3",
+    "kind": "mcp_sandbox",
+    "label": "postgres-mcp (Aegis Bridge)",
+    "detail": "sbx-pg-7c21",
+    "verdict": "allow"
+   },
+   {
+    "id": "n4",
+    "kind": "credential",
+    "label": ".env credentials",
+    "detail": "Read DATABASE_URL from .env in ~/src/settlement-recon",
+    "verdict": "allow"
+   },
+   {
+    "id": "n5",
+    "kind": "data",
+    "label": "cards.txn_ledger — 1,240 rows",
+    "detail": "SELECT * FROM cards.txn_ledger WHERE settle_date = current_date - 1",
+    "verdict": "flag"
+   },
+   {
+    "id": "n6",
+    "kind": "dlp_outcome",
+    "label": "Blocked before prompt left the sandbox",
+    "detail": "Flagged 1,240 card PANs (e.g. 4539 •••• •••• 1187) and NRICs (e.g. S•••••••D) in the tool result headed to api.anthropic.com. Blocked before it left the sandbox; follow-up egress to pastebin.com blocked by the CUE.",
+    "verdict": "block"
+   }
+  ],
+  "edges": [
+   {
+    "from": "n1",
+    "to": "n2"
+   },
+   {
+    "from": "n2",
+    "to": "n3"
+   },
+   {
+    "from": "n3",
+    "to": "n4"
+   },
+   {
+    "from": "n4",
+    "to": "n5"
+   },
+   {
+    "from": "n5",
+    "to": "n6"
+   }
+  ]
+ }
+}

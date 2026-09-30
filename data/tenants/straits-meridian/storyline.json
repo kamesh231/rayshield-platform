@@ -1,0 +1,49 @@
+{
+  "$comment": "Straits Meridian Bank demo storyline (~6 minutes). Each beat: who, what they do, what the screen shows, and the SSE event it emits (if any).",
+  "duration_min": 6,
+  "setup": ["DEMO_TENANT=straits-meridian npm start", "Window A: sign in as priscilla (CISO)", "Window B: sign in as rahul (terminal + /me)", "Click Reset demo once as weiling before starting"],
+  "beats": [
+    {
+      "n": 1, "title": "CISO frames it", "persona": "priscilla", "screen": "/console · Home",
+      "action": "Open Home.",
+      "expect": ["Deployment step 3 of 4 (Full containment next)", "23 of 27 services governed", "Shadow share 3.1 % (5.4 % previous week)", "90 % endpoints enforcing (371 / 412)", "17 / 17 critical detections contained", "0 card or NRIC records left the bank", "3 decisions awaiting the CISO"],
+      "event": null
+    },
+    {
+      "n": 2, "title": "Developer works", "persona": "rahul", "screen": "/terminal → /me",
+      "action": "aegis run claude-code --src ./settlement-recon --writable, then claude \"find why yesterday's card settlement is off by SGD 1,240\"",
+      "expect": ["Boots under Payments Engineering v3 with inherited egress + DLP", "DLP blocks card PAN + NRIC before the prompt leaves", "/me · My blocked events explains why and how to fix"],
+      "event": { "type": "detection", "rule": "CARD-PAN", "host": "LT-SG-2231", "also": "blastRun" }
+    },
+    {
+      "n": 3, "title": "Security triages", "persona": "arjun", "screen": "/console · Home → Protect → Detections → Blast radius → Discover",
+      "action": "Open the escalated card-data detection, open the blast-radius tree, review Payments CUE draft v4 (dlp-mask-query-results), open DeepSeek, label Perplexity Under review, try Approve on confluence.",
+      "expect": ["Tree LT-SG-2231 → Payments v3 → postgres-mcp (Aegis Bridge) → .env → cards.txn_ledger 1,240 rows → Blocked before prompt left the sandbox", "Perplexity moves to Under review (24 of 27 governed)", "Approve is refused: only Tan Wei Ling (Admin) or Priscilla Goh (CISO) can approve MCP servers"],
+      "event": { "type": "serviceStatus", "service": "perplexity", "status": "under_review" }
+    },
+    {
+      "n": 4, "title": "Developer asks", "persona": "rahul", "screen": "/terminal",
+      "action": "aegis mcp request confluence --reason \"read runbooks while debugging settlement\"",
+      "expect": ["Terminal: scan passed, awaiting decision", "Toast in Admin and CISO consoles: Rahul Iyer is asking for confluence", "/me · My MCP requests shows confluence · awaiting decision"],
+      "event": { "type": "mcpRequest", "name": "confluence", "by": "Rahul Iyer" }
+    },
+    {
+      "n": 5, "title": "CISO decides", "persona": "priscilla", "screen": "/console · Control → MCP Bridge, CUEs",
+      "action": "Approve confluence for Engineering — Payments, then publish Payments CUE v4 (demo bar or console).",
+      "expect": ["confluence Onboarded · access Engineering — Payments", "claude-code/payments-eng@v4 signed; push queued", "Terminal announces the signed v4 CUE"],
+      "event": [{ "type": "mcpDecision", "name": "confluence", "decision": "approved" }, { "type": "cuePublished", "cue": "cue_payments_v3", "version": 4 }, { "type": "cuePushed", "host": "LT-SG-2231", "cueVersion": 4 }]
+    },
+    {
+      "n": 6, "title": "Developer unblocked", "persona": "rahul", "screen": "/terminal",
+      "action": "claude \"open the runbook for settlement retries\", then claude \"summarise today's settlement exceptions\"",
+      "expect": ["confluence runbook opens (allowed by group MCP policy)", "Query result arrives masked by dlp-mask-query-results; task succeeds; no detection"],
+      "event": { "type": "terminal", "kind": "agent-task" }
+    },
+    {
+      "n": 7, "title": "Admin closes the loop", "persona": "weiling", "screen": "/console · Home → Protect → Fleet",
+      "action": "Review CUE drift, the silent Zscaler sensor and contractor recertification, then Reset demo.",
+      "expect": ["6 Payments endpoints still on v3 catching up (17 endpoints on older CUEs in total)", "Sensor sase_zscaler silent for 2 h 40 m", "Vendor Engineering (contractors) recertification due in 14 days"],
+      "event": { "type": "reset" }
+    }
+  ]
+}

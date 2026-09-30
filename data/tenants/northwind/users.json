@@ -1,0 +1,67 @@
+{
+  "$comment": "Northwind Capital demo logins (moved unchanged from src/users.js).",
+  "users": {
+    "priya": {
+      "name": "Priya Nair",
+      "email": "priya.nair@northwind.example",
+      "password": "demo",
+      "title": "Tenant Administrator",
+      "console": "Administrator",
+      "perms": {
+        "approveMcp": true,
+        "editCue": true,
+        "setStatus": true,
+        "viewAll": true,
+        "terminal": []
+      },
+      "landing": "/console"
+    },
+    "tomas": {
+      "name": "Tomas Weiler",
+      "email": "tomas.weiler@northwind.example",
+      "password": "demo",
+      "title": "Security Analyst",
+      "console": "Security",
+      "perms": {
+        "approveMcp": true,
+        "editCue": false,
+        "setStatus": true,
+        "viewAll": true,
+        "terminal": []
+      },
+      "landing": "/console"
+    },
+    "ciso": {
+      "name": "Rhea Menon",
+      "email": "rhea.menon@northwind.example",
+      "password": "demo",
+      "title": "CISO (read-only)",
+      "console": "Viewer",
+      "perms": {
+        "approveMcp": false,
+        "editCue": false,
+        "setStatus": false,
+        "viewAll": true,
+        "terminal": []
+      },
+      "landing": "/console"
+    },
+    "dev": {
+      "name": "Dev Patel",
+      "email": "dev.patel@northwind.example",
+      "password": "demo",
+      "title": "Engineer",
+      "console": null,
+      "perms": {
+        "approveMcp": false,
+        "editCue": false,
+        "setStatus": false,
+        "viewAll": false,
+        "terminal": [
+          "LT-4821"
+        ]
+      },
+      "landing": "/terminal"
+    }
+  }
+}

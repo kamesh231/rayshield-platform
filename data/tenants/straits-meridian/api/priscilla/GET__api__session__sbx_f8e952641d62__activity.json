@@ -1,0 +1,92 @@
+{
+ "operationId": "getSessionActivity",
+ "access": "redacted",
+ "status": 200,
+ "headers": {},
+ "body": {
+  "session": "sbx_f8e952641d62",
+  "header": {
+   "device_id": "a497c981-1b88-4af4-b21f-6d94c7af60ef",
+   "host": "LT-SG-2231",
+   "owner": "Rahul Iyer",
+   "department": "Engineering — Payments",
+   "group": {
+    "id": "grp_payments_eng",
+    "name": "Engineering — Payments"
+   },
+   "tool": "claude-code",
+   "outcome": "detected",
+   "started": 1790466890,
+   "last_seen": 1790468720
+  },
+  "origin": {
+   "source": "sandbox",
+   "writable": true,
+   "profile": "claude-code",
+   "workspace": "~/src/risk-reports",
+   "identity": "spiffe://straitsmeridian.example/user/rahul.iyer",
+   "initial_prompt": null
+  },
+  "boot": {
+   "count": 10,
+   "items": [
+    {
+     "label": "egress allow",
+     "count": 5
+    },
+    {
+     "label": "mcps",
+     "count": 2
+    },
+    {
+     "label": "dlp rules",
+     "count": 3
+    }
+   ]
+  },
+  "activity": [
+   {
+    "cat": "prompt",
+    "kind": "turn",
+    "label": "fix the failing build in risk-reports",
+    "detail": null,
+    "count": 1,
+    "verdict": "allow",
+    "severity": null,
+    "first_ts": 1790466895,
+    "last_ts": 1790466895,
+    "rule_id": null,
+    "reason": null,
+    "owasp": null
+   },
+   {
+    "cat": "file_read",
+    "kind": "read",
+    "label": "Read files under ./src",
+    "detail": null,
+    "count": 4,
+    "verdict": "allow",
+    "severity": null,
+    "first_ts": 1790466930,
+    "last_ts": 1790466980,
+    "rule_id": null,
+    "reason": null,
+    "owasp": null
+   },
+   {
+    "cat": "detection",
+    "kind": "PII-NRIC",
+    "label": "NRIC / FIN in agent context",
+    "detail": "tests/fixtures/customers.json · 14 NRIC values in a test fixture (blocked)",
+    "count": 1,
+    "verdict": "block",
+    "severity": "critical",
+    "first_ts": 1790467200,
+    "last_ts": 1790467200,
+    "rule_id": "PII-NRIC",
+    "reason": "tests/fixtures/customers.json · 14 NRIC values in a test fixture (blocked)",
+    "owasp": null
+   }
+  ]
+ }
+}

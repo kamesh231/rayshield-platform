@@ -1,0 +1,63 @@
+{
+ "operationId": "getDiscoveryEndpoint",
+ "access": "read",
+ "status": 200,
+ "headers": {
+  "X-Window-From": "1789956000",
+  "X-Window-To": "1790560800",
+  "X-Data-As-Of": "1790560680"
+ },
+ "body": {
+  "endpoint": {
+   "endpoint": "10.40.47.164",
+   "host": "LT-SG-4402",
+   "endpoint_id": "ep_LT-SG-4402",
+   "device_id": "194ef8f9-561c-4ea1-b882-cc794f93b079",
+   "type": "laptop",
+   "ephemeral": false,
+   "user": "Jia Hui Ong",
+   "department": "Data & Analytics",
+   "identity_source": "idp",
+   "sensor": "pcap",
+   "first_seen": 1782957600,
+   "last_seen": 1790559812
+  },
+  "services": [
+   {
+    "service_id": "gemini-cli",
+    "ai_service": "Gemini CLI",
+    "status": "approved",
+    "hits": 59,
+    "last_seen": 1790559812
+   },
+   {
+    "service_id": "claude-code",
+    "ai_service": "Claude Code",
+    "status": "approved",
+    "hits": 47,
+    "last_seen": 1790559812
+   },
+   {
+    "service_id": "grammarly-business",
+    "ai_service": "Grammarly Business",
+    "status": "approved",
+    "hits": 35,
+    "last_seen": 1790559812
+   },
+   {
+    "service_id": "azure-openai",
+    "ai_service": "Azure OpenAI",
+    "status": "approved",
+    "hits": 23,
+    "last_seen": 1790559812
+   },
+   {
+    "service_id": "anthropic-api",
+    "ai_service": "Anthropic Claude (API)",
+    "status": "approved",
+    "hits": 15,
+    "last_seen": 1790559812
+   }
+  ]
+ }
+}

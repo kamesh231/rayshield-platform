@@ -1,0 +1,67 @@
+{
+ "operationId": "getService",
+ "access": "read",
+ "status": 200,
+ "headers": {
+  "X-Window-From": "1789956000",
+  "X-Window-To": "1790560800",
+  "X-Data-As-Of": "1790560680"
+ },
+ "body": {
+  "service": {
+   "ai_service": "Claude.ai (personal)",
+   "category": "Assistant",
+   "icon": null,
+   "separability": "distinct",
+   "confidence": "confirmed",
+   "hits": 640,
+   "bytes": 26387200,
+   "users": 18,
+   "risk_score": 61,
+   "jurisdiction": "US",
+   "ever_agentic": false,
+   "sandbox_candidate": false,
+   "agent_sdks": null,
+   "collector_count": 2,
+   "first_seen": 1777600800,
+   "last_seen": 1790560040,
+   "personal_account": true,
+   "oauth_scopes": null,
+   "service_id": "claude-personal",
+   "vendor": "Anthropic",
+   "embedded_in": null,
+   "status": "unapproved",
+   "reviewed_by": "Arjun Menon",
+   "reviewed_at": 1778446800,
+   "endpoints": 19,
+   "is_new": false
+  },
+  "description": "Personal Claude.ai accounts. Use Claude Code or the API instead.",
+  "top_endpoints": [
+   {
+    "endpoint_id": "ep_LT-SG-5120",
+    "host": "LT-SG-5120",
+    "ip": "10.40.36.162",
+    "type": "laptop",
+    "user": "Benjamin Chua",
+    "department": "Treasury & Markets",
+    "hits": 119,
+    "last_seen": 1790560264
+   }
+  ],
+  "status_history": [
+   {
+    "status": "unlabelled",
+    "by": "system",
+    "at": 1777600800,
+    "note": null
+   },
+   {
+    "status": "unapproved",
+    "by": "Arjun Menon",
+    "at": 1778446800,
+    "note": null
+   }
+  ]
+ }
+}

@@ -1,0 +1,57 @@
+{
+ "operationId": "getDetection",
+ "access": "redacted",
+ "status": 200,
+ "headers": {},
+ "body": {
+  "detection_id": "det_01JABX5Q0GY",
+  "ts": 1790242862,
+  "rule_id": "SENSITIVE-ACCESS",
+  "rule_label": "Sensitive file access",
+  "severity": "medium",
+  "disposition": "blocked",
+  "device_id": "d18b057d-a569-4e5e-a383-143830048c42",
+  "host": "LT-SG-9212",
+  "owner": "Xin Yi Lau",
+  "owner_kind": "person",
+  "department": "Engineering — Payments",
+  "group": {
+   "id": "grp_payments_eng",
+   "name": "Engineering — Payments"
+  },
+  "session_id": "sbx_9ada762dabbe",
+  "teaser": "Sensitive file access · file read",
+  "description": "Access to a secret, judged by file content rather than filename or path.",
+  "owasp": "ASI04",
+  "signal": "guest",
+  "classification": "regulated data",
+  "backend": "aegis-engine 0.9.6",
+  "evidence": {
+   "type": "sensitive_content",
+   "decoded_command": null,
+   "sensitive_content": null,
+   "exfil": null,
+   "egress_spike": null,
+   "persistence": null,
+   "undisclosed_action": null
+  },
+  "chain": [
+   {
+    "ts": 1790242862,
+    "label": "Sensitive file access",
+    "detail": null,
+    "is_current": true,
+    "is_detection": true,
+    "severity": "medium",
+    "disposition": "blocked"
+   }
+  ],
+  "signature": {
+   "alg": "ed25519",
+   "key_id": "aegis-smb-2026-09",
+   "value": "MEUCIQ1ddr0bjuj5dp…",
+   "signed_at": 1790242863,
+   "verify_hint": "aegis verify det_01JABX5Q0GY"
+  }
+ }
+}

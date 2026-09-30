@@ -1,0 +1,28 @@
+{
+ "operationId": "listDiscoveredSkills",
+ "access": "self",
+ "status": 200,
+ "headers": {
+  "X-Total-Count": "2"
+ },
+ "body": [
+  {
+   "skill_id": "skl_settlement_recon_helper_ltsg2231",
+   "name": "settlement-recon-helper",
+   "endpoint_id": "ep_LT-SG-2231",
+   "tool": "claude-code",
+   "source": "user",
+   "flags": [],
+   "last_seen": 1790557707
+  },
+  {
+   "skill_id": "skl_settlement_recon_helper_vmdevrahul07",
+   "name": "settlement-recon-helper",
+   "endpoint_id": "ep_vm-dev-rahul-07",
+   "tool": "claude-code",
+   "source": "user",
+   "flags": [],
+   "last_seen": 1790557378
+  }
+ ]
+}

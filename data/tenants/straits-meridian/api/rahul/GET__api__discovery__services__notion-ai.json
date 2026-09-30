@@ -1,0 +1,11 @@
+{
+ "operationId": "getService",
+ "access": "self",
+ "status": 403,
+ "headers": {},
+ "body": {
+  "error": "Role 'developer' (Rahul Iyer) cannot call getService.",
+  "code": "FORBIDDEN",
+  "request_id": "req_AbQ6X66s"
+ }
+}

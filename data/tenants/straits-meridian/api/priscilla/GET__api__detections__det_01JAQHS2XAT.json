@@ -1,0 +1,57 @@
+{
+ "operationId": "getDetection",
+ "access": "redacted",
+ "status": 200,
+ "headers": {},
+ "body": {
+  "detection_id": "det_01JAQHS2XAT",
+  "ts": 1790521200,
+  "rule_id": "SECRET-IN-PROMPT",
+  "rule_label": "Secret in prompt",
+  "severity": "high",
+  "disposition": "blocked",
+  "device_id": "51bf4dc8-0d42-4671-8d09-cdf5d7c7621c",
+  "host": "vm-ci-build-214",
+  "owner": "svc-ci",
+  "owner_kind": "service",
+  "department": "Service accounts (CI / ETL)",
+  "group": {
+   "id": "grp_svc",
+   "name": "Service accounts (CI / ETL)"
+  },
+  "session_id": "sbx_b57f026e3fa3",
+  "teaser": "Secret in prompt · file → model prompt",
+  "description": "An API key, token, private key or connection string in a prompt or file sent to the model.",
+  "owasp": null,
+  "signal": "guest",
+  "classification": "regulated data",
+  "backend": "aegis-engine 0.9.6",
+  "evidence": {
+   "type": "sensitive_content",
+   "decoded_command": null,
+   "sensitive_content": null,
+   "exfil": null,
+   "egress_spike": null,
+   "persistence": null,
+   "undisclosed_action": null
+  },
+  "chain": [
+   {
+    "ts": 1790521200,
+    "label": "Secret in prompt",
+    "detail": null,
+    "is_current": true,
+    "is_detection": true,
+    "severity": "high",
+    "disposition": "blocked"
+   }
+  ],
+  "signature": {
+   "alg": "ed25519",
+   "key_id": "aegis-smb-2026-09",
+   "value": "MEUCIQ1du60dqj6czo…",
+   "signed_at": 1790521201,
+   "verify_hint": "aegis verify det_01JAQHS2XAT"
+  }
+ }
+}

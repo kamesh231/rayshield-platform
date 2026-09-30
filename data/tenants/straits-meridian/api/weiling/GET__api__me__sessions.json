@@ -1,0 +1,28 @@
+{
+ "operationId": "listMySessions",
+ "access": "self",
+ "status": 200,
+ "headers": {},
+ "body": [
+  {
+   "sid": "sbx_90a0513024df",
+   "name": "claude-code · payments-api",
+   "egress": 4,
+   "actions": 31,
+   "prompts": 19,
+   "dlp": 0,
+   "rules": 0,
+   "denies": 0,
+   "started": 1790425152,
+   "last_seen": 1790428468,
+   "device_id": "f3a545f9-a17e-49f1-b705-6efd979e6d66",
+   "host": "LT-SG-0142",
+   "owner": "Tan Wei Ling",
+   "department": null,
+   "group": null,
+   "tool": "claude-code",
+   "detections": 0,
+   "outcome": "clean"
+  }
+ ]
+}

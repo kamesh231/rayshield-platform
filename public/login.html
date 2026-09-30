@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RayShield — Sign in</title>
+<style>
+  :root { --ink:#0B1220; --mut:#5b6773; --line:#e3e8ed; --accent:#4F5BD5; --bg:#faf9f5; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; background:var(--bg); color:var(--ink); min-height:100vh; display:flex; align-items:center; justify-content:center; padding:24px; }
+  .card { width:100%; max-width:400px; background:#fff; border:1px solid var(--line); border-radius:16px; padding:28px; box-shadow:0 8px 32px rgba(11,18,32,.06); }
+  .brand { display:flex; align-items:center; gap:10px; margin-bottom:4px; }
+  .logo { width:30px; height:30px; border-radius:8px; background:linear-gradient(135deg,#4F5BD5,#7C8CFF); }
+  h1 { font-size:19px; margin:0; }
+  .sub { color:var(--mut); font-size:13px; margin:4px 0 22px; }
+  label { display:block; font-size:12px; font-weight:600; margin:14px 0 6px; }
+  input { width:100%; padding:10px 12px; border:1px solid var(--line); border-radius:9px; font-size:14px; }
+  input:focus { outline:none; border-color:var(--accent); }
+  button.go { width:100%; margin-top:20px; padding:11px; border:0; border-radius:9px; background:var(--ink); color:#fff; font-size:14px; font-weight:600; cursor:pointer; }
+  .err { color:#C4293A; font-size:13px; margin-top:12px; min-height:18px; }
+  .accts { margin-top:22px; border-top:1px solid var(--line); padding-top:16px; }
+  .accts h2 { font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--mut); margin:0 0 10px; }
+  .acct { width:100%; text-align:left; border:1px solid var(--line); background:#fff; border-radius:9px; padding:9px 11px; margin-bottom:7px; cursor:pointer; display:flex; justify-content:space-between; align-items:center; }
+  .acct:hover { border-color:var(--accent); background:#f7f8ff; }
+  .acct .n { font-size:13px; font-weight:600; }
+  .acct .t { font-size:11px; color:var(--mut); }
+  .acct .pill { font-size:10px; font-weight:600; padding:2px 7px; border-radius:10px; background:#ECEEFF; color:var(--accent); }
+  .foot { text-align:center; font-size:11px; color:var(--mut); margin-top:16px; }
+  code { background:#f4f6f8; padding:1px 5px; border-radius:4px; }
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="brand"><div class="logo"></div><h1>RayShield</h1></div>
+    <div class="sub">Agentic control plane — demo tenant · Northwind Capital</div>
+    <form id="f">
+      <label for="u">Username</label>
+      <input id="u" name="u" autocomplete="username" autofocus>
+      <label for="p">Password</label>
+      <input id="p" name="p" type="password" autocomplete="current-password">
+      <button class="go" type="submit">Sign in</button>
+      <div class="err" id="err"></div>
+    </form>
+    <div class="accts">
+      <h2>Demo accounts — click to fill</h2>
+      <button class="acct" data-u="priya"><span><span class="n">Priya Nair</span><br><span class="t">Tenant Administrator</span></span><span class="pill">Full access</span></button>
+      <button class="acct" data-u="tomas"><span><span class="n">Tomas Weiler</span><br><span class="t">Security Analyst</span></span><span class="pill">Approve + triage</span></button>
+      <button class="acct" data-u="ciso"><span><span class="n">Rhea Menon</span><br><span class="t">CISO</span></span><span class="pill">Read-only</span></button>
+      <button class="acct" data-u="dev"><span><span class="n">Dev Patel</span><br><span class="t">Engineer</span></span><span class="pill">Terminal only</span></button>
+    </div>
+    <div class="foot">All accounts use password <code>demo</code></div>
+  </div>
+<script>
+  var f = document.getElementById('f'), err = document.getElementById('err');
+  document.querySelectorAll('.acct').forEach(function (b) {
+    b.addEventListener('click', function () {
+      document.getElementById('u').value = b.dataset.u;
+      document.getElementById('p').value = 'demo';
+      err.textContent = '';
+    });
+  });
+  f.addEventListener('submit', function (e) {
+    e.preventDefault();
+    err.textContent = '';
+    fetch('/api/login', { method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username: document.getElementById('u').value.trim(), password: document.getElementById('p').value }) })
+      .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+      .then(function (res) {
+        if (!res.ok) { err.textContent = res.j.error || 'Sign in failed.'; return; }
+        location.href = res.j.user.landing || '/';
+      })
+      .catch(function () { err.textContent = 'Network error.'; });
+  });
+</script>
+</body>
+</html>

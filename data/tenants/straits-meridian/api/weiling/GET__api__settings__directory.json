@@ -1,0 +1,13 @@
+{
+ "operationId": "getSettingsDirectory",
+ "access": "read",
+ "status": 200,
+ "headers": {},
+ "body": {
+  "connected": true,
+  "provider": "Entra ID",
+  "mapped_endpoints": 371,
+  "total_endpoints": 412,
+  "last_sync": 1790559600
+ }
+}

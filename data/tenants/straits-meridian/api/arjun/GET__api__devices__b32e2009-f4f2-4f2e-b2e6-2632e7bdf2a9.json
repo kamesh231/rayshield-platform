@@ -1,0 +1,38 @@
+{
+ "operationId": "getDevice",
+ "access": "read",
+ "status": 200,
+ "headers": {
+  "X-Window-From": "1789956000",
+  "X-Window-To": "1790560800",
+  "X-Data-As-Of": "1790560680"
+ },
+ "body": {
+  "id": "b32e2009-f4f2-4f2e-b2e6-2632e7bdf2a9",
+  "device_name": "LT-SG-3310",
+  "status": "active",
+  "health_score": 92,
+  "risk_level": "low",
+  "blocks_24h": 1,
+  "last_heartbeat": 1790560672,
+  "endpoint_id": "ep_LT-SG-3310",
+  "ip": "10.40.27.6",
+  "type": "laptop",
+  "owner": "Marcus Lee",
+  "owner_kind": "person",
+  "department": "Engineering — Digital Banking",
+  "group": {
+   "id": "grp_digital_eng",
+   "name": "Engineering — Digital Banking"
+  },
+  "agent_state": "enforcing",
+  "agent_version": "0.9.6",
+  "tools": [
+   "claude-code"
+  ],
+  "allowed": 388,
+  "blocked": 9,
+  "recorded": 13,
+  "os": "macOS 15.0"
+ }
+}

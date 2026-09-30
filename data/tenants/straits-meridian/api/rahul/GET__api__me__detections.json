@@ -1,0 +1,92 @@
+{
+ "operationId": "listMyDetections",
+ "access": "self",
+ "status": 200,
+ "headers": {},
+ "body": [
+  {
+   "detection_id": "det_01JA4K9PAN1",
+   "ts": 1790553600,
+   "rule_id": "CARD-PAN",
+   "rule_label": "Card number (PAN) in agent context",
+   "severity": "critical",
+   "disposition": "escalated",
+   "device_id": "a497c981-1b88-4af4-b21f-6d94c7af60ef",
+   "host": "LT-SG-2231",
+   "owner": "Rahul Iyer",
+   "owner_kind": "person",
+   "department": "Engineering — Payments",
+   "group": {
+    "id": "grp_payments_eng",
+    "name": "Engineering — Payments"
+   },
+   "session_id": "sbx_7c21e9a04b3f",
+   "teaser": "cards.txn_ledger · 1,240 rows with PAN + NRIC columns → api.anthropic.com (blocked before transmission)",
+   "fix_hint": "Your query returned raw card numbers and NRICs, so DLP stopped the prompt before it left your laptop. Query aggregated columns only (SUM/COUNT by settlement batch), or wait for Payments CUE v4, which masks these columns automatically.",
+   "why": "A card primary account number reached an agent prompt or tool result. DLP inspects the turn before it leaves the sandbox."
+  },
+  {
+   "detection_id": "det_01JARNRNKZT",
+   "ts": 1790467200,
+   "rule_id": "PII-NRIC",
+   "rule_label": "NRIC / FIN in agent context",
+   "severity": "critical",
+   "disposition": "blocked",
+   "device_id": "a497c981-1b88-4af4-b21f-6d94c7af60ef",
+   "host": "LT-SG-2231",
+   "owner": "Rahul Iyer",
+   "owner_kind": "person",
+   "department": "Engineering — Payments",
+   "group": {
+    "id": "grp_payments_eng",
+    "name": "Engineering — Payments"
+   },
+   "session_id": "sbx_f8e952641d62",
+   "teaser": "tests/fixtures/customers.json · 14 NRIC values in a test fixture (blocked)",
+   "fix_hint": "A test fixture contained real-format NRICs. Replace them with the synthetic generator (make fixtures-synthetic) and re-run.",
+   "why": "A Singapore NRIC or FIN number reached an agent prompt or tool result."
+  },
+  {
+   "detection_id": "det_01JAW9NKK6J",
+   "ts": 1790452800,
+   "rule_id": "SECRET-IN-PROMPT",
+   "rule_label": "Secret in prompt",
+   "severity": "high",
+   "disposition": "blocked",
+   "device_id": "18fcef06-5ea0-4b62-89d0-7868e89ab483",
+   "host": "vm-dev-rahul-07",
+   "owner": "Rahul Iyer",
+   "owner_kind": "person",
+   "department": "Engineering — Payments",
+   "group": {
+    "id": "grp_payments_eng",
+    "name": "Engineering — Payments"
+   },
+   "session_id": "sbx_298fafe63451",
+   "teaser": "~/.config/settlement/credentials · connection string with password (blocked)",
+   "fix_hint": "Credentials in a file were sent as context. Use the Aegis Bridge vault connection for postgres-mcp instead of local credential files.",
+   "why": "An API key, token, private key or connection string in a prompt or file sent to the model."
+  },
+  {
+   "detection_id": "det_01JAGS2DYTG",
+   "ts": 1790171442,
+   "rule_id": "SWIFT-MSG",
+   "rule_label": "SWIFT payment message in agent context",
+   "severity": "high",
+   "disposition": "blocked",
+   "device_id": "a497c981-1b88-4af4-b21f-6d94c7af60ef",
+   "host": "LT-SG-2231",
+   "owner": "Rahul Iyer",
+   "owner_kind": "person",
+   "department": "Engineering — Payments",
+   "group": {
+    "id": "grp_payments_eng",
+    "name": "Engineering — Payments"
+   },
+   "session_id": "sbx_cc12d9ff240b",
+   "teaser": "pacs.008 message in a test file (blocked)",
+   "fix_hint": null,
+   "why": "An MT103 or pacs.008 customer credit transfer reached an agent prompt."
+  }
+ ]
+}

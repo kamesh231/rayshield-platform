@@ -1,0 +1,11 @@
+{
+ "operationId": "removeBridgeMcp",
+ "access": "deny",
+ "status": 403,
+ "headers": {},
+ "body": {
+  "error": "Role 'ciso' (Priscilla Goh) cannot call removeBridgeMcp.",
+  "code": "FORBIDDEN",
+  "request_id": "req_tymVtbX7"
+ }
+}

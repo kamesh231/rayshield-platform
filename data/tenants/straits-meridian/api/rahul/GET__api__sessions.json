@@ -1,0 +1,217 @@
+{
+ "operationId": "listSessions",
+ "access": "self",
+ "status": 200,
+ "headers": {
+  "X-Total-Count": "9"
+ },
+ "body": [
+  {
+   "sid": "sbx_7c21e9a04b3f",
+   "name": "claude-code · settlement-recon",
+   "egress": 10,
+   "actions": 33,
+   "prompts": 9,
+   "dlp": 1,
+   "rules": 1,
+   "denies": 2,
+   "started": 1790552965,
+   "last_seen": 1790553570,
+   "device_id": "a497c981-1b88-4af4-b21f-6d94c7af60ef",
+   "host": "LT-SG-2231",
+   "owner": "Rahul Iyer",
+   "department": "Engineering — Payments",
+   "group": {
+    "id": "grp_payments_eng",
+    "name": "Engineering — Payments"
+   },
+   "tool": "claude-code",
+   "detections": 1,
+   "outcome": "detected"
+  },
+  {
+   "sid": "sbx_edf278a754b5",
+   "name": "claude-code · settlement-recon",
+   "egress": 11,
+   "actions": 39,
+   "prompts": 16,
+   "dlp": 0,
+   "rules": 0,
+   "denies": 0,
+   "started": 1790552160,
+   "last_seen": 1790555106,
+   "device_id": "a497c981-1b88-4af4-b21f-6d94c7af60ef",
+   "host": "LT-SG-2231",
+   "owner": "Rahul Iyer",
+   "department": "Engineering — Payments",
+   "group": {
+    "id": "grp_payments_eng",
+    "name": "Engineering — Payments"
+   },
+   "tool": "claude-code",
+   "detections": 0,
+   "outcome": "clean"
+  },
+  {
+   "sid": "sbx_20d451e6d852",
+   "name": "claude-code · payments-api",
+   "egress": 4,
+   "actions": 19,
+   "prompts": 9,
+   "dlp": 0,
+   "rules": 0,
+   "denies": 0,
+   "started": 1790534016,
+   "last_seen": 1790536560,
+   "device_id": "a497c981-1b88-4af4-b21f-6d94c7af60ef",
+   "host": "LT-SG-2231",
+   "owner": "Rahul Iyer",
+   "department": "Engineering — Payments",
+   "group": {
+    "id": "grp_payments_eng",
+    "name": "Engineering — Payments"
+   },
+   "tool": "claude-code",
+   "detections": 0,
+   "outcome": "clean"
+  },
+  {
+   "sid": "sbx_72a36081c82a",
+   "name": "claude-code · etl-jobs",
+   "egress": 3,
+   "actions": 37,
+   "prompts": 12,
+   "dlp": 0,
+   "rules": 0,
+   "denies": 0,
+   "started": 1790515872,
+   "last_seen": 1790518424,
+   "device_id": "18fcef06-5ea0-4b62-89d0-7868e89ab483",
+   "host": "vm-dev-rahul-07",
+   "owner": "Rahul Iyer",
+   "department": "Engineering — Payments",
+   "group": {
+    "id": "grp_payments_eng",
+    "name": "Engineering — Payments"
+   },
+   "tool": "claude-code",
+   "detections": 0,
+   "outcome": "clean"
+  },
+  {
+   "sid": "sbx_f8e952641d62",
+   "name": "claude-code · risk-reports",
+   "egress": 11,
+   "actions": 19,
+   "prompts": 5,
+   "dlp": 1,
+   "rules": 1,
+   "denies": 1,
+   "started": 1790466890,
+   "last_seen": 1790468720,
+   "device_id": "a497c981-1b88-4af4-b21f-6d94c7af60ef",
+   "host": "LT-SG-2231",
+   "owner": "Rahul Iyer",
+   "department": "Engineering — Payments",
+   "group": {
+    "id": "grp_payments_eng",
+    "name": "Engineering — Payments"
+   },
+   "tool": "claude-code",
+   "detections": 1,
+   "outcome": "detected"
+  },
+  {
+   "sid": "sbx_298fafe63451",
+   "name": "claude-code · settlement-recon",
+   "egress": 4,
+   "actions": 39,
+   "prompts": 10,
+   "dlp": 1,
+   "rules": 1,
+   "denies": 1,
+   "started": 1790452132,
+   "last_seen": 1790454694,
+   "device_id": "18fcef06-5ea0-4b62-89d0-7868e89ab483",
+   "host": "vm-dev-rahul-07",
+   "owner": "Rahul Iyer",
+   "department": "Engineering — Payments",
+   "group": {
+    "id": "grp_payments_eng",
+    "name": "Engineering — Payments"
+   },
+   "tool": "claude-code",
+   "detections": 1,
+   "outcome": "detected"
+  },
+  {
+   "sid": "sbx_53411532343a",
+   "name": "claude-code · risk-reports",
+   "egress": 3,
+   "actions": 12,
+   "prompts": 16,
+   "dlp": 0,
+   "rules": 0,
+   "denies": 0,
+   "started": 1790370720,
+   "last_seen": 1790371520,
+   "device_id": "a497c981-1b88-4af4-b21f-6d94c7af60ef",
+   "host": "LT-SG-2231",
+   "owner": "Rahul Iyer",
+   "department": "Engineering — Payments",
+   "group": {
+    "id": "grp_payments_eng",
+    "name": "Engineering — Payments"
+   },
+   "tool": "claude-code",
+   "detections": 0,
+   "outcome": "clean"
+  },
+  {
+   "sid": "sbx_b53e7374dec1",
+   "name": "claude-code · mobile-app",
+   "egress": 11,
+   "actions": 26,
+   "prompts": 5,
+   "dlp": 0,
+   "rules": 0,
+   "denies": 0,
+   "started": 1790352576,
+   "last_seen": 1790355896,
+   "device_id": "18fcef06-5ea0-4b62-89d0-7868e89ab483",
+   "host": "vm-dev-rahul-07",
+   "owner": "Rahul Iyer",
+   "department": "Engineering — Payments",
+   "group": {
+    "id": "grp_payments_eng",
+    "name": "Engineering — Payments"
+   },
+   "tool": "claude-code",
+   "detections": 0,
+   "outcome": "clean"
+  },
+  {
+   "sid": "sbx_cc12d9ff240b",
+   "name": "claude-code · mobile-app",
+   "egress": 7,
+   "actions": 26,
+   "prompts": 10,
+   "dlp": 1,
+   "rules": 1,
+   "denies": 1,
+   "started": 1790170828,
+   "last_seen": 1790173413,
+   "device_id": "a497c981-1b88-4af4-b21f-6d94c7af60ef",
+   "host": "LT-SG-2231",
+   "owner": "Rahul Iyer",
+   "department": "Engineering — Payments",
+   "group": {
+    "id": "grp_payments_eng",
+    "name": "Engineering — Payments"
+   },
+   "tool": "claude-code",
+   "detections": 1,
+   "outcome": "detected"
+  }
+ ]
+}

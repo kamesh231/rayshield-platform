@@ -1,0 +1,53 @@
+{
+  "$comment": "Four personas for Straits Meridian Bank (fictional). `perms` is enforced by src/server.js; `access` in access-matrix.json is the per-operation mirror.",
+  "personas": {
+    "weiling": {
+      "name": "Tan Wei Ling", "email": "tan.wei.ling@straitsmeridian.example", "password": "demo",
+      "title": "Platform Administrator, Technology Risk", "role_claim": "admin", "console": "Administrator",
+      "jtbd": "Keep coverage complete and policy current, so the platform itself is never the gap.",
+      "landing": "/console", "nav": ["home", "discover", "control", "protect", "usage", "settings"],
+      "home": "admin",
+      "home_top": ["Deployment journey", "Agents enforcing 371/412", "9 offline", "CUE drift (17 endpoints on older versions)", "MCP onboarding queue (confluence)", "Silent Zscaler sensor"],
+      "overview_layout": [["W1", "L"], ["W8", "M"], ["W9", "M"], ["W2", "L"], ["W6", "M"], ["W5", "M"], ["W7", "M"], ["W3", "M"], ["W4", "L"]],
+      "data_scope": "org", "evidence": "full",
+      "perms": { "approveMcp": true, "onboardMcp": true, "decideMcp": true, "removeMcp": true, "editCue": true, "publishCue": true, "deleteCue": true, "assignPolicy": true, "createGroup": true, "setStatus": true, "settingsWrite": true, "reset": true, "viewAll": true, "scope": "org", "terminal": ["LT-SG-2231", "vm-dev-rahul-07"], "terminalMode": "exec" },
+      "demo_bar": ["approve-confluence", "publish-cue-v4", "reset", "switch-user"]
+    },
+    "arjun": {
+      "name": "Arjun Menon", "email": "arjun.menon@straitsmeridian.example", "password": "demo",
+      "title": "SOC Lead, Cyber Defence", "role_claim": "security", "console": "Security",
+      "jtbd": "Show me what needs attention, let me act, and prove nothing was tampered with.",
+      "landing": "/console", "nav": ["home", "discover", "control", "protect", "usage", "settings"],
+      "home": "security",
+      "home_top": ["Needs attention: card-data block, DeepSeek on 6 Treasury endpoints, Perplexity new, gmail-mcp unonboarded", "58 detections / 3 escalated", "Blast radius link"],
+      "overview_layout": [["W2", "L"], ["W1", "L"], ["W9", "M"], ["W5", "M"], ["W4", "L"], ["W6", "M"], ["W3", "M"], ["W7", "M"], ["W8", "M"]],
+      "data_scope": "org", "evidence": "full",
+      "perms": { "approveMcp": false, "onboardMcp": false, "decideMcp": false, "removeMcp": false, "editCue": false, "publishCue": false, "deleteCue": false, "assignPolicy": false, "createGroup": false, "setStatus": true, "settingsWrite": false, "reset": false, "viewAll": true, "scope": "org", "terminal": ["LT-SG-2231", "vm-dev-rahul-07"], "terminalMode": "replay", "draftCue": true },
+      "demo_bar": ["switch-user"]
+    },
+    "priscilla": {
+      "name": "Priscilla Goh", "email": "priscilla.goh@straitsmeridian.example", "password": "demo",
+      "title": "Chief Information Security Officer", "role_claim": "ciso", "console": "Administrator",
+      "jtbd": "Give me a defensible posture for the board and MAS, and let me make the high-risk calls myself.",
+      "landing": "/console", "nav": ["home", "discover", "control", "protect", "usage", "settings"],
+      "home": "ciso",
+      "home_top": ["23 of 27 governed", "Shadow share 3.1 % (down from 5.4 %)", "90 % endpoints enforcing", "17/17 critical detections contained", "0 card or NRIC records left the bank", "Top 3 decisions awaiting the CISO", "Framework coverage"],
+      "overview_layout": [["W1", "L"], ["W7", "M"], ["W2", "M"], ["W5", "M"], ["W9", "M"], ["W8", "M"], ["W3", "M"], ["W6", "M"], ["W4", "L"]],
+      "data_scope": "org", "evidence": "redacted",
+      "redaction": "x-viewer-redaction (assumption, confirm): teaser = rule label + target type; evidence keys other than type = null; chain[].detail = null; origin.initial_prompt = null",
+      "perms": { "approveMcp": true, "onboardMcp": true, "decideMcp": true, "removeMcp": false, "editCue": true, "publishCue": true, "deleteCue": false, "assignPolicy": true, "createGroup": false, "setStatus": true, "settingsWrite": false, "reset": false, "viewAll": true, "scope": "org", "terminal": [], "terminalMode": "none" },
+      "demo_bar": ["approve-confluence", "publish-cue-v4", "switch-user"]
+    },
+    "rahul": {
+      "name": "Rahul Iyer", "email": "rahul.iyer@straitsmeridian.example", "password": "demo",
+      "title": "Senior Engineer, Payments", "role_claim": "developer", "console": null,
+      "jtbd": "Let me keep using Claude Code the way I do, know what I'm allowed, and get unblocked fast.",
+      "landing": "/me", "nav": ["me", "terminal"],
+      "home": "developer",
+      "home_top": ["My access (tools, models, approved MCPs, egress)", "My devices", "My blocked events (7d) with why and how to fix", "My MCP request status", "My spend vs the USD 40/day cap"],
+      "data_scope": "self", "evidence": "self",
+      "perms": { "approveMcp": false, "onboardMcp": false, "decideMcp": false, "removeMcp": false, "editCue": false, "publishCue": false, "deleteCue": false, "assignPolicy": false, "createGroup": false, "setStatus": false, "settingsWrite": false, "reset": false, "viewAll": false, "scope": "self", "terminal": ["LT-SG-2231", "vm-dev-rahul-07"], "terminalMode": "exec" },
+      "demo_bar": []
+    }
+  }
+}

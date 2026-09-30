@@ -1,0 +1,111 @@
+{
+ "operationId": "getService",
+ "access": "read",
+ "status": 200,
+ "headers": {
+  "X-Window-From": "1789956000",
+  "X-Window-To": "1790560800",
+  "X-Data-As-Of": "1790560680"
+ },
+ "body": {
+  "service": {
+   "ai_service": "Codex CLI",
+   "category": "Coding agent",
+   "icon": null,
+   "separability": "distinct",
+   "confidence": "confirmed",
+   "hits": 280,
+   "bytes": 11544400,
+   "users": 7,
+   "risk_score": 55,
+   "jurisdiction": "US",
+   "ever_agentic": true,
+   "sandbox_candidate": true,
+   "agent_sdks": null,
+   "collector_count": 2,
+   "first_seen": 1790128800,
+   "last_seen": 1790560400,
+   "personal_account": false,
+   "oauth_scopes": null,
+   "service_id": "codex-cli",
+   "vendor": "OpenAI",
+   "embedded_in": null,
+   "status": "unlabelled",
+   "reviewed_by": null,
+   "reviewed_at": null,
+   "endpoints": 7,
+   "is_new": true
+  },
+  "description": "Agentic coding CLI. First seen on 7 contractor laptops.",
+  "top_endpoints": [
+   {
+    "endpoint_id": "ep_LT-VN-0412",
+    "host": "LT-VN-0412",
+    "ip": "10.40.21.23",
+    "type": "laptop",
+    "user": "Thanh Nguyen",
+    "department": "Vendor Engineering (contractors)",
+    "hits": 162,
+    "last_seen": 1790560507
+   },
+   {
+    "endpoint_id": "ep_LT-VN-0419",
+    "host": "LT-VN-0419",
+    "ip": "10.40.38.191",
+    "type": "laptop",
+    "user": "Minh Pham",
+    "department": "Vendor Engineering (contractors)",
+    "hits": 181,
+    "last_seen": 1790559845
+   },
+   {
+    "endpoint_id": "ep_LT-VN-6679",
+    "host": "LT-VN-6679",
+    "ip": "10.40.9.22",
+    "type": "laptop",
+    "user": "Linh Hoang",
+    "department": "Vendor Engineering (contractors)",
+    "hits": 42,
+    "last_seen": 1790559281
+   },
+   {
+    "endpoint_id": "ep_LT-VN-9201",
+    "host": "LT-VN-9201",
+    "ip": "10.40.48.198",
+    "type": "laptop",
+    "user": "Phuong Ngo",
+    "department": "Vendor Engineering (contractors)",
+    "hits": 346,
+    "last_seen": 1790560590
+   },
+   {
+    "endpoint_id": "ep_LT-VN-8149",
+    "host": "LT-VN-8149",
+    "ip": "10.40.9.223",
+    "type": "laptop",
+    "user": "Quang Vu",
+    "department": "Vendor Engineering (contractors)",
+    "hits": 182,
+    "last_seen": 1790559026
+   },
+   {
+    "endpoint_id": "ep_LT-VN-7646",
+    "host": "LT-VN-7646",
+    "ip": "10.40.37.70",
+    "type": "laptop",
+    "user": "Hoa Vu",
+    "department": "Vendor Engineering (contractors)",
+    "hits": 158,
+    "last_seen": 1790559309
+   }
+  ],
+  "status_history": [
+   {
+    "status": "unlabelled",
+    "by": "system",
+    "at": 1790128800,
+    "note": null
+   }
+  ]
+ }
+}

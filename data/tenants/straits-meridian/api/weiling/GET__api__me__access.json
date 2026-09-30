@@ -1,0 +1,43 @@
+{
+ "operationId": "getMyAccess",
+ "access": "self",
+ "status": 200,
+ "headers": {},
+ "body": {
+  "user": {
+   "name": "Tan Wei Ling",
+   "email": "tan.wei.ling@straitsmeridian.example",
+   "role": "admin",
+   "group": null
+  },
+  "tools": [
+   "claude-code"
+  ],
+  "models": [
+   "claude-sonnet-5"
+  ],
+  "cue": {
+   "id": "cue_bank_baseline",
+   "name": "Claude Code — Bank baseline",
+   "version": 5,
+   "base": null,
+   "pending_draft": null
+  },
+  "mcp_servers": [],
+  "mcp_policy": null,
+  "egress_allow": [
+   "api.anthropic.com",
+   "registry.npmjs.org",
+   "pypi.org",
+   "github.straitsmeridian.example"
+  ],
+  "dlp_rules": [
+   "dlp-card-pan",
+   "dlp-nric",
+   "dlp-secrets",
+   "dlp-swift-mt"
+  ],
+  "budget": null,
+  "writable_mounts_note": "Writable paths are passed at launch with --src/--writable; they are not part of a CUE."
+ }
+}

@@ -1,0 +1,45 @@
+{
+ "operationId": "listBlastRoots",
+ "access": "self",
+ "status": 200,
+ "headers": {
+  "X-Window-From": "1789956000",
+  "X-Window-To": "1790560800",
+  "X-Data-As-Of": "1790560680"
+ },
+ "body": [
+  {
+   "execution_id": "exec_01JA4K9PAN1",
+   "ts": 1790553600,
+   "owner": "Rahul Iyer",
+   "host": "LT-SG-2231",
+   "cue_name": "Claude Code — Payments Engineering v3",
+   "tool": "claude-code",
+   "worst_outcome": "blocked",
+   "dlp_label": "Card PAN + NRIC",
+   "node_count": 6
+  },
+  {
+   "execution_id": "exec_01JA3Q8FIXT",
+   "ts": 1790467200,
+   "owner": "Rahul Iyer",
+   "host": "LT-SG-2231",
+   "cue_name": "Claude Code — Payments Engineering v3",
+   "tool": "claude-code",
+   "worst_outcome": "blocked",
+   "dlp_label": "NRIC in test fixture",
+   "node_count": 6
+  },
+  {
+   "execution_id": "exec_01JA3NCREDF",
+   "ts": 1790452800,
+   "owner": "Rahul Iyer",
+   "host": "vm-dev-rahul-07",
+   "cue_name": "Claude Code — Payments Engineering v3",
+   "tool": "claude-code",
+   "worst_outcome": "blocked",
+   "dlp_label": "Secret in prompt",
+   "node_count": 6
+  }
+ ]
+}

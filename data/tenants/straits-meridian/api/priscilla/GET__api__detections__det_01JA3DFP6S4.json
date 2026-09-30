@@ -1,0 +1,57 @@
+{
+ "operationId": "getDetection",
+ "access": "redacted",
+ "status": 200,
+ "headers": {},
+ "body": {
+  "detection_id": "det_01JA3DFP6S4",
+  "ts": 1790416639,
+  "rule_id": "SENSITIVE-ACCESS",
+  "rule_label": "Sensitive file access",
+  "severity": "medium",
+  "disposition": "blocked",
+  "device_id": "83245f0b-7d16-4d8d-8384-0d1610bfa365",
+  "host": "vm-dev-nurul-19",
+  "owner": "Nurul Ang",
+  "owner_kind": "person",
+  "department": "Engineering — Payments",
+  "group": {
+   "id": "grp_payments_eng",
+   "name": "Engineering — Payments"
+  },
+  "session_id": "sbx_567a8fc70143",
+  "teaser": "Sensitive file access · file read",
+  "description": "Access to a secret, judged by file content rather than filename or path.",
+  "owasp": "ASI04",
+  "signal": "guest",
+  "classification": "regulated data",
+  "backend": "aegis-engine 0.9.6",
+  "evidence": {
+   "type": "sensitive_content",
+   "decoded_command": null,
+   "sensitive_content": null,
+   "exfil": null,
+   "egress_spike": null,
+   "persistence": null,
+   "undisclosed_action": null
+  },
+  "chain": [
+   {
+    "ts": 1790416639,
+    "label": "Sensitive file access",
+    "detail": null,
+    "is_current": true,
+    "is_detection": true,
+    "severity": "medium",
+    "disposition": "blocked"
+   }
+  ],
+  "signature": {
+   "alg": "ed25519",
+   "key_id": "aegis-smb-2026-09",
+   "value": "MEUCIQ1cfk51p12s5z…",
+   "signed_at": 1790416640,
+   "verify_hint": "aegis verify det_01JA3DFP6S4"
+  }
+ }
+}

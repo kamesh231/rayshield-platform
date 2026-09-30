@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RayShield — Endpoint terminal</title>
+<link rel="stylesheet" href="/static/vendor/xterm.css">
+<style>
+  :root { --ink:#0B1220; --mut:#8b97a7; --line:#22304a; }
+  * { box-sizing:border-box; }
+  html,body { margin:0; height:100%; background:#0b1220; color:#e6ebf2; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
+  .top { display:flex; align-items:center; gap:12px; padding:10px 16px; border-bottom:1px solid var(--line); }
+  .logo { width:22px; height:22px; border-radius:6px; background:linear-gradient(135deg,#4F5BD5,#7C8CFF); }
+  .top .who { margin-left:auto; font-size:12px; color:var(--mut); }
+  .top a, .top button { color:#cdd6e4; font-size:12px; text-decoration:none; background:#1b2740; border:1px solid var(--line); border-radius:7px; padding:5px 10px; cursor:pointer; }
+  .wrap { display:flex; height:calc(100vh - 45px); }
+  .term { flex:1; min-width:0; padding:10px 6px 10px 12px; }
+  #term { height:100%; }
+  .side { width:320px; border-left:1px solid var(--line); padding:12px 14px; overflow:auto; }
+  .side h2 { font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--mut); margin:2px 0 10px; }
+  .evt { border:1px solid var(--line); border-radius:9px; padding:8px 10px; margin-bottom:8px; font-size:12px; background:#0f1a2e; }
+  .evt .t { font-size:10px; color:var(--mut); }
+  .evt.crit { border-color:#7a2530; } .evt.warn { border-color:#7a5320; } .evt.ok { border-color:#2f6b4a; }
+  .hint { font-size:11px; color:var(--mut); margin-top:4px; }
+  .hostpick { font-size:12px; background:#1b2740; border:1px solid var(--line); border-radius:7px; padding:5px 8px; color:#cdd6e4; }
+</style>
+</head>
+<body>
+  <div class="top">
+    <div class="logo"></div><strong style="font-size:14px">RayShield</strong>
+    <span style="font-size:12px;color:var(--mut)">Endpoint terminal</span>
+    <select id="host" class="hostpick" style="display:none"></select>
+    <span class="who" id="who"></span>
+    <a id="toconsole" href="/console" style="display:none">Open console</a>
+    <button id="out">Sign out</button>
+  </div>
+  <div class="wrap">
+    <div class="term"><div id="term"></div></div>
+    <div class="side">
+      <h2>Live from Aegis</h2>
+      <div id="feed"></div>
+      <div class="hint">Events here also appear in the security console in real time.</div>
+    </div>
+  </div>
+
+<script src="/static/vendor/xterm.js"></script>
+<script src="/static/vendor/addon-fit.js"></script>
+<script>
+(function () {
+  var me = null, host = null, term, fit, buf = '', busy = false, tag = null, readOnly = false;
+
+  function boot(user, info) {
+    me = user;
+    tag = info && info.userTag; readOnly = !!(info && info.mode === 'replay');
+    document.getElementById('who').textContent = user.name + ' · ' + (user.title || '');
+    if (user.perms.viewAll || user.landing === '/me') {
+      var tc = document.getElementById('toconsole'); tc.style.display = 'inline-block';
+      if (!user.perms.viewAll) { tc.href = '/me'; tc.textContent = 'My access (/me)'; }
+    }
+    var hosts = (info && info.hosts) || (user.perms.viewAll ? ['LT-4821', 'vm-ci-build-214'] : user.perms.terminal);
+    host = hosts[0];
+    if (hosts.length > 1) {
+      var sel = document.getElementById('host'); sel.style.display = 'inline-block';
+      hosts.forEach(function (h) { var o = document.createElement('option'); o.value = h; o.textContent = h; sel.appendChild(o); });
+      sel.onchange = function () { host = sel.value; reset(); };
+    }
+    setupTerm();
+    connectFeed();
+  }
+
+  function setupTerm() {
+    term = new Terminal({ fontFamily: 'JetBrains Mono, Menlo, monospace', fontSize: 13, cursorBlink: true,
+      theme: { background: '#0b1220', foreground: '#e6ebf2', cursor: '#7C8CFF' }, convertEol: true });
+    fit = new FitAddon.FitAddon(); term.loadAddon(fit);
+    term.open(document.getElementById('term')); fit.fit();
+    window.addEventListener('resize', function () { try { fit.fit(); } catch (e) {} });
+    term.onData(onData);
+    reset();
+  }
+
+  function prompt() { term.write('\r\n\x1b[32m' + userTag() + '\x1b[0m$ '); }
+  function userTag() { return (tag || (me.id === 'dev' ? 'dev.patel' : 'analyst')) + '@' + host; }
+
+  function reset() {
+    term.reset();
+    fetch('/api/terminal/hello?host=' + encodeURIComponent(host))
+      .then(function (r) { return r.json(); })
+      .then(function (j) { term.write(j.banner || j.error || ''); if (j.readOnly) { readOnly = true; term.write('\r\n\x1b[33m(read-only replay — live commands appear here as they run)\x1b[0m\r\n'); } else prompt(); })
+      .catch(function () { term.write('connection error\r\n'); });
+  }
+
+  function onData(d) {
+    if (busy || readOnly) return;
+    var code = d.charCodeAt(0);
+    if (d === '\r') { term.write('\r\n'); exec(buf.trim()); buf = ''; return; }
+    if (code === 127) { if (buf.length) { buf = buf.slice(0, -1); term.write('\b \b'); } return; }
+    if (code === 3) { term.write('^C'); buf = ''; prompt(); return; }
+    if (code < 32) return;
+    buf += d; term.write(d);
+  }
+
+  function exec(cmd) {
+    if (!cmd) { prompt(); return; }
+    busy = true;
+    fetch('/api/terminal/exec', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ host: host, cmd: cmd }) })
+      .then(function (r) { return r.json(); })
+      .then(function (j) { typeOut(j.out || '', function () { busy = false; prompt(); }); })
+      .catch(function () { term.write('\r\nerror\r\n'); busy = false; prompt(); });
+  }
+
+  // Type output line-by-line so the demo feels live.
+  function typeOut(text, done) {
+    var lines = text.split('\r\n'); var i = 0;
+    (function step() {
+      if (i >= lines.length) { done(); return; }
+      term.write(lines[i] + (i < lines.length - 1 ? '\r\n' : ''));
+      i++; setTimeout(step, 45);
+    })();
+  }
+
+  function connectFeed() {
+    try {
+      var es = new EventSource('/api/stream');
+      es.onmessage = function (e) { try { onEvent(JSON.parse(e.data)); } catch (x) {} };
+    } catch (x) {}
+  }
+  function onEvent(evt) {
+    if (evt.type === 'reset') { location.reload(); return; }
+    if (evt.type === 'cuePushed' && (evt.host === host)) {
+      if (evt.message) term.write('\r\n\x1b[36maegis ▸\x1b[0m ' + evt.message + ' \x1b[90m(' + evt.by + ')\x1b[0m\r\n');
+      else term.write('\r\n\x1b[36maegis ▸\x1b[0m signed CUE ' + evt.tool + '/' + evt.role + '@v' + evt.cueVersion + ' \x1b[32mpushed\x1b[0m by ' + evt.by + ' — linear MCP now available.\r\n');
+      if (!readOnly) prompt();
+    }
+    if (readOnly && evt.host === host && evt.type !== 'cuePushed') { reset(); }
+    var cls = evt.severity === 'critical' ? 'crit' : evt.type === 'detection' ? 'warn' : evt.type === 'mcpDecision' && evt.decision === 'approved' ? 'ok' : '';
+    var title = evt.type === 'detection' ? ((evt.severity || '') + ' detection · ' + evt.rule)
+      : evt.type === 'mcpRequest' ? 'MCP request · ' + evt.name
+      : evt.type === 'mcpDecision' ? 'MCP ' + evt.decision + ' · ' + evt.name
+      : evt.type === 'cuePushed' ? 'CUE pushed · v' + evt.cueVersion : null;
+    if (!title) return;
+    var d = document.createElement('div'); d.className = 'evt ' + cls;
+    d.innerHTML = '<div class="t">' + new Date(evt.at || Date.now()).toLocaleTimeString() + '</div>' + esc(title) + (evt.teaser ? '<br><span style="color:#8b97a7">' + esc(evt.teaser) + '</span>' : '');
+    var feed = document.getElementById('feed'); feed.insertBefore(d, feed.firstChild);
+  }
+  function esc(s) { return String(s).replace(/[&<>]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]; }); }
+
+  document.getElementById('out').onclick = function () { fetch('/api/logout', { method: 'POST' }).then(function () { location.href = '/login'; }); };
+
+  fetch('/api/me').then(function (r) { return r.json(); }).then(function (j) {
+    if (!j.user) { location.href = '/login'; return; }
+    fetch('/api/terminal/hosts').then(function (r) { return r.json(); }).then(function (info) { boot(j.user, info); }).catch(function () { boot(j.user); });
+  });
+})();
+</script>
+</body>
+</html>

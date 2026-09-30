@@ -1,0 +1,24 @@
+{
+ "operationId": "listCueVersions",
+ "access": "read",
+ "status": 200,
+ "headers": {},
+ "body": [
+  {
+   "version": 2,
+   "state": "published",
+   "published_at": 1789178400,
+   "published_by": "Priscilla Goh",
+   "change": "+ MCP warehouse-mcp (only with dlp-nric Enforce)",
+   "endpoints": 34
+  },
+  {
+   "version": 1,
+   "state": "superseded",
+   "published_at": 1782784800,
+   "published_by": "Tan Wei Ling",
+   "change": "gemini-cli shipped default + DLP",
+   "endpoints": 2
+  }
+ ]
+}

@@ -1,0 +1,88 @@
+{
+ "operationId": "listDiscoveredMcps",
+ "access": "self",
+ "status": 200,
+ "headers": {
+  "X-Total-Count": "6"
+ },
+ "body": [
+  {
+   "mcp_id": "mcp_postgres",
+   "name": "postgres-mcp",
+   "kind": "local",
+   "endpoint_id": "ep_LT-SG-2231",
+   "host": "LT-SG-2231",
+   "tool": "claude-code",
+   "bridge_state": "onboarded",
+   "risk_tier": "medium",
+   "flags": [],
+   "first_seen": 1788832800,
+   "last_seen": 1790558206
+  },
+  {
+   "mcp_id": "mcp_postgres",
+   "name": "postgres-mcp",
+   "kind": "local",
+   "endpoint_id": "ep_vm-dev-rahul-07",
+   "host": "vm-dev-rahul-07",
+   "tool": "claude-code",
+   "bridge_state": "onboarded",
+   "risk_tier": "medium",
+   "flags": [],
+   "first_seen": 1788832800,
+   "last_seen": 1790560230
+  },
+  {
+   "mcp_id": "mcp_github_enterprise",
+   "name": "github-enterprise",
+   "kind": "remote",
+   "endpoint_id": "ep_LT-SG-2231",
+   "host": "LT-SG-2231",
+   "tool": "claude-code",
+   "bridge_state": "onboarded",
+   "risk_tier": "medium",
+   "flags": [],
+   "first_seen": 1788832800,
+   "last_seen": 1790559345
+  },
+  {
+   "mcp_id": "mcp_github_enterprise",
+   "name": "github-enterprise",
+   "kind": "remote",
+   "endpoint_id": "ep_vm-dev-rahul-07",
+   "host": "vm-dev-rahul-07",
+   "tool": "claude-code",
+   "bridge_state": "onboarded",
+   "risk_tier": "medium",
+   "flags": [],
+   "first_seen": 1788832800,
+   "last_seen": 1790560223
+  },
+  {
+   "mcp_id": "mcp_jira",
+   "name": "jira",
+   "kind": "remote",
+   "endpoint_id": "ep_LT-SG-2231",
+   "host": "LT-SG-2231",
+   "tool": "claude-code",
+   "bridge_state": "onboarded",
+   "risk_tier": "low",
+   "flags": [],
+   "first_seen": 1788832800,
+   "last_seen": 1790560415
+  },
+  {
+   "mcp_id": "mcp_jira",
+   "name": "jira",
+   "kind": "remote",
+   "endpoint_id": "ep_vm-dev-rahul-07",
+   "host": "vm-dev-rahul-07",
+   "tool": "claude-code",
+   "bridge_state": "onboarded",
+   "risk_tier": "low",
+   "flags": [],
+   "first_seen": 1788832800,
+   "last_seen": 1790558948
+  }
+ ]
+}

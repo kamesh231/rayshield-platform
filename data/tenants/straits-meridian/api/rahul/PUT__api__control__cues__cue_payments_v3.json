@@ -1,0 +1,11 @@
+{
+ "operationId": "updateCue",
+ "access": "deny",
+ "status": 403,
+ "headers": {},
+ "body": {
+  "error": "Role 'developer' (Rahul Iyer) cannot call updateCue.",
+  "code": "FORBIDDEN",
+  "request_id": "req_R_pcKpu5"
+ }
+}

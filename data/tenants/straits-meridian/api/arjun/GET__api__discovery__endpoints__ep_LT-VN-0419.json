@@ -1,0 +1,49 @@
+{
+ "operationId": "getDiscoveryEndpoint",
+ "access": "read",
+ "status": 200,
+ "headers": {
+  "X-Window-From": "1789956000",
+  "X-Window-To": "1790560800",
+  "X-Data-As-Of": "1790560680"
+ },
+ "body": {
+  "endpoint": {
+   "endpoint": "10.40.38.191",
+   "host": "LT-VN-0419",
+   "endpoint_id": "ep_LT-VN-0419",
+   "device_id": "da864b31-bee5-4b9b-aa9a-09da32e37f7b",
+   "type": "laptop",
+   "ephemeral": false,
+   "user": "Minh Pham",
+   "department": "Vendor Engineering (contractors)",
+   "identity_source": "idp",
+   "sensor": "pcap",
+   "first_seen": 1773972000,
+   "last_seen": 1790559845
+  },
+  "services": [
+   {
+    "service_id": "codex-cli",
+    "ai_service": "Codex CLI",
+    "status": "unlabelled",
+    "hits": 181,
+    "last_seen": 1790559845
+   },
+   {
+    "service_id": "zoom-ai",
+    "ai_service": "Zoom AI Companion",
+    "status": "approved",
+    "hits": 121,
+    "last_seen": 1790559845
+   },
+   {
+    "service_id": "chatgpt-enterprise",
+    "ai_service": "ChatGPT Enterprise",
+    "status": "approved",
+    "hits": 61,
+    "last_seen": 1790559845
+   }
+  ]
+ }
+}

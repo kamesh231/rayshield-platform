@@ -1,0 +1,56 @@
+{
+ "operationId": "getService",
+ "access": "read",
+ "status": 200,
+ "headers": {
+  "X-Window-From": "1789956000",
+  "X-Window-To": "1790560800",
+  "X-Data-As-Of": "1790560680"
+ },
+ "body": {
+  "service": {
+   "ai_service": "ChatGPT (personal)",
+   "category": "Assistant",
+   "icon": null,
+   "separability": "distinct",
+   "confidence": "confirmed",
+   "hits": 1210,
+   "bytes": 49888300,
+   "users": 35,
+   "risk_score": 61,
+   "jurisdiction": "US",
+   "ever_agentic": false,
+   "sandbox_candidate": false,
+   "agent_sdks": null,
+   "collector_count": 2,
+   "first_seen": 1775872800,
+   "last_seen": 1790559470,
+   "personal_account": true,
+   "oauth_scopes": null,
+   "service_id": "chatgpt-personal",
+   "vendor": "OpenAI",
+   "embedded_in": null,
+   "status": "unapproved",
+   "reviewed_by": "Arjun Menon",
+   "reviewed_at": 1777582800,
+   "endpoints": 37,
+   "is_new": false
+  },
+  "description": "Personal ChatGPT accounts. Use ChatGPT Enterprise instead.",
+  "top_endpoints": [],
+  "status_history": [
+   {
+    "status": "unlabelled",
+    "by": "system",
+    "at": 1775872800,
+    "note": null
+   },
+   {
+    "status": "unapproved",
+    "by": "Arjun Menon",
+    "at": 1777582800,
+    "note": null
+   }
+  ]
+ }
+}

@@ -1,0 +1,11 @@
+{
+ "operationId": "getEndpointMcps",
+ "access": "read",
+ "status": 409,
+ "headers": {},
+ "body": {
+  "core_installed": false,
+  "message": "Install Core to scan MCPs and skills on this endpoint.",
+  "endpoints_without_core": 1
+ }
+}

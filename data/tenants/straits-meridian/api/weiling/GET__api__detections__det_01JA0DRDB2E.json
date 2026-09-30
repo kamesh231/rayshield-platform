@@ -1,0 +1,70 @@
+{
+ "operationId": "getDetection",
+ "access": "read",
+ "status": 200,
+ "headers": {},
+ "body": {
+  "detection_id": "det_01JA0DRDB2E",
+  "ts": 1790237511,
+  "rule_id": "UNDISCLOSED-ACTION",
+  "rule_label": "Undisclosed action",
+  "severity": "medium",
+  "disposition": "recorded",
+  "device_id": "bfb1c8f2-2873-452e-b5b4-ab9879f4eaa3",
+  "host": "LT-SG-7861",
+  "owner": "Farhan Wong",
+  "owner_kind": "person",
+  "department": "Cyber Defence (SOC)",
+  "group": {
+   "id": "grp_soc",
+   "name": "Cyber Defence (SOC)"
+  },
+  "session_id": "sbx_bae095987849",
+  "teaser": "declared 4 · observed 6",
+  "description": "The agent did more than it declared; the engine cross-checks the declared manifest against what it observed.",
+  "owasp": null,
+  "signal": "guest",
+  "classification": "regulated data",
+  "backend": "aegis-engine 0.9.6",
+  "evidence": {
+   "type": "undisclosed_action",
+   "decoded_command": null,
+   "sensitive_content": null,
+   "exfil": null,
+   "egress_spike": null,
+   "persistence": null,
+   "undisclosed_action": {
+    "declared": 4,
+    "observed": 6,
+    "undeclared": 2,
+    "declared_list": [
+     "Read files under ./src",
+     "Ran the test suite",
+     "Formatted changed files"
+    ],
+    "observed_extra": [
+     "Egress to an unlisted host",
+     "Read ~/.aws/credentials"
+    ]
+   }
+  },
+  "chain": [
+   {
+    "ts": 1790237511,
+    "label": "Undisclosed action",
+    "detail": "declared 4 · observed 6",
+    "is_current": true,
+    "is_detection": true,
+    "severity": "medium",
+    "disposition": "recorded"
+   }
+  ],
+  "signature": {
+   "alg": "ed25519",
+   "key_id": "aegis-smb-2026-09",
+   "value": "MEUCIQ1ugysre1b65z…",
+   "signed_at": 1790237512,
+   "verify_hint": "aegis verify det_01JA0DRDB2E"
+  }
+ }
+}

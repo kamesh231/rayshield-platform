@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<sc-if value="{{isObserved}}" hint-placeholder-val="{{true}}">
+  <div style="display:flex;align-items:center;gap:10px;padding:10px 16px;background:#EEF0F2;border-radius:4px;font-family:'IBM Plex Sans',sans-serif;">
+    <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#3D4652;text-transform:uppercase;letter-spacing:0.03em;">Observed</span>
+    <span style="font-size:13px;color:#12161C;">{{message}}</span>
+    <sc-if value="{{hasAction}}"><a href="{{href}}" style="font-size:13px;margin-left:auto;color:#0F766E;">{{actionLabel}} →</a></sc-if>
+  </div>
+</sc-if>
+<sc-if value="{{isGovernance}}">
+  <div style="display:flex;align-items:center;gap:10px;padding:10px 16px;background:#FDF1E4;border-radius:4px;font-family:'IBM Plex Sans',sans-serif;">
+    <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#B4530A;text-transform:uppercase;letter-spacing:0.03em;">Governance</span>
+    <span style="font-size:13px;color:#12161C;">{{message}}</span>
+    <sc-if value="{{hasAction}}"><a href="{{href}}" style="font-size:13px;margin-left:auto;color:#0F766E;">{{actionLabel}} →</a></sc-if>
+  </div>
+</sc-if>
+<sc-if value="{{isSystem}}">
+  <div style="display:flex;align-items:center;gap:10px;padding:10px 16px;background:#EAF0FC;border-radius:4px;font-family:'IBM Plex Sans',sans-serif;">
+    <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#2B5FCB;text-transform:uppercase;letter-spacing:0.03em;">System</span>
+    <span style="font-size:13px;color:#12161C;">{{message}}</span>
+    <sc-if value="{{hasAction}}"><a href="{{href}}" style="font-size:13px;margin-left:auto;color:#0F766E;">{{actionLabel}} →</a></sc-if>
+  </div>
+</sc-if>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:620,&quot;height&quot;:60},&quot;prefix&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;Governance&quot;,&quot;options&quot;:[&quot;Observed&quot;,&quot;Governance&quot;,&quot;System&quot;],&quot;tsType&quot;:&quot;string&quot;},&quot;message&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;3 services still Unlabelled, first seen this week&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;actionLabel&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Review&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;href&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;#&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    const p = this.props.prefix || 'Observed';
+    return {
+      isObserved: p === 'Observed',
+      isGovernance: p === 'Governance',
+      isSystem: p === 'System',
+      message: this.props.message ?? '',
+      actionLabel: this.props.actionLabel,
+      hasAction: !!this.props.actionLabel,
+      href: this.props.href || '#',
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+{
+ "operationId": "getUsageByModel",
+ "access": "self",
+ "status": 200,
+ "headers": {},
+ "body": [
+  {
+   "model": "claude-sonnet-5",
+   "provider": "Anthropic",
+   "wire": "api.anthropic.com",
+   "rate_per_mtok": {
+    "input": 3,
+    "output": 15,
+    "cache_read": 0.3
+   }
+  },
+  {
+   "model": "gemini-2.5-pro",
+   "provider": "Google",
+   "wire": "generativelanguage.googleapis.com",
+   "rate_per_mtok": {
+    "input": 1.25,
+    "output": 10,
+    "cache_read": 0.31
+   }
+  }
+ ]
+}

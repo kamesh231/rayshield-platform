@@ -1,0 +1,25 @@
+{
+ "operationId": "getUsageByUser",
+ "access": "self",
+ "status": 200,
+ "headers": {
+  "X-Total-Count": "1"
+ },
+ "body": [
+  {
+   "person": "Rahul Iyer",
+   "turns": 260,
+   "sessions": 26,
+   "input": 27005509,
+   "output": 3484582,
+   "cost_usd": 118.4,
+   "department": "Engineering — Payments",
+   "group": {
+    "id": "grp_payments_eng",
+    "name": "Engineering — Payments"
+   },
+   "cache_read": 13067182,
+   "tokens": 43557273
+  }
+ ]
+}

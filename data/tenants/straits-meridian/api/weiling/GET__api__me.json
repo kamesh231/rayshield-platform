@@ -1,0 +1,19 @@
+{
+ "operationId": "getMe",
+ "access": "read",
+ "status": 200,
+ "headers": {},
+ "body": {
+  "id": "usr_weiling",
+  "name": "Tan Wei Ling",
+  "email": "tan.wei.ling@straitsmeridian.example",
+  "role": "admin",
+  "org": {
+   "id": "org_straits_meridian",
+   "name": "Straits Meridian Bank"
+  },
+  "title": "Platform Administrator, Technology Risk",
+  "console_role": "Administrator",
+  "data_scope": "org"
+ }
+}

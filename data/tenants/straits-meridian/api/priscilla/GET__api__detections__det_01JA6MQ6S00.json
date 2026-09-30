@@ -1,0 +1,57 @@
+{
+ "operationId": "getDetection",
+ "access": "redacted",
+ "status": 200,
+ "headers": {},
+ "body": {
+  "detection_id": "det_01JA6MQ6S00",
+  "ts": 1790511550,
+  "rule_id": "PII-NRIC",
+  "rule_label": "NRIC / FIN in agent context",
+  "severity": "critical",
+  "disposition": "blocked",
+  "device_id": "c097e8e0-00f1-4b59-9688-a74af1904496",
+  "host": "LT-SG-3679",
+  "owner": "Wen Hui Lim",
+  "owner_kind": "person",
+  "department": "Engineering — Digital Banking",
+  "group": {
+   "id": "grp_digital_eng",
+   "name": "Engineering — Digital Banking"
+  },
+  "session_id": "sbx_9342d9469700",
+  "teaser": "NRIC / FIN in agent context · tool result → model prompt",
+  "description": "A Singapore NRIC or FIN number reached an agent prompt or tool result.",
+  "owasp": null,
+  "signal": "guest",
+  "classification": "regulated data",
+  "backend": "aegis-engine 0.9.6",
+  "evidence": {
+   "type": "sensitive_content",
+   "decoded_command": null,
+   "sensitive_content": null,
+   "exfil": null,
+   "egress_spike": null,
+   "persistence": null,
+   "undisclosed_action": null
+  },
+  "chain": [
+   {
+    "ts": 1790511550,
+    "label": "NRIC / FIN in agent context",
+    "detail": null,
+    "is_current": true,
+    "is_detection": true,
+    "severity": "critical",
+    "disposition": "blocked"
+   }
+  ],
+  "signature": {
+   "alg": "ed25519",
+   "key_id": "aegis-smb-2026-09",
+   "value": "MEUCIQ86o4xg134q7d…",
+   "signed_at": 1790511551,
+   "verify_hint": "aegis verify det_01JA6MQ6S00"
+  }
+ }
+}

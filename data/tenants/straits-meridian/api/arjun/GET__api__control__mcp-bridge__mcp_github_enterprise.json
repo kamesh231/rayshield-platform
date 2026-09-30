@@ -1,0 +1,53 @@
+{
+ "operationId": "getBridgeMcp",
+ "access": "read",
+ "status": 200,
+ "headers": {},
+ "body": {
+  "id": "mcp_github_enterprise",
+  "name": "github-enterprise",
+  "source": "github.straitsmeridian.example/platform/github-mcp",
+  "kind": "remote",
+  "status": "approved",
+  "risk_score": 44,
+  "risk_tier": "medium",
+  "capabilities": {
+   "tools": [
+    "search_code",
+    "get_file",
+    "create_pull_request"
+   ],
+   "disabled_tools": [
+    "push_files"
+   ],
+   "writes": true
+  },
+  "findings": {
+   "high": 0,
+   "medium": 1,
+   "low": 1,
+   "summary": "push_files disabled at the Bridge"
+  },
+  "approved_by": "Tan Wei Ling",
+  "approved_reason": "Source hosting; push only through pull requests",
+  "groups_with_access": [
+   {
+    "id": "grp_payments_eng",
+    "name": "Engineering — Payments"
+   },
+   {
+    "id": "grp_digital_eng",
+    "name": "Engineering — Digital Banking"
+   },
+   {
+    "id": "grp_contractors",
+    "name": "Vendor Engineering (contractors)"
+   },
+   {
+    "id": "grp_svc",
+    "name": "Service accounts (CI / ETL)"
+   }
+  ],
+  "created_at": 1783648800
+ }
+}

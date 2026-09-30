@@ -1,0 +1,42 @@
+{
+ "operationId": "listDeviceEvents",
+ "access": "read",
+ "status": 200,
+ "headers": {},
+ "body": [
+  {
+   "id": "c9c70303-cba1-4a8c-a348-a769c09fc77a",
+   "ts": 1790287290,
+   "identity": "minh.pham",
+   "device": "LT-VN-0419",
+   "app": "Anthropic Claude (API)",
+   "action": "detection",
+   "target": "MCP tool result → model prompt",
+   "source": "sandbox",
+   "decision": "block",
+   "reason": "card PAN in query result (blocked)",
+   "rule_id": "CARD-PAN",
+   "session_id": "sbx_ae4f9544a796",
+   "tool": "codex-cli",
+   "channel": "agent",
+   "enforced_by": "dlp"
+  },
+  {
+   "id": "62d36676-cc93-459a-a942-252747ade702",
+   "ts": 1790287200,
+   "identity": "minh.pham",
+   "device": "LT-VN-0419",
+   "app": "transfer.sh",
+   "action": "detection",
+   "target": "archive → external host",
+   "source": "sandbox",
+   "decision": "block",
+   "reason": "app-config.zip · 2.1 MB → transfer.sh (blocked)",
+   "rule_id": "EXFIL",
+   "session_id": "sbx_ae4f9544a796",
+   "tool": "codex-cli",
+   "channel": "agent",
+   "enforced_by": "dlp"
+  }
+ ]
+}

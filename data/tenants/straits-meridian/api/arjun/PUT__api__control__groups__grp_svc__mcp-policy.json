@@ -1,0 +1,11 @@
+{
+ "operationId": "setGroupMcpPolicy",
+ "access": "deny",
+ "status": 403,
+ "headers": {},
+ "body": {
+  "error": "Role 'security' (Arjun Menon) cannot call setGroupMcpPolicy.",
+  "code": "FORBIDDEN",
+  "request_id": "req_sejlKYIY"
+ }
+}

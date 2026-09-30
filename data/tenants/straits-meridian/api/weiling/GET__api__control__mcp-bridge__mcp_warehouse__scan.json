@@ -1,0 +1,16 @@
+{
+ "operationId": "getBridgeScan",
+ "access": "read",
+ "status": 200,
+ "headers": {},
+ "body": {
+  "status": "approved",
+  "risk_score": 71,
+  "findings": {
+   "high": 1,
+   "medium": 1,
+   "low": 0,
+   "summary": "Reaches customer_360 PII; allowed only with dlp-nric in Enforce"
+  }
+ }
+}

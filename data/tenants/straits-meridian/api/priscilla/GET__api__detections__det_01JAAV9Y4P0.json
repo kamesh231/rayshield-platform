@@ -1,0 +1,57 @@
+{
+ "operationId": "getDetection",
+ "access": "redacted",
+ "status": 200,
+ "headers": {},
+ "body": {
+  "detection_id": "det_01JAAV9Y4P0",
+  "ts": 1790284561,
+  "rule_id": "UNDISCLOSED-ACTION",
+  "rule_label": "Undisclosed action",
+  "severity": "medium",
+  "disposition": "recorded",
+  "device_id": "581066ec-e314-4638-adc5-30cac7213b99",
+  "host": "LT-SG-3766",
+  "owner": "Serena Tan",
+  "owner_kind": "person",
+  "department": "Engineering — Digital Banking",
+  "group": {
+   "id": "grp_digital_eng",
+   "name": "Engineering — Digital Banking"
+  },
+  "session_id": "sbx_b371edd50bd4",
+  "teaser": "Undisclosed action · agent actions",
+  "description": "The agent did more than it declared; the engine cross-checks the declared manifest against what it observed.",
+  "owasp": null,
+  "signal": "guest",
+  "classification": "regulated data",
+  "backend": "aegis-engine 0.9.6",
+  "evidence": {
+   "type": "undisclosed_action",
+   "decoded_command": null,
+   "sensitive_content": null,
+   "exfil": null,
+   "egress_spike": null,
+   "persistence": null,
+   "undisclosed_action": null
+  },
+  "chain": [
+   {
+    "ts": 1790284561,
+    "label": "Undisclosed action",
+    "detail": null,
+    "is_current": true,
+    "is_detection": true,
+    "severity": "medium",
+    "disposition": "recorded"
+   }
+  ],
+  "signature": {
+   "alg": "ed25519",
+   "key_id": "aegis-smb-2026-09",
+   "value": "MEUCIQ1tybpohmnbzo…",
+   "signed_at": 1790284562,
+   "verify_hint": "aegis verify det_01JAAV9Y4P0"
+  }
+ }
+}

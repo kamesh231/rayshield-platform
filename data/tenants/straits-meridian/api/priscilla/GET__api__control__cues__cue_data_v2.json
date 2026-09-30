@@ -1,0 +1,63 @@
+{
+ "operationId": "getCue",
+ "access": "read",
+ "status": 200,
+ "headers": {},
+ "body": {
+  "id": "cue_data_v2",
+  "name": "Gemini CLI — Data & Analytics",
+  "tool": "gemini-cli",
+  "scope": "group",
+  "scope_ref": "grp_data",
+  "base_cue_id": null,
+  "version": 2,
+  "state": "published",
+  "egress_allow": [
+   {
+    "value": "generativelanguage.googleapis.com",
+    "inherited": false,
+    "source": null
+   },
+   {
+    "value": "oauth2.googleapis.com",
+    "inherited": false,
+    "source": null
+   },
+   {
+    "value": "pypi.org",
+    "inherited": false,
+    "source": null
+   }
+  ],
+  "mcp_servers": [
+   {
+    "value": "warehouse-mcp",
+    "inherited": false,
+    "source": null
+   },
+   {
+    "value": "jira",
+    "inherited": false,
+    "source": null
+   }
+  ],
+  "dlp_rules": [
+   {
+    "value": "dlp-nric",
+    "inherited": false,
+    "source": null
+   },
+   {
+    "value": "dlp-card-pan",
+    "inherited": false,
+    "source": null
+   },
+   {
+    "value": "dlp-secrets",
+    "inherited": false,
+    "source": null
+   }
+  ],
+  "internal_tools": []
+ }
+}

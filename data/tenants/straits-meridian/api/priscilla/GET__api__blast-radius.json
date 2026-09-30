@@ -1,0 +1,11 @@
+{
+ "operationId": "blastRadiusDesignTimeDeprecated",
+ "access": "read",
+ "status": 410,
+ "headers": {},
+ "body": {
+  "error": "Gone — replaced by /api/protect/blast-radius",
+  "code": "NOT_FOUND",
+  "request_id": "req_Mp3B2vn7"
+ }
+}

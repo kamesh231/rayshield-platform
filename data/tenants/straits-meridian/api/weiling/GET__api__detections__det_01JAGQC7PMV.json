@@ -1,0 +1,62 @@
+{
+ "operationId": "getDetection",
+ "access": "read",
+ "status": 200,
+ "headers": {},
+ "body": {
+  "detection_id": "det_01JAGQC7PMV",
+  "ts": 1790279413,
+  "rule_id": "SENSITIVE-ACCESS",
+  "rule_label": "Sensitive file access",
+  "severity": "medium",
+  "disposition": "recorded",
+  "device_id": "4176878c-06ef-41b0-9161-fea082d6104d",
+  "host": "LT-SG-7094",
+  "owner": "Priyanka Kumar",
+  "owner_kind": "person",
+  "department": "Data & Analytics",
+  "group": {
+   "id": "grp_data",
+   "name": "Data & Analytics"
+  },
+  "session_id": "sbx_35addf6b1c12",
+  "teaser": "id_ed25519 read",
+  "description": "Access to a secret, judged by file content rather than filename or path.",
+  "owasp": "ASI04",
+  "signal": "guest",
+  "classification": "regulated data",
+  "backend": "aegis-engine 0.9.6",
+  "evidence": {
+   "type": "sensitive_content",
+   "decoded_command": null,
+   "sensitive_content": {
+    "path": "~/.ssh/id_ed25519",
+    "basis": "credential material by content",
+    "pattern": "credential file content",
+    "snippet_redacted": "•••••••• (redacted at source)"
+   },
+   "exfil": null,
+   "egress_spike": null,
+   "persistence": null,
+   "undisclosed_action": null
+  },
+  "chain": [
+   {
+    "ts": 1790279413,
+    "label": "Sensitive file access",
+    "detail": "id_ed25519 read",
+    "is_current": true,
+    "is_detection": true,
+    "severity": "medium",
+    "disposition": "recorded"
+   }
+  ],
+  "signature": {
+   "alg": "ed25519",
+   "key_id": "aegis-smb-2026-09",
+   "value": "MEUCIQ18vistq2e4bl…",
+   "signed_at": 1790279414,
+   "verify_hint": "aegis verify det_01JAGQC7PMV"
+  }
+ }
+}

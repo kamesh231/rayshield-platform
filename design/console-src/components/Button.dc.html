@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<sc-if value="{{isPrimary}}" hint-placeholder-val="{{true}}">
+  <button onClick="{{handleClick}}" disabled="{{disabled}}" style="background:#0F766E;color:#fff;border:none;border-radius:4px;padding:9px 16px;font-size:13.5px;font-weight:500;font-family:'IBM Plex Sans',sans-serif;cursor:pointer;" style-hover="background:#189089;">{{label}}</button>
+</sc-if>
+<sc-if value="{{isSecondary}}">
+  <button onClick="{{handleClick}}" disabled="{{disabled}}" style="background:transparent;color:#0F766E;border:1px solid #0F766E;border-radius:4px;padding:9px 16px;font-size:13.5px;font-weight:500;font-family:'IBM Plex Sans',sans-serif;cursor:pointer;" style-hover="background:#E3F3F1;">{{label}}</button>
+</sc-if>
+<sc-if value="{{isGhost}}">
+  <button onClick="{{handleClick}}" disabled="{{disabled}}" style="background:transparent;color:#3D4652;border:none;border-radius:4px;padding:9px 16px;font-size:13.5px;font-weight:500;font-family:'IBM Plex Sans',sans-serif;cursor:pointer;" style-hover="background:#F5F6F8;">{{label}}</button>
+</sc-if>
+<sc-if value="{{isDanger}}">
+  <button onClick="{{handleClick}}" disabled="{{disabled}}" style="background:#C4293A;color:#fff;border:none;border-radius:4px;padding:9px 16px;font-size:13.5px;font-weight:500;font-family:'IBM Plex Sans',sans-serif;cursor:pointer;" style-hover="background:#A8202F;">{{label}}</button>
+</sc-if>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:180,&quot;height&quot;:50},&quot;label&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Button&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;variant&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;primary&quot;,&quot;options&quot;:[&quot;primary&quot;,&quot;secondary&quot;,&quot;ghost&quot;,&quot;danger&quot;],&quot;tsType&quot;:&quot;string&quot;},&quot;disabled&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;onClick&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;() =&gt; void&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    const v = this.props.variant || 'primary';
+    return {
+      label: this.props.label ?? 'Button',
+      disabled: this.props.disabled ?? false,
+      isPrimary: v === 'primary',
+      isSecondary: v === 'secondary',
+      isGhost: v === 'ghost',
+      isDanger: v === 'danger',
+      handleClick: this.props.onClick || (() => {}),
+    };
+  }
+}
+</script>
+</body>
+</html>

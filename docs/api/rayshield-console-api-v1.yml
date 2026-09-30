@@ -1,0 +1,1207 @@
+openapi: 3.0.3
+info:
+  title: RayShield Console API — v1 scope (Home, Discover, Protect, Usage)
+  version: "2.1.0-draft"
+  license: { name: Proprietary, url: "https://rayshield.example/terms" }
+  description: |
+    Contract between the RayShield console and aegis-fleet-api for the first release.
+    Builds on the existing spec (v2.0.0) — read each operation's `x-status` and description.
+
+    **Scope.** Home, Discover, Protect and Usage. Control (CUEs, groups, MCP approvals, blast
+    radius) and Policies are parked: the console does not call those endpoints in v1.
+
+    **Time window.** No time-series in v1. Every read returns an aggregate over the **last 7 days**.
+    `from`/`to` are optional (epoch seconds); default `to = now`, `from = to − 7d`. A span longer than
+    7 days returns `400` with code `WINDOW_TOO_LARGE`. There is no `bucket` parameter.
+
+    **Additive changes only.** `x-status: extended` means the endpoint exists today; every existing
+    field keeps its name and meaning, and the listed fields are added. Nothing is renamed or removed.
+    `x-status: new` means the path does not exist yet.
+
+    **Response shape.** Bodies keep today's style (bare arrays or objects). Paging and window metadata
+    travel in response headers — see `components/headers`. CORS must list them in
+    `Access-Control-Expose-Headers`.
+
+    **Auth.** Every console call needs `Authorization: Bearer <JWT>`. Minimum role per operation is in
+    `x-min-role` (viewer < security < admin). Device and sensor ingest tokens cannot call console
+    endpoints. Viewer responses are redacted as described in `x-viewer-redaction`.
+servers:
+  - url: https://aegis.northwind.internal:8091
+    description: Pilot — one Aegis Server per customer (hostname to be confirmed per customer)
+
+security:
+  - bearerAuth: []
+
+tags:
+  - name: Auth
+    description: Console sign-in, token refresh and the current user
+  - name: Home
+    description: Posture rows and the Needs-attention list
+  - name: Discover
+    description: AI services, endpoints and sensors observed by Shield (pcap, SASE, DNS, IdP)
+  - name: Protect
+    description: Fleet, per-device decisions, detections and execution sessions
+  - name: Usage
+    description: Tokens, cost and budgets for agent sessions
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: |
+        Access token, 15-minute lifetime, signed by the Aegis Server (EdDSA or RS256).
+        Claims: `sub`, `email`, `name`, `org_id`, `role` (admin | security | viewer),
+        `aud` = "rayshield-console", `iat`, `exp`.
+
+  headers:
+    X-Window-From: { description: "Window start actually applied (epoch seconds)", schema: { type: integer, format: int64 } }
+    X-Window-To: { description: "Window end actually applied (epoch seconds)", schema: { type: integer, format: int64 } }
+    X-Data-As-Of: { description: "Newest event timestamp included — drives the freshness banner", schema: { type: integer, format: int64 } }
+    X-Next-Cursor: { description: "Opaque cursor for the next page; absent on the last page", schema: { type: string } }
+    X-Total-Count: { description: "Rows matching the filters (omit if expensive)", schema: { type: integer } }
+
+  parameters:
+    From:
+      name: from
+      in: query
+      required: false
+      description: Window start, epoch seconds. Default `to − 7d`. Span may not exceed 7 days.
+      schema: { type: integer, format: int64 }
+    To:
+      name: to
+      in: query
+      required: false
+      description: Window end, epoch seconds. Default now.
+      schema: { type: integer, format: int64 }
+    Cursor:
+      name: cursor
+      in: query
+      required: false
+      description: Value of `X-Next-Cursor` from the previous page.
+      schema: { type: string }
+    Limit:
+      name: limit
+      in: query
+      required: false
+      description: Page size. Default 50, maximum 200.
+      schema: { type: integer, minimum: 1, maximum: 200, default: 50 }
+
+  responses:
+    BadRequest:
+      description: Invalid parameter
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Error' }
+          example: { error: "The window may not exceed 7 days.", code: WINDOW_TOO_LARGE, request_id: req_7Hc2kQ }
+    Unauthorized:
+      description: Missing, expired or invalid access token
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Error' }
+          example: { error: "Access token expired.", code: UNAUTHENTICATED, request_id: req_9aB31x }
+    Forbidden:
+      description: Authenticated, but this role may not do this
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Error' }
+          example: { error: "Role 'viewer' cannot change governance status.", code: FORBIDDEN, request_id: req_Qm28vd }
+    NotFound:
+      description: No such resource in this organisation
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Error' }
+          example: { error: "No detection with that id.", code: NOT_FOUND, request_id: req_Lx03pa }
+
+  schemas:
+    Error:
+      type: object
+      description: Existing `{ error }` shape plus two additive fields.
+      required: [error]
+      properties:
+        error: { type: string }
+        code: { type: string, enum: [WINDOW_TOO_LARGE, INVALID_CURSOR, INVALID_PARAMETER, UNAUTHENTICATED, FORBIDDEN, NOT_FOUND, RATE_LIMITED] }
+        request_id: { type: string }
+
+    User:
+      type: object
+      properties:
+        id: { type: string }
+        name: { type: string }
+        email: { type: string }
+        role: { type: string, enum: [admin, security, viewer] }
+        org: { type: object, properties: { id: { type: string }, name: { type: string } } }
+
+    Link:
+      type: object
+      description: Where the console navigates when the row is clicked
+      properties:
+        screen: { type: string, enum: [services, service, endpoints, endpoint, sensors, fleet, device, detections, detection, sessions, session, usage, budgets] }
+        params: { type: object, additionalProperties: { type: string } }
+
+    GroupRef:
+      type: object
+      nullable: true
+      description: |
+        The console "group". v1 source: the group assignment the backend already holds for the
+        device or person (rs_* tables / directory mapping). Null when unknown — the console then
+        shows `department`. See doc, decision 2.
+      properties:
+        id: { type: string }
+        name: { type: string, example: "Engineering — EU (canary)" }
+
+    GovernanceStatus:
+      type: string
+      enum: [approved, unapproved, prohibited, under_review, beta, unlabelled]
+
+    Service:
+      type: object
+      description: Existing `DiscoveryService` fields (unchanged) plus the additions marked NEW.
+      properties:
+        ai_service: { type: string, description: "Display name (existing)" }
+        category: { type: string }
+        icon: { type: string, nullable: true }
+        separability: { type: string, description: "distinct | local | embedded" }
+        confidence: { type: string }
+        hits: { type: integer, format: int64, description: "Requests in the window (existing)" }
+        bytes: { type: integer, format: int64 }
+        users: { type: integer, format: int64 }
+        risk_score: { type: integer }
+        jurisdiction: { type: string }
+        ever_agentic: { type: boolean }
+        sandbox_candidate: { type: boolean }
+        agent_sdks: { type: string, nullable: true }
+        collector_count: { type: integer, format: int64 }
+        first_seen: { type: integer, format: int64 }
+        last_seen: { type: integer, format: int64 }
+        personal_account: { type: boolean }
+        oauth_scopes: { type: string, nullable: true }
+        service_id: { type: string, description: "NEW — stable catalog key, e.g. perplexity" }
+        vendor: { type: string, description: NEW }
+        embedded_in: { type: string, nullable: true, description: "NEW — sanctioned SaaS it is embedded in (HubSpot, Notion…)" }
+        status: { $ref: '#/components/schemas/GovernanceStatus' }
+        reviewed_by: { type: string, nullable: true, description: NEW }
+        reviewed_at: { type: integer, format: int64, nullable: true, description: NEW }
+        endpoints: { type: integer, description: "NEW — distinct endpoints in the window" }
+        is_new: { type: boolean, description: "NEW — first_seen falls inside the window" }
+
+    DiscoveryEndpoint:
+      type: object
+      description: Existing `by_endpoint` fields (unchanged) plus the additions marked NEW.
+      properties:
+        endpoint: { type: string, description: "src_ip (existing)" }
+        host: { type: string, nullable: true }
+        hits: { type: integer, format: int64 }
+        bytes: { type: integer, format: int64 }
+        services: { type: integer, format: int64 }
+        endpoint_id: { type: string, description: "NEW — stable id, identical in Discover and Protect" }
+        device_id: { type: string, nullable: true, description: "NEW — Aegis device id when an agent is installed" }
+        type: { type: string, enum: [laptop, vm, other], description: NEW }
+        ephemeral: { type: boolean, description: NEW }
+        user: { type: string, nullable: true, description: "NEW — directory identity" }
+        department: { type: string, nullable: true, description: NEW }
+        identity_source: { type: string, nullable: true, enum: [idp, vpn_logon, mdm, dhcp, null], description: "NEW — how user/department were resolved" }
+        sensor: { type: string, description: "NEW — sensor that saw it most, e.g. pcap" }
+        first_seen: { type: integer, format: int64, description: NEW }
+        last_seen: { type: integer, format: int64, description: NEW }
+
+    Device:
+      type: object
+      description: Existing `Device` fields (unchanged) plus the additions marked NEW.
+      properties:
+        id: { type: string, format: uuid }
+        device_name: { type: string, description: "Hostname (existing)" }
+        status: { type: string }
+        health_score: { type: integer }
+        risk_level: { type: string, enum: [low, medium, high] }
+        blocks_24h: { type: integer, format: int64 }
+        last_heartbeat: { type: integer, format: int64 }
+        endpoint_id: { type: string, description: NEW }
+        ip: { type: string, description: NEW }
+        type: { type: string, enum: [laptop, vm, other], description: NEW }
+        owner: { type: string, nullable: true, description: NEW }
+        owner_kind: { type: string, enum: [person, service], description: NEW }
+        department: { type: string, nullable: true, description: NEW }
+        group: { $ref: '#/components/schemas/GroupRef' }
+        agent_state: { type: string, enum: [enforcing, record_only, offline, no_agent], description: "NEW — offline = no heartbeat for 10 min" }
+        agent_version: { type: string, nullable: true, description: NEW }
+        tools: { type: array, items: { type: string }, description: "NEW — wrapped agent CLIs seen, e.g. claude-code" }
+        allowed: { type: integer, format: int64, description: "NEW — decisions in the window" }
+        blocked: { type: integer, format: int64, description: "NEW — decisions in the window" }
+        recorded: { type: integer, format: int64, description: "NEW — decisions in the window" }
+
+    DeviceEvent:
+      type: object
+      description: Existing `Decision` fields (unchanged) plus the additions marked NEW.
+      properties:
+        id: { type: string, format: uuid }
+        ts: { type: integer, format: int64 }
+        identity: { type: string }
+        device: { type: string }
+        app: { type: string, nullable: true, description: "AI service or destination (existing)" }
+        action: { type: string, enum: [tool call, prompt, network, detection, action] }
+        target: { type: string }
+        source: { type: string, enum: [sandbox, host, unlabelled] }
+        decision: { type: string, enum: [allow, block, record], description: "Existing field; values made explicit" }
+        reason: { type: string, nullable: true }
+        rule_id: { type: string, nullable: true }
+        session_id: { type: string, nullable: true, description: NEW }
+        tool: { type: string, nullable: true, description: "NEW — e.g. claude-code" }
+        channel: { type: string, enum: [agent, browser_app], description: "NEW — the UI's 'via Claude Code' vs 'browser or app'" }
+        enforced_by: { type: string, nullable: true, enum: [cue, dlp, detector, null], description: "NEW — what produced a block or record" }
+
+    Severity:
+      type: string
+      enum: [critical, high, medium]
+
+    Disposition:
+      type: string
+      enum: [blocked, recorded, escalated]
+
+    DetectionFamily:
+      type: object
+      properties:
+        rule_id: { type: string, example: SENSITIVE-ACCESS }
+        label: { type: string }
+        description: { type: string }
+        severity: { $ref: '#/components/schemas/Severity' }
+        owasp: { type: string, example: ASI04, description: "OWASP Top 10 for Agentic Applications id" }
+        signal: { type: string, enum: [wire, guest] }
+        hits: { type: integer }
+        devices: { type: integer }
+        groups: { type: integer }
+        blocked: { type: integer }
+        recorded: { type: integer }
+        escalated: { type: integer }
+
+    DetectionRow:
+      type: object
+      properties:
+        detection_id: { type: string }
+        ts: { type: integer, format: int64 }
+        rule_id: { type: string }
+        rule_label: { type: string }
+        severity: { $ref: '#/components/schemas/Severity' }
+        disposition: { $ref: '#/components/schemas/Disposition' }
+        device_id: { type: string }
+        host: { type: string }
+        owner: { type: string, nullable: true }
+        owner_kind: { type: string, enum: [person, service] }
+        department: { type: string, nullable: true }
+        group: { $ref: '#/components/schemas/GroupRef' }
+        session_id: { type: string, nullable: true }
+        teaser: { type: string, description: "One line, already redacted. For viewer: rule label and target type only." }
+
+    Evidence:
+      type: object
+      description: |
+        One shape per `type`; the other keys are null. Secrets are redacted server-side before the
+        response leaves the API. For viewer, every key except `type` is null.
+      properties:
+        type: { type: string, enum: [decoded_command, sensitive_content, exfil, egress_spike, persistence, undisclosed_action] }
+        decoded_command:
+          type: object
+          nullable: true
+          properties: { encoding: { type: string, enum: [base64, hex, none] }, decoded_redacted: { type: string }, where: { type: string } }
+        sensitive_content:
+          type: object
+          nullable: true
+          properties: { path: { type: string }, basis: { type: string }, pattern: { type: string }, snippet_redacted: { type: string } }
+        exfil:
+          type: object
+          nullable: true
+          properties: { destination: { type: string }, bytes: { type: integer, format: int64 }, classification: { type: string } }
+        egress_spike:
+          type: object
+          nullable: true
+          properties: { destination: { type: string }, multiple_of_baseline: { type: number }, baseline_bytes_per_5min: { type: integer } }
+        persistence:
+          type: object
+          nullable: true
+          properties: { mechanism: { type: string }, artifact: { type: string } }
+        undisclosed_action:
+          type: object
+          nullable: true
+          properties: { declared: { type: integer }, observed: { type: integer }, undeclared: { type: integer }, declared_list: { type: array, items: { type: string } }, observed_extra: { type: array, items: { type: string } } }
+
+    DetectionDetail:
+      allOf:
+        - $ref: '#/components/schemas/DetectionRow'
+        - type: object
+          properties:
+            description: { type: string }
+            owasp: { type: string }
+            signal: { type: string, enum: [wire, guest] }
+            classification: { type: string, nullable: true }
+            backend: { type: string, example: "aegis-engine 0.9.4" }
+            evidence: { $ref: '#/components/schemas/Evidence' }
+            chain:
+              type: array
+              description: Neighbouring events in the same session, oldest first. `detail` is null for viewer.
+              items:
+                type: object
+                properties:
+                  ts: { type: integer, format: int64 }
+                  label: { type: string }
+                  detail: { type: string, nullable: true }
+                  is_current: { type: boolean }
+                  is_detection: { type: boolean }
+                  severity: { $ref: '#/components/schemas/Severity' }
+                  disposition: { $ref: '#/components/schemas/Disposition' }
+            signature:
+              type: object
+              description: The existing evidence `signature` is a string; this object is new.
+              properties:
+                alg: { type: string, example: ed25519 }
+                key_id: { type: string }
+                value: { type: string }
+                signed_at: { type: integer, format: int64 }
+                verify_hint: { type: string, example: "aegis verify <event_id>" }
+
+    SessionRow:
+      type: object
+      description: Existing `/api/sessions` fields (unchanged) plus the additions marked NEW.
+      properties:
+        sid: { type: string }
+        name: { type: string }
+        egress: { type: integer }
+        actions: { type: integer }
+        prompts: { type: integer }
+        dlp: { type: integer }
+        rules: { type: integer }
+        denies: { type: integer }
+        started: { type: integer, format: int64 }
+        last_seen: { type: integer, format: int64 }
+        device_id: { type: string, description: NEW }
+        host: { type: string, description: NEW }
+        owner: { type: string, nullable: true, description: NEW }
+        department: { type: string, nullable: true, description: NEW }
+        group: { $ref: '#/components/schemas/GroupRef' }
+        tool: { type: string, nullable: true, description: NEW }
+        detections: { type: integer, description: NEW }
+        outcome: { type: string, enum: [clean, detected, stopped], description: "NEW — stopped = budget hard-stop" }
+
+paths:
+  # ─────────────────────────────── Auth ───────────────────────────────
+  /api/auth/login:
+    post:
+      tags: [Auth]
+      operationId: login
+      summary: Sign in (pilot, email + password). OIDC SSO replaces this later without changing other calls.
+      x-status: new
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, password]
+              properties: { email: { type: string }, password: { type: string, format: password } }
+            example: { email: "priya.nair@northwind.example", password: "••••••••" }
+      responses:
+        '200':
+          description: Signed in. A refresh token is also set as an HttpOnly, Secure, SameSite=Strict cookie.
+          headers:
+            Set-Cookie: { schema: { type: string }, example: "rs_refresh=…; HttpOnly; Secure; SameSite=Strict; Path=/api/auth; Max-Age=28800" }
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  access_token: { type: string }
+                  token_type: { type: string, example: Bearer }
+                  expires_in: { type: integer, example: 900 }
+                  user: { $ref: '#/components/schemas/User' }
+              example:
+                access_token: "eyJhbGciOiJFZERTQSIsImtpZCI6ImF1dGgtMjAyNi0wOSJ9.eyJzdWIiOiJ1c3JfMDFKOSIsIm9yZ19pZCI6Im9yZ19ub3J0aHdpbmQiLCJyb2xlIjoiYWRtaW4ifQ.c2ln"
+                token_type: Bearer
+                expires_in: 900
+                user: { id: usr_01J9, name: Priya Nair, email: priya.nair@northwind.example, role: admin, org: { id: org_northwind, name: Northwind Capital } }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '429': { description: "Too many attempts — lock for 15 minutes after 5 failures" }
+
+  /api/auth/refresh:
+    post:
+      tags: [Auth]
+      operationId: refresh
+      summary: Exchange the refresh cookie for a new access token (the refresh token rotates)
+      x-status: new
+      security: []
+      responses:
+        '200':
+          description: New access token
+          content:
+            application/json:
+              example: { access_token: "eyJ…", token_type: Bearer, expires_in: 900 }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+
+  /api/auth/logout:
+    post:
+      tags: [Auth]
+      operationId: logout
+      summary: Revoke the refresh token and clear the cookie
+      x-status: new
+      responses:
+        '204': { description: Signed out }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+
+  /api/me:
+    get:
+      tags: [Auth]
+      operationId: getMe
+      summary: Current user and role — the console shows or hides actions from this
+      x-status: new
+      x-min-role: viewer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/User' }
+              example: { id: usr_01J9, name: Priya Nair, email: priya.nair@northwind.example, role: admin, org: { id: org_northwind, name: Northwind Capital } }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+
+  # ─────────────────────────────── Home ───────────────────────────────
+  /api/home:
+    get:
+      tags: [Home]
+      operationId: getHome
+      summary: Home rows per plane plus the Needs-attention list (also feeds the Discover overview list)
+      description: |
+        The console uses this instead of `/api/posture`, `/api/risks/top` and `/api/whatsnew`.
+        No Control rows in v1. Attention items are derived from the same data as the Discover and
+        Protect endpoints, newest first, maximum 10. `plane=discover` returns only Discover items
+        (for the attention list on the Discover overview).
+        Suggested attention rules: service first seen in window with no status; activity on a
+        prohibited service; escalated detection; critical detection; sensor silent > 2 h;
+        agents offline.
+      x-status: new
+      x-min-role: viewer
+      parameters:
+        - { $ref: '#/components/parameters/From' }
+        - { $ref: '#/components/parameters/To' }
+        - { name: plane, in: query, required: false, schema: { type: string, enum: [discover, protect] } }
+      responses:
+        '200':
+          description: OK
+          headers:
+            X-Window-From: { $ref: '#/components/headers/X-Window-From' }
+            X-Window-To: { $ref: '#/components/headers/X-Window-To' }
+            X-Data-As-Of: { $ref: '#/components/headers/X-Data-As-Of' }
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  planes:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name: { type: string, enum: [Discover, Protect] }
+                        rows:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              key: { type: string }
+                              label: { type: string }
+                              value: { type: integer }
+                              total: { type: integer, nullable: true }
+                              link: { $ref: '#/components/schemas/Link' }
+                  attention:
+                    type: array
+                    maxItems: 10
+                    items:
+                      type: object
+                      properties:
+                        kind: { type: string, enum: [discover, protect, usage, system] }
+                        severity: { type: string, enum: [info, warning, critical] }
+                        text: { type: string }
+                        meta: { type: string, nullable: true, example: "4 endpoints" }
+                        ts: { type: integer, format: int64 }
+                        link: { $ref: '#/components/schemas/Link' }
+              example:
+                planes:
+                  - name: Discover
+                    rows:
+                      - { key: services_detected, label: "AI services detected", value: 24, total: null, link: { screen: services, params: {} } }
+                      - { key: services_unlabelled, label: "Awaiting a governance decision", value: 3, total: null, link: { screen: services, params: { status: unlabelled } } }
+                      - { key: endpoints_using_ai, label: "Endpoints using AI", value: 133, total: null, link: { screen: endpoints, params: {} } }
+                  - name: Protect
+                    rows:
+                      - { key: agents_enforcing, label: "Endpoints with an enforcing agent", value: 118, total: 133, link: { screen: fleet, params: { agent_state: enforcing } } }
+                      - { key: detections, label: "Detections", value: 61, total: null, link: { screen: detections, params: {} } }
+                      - { key: detections_escalated, label: "Escalated to a human", value: 4, total: null, link: { screen: detections, params: { disposition: escalated } } }
+                attention:
+                  - { kind: discover, severity: warning, text: "New AI service detected: Perplexity · no governance status yet", meta: "4 endpoints", ts: 1790403161, link: { screen: service, params: { service_id: perplexity } } }
+                  - { kind: protect, severity: critical, text: "Critical detection on vm-ci-build-214 · escalated", meta: "Data exfiltration", ts: 1790409482, link: { screen: detection, params: { detection_id: det_01J9Z8M7TQ } } }
+                  - { kind: system, severity: warning, text: "Sensor sase_zscaler has sent no data for 2 h 40 m", meta: null, ts: 1790401800, link: { screen: sensors, params: {} } }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+
+  # ───────────────────────────── Discover ─────────────────────────────
+  /api/discovery/summary:
+    get:
+      tags: [Discover]
+      operationId: getDiscoverySummary
+      summary: Overview tiles
+      description: |
+        Existing fields unchanged: `services`, `users`, `departments`, `bytes`, `hits`, `agent_alerts`.
+        Added: `new_services`, `embedded_services`, `endpoints` (by type), `governance` (count per
+        status), `unreviewed`, `unreviewed_new`, `shadow_share_pct`, and `previous` (same numbers for
+        the previous 7 days, for the "vs previous" deltas — the same comparison `/api/discovery/changes`
+        already does). `shadow_share_pct` = hits to unapproved + prohibited + unlabelled ÷ all hits.
+      x-status: extended
+      x-min-role: viewer
+      parameters: [ { $ref: '#/components/parameters/From' }, { $ref: '#/components/parameters/To' } ]
+      responses:
+        '200':
+          description: OK
+          headers:
+            X-Window-From: { $ref: '#/components/headers/X-Window-From' }
+            X-Window-To: { $ref: '#/components/headers/X-Window-To' }
+            X-Data-As-Of: { $ref: '#/components/headers/X-Data-As-Of' }
+          content:
+            application/json:
+              example:
+                services: 24
+                users: 96
+                departments: 9
+                bytes: 3812004211
+                hits: 48210
+                agent_alerts: 5
+                new_services: 2
+                embedded_services: 6
+                endpoints: { total: 133, laptop: 96, vm: 31, other: 6 }
+                governance: { approved: 12, unapproved: 4, prohibited: 2, under_review: 2, beta: 1, unlabelled: 3 }
+                unreviewed: 3
+                unreviewed_new: 1
+                shadow_share_pct: 7.4
+                previous: { services: 22, hits: 45102, shadow_share_pct: 5.3 }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+
+  /api/discovery/by_service:
+    get:
+      tags: [Discover]
+      operationId: listServices
+      summary: AI services list (and the "Recently reviewed" widget with sort=reviewed_at)
+      description: |
+        Existing `DiscoveryService` fields unchanged. Added fields are marked NEW in the `Service`
+        schema. Added query parameters: `status`, `sort`, `q`, `cursor`, `limit`.
+        `q` matches `ai_service`, `vendor`, `category`.
+      x-status: extended
+      x-min-role: viewer
+      parameters:
+        - { $ref: '#/components/parameters/From' }
+        - { $ref: '#/components/parameters/To' }
+        - { name: status, in: query, required: false, description: "`shadow` = unapproved + prohibited + unlabelled", schema: { type: string, enum: [approved, unapproved, prohibited, under_review, beta, unlabelled, shadow] } }
+        - { name: sort, in: query, required: false, schema: { type: string, enum: [hits, endpoints, last_seen, risk_score, reviewed_at], default: hits } }
+        - { name: q, in: query, required: false, schema: { type: string } }
+        - { $ref: '#/components/parameters/Cursor' }
+        - { $ref: '#/components/parameters/Limit' }
+      responses:
+        '200':
+          description: OK
+          headers:
+            X-Window-From: { $ref: '#/components/headers/X-Window-From' }
+            X-Window-To: { $ref: '#/components/headers/X-Window-To' }
+            X-Data-As-Of: { $ref: '#/components/headers/X-Data-As-Of' }
+            X-Next-Cursor: { $ref: '#/components/headers/X-Next-Cursor' }
+            X-Total-Count: { $ref: '#/components/headers/X-Total-Count' }
+          content:
+            application/json:
+              schema: { type: array, items: { $ref: '#/components/schemas/Service' } }
+              example:
+                - { ai_service: OpenAI ChatGPT, category: Assistant, icon: null, separability: distinct, confidence: confirmed, hits: 14230, bytes: 912003114, users: 81, risk_score: 42, jurisdiction: US, ever_agentic: false, sandbox_candidate: false, agent_sdks: null, collector_count: 2, first_seen: 1773302400, last_seen: 1790411395, personal_account: false, oauth_scopes: null, service_id: openai-chatgpt, vendor: OpenAI, embedded_in: null, status: approved, reviewed_by: Priya Nair, reviewed_at: 1789203780, endpoints: 88, is_new: false }
+                - { ai_service: Perplexity, category: Search, icon: null, separability: distinct, confidence: high, hits: 240, bytes: 3120441, users: 4, risk_score: 55, jurisdiction: US, ever_agentic: false, sandbox_candidate: false, agent_sdks: null, collector_count: 1, first_seen: 1790403161, last_seen: 1790409482, personal_account: true, oauth_scopes: null, service_id: perplexity, vendor: Perplexity, embedded_in: null, status: unlabelled, reviewed_by: null, reviewed_at: null, endpoints: 4, is_new: true }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+
+  /api/discovery/services/{service_id}:
+    get:
+      tags: [Discover]
+      operationId: getService
+      summary: Service side panel — one service plus the endpoints using it
+      x-status: new
+      x-min-role: viewer
+      parameters:
+        - { name: service_id, in: path, required: true, schema: { type: string } }
+        - { $ref: '#/components/parameters/From' }
+        - { $ref: '#/components/parameters/To' }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              example:
+                service: { ai_service: Perplexity, service_id: perplexity, vendor: Perplexity, category: Search, separability: distinct, embedded_in: null, status: unlabelled, reviewed_by: null, reviewed_at: null, hits: 240, endpoints: 4, users: 4, first_seen: 1790403161, last_seen: 1790409482, is_new: true }
+                description: "AI answer engine. Browser and desktop app."
+                top_endpoints:
+                  - { endpoint_id: ep_LT-4821, host: LT-4821, ip: 10.20.14.37, type: laptop, user: Dev Patel, department: Engineering, hits: 96, last_seen: 1790409482 }
+                  - { endpoint_id: ep_LT-2210, host: LT-2210, ip: 10.20.9.114, type: laptop, user: Kira Novak, department: Engineering, hits: 71, last_seen: 1790408479 }
+                status_history:
+                  - { status: unlabelled, by: system, at: 1790403161, note: null }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '404': { $ref: '#/components/responses/NotFound' }
+
+  /api/discovery/services/{service_id}/status:
+    put:
+      tags: [Discover]
+      operationId: setServiceStatus
+      summary: Set a service's governance status — label only, no enforcement in v1
+      description: |
+        **Build only if decision 1 is "yes".** Stores status, reviewer and time, and writes an audit
+        record. Does not create or change any policy. `unlabelled` is not accepted — a service
+        cannot be set back to unlabelled.
+      x-status: new
+      x-min-role: security
+      parameters:
+        - { name: service_id, in: path, required: true, schema: { type: string } }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [status]
+              properties:
+                status: { type: string, enum: [approved, unapproved, prohibited, under_review, beta] }
+                note: { type: string, maxLength: 500 }
+            example: { status: under_review, note: "Checking data-retention terms with Legal." }
+      responses:
+        '200':
+          description: Updated
+          content:
+            application/json:
+              example: { service_id: perplexity, status: under_review, reviewed_by: Tomas Weiler, reviewed_at: 1790411405 }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { $ref: '#/components/responses/NotFound' }
+
+  /api/discovery/by_endpoint:
+    get:
+      tags: [Discover]
+      operationId: listDiscoveryEndpoints
+      summary: Endpoints list
+      description: |
+        Existing fields unchanged (`endpoint`, `host`, `hits`, `bytes`, `services`). Added fields are
+        marked NEW in the `DiscoveryEndpoint` schema. Added query parameters: `type`, `service_id`,
+        `q` (matches host, IP, user), `sort`, `cursor`, `limit`. `endpoint_id` must be the same value
+        Protect uses, so a row can open the device page.
+      x-status: extended
+      x-min-role: viewer
+      parameters:
+        - { $ref: '#/components/parameters/From' }
+        - { $ref: '#/components/parameters/To' }
+        - { name: type, in: query, required: false, schema: { type: string, enum: [laptop, vm, other] } }
+        - { name: service_id, in: query, required: false, description: "Only endpoints that used this service", schema: { type: string } }
+        - { name: sort, in: query, required: false, schema: { type: string, enum: [hits, services, last_seen], default: hits } }
+        - { name: q, in: query, required: false, schema: { type: string } }
+        - { $ref: '#/components/parameters/Cursor' }
+        - { $ref: '#/components/parameters/Limit' }
+      responses:
+        '200':
+          description: OK
+          headers:
+            X-Window-From: { $ref: '#/components/headers/X-Window-From' }
+            X-Window-To: { $ref: '#/components/headers/X-Window-To' }
+            X-Next-Cursor: { $ref: '#/components/headers/X-Next-Cursor' }
+            X-Total-Count: { $ref: '#/components/headers/X-Total-Count' }
+          content:
+            application/json:
+              schema: { type: array, items: { $ref: '#/components/schemas/DiscoveryEndpoint' } }
+              example:
+                - { endpoint: 10.20.14.37, host: LT-4821, hits: 1830, bytes: 88120331, services: 4, endpoint_id: ep_LT-4821, device_id: dev_4f1c2a9e, type: laptop, ephemeral: false, user: Dev Patel, department: Engineering, identity_source: idp, sensor: pcap, first_seen: 1773302400, last_seen: 1790411395 }
+                - { endpoint: 10.60.3.118, host: vm-build-412, hits: 212, bytes: 4410032, services: 1, endpoint_id: ep_10.60.3.118, device_id: null, type: vm, ephemeral: true, user: null, department: null, identity_source: null, sensor: sase_zscaler, first_seen: 1790345230, last_seen: 1790408479 }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+
+  /api/discovery/endpoints/{endpoint_id}:
+    get:
+      tags: [Discover]
+      operationId: getDiscoveryEndpoint
+      summary: Endpoint side panel — identity plus the services it used
+      x-status: new
+      x-min-role: viewer
+      parameters:
+        - { name: endpoint_id, in: path, required: true, schema: { type: string } }
+        - { $ref: '#/components/parameters/From' }
+        - { $ref: '#/components/parameters/To' }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              example:
+                endpoint: { endpoint: 10.20.14.37, host: LT-4821, endpoint_id: ep_LT-4821, device_id: dev_4f1c2a9e, type: laptop, user: Dev Patel, department: Engineering, identity_source: idp, sensor: pcap, first_seen: 1773302400, last_seen: 1790411395 }
+                services:
+                  - { service_id: anthropic-claude, ai_service: Anthropic Claude, status: approved, hits: 1210, last_seen: 1790411395 }
+                  - { service_id: perplexity, ai_service: Perplexity, status: unlabelled, hits: 96, last_seen: 1790409482 }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '404': { $ref: '#/components/responses/NotFound' }
+
+  /api/discovery/usage-graph:
+    get:
+      tags: [Discover]
+      operationId: getUsageGraph
+      summary: '"Who uses which AI service" widget — people or endpoints to services'
+      description: |
+        Top `limit` left nodes by hits, every service they touched, and hit counts on each edge.
+        Different from `/api/ecosystem`, which is agent-to-destination.
+      x-status: new
+      x-min-role: viewer
+      parameters:
+        - { $ref: '#/components/parameters/From' }
+        - { $ref: '#/components/parameters/To' }
+        - { name: by, in: query, required: false, schema: { type: string, enum: [users, endpoints], default: users } }
+        - { name: limit, in: query, required: false, schema: { type: integer, default: 12, maximum: 30 } }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              example:
+                left: [ { id: "user:dev.patel", label: Dev Patel, sub: Engineering, hits: 1830 } ]
+                right: [ { id: anthropic-claude, label: Anthropic Claude, status: approved, hits: 9120 } ]
+                edges: [ { from: "user:dev.patel", to: anthropic-claude, hits: 1210 } ]
+        '401': { $ref: '#/components/responses/Unauthorized' }
+
+  /api/sensors:
+    get:
+      tags: [Discover]
+      operationId: getSensors
+      summary: Sensors & coverage page, freshness banner and directory status
+      description: |
+        Existing `endpoint` and `discovery` arrays unchanged. Added to each `discovery` row:
+        `endpoints`, `hits`, `health` (ok | degraded | silent — silent = no rows for 2 h) and
+        `description`. Added top-level `directory` (identity-provider connection status, which the
+        console uses to decide whether to show names or IPs).
+      x-status: extended
+      x-min-role: viewer
+      parameters: [ { $ref: '#/components/parameters/From' }, { $ref: '#/components/parameters/To' } ]
+      responses:
+        '200':
+          description: OK
+          headers:
+            X-Data-As-Of: { $ref: '#/components/headers/X-Data-As-Of' }
+          content:
+            application/json:
+              example:
+                endpoint:
+                  - { sensor: aegis-sandbox, source: sandbox, family: endpoint, events: 88412, blocks: 311, labels: 12, last_seen: 1790411395 }
+                discovery:
+                  - { sensor: "Shield · pcap", family: discovery, rows: 33120, services: 21, last_seen: 1790411395, endpoints: 93, hits: 33120, health: ok, description: "Network capture on the core switch span port" }
+                  - { sensor: "Shield · sase_zscaler", family: discovery, rows: 15090, services: 17, last_seen: 1790401800, endpoints: 40, hits: 15090, health: silent, description: "Zscaler web logs via webhook" }
+                directory: { connected: true, provider: "Entra ID", mapped_endpoints: 96, total_endpoints: 133, last_sync: 1790406000 }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+
+  # ───────────────────────────── Protect ──────────────────────────────
+  /api/devices/summary:
+    get:
+      tags: [Protect]
+      operationId: getFleetSummary
+      summary: Fleet tiles
+      x-status: new
+      x-min-role: viewer
+      parameters: [ { $ref: '#/components/parameters/From' }, { $ref: '#/components/parameters/To' } ]
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              example: { endpoints: 133, enforcing: 118, record_only: 6, offline: 3, no_agent: 6, allowed: 402113, blocked: 3120, recorded: 18877 }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+
+  /api/devices:
+    get:
+      tags: [Protect]
+      operationId: listDevices
+      summary: Fleet list
+      description: |
+        Existing `Device` fields unchanged. Added fields are marked NEW in the schema; `allowed`,
+        `blocked`, `recorded` cover the requested window (7 days by default). Added query parameters:
+        `agent_state`, `group_id`, `sort`, `q` (matches hostname, IP, owner, group name), `cursor`, `limit`.
+      x-status: extended
+      x-min-role: viewer
+      parameters:
+        - { $ref: '#/components/parameters/From' }
+        - { $ref: '#/components/parameters/To' }
+        - { name: agent_state, in: query, required: false, schema: { type: string, enum: [enforcing, record_only, offline, no_agent] } }
+        - { name: group_id, in: query, required: false, schema: { type: string } }
+        - { name: sort, in: query, required: false, schema: { type: string, enum: [blocked, recorded, allowed, last_heartbeat, device_name], default: blocked } }
+        - { name: q, in: query, required: false, schema: { type: string } }
+        - { $ref: '#/components/parameters/Cursor' }
+        - { $ref: '#/components/parameters/Limit' }
+      responses:
+        '200':
+          description: OK
+          headers:
+            X-Window-From: { $ref: '#/components/headers/X-Window-From' }
+            X-Window-To: { $ref: '#/components/headers/X-Window-To' }
+            X-Next-Cursor: { $ref: '#/components/headers/X-Next-Cursor' }
+            X-Total-Count: { $ref: '#/components/headers/X-Total-Count' }
+          content:
+            application/json:
+              schema: { type: array, items: { $ref: '#/components/schemas/Device' } }
+              example:
+                - { id: 0b6f1c2a-9e41-4d7a-8c3e-51a2d9f04e17, device_name: LT-4821, status: active, health_score: 92, risk_level: low, blocks_24h: 6, last_heartbeat: 1790411340, endpoint_id: ep_LT-4821, ip: 10.20.14.37, type: laptop, owner: Dev Patel, owner_kind: person, department: Engineering, group: { id: grp_engineering, name: Engineering }, agent_state: enforcing, agent_version: "0.9.4", tools: [claude-code, gemini-cli], allowed: 6120, blocked: 41, recorded: 212 }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+
+  /api/devices/{id}:
+    get:
+      tags: [Protect]
+      operationId: getDevice
+      summary: Device page header
+      description: Same fields as a `/api/devices` row plus `os`.
+      x-status: new
+      x-min-role: viewer
+      parameters:
+        - { name: id, in: path, required: true, schema: { type: string, format: uuid } }
+        - { $ref: '#/components/parameters/From' }
+        - { $ref: '#/components/parameters/To' }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              example: { id: 0b6f1c2a-9e41-4d7a-8c3e-51a2d9f04e17, device_name: LT-4821, status: active, health_score: 92, risk_level: low, blocks_24h: 6, last_heartbeat: 1790411340, endpoint_id: ep_LT-4821, ip: 10.20.14.37, type: laptop, os: "macOS 14.6", owner: Dev Patel, owner_kind: person, department: Engineering, group: { id: grp_engineering, name: Engineering }, agent_state: enforcing, agent_version: "0.9.4", tools: [claude-code, gemini-cli], allowed: 6120, blocked: 41, recorded: 212 }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '404': { $ref: '#/components/responses/NotFound' }
+
+  /api/devices/{id}/events:
+    get:
+      tags: [Protect]
+      operationId: listDeviceEvents
+      summary: Decision feed for one device, newest first
+      description: |
+        Rows use the existing `Decision` fields plus the NEW ones in `DeviceEvent`. The existing
+        `/api/stream/decisions` has no device filter and stops at 200 rows, so it cannot serve this
+        page. `q` matches `app`, `target`, `reason`, `rule_id`.
+      x-status: new
+      x-min-role: viewer
+      parameters:
+        - { name: id, in: path, required: true, schema: { type: string, format: uuid } }
+        - { $ref: '#/components/parameters/From' }
+        - { $ref: '#/components/parameters/To' }
+        - { name: decision, in: query, required: false, schema: { type: string, enum: [allow, block, record] } }
+        - { name: q, in: query, required: false, schema: { type: string } }
+        - { $ref: '#/components/parameters/Cursor' }
+        - { $ref: '#/components/parameters/Limit' }
+      responses:
+        '200':
+          description: OK
+          headers:
+            X-Next-Cursor: { $ref: '#/components/headers/X-Next-Cursor' }
+          content:
+            application/json:
+              schema: { type: array, items: { $ref: '#/components/schemas/DeviceEvent' } }
+              example:
+                - { id: 7d1e0c52-3a4b-4f6e-9b21-0c8d5a7e3f10, ts: 1790409482, identity: dev.patel, device: LT-4821, app: paste.ee, action: network, target: "paste.ee:443", source: sandbox, decision: block, reason: "Egress not in the CUE allow-list", rule_id: null, session_id: sbx_3e91c0a7d2f4, tool: claude-code, channel: agent, enforced_by: cue }
+                - { id: 2a9f4b18-6c07-4e3d-a5b2-8e1f0d6c9a44, ts: 1790409470, identity: dev.patel, device: LT-4821, app: Anthropic Claude, action: prompt, target: api.anthropic.com, source: sandbox, decision: allow, reason: null, rule_id: null, session_id: sbx_3e91c0a7d2f4, tool: claude-code, channel: agent, enforced_by: null }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '404': { $ref: '#/components/responses/NotFound' }
+
+  /api/detections/summary:
+    get:
+      tags: [Protect]
+      operationId: getDetectionsSummary
+      summary: Detections page — tiles and the rule-family table
+      description: The console uses this instead of `/api/detectors`, which has hit counts only.
+      x-status: new
+      x-min-role: viewer
+      parameters: [ { $ref: '#/components/parameters/From' }, { $ref: '#/components/parameters/To' } ]
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  totals: { type: object, properties: { detections: { type: integer }, families: { type: integer }, critical: { type: integer }, escalated: { type: integer }, devices: { type: integer } } }
+                  families: { type: array, items: { $ref: '#/components/schemas/DetectionFamily' } }
+              example:
+                totals: { detections: 61, families: 9, critical: 14, escalated: 4, devices: 23 }
+                families:
+                  - { rule_id: EXFIL, label: "Data exfiltration", description: "A confirmed transfer of sensitive data to a destination outside the CUE egress allow-list.", severity: critical, owasp: ASI05, signal: guest, hits: 5, devices: 4, groups: 3, blocked: 3, recorded: 0, escalated: 2 }
+                  - { rule_id: SENSITIVE-ACCESS, label: "Sensitive file access", description: "Access to a secret, judged by file content rather than filename or path.", severity: medium, owasp: ASI04, signal: guest, hits: 12, devices: 9, groups: 4, blocked: 10, recorded: 2, escalated: 0 }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+
+  /api/detections:
+    get:
+      tags: [Protect]
+      operationId: listDetections
+      summary: Detection list — one rule family, or filtered across families
+      description: "`q` matches host, owner, group name and session id (never redacted content)."
+      x-status: new
+      x-min-role: viewer
+      parameters:
+        - { $ref: '#/components/parameters/From' }
+        - { $ref: '#/components/parameters/To' }
+        - { name: rule_id, in: query, required: false, schema: { type: string } }
+        - { name: severity, in: query, required: false, schema: { $ref: '#/components/schemas/Severity' } }
+        - { name: disposition, in: query, required: false, schema: { $ref: '#/components/schemas/Disposition' } }
+        - { name: device_id, in: query, required: false, schema: { type: string } }
+        - { name: session_id, in: query, required: false, schema: { type: string } }
+        - { name: q, in: query, required: false, schema: { type: string } }
+        - { $ref: '#/components/parameters/Cursor' }
+        - { $ref: '#/components/parameters/Limit' }
+      responses:
+        '200':
+          description: OK
+          headers:
+            X-Next-Cursor: { $ref: '#/components/headers/X-Next-Cursor' }
+            X-Total-Count: { $ref: '#/components/headers/X-Total-Count' }
+          content:
+            application/json:
+              schema: { type: array, items: { $ref: '#/components/schemas/DetectionRow' } }
+              example:
+                - { detection_id: det_01J9Z8K2W4, ts: 1790409482, rule_id: SENSITIVE-ACCESS, rule_label: "Sensitive file access", severity: medium, disposition: blocked, device_id: 0b6f1c2a-9e41-4d7a-8c3e-51a2d9f04e17, host: LT-4821, owner: Dev Patel, owner_kind: person, department: Engineering, group: { id: grp_engineering, name: Engineering }, session_id: sbx_3e91c0a7d2f4, teaser: "prod.env~ — Postgres connection URI with inline password" }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+
+  /api/detections/{detection_id}:
+    get:
+      tags: [Protect]
+      operationId: getDetection
+      summary: Detection detail — rule, typed evidence, event chain, signature
+      description: |
+        Builds on the existing `/api/evidence/{id}` (argv, process chain, signature string), which
+        stays as is. Adds rule metadata, typed evidence, the surrounding event chain and a structured
+        signature.
+      x-status: new
+      x-min-role: viewer
+      x-viewer-redaction: "teaser = rule label + target type; evidence keys other than type = null; chain[].detail = null"
+      parameters:
+        - { name: detection_id, in: path, required: true, schema: { type: string } }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/DetectionDetail' }
+              example:
+                detection_id: det_01J9Z8K2W4
+                ts: 1790409482
+                rule_id: SENSITIVE-ACCESS
+                rule_label: "Sensitive file access"
+                description: "Access to a secret, judged by file content rather than filename or path."
+                severity: medium
+                disposition: blocked
+                owasp: ASI04
+                signal: guest
+                classification: credential
+                backend: "aegis-engine 0.9.4"
+                device_id: 0b6f1c2a-9e41-4d7a-8c3e-51a2d9f04e17
+                host: LT-4821
+                owner: Dev Patel
+                owner_kind: person
+                department: Engineering
+                group: { id: grp_engineering, name: Engineering }
+                session_id: sbx_3e91c0a7d2f4
+                teaser: "prod.env~ — Postgres connection URI with inline password"
+                evidence:
+                  type: sensitive_content
+                  decoded_command: null
+                  sensitive_content: { path: "prod.env~", basis: "Postgres connection URI with inline password", pattern: "postgres://user:pass@host/db", snippet_redacted: "DATABASE_URL=postgres://svc_billing:••••••@db.prod.internal:5432/ledger" }
+                  exfil: null
+                  egress_spike: null
+                  persistence: null
+                  undisclosed_action: null
+                chain:
+                  - { ts: 1790409470, label: "reads config/app.yaml", detail: file_read, is_current: false, is_detection: false }
+                  - { ts: 1790409482, label: "Sensitive file access", detail: "prod.env~", is_current: true, is_detection: true, severity: medium, disposition: blocked }
+                signature: { alg: ed25519, key_id: aegis-srv-2026-09, value: "MEUCIQDk…", signed_at: 1790409483, verify_hint: "aegis verify 7d1e0c52-3a4b-4f6e-9b21-0c8d5a7e3f10" }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '404': { $ref: '#/components/responses/NotFound' }
+
+  /api/sessions:
+    get:
+      tags: [Protect]
+      operationId: listSessions
+      summary: Execution sessions list
+      description: |
+        Existing fields unchanged. Added fields are marked NEW in `SessionRow`. Added query
+        parameters: `outcome`, `device_id`, `q` (matches host, owner, sid), `cursor`, `limit`.
+        Please confirm `/api/sessions` (not `/api/sandboxes`) is the canonical list — the console needs one.
+      x-status: extended
+      x-min-role: viewer
+      parameters:
+        - { $ref: '#/components/parameters/From' }
+        - { $ref: '#/components/parameters/To' }
+        - { name: outcome, in: query, required: false, schema: { type: string, enum: [clean, detected, stopped] } }
+        - { name: device_id, in: query, required: false, schema: { type: string } }
+        - { name: q, in: query, required: false, schema: { type: string } }
+        - { $ref: '#/components/parameters/Cursor' }
+        - { $ref: '#/components/parameters/Limit' }
+      responses:
+        '200':
+          description: OK
+          headers:
+            X-Next-Cursor: { $ref: '#/components/headers/X-Next-Cursor' }
+            X-Total-Count: { $ref: '#/components/headers/X-Total-Count' }
+          content:
+            application/json:
+              schema: { type: array, items: { $ref: '#/components/schemas/SessionRow' } }
+              example:
+                - { sid: sbx_3e91c0a7d2f4, name: "claude-code · payments-api", egress: 9, actions: 31, prompts: 14, dlp: 0, rules: 1, denies: 2, started: 1790408479, last_seen: 1790409490, device_id: 0b6f1c2a-9e41-4d7a-8c3e-51a2d9f04e17, host: LT-4821, owner: Dev Patel, department: Engineering, group: { id: grp_engineering, name: Engineering }, tool: claude-code, detections: 1, outcome: detected }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+
+  /api/sessions/summary:
+    get:
+      tags: [Protect]
+      operationId: getSessionsSummary
+      summary: Counts for the outcome filter chips on the Sessions page
+      x-status: new
+      x-min-role: viewer
+      parameters: [ { $ref: '#/components/parameters/From' }, { $ref: '#/components/parameters/To' } ]
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              example: { total: 318, clean: 281, detected: 29, stopped: 8 }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+
+  /api/session/{sid}/activity:
+    get:
+      tags: [Protect]
+      operationId: getSessionActivity
+      summary: Session detail — origin, boot summary and activity feed
+      description: |
+        Existing response already matches the session screen (`origin`, `boot`, `activity`) and
+        stays as is. Added: a `header` object; on each activity row `rule_id`, `reason` and `owasp`;
+        and explicit `verdict` values (allow | block | record | stopped).
+      x-status: extended
+      x-min-role: viewer
+      x-viewer-redaction: "origin.initial_prompt = null; activity rows of cat prompt have detail = null"
+      parameters:
+        - { name: sid, in: path, required: true, schema: { type: string } }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              example:
+                session: sbx_3e91c0a7d2f4
+                header: { device_id: 0b6f1c2a-9e41-4d7a-8c3e-51a2d9f04e17, host: LT-4821, owner: Dev Patel, department: Engineering, group: { id: grp_engineering, name: Engineering }, tool: claude-code, outcome: detected, started: 1790408479, last_seen: 1790409490 }
+                origin: { source: sandbox, writable: true, profile: node20, workspace: /work/payments-api, identity: "spiffe://northwind.example/user/dev.patel", initial_prompt: "add idempotency keys to the refund endpoint" }
+                boot: { count: 11, items: [ { label: "egress allow", count: 6 }, { label: mcps, count: 2 }, { label: "writable mounts", count: 1 } ] }
+                activity:
+                  - { cat: file_read, kind: read, label: "Read 3 files under ./src", detail: "src/refund.ts …", count: 3, verdict: allow, severity: null, first_ts: 1790408490, last_ts: 1790408501, rule_id: null, reason: null, owasp: null }
+                  - { cat: blocked, kind: egress, label: "Egress to paste.ee", detail: "paste.ee:443", count: 1, verdict: block, severity: null, first_ts: 1790409460, last_ts: 1790409460, rule_id: null, reason: "Not in the CUE allow-list", owasp: null }
+                  - { cat: detection, kind: SENSITIVE-ACCESS, label: "Sensitive file access", detail: "prod.env~", count: 1, verdict: block, severity: medium, first_ts: 1790409482, last_ts: 1790409482, rule_id: SENSITIVE-ACCESS, reason: "Postgres connection URI with inline password", owasp: ASI04 }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '404': { $ref: '#/components/responses/NotFound' }
+
+  # ────────────────────────────── Usage ───────────────────────────────
+  /api/usage/summary:
+    get:
+      tags: [Usage]
+      operationId: getUsageSummary
+      summary: Usage tiles
+      description: |
+        Existing fields unchanged (`turns`, `users`, `sessions`, `cost_usd`, `tokens`). Added:
+        `input_tokens`, `output_tokens`, `cache_read_tokens`, `hard_stops`, and `rate_card_id`
+        (the server-side price table used for `cost_usd`).
+      x-status: extended
+      x-min-role: viewer
+      parameters: [ { $ref: '#/components/parameters/From' }, { $ref: '#/components/parameters/To' } ]
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              example: { turns: 41877, users: 71, sessions: 3120, cost_usd: 4812.37, tokens: 912004118, input_tokens: 566442551, output_tokens: 72960329, cache_read_tokens: 272601238, hard_stops: 38, rate_card_id: default-2026-09 }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+
+  /api/usage/by_model:
+    get:
+      tags: [Usage]
+      operationId: getUsageByModel
+      summary: '"By model" table; the console groups rows by provider for "By provider"'
+      x-status: new
+      x-min-role: viewer
+      parameters: [ { $ref: '#/components/parameters/From' }, { $ref: '#/components/parameters/To' } ]
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              example:
+                - { model: claude-sonnet-5, provider: Anthropic, wire: api.anthropic.com, input_tokens: 262610021, output_tokens: 33563813, cache_read_tokens: 125396573, cost_usd: 2140.55, sessions: 1703, users: 58, groups: 7, top_groups: [ { name: Engineering, cost_usd: 1402.10 }, { name: Data Platform, cost_usd: 311.07 } ], rate_per_mtok: { input: 3.0, output: 15.0, cache_read: 0.3 } }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+
+  /api/usage/by_group:
+    get:
+      tags: [Usage]
+      operationId: getUsageByGroup
+      summary: '"Top groups" table'
+      description: Group = `GroupRef` where known, otherwise directory department (see decision 2).
+      x-status: new
+      x-min-role: viewer
+      parameters: [ { $ref: '#/components/parameters/From' }, { $ref: '#/components/parameters/To' } ]
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              example:
+                - { group: { id: grp_engineering, name: Engineering }, tokens: 512003991, cost_usd: 2911.02, sessions: 1840, users: 31, stops: 11 }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+
+  /api/usage/by_user:
+    get:
+      tags: [Usage]
+      operationId: getUsageByUser
+      summary: '"Top people" table'
+      description: |
+        Existing fields unchanged (`person`, `turns`, `sessions`, `input`, `output`, `cost_usd`).
+        Added: `department`, `group`, `cache_read`, `tokens` (total). Added `cursor`/`limit`.
+      x-status: extended
+      x-min-role: viewer
+      parameters:
+        - { $ref: '#/components/parameters/From' }
+        - { $ref: '#/components/parameters/To' }
+        - { $ref: '#/components/parameters/Cursor' }
+        - { $ref: '#/components/parameters/Limit' }
+      responses:
+        '200':
+          description: OK
+          headers:
+            X-Next-Cursor: { $ref: '#/components/headers/X-Next-Cursor' }
+          content:
+            application/json:
+              example:
+                - { person: Dev Patel, turns: 902, sessions: 64, input: 11002331, output: 1402110, cost_usd: 91.40, department: Engineering, group: { id: grp_engineering, name: Engineering }, cache_read: 5120034, tokens: 17524475 }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+
+  /api/usage/budgets:
+    get:
+      tags: [Usage]
+      operationId: getUsageBudgets
+      summary: Budgets page — caps per group and the hard-stops that fired
+      description: |
+        **Build only if decision 4 is "yes"** — i.e. the engine already enforces spend caps and
+        records a stop event. Otherwise the console hides Budgets in v1.
+        `avg_usd_per_user` = group cost in the window ÷ distinct users in the group ÷ 7 (per user per day).
+      x-status: new
+      x-min-role: viewer
+      parameters: [ { $ref: '#/components/parameters/From' }, { $ref: '#/components/parameters/To' } ]
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              example:
+                groups:
+                  - { group: { id: grp_engineering, name: Engineering }, cap_usd: 150, cap_scope: per_user_24h, mode: hard_stop, cost_usd: 2911.02, sessions: 1840, users: 31, avg_usd_per_user: 13.41, stops: 11 }
+                stops:
+                  - { ts: 1790345230, sid: sbx_a90d13c41e22, person: Kira Novak, group: { id: grp_engineering, name: Engineering }, cap_usd: 150, cap_scope: per_user_24h, spend_usd: 150.02, stop_turn: 37 }
+        '401': { $ref: '#/components/responses/Unauthorized' }

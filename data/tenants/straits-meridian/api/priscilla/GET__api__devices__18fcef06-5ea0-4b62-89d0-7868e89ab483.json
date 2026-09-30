@@ -1,0 +1,38 @@
+{
+ "operationId": "getDevice",
+ "access": "read",
+ "status": 200,
+ "headers": {
+  "X-Window-From": "1789956000",
+  "X-Window-To": "1790560800",
+  "X-Data-As-Of": "1790560680"
+ },
+ "body": {
+  "id": "18fcef06-5ea0-4b62-89d0-7868e89ab483",
+  "device_name": "vm-dev-rahul-07",
+  "status": "active",
+  "health_score": 96,
+  "risk_level": "low",
+  "blocks_24h": 0,
+  "last_heartbeat": 1790560403,
+  "endpoint_id": "ep_vm-dev-rahul-07",
+  "ip": "10.60.21.214",
+  "type": "vm",
+  "owner": "Rahul Iyer",
+  "owner_kind": "person",
+  "department": "Engineering — Payments",
+  "group": {
+   "id": "grp_payments_eng",
+   "name": "Engineering — Payments"
+  },
+  "agent_state": "enforcing",
+  "agent_version": "0.9.6",
+  "tools": [
+   "claude-code"
+  ],
+  "allowed": 149,
+  "blocked": 2,
+  "recorded": 9,
+  "os": "Ubuntu 24.04"
+ }
+}

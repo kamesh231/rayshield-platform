@@ -1,0 +1,25 @@
+{
+ "operationId": "listDeviceEvents",
+ "access": "read",
+ "status": 200,
+ "headers": {},
+ "body": [
+  {
+   "id": "cd8d121a-252f-4436-a132-91149508df61",
+   "ts": 1790542080,
+   "identity": "jia.hui.ong",
+   "device": "LT-SG-4402",
+   "app": "Anthropic Claude (API)",
+   "action": "detection",
+   "target": "MCP tool result → model prompt",
+   "source": "sandbox",
+   "decision": "block",
+   "reason": "customer_360.party · 612 rows with NRIC column via warehouse-mcp (blocked)",
+   "rule_id": "PII-NRIC",
+   "session_id": "sbx_2976a8d6d6b2",
+   "tool": "gemini-cli",
+   "channel": "agent",
+   "enforced_by": "dlp"
+  }
+ ]
+}

@@ -1,0 +1,17 @@
+{
+ "operationId": "getGroupMcpPolicy",
+ "access": "read",
+ "status": 200,
+ "headers": {},
+ "body": {
+  "group_id": "grp_svc",
+  "allow": [
+   "mcp_github_enterprise"
+  ],
+  "deny": [
+   "mcp_slack"
+  ],
+  "updated_by": "Tan Wei Ling",
+  "updated_at": 1789783200
+ }
+}

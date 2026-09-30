@@ -1,0 +1,38 @@
+{
+ "operationId": "getDevice",
+ "access": "read",
+ "status": 200,
+ "headers": {
+  "X-Window-From": "1789956000",
+  "X-Window-To": "1790560800",
+  "X-Data-As-Of": "1790560680"
+ },
+ "body": {
+  "id": "6f2dd239-2dee-4c3c-9017-854d47141748",
+  "device_name": "LT-SG-3391",
+  "status": "active",
+  "health_score": 71,
+  "risk_level": "low",
+  "blocks_24h": 1,
+  "last_heartbeat": 1790560693,
+  "endpoint_id": "ep_LT-SG-3391",
+  "ip": "10.40.33.159",
+  "type": "laptop",
+  "owner": "Daniel Koh",
+  "owner_kind": "person",
+  "department": "Engineering — Digital Banking",
+  "group": {
+   "id": "grp_digital_eng",
+   "name": "Engineering — Digital Banking"
+  },
+  "agent_state": "record_only",
+  "agent_version": "0.9.6",
+  "tools": [
+   "claude-code"
+  ],
+  "allowed": 408,
+  "blocked": 4,
+  "recorded": 20,
+  "os": "Ubuntu 24.04"
+ }
+}

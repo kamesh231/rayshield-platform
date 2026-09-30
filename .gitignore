@@ -1,0 +1,9 @@
+node_modules/
+_pw*.mjs
+_shots.mjs
+*.log
+.DS_Store
+
+# Straits Meridian demo changes saved by the server at runtime (Reset demo clears it)
+data/tenants/straits-meridian/live-state.json
+data/tenants/straits-meridian/live-state.json.tmp

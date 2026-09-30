@@ -1,0 +1,63 @@
+{
+ "operationId": "getDetection",
+ "access": "self",
+ "status": 200,
+ "headers": {},
+ "body": {
+  "detection_id": "det_01JAW9NKK6J",
+  "ts": 1790452800,
+  "rule_id": "SECRET-IN-PROMPT",
+  "rule_label": "Secret in prompt",
+  "severity": "high",
+  "disposition": "blocked",
+  "device_id": "18fcef06-5ea0-4b62-89d0-7868e89ab483",
+  "host": "vm-dev-rahul-07",
+  "owner": "Rahul Iyer",
+  "owner_kind": "person",
+  "department": "Engineering — Payments",
+  "group": {
+   "id": "grp_payments_eng",
+   "name": "Engineering — Payments"
+  },
+  "session_id": "sbx_298fafe63451",
+  "teaser": "~/.config/settlement/credentials · connection string with password (blocked)",
+  "description": "An API key, token, private key or connection string in a prompt or file sent to the model.",
+  "owasp": null,
+  "signal": "guest",
+  "classification": "regulated data",
+  "backend": "aegis-engine 0.9.6",
+  "evidence": {
+   "type": "sensitive_content",
+   "decoded_command": null,
+   "sensitive_content": {
+    "path": "~/.config/settlement/credentials",
+    "basis": "Postgres connection URI with inline password",
+    "pattern": "postgres://user:pass@host/db",
+    "snippet_redacted": "DATABASE_URL=postgres://svc_recon:••••••@payments-replica.db.straitsmeridian.example:5432/cards"
+   },
+   "exfil": null,
+   "egress_spike": null,
+   "persistence": null,
+   "undisclosed_action": null
+  },
+  "chain": [
+   {
+    "ts": 1790452800,
+    "label": "Secret in prompt",
+    "detail": "~/.config/settlement/credentials · connection string with password (blocked)",
+    "is_current": true,
+    "is_detection": true,
+    "severity": "high",
+    "disposition": "blocked"
+   }
+  ],
+  "signature": {
+   "alg": "ed25519",
+   "key_id": "aegis-smb-2026-09",
+   "value": "MEUCIQ7ipbwfndmsgh…",
+   "signed_at": 1790452801,
+   "verify_hint": "aegis verify det_01JAW9NKK6J"
+  },
+  "fix_hint": "Credentials in a file were sent as context. Use the Aegis Bridge vault connection for postgres-mcp instead of local credential files."
+ }
+}

@@ -1,0 +1,12 @@
+{
+ "operationId": "getSessionsSummary",
+ "access": "self",
+ "status": 200,
+ "headers": {},
+ "body": {
+  "total": 9,
+  "clean": 5,
+  "detected": 4,
+  "stopped": 0
+ }
+}

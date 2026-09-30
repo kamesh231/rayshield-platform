@@ -1,0 +1,36 @@
+{
+ "operationId": "getDevice",
+ "access": "read",
+ "status": 200,
+ "headers": {
+  "X-Window-From": "1789956000",
+  "X-Window-To": "1790560800",
+  "X-Data-As-Of": "1790560680"
+ },
+ "body": {
+  "id": "72187152-a2c4-45da-9496-2d38d26af90d",
+  "device_name": "LT-SG-5141",
+  "status": "offline",
+  "health_score": 40,
+  "risk_level": "low",
+  "blocks_24h": 1,
+  "last_heartbeat": 1790499054,
+  "endpoint_id": "ep_LT-SG-5141",
+  "ip": "10.40.9.132",
+  "type": "laptop",
+  "owner": "Kenji Watanabe",
+  "owner_kind": "person",
+  "department": "Treasury & Markets",
+  "group": {
+   "id": "grp_treasury",
+   "name": "Treasury & Markets"
+  },
+  "agent_state": "offline",
+  "agent_version": "0.9.6",
+  "tools": [],
+  "allowed": 398,
+  "blocked": 5,
+  "recorded": 28,
+  "os": "Windows 11"
+ }
+}

@@ -1,0 +1,80 @@
+{
+ "operationId": "listGroups",
+ "access": "read",
+ "status": 200,
+ "headers": {},
+ "body": [
+  {
+   "id": "grp_payments_eng",
+   "name": "Engineering — Payments",
+   "member_count": 47,
+   "assigned_cue_id": "cue_payments_v3",
+   "assigned_cue_name": "Claude Code — Payments Engineering v3",
+   "recert_due": null,
+   "mcp_policy_id": "mcpp_payments_eng"
+  },
+  {
+   "id": "grp_digital_eng",
+   "name": "Engineering — Digital Banking",
+   "member_count": 88,
+   "assigned_cue_id": "cue_digital_v2",
+   "assigned_cue_name": "Claude Code — Digital Banking v2",
+   "recert_due": null,
+   "mcp_policy_id": "mcpp_digital_eng"
+  },
+  {
+   "id": "grp_data",
+   "name": "Data & Analytics",
+   "member_count": 36,
+   "assigned_cue_id": "cue_data_v2",
+   "assigned_cue_name": "Gemini CLI — Data & Analytics v2",
+   "recert_due": null,
+   "mcp_policy_id": "mcpp_data"
+  },
+  {
+   "id": "grp_soc",
+   "name": "Cyber Defence (SOC)",
+   "member_count": 14,
+   "assigned_cue_id": "cue_soc_v1",
+   "assigned_cue_name": "Claude Code — Cyber Defence v1",
+   "recert_due": null,
+   "mcp_policy_id": "mcpp_soc"
+  },
+  {
+   "id": "grp_treasury",
+   "name": "Treasury & Markets",
+   "member_count": 29,
+   "assigned_cue_id": null,
+   "assigned_cue_name": null,
+   "recert_due": null,
+   "mcp_policy_id": "mcpp_treasury"
+  },
+  {
+   "id": "grp_retail_ops",
+   "name": "Retail Banking Operations",
+   "member_count": 71,
+   "assigned_cue_id": null,
+   "assigned_cue_name": null,
+   "recert_due": null,
+   "mcp_policy_id": "mcpp_retail_ops"
+  },
+  {
+   "id": "grp_contractors",
+   "name": "Vendor Engineering (contractors)",
+   "member_count": 22,
+   "assigned_cue_id": "cue_contractors_v1",
+   "assigned_cue_name": "Codex CLI — Vendor contractors v1",
+   "recert_due": 1791770400,
+   "mcp_policy_id": "mcpp_contractors"
+  },
+  {
+   "id": "grp_svc",
+   "name": "Service accounts (CI / ETL)",
+   "member_count": 26,
+   "assigned_cue_id": null,
+   "assigned_cue_name": null,
+   "recert_due": null,
+   "mcp_policy_id": "mcpp_svc"
+  }
+ ]
+}

@@ -1,0 +1,54 @@
+{
+ "operationId": "listMySessions",
+ "access": "self",
+ "status": 200,
+ "headers": {},
+ "body": [
+  {
+   "sid": "sbx_10448e61722f",
+   "name": "claude-code · mobile-app",
+   "egress": 6,
+   "actions": 38,
+   "prompts": 19,
+   "dlp": 0,
+   "rules": 0,
+   "denies": 0,
+   "started": 1790461440,
+   "last_seen": 1790463435,
+   "device_id": "43463483-7c37-4958-9d7e-9e1adaecbcd7",
+   "host": "LT-SG-4710",
+   "owner": "Arjun Menon",
+   "department": "Cyber Defence (SOC)",
+   "group": {
+    "id": "grp_soc",
+    "name": "Cyber Defence (SOC)"
+   },
+   "tool": "claude-code",
+   "detections": 0,
+   "outcome": "clean"
+  },
+  {
+   "sid": "sbx_b475503a2f74",
+   "name": "claude-code · risk-reports",
+   "egress": 11,
+   "actions": 14,
+   "prompts": 11,
+   "dlp": 0,
+   "rules": 0,
+   "denies": 0,
+   "started": 1790407008,
+   "last_seen": 1790408113,
+   "device_id": "43463483-7c37-4958-9d7e-9e1adaecbcd7",
+   "host": "LT-SG-4710",
+   "owner": "Arjun Menon",
+   "department": "Cyber Defence (SOC)",
+   "group": {
+    "id": "grp_soc",
+    "name": "Cyber Defence (SOC)"
+   },
+   "tool": "claude-code",
+   "detections": 0,
+   "outcome": "clean"
+  }
+ ]
+}

@@ -1,0 +1,117 @@
+{
+ "operationId": "getService",
+ "access": "read",
+ "status": 200,
+ "headers": {
+  "X-Window-From": "1789956000",
+  "X-Window-To": "1790560800",
+  "X-Data-As-Of": "1790560680"
+ },
+ "body": {
+  "service": {
+   "ai_service": "Amazon Bedrock",
+   "category": "Model API",
+   "icon": null,
+   "separability": "distinct",
+   "confidence": "confirmed",
+   "hits": 2300,
+   "bytes": 94829000,
+   "users": 16,
+   "risk_score": 22,
+   "jurisdiction": "SG",
+   "ever_agentic": false,
+   "sandbox_candidate": false,
+   "agent_sdks": null,
+   "collector_count": 2,
+   "first_seen": 1778464800,
+   "last_seen": 1790560080,
+   "personal_account": false,
+   "oauth_scopes": null,
+   "service_id": "amazon-bedrock",
+   "vendor": "AWS",
+   "embedded_in": null,
+   "status": "approved",
+   "reviewed_by": "Tan Wei Ling",
+   "reviewed_at": 1779310800,
+   "endpoints": 17,
+   "is_new": false
+  },
+  "description": "Model API in the bank’s AWS Singapore account.",
+  "top_endpoints": [
+   {
+    "endpoint_id": "ep_vm-dev-rahul-07",
+    "host": "vm-dev-rahul-07",
+    "ip": "10.60.21.214",
+    "type": "vm",
+    "user": "Rahul Iyer",
+    "department": "Engineering — Payments",
+    "hits": 32,
+    "last_seen": 1790560789
+   },
+   {
+    "endpoint_id": "ep_LT-SG-1187",
+    "host": "LT-SG-1187",
+    "ip": "10.40.55.77",
+    "type": "laptop",
+    "user": "Nur Aisyah",
+    "department": "Engineering — Digital Banking",
+    "hits": 14,
+    "last_seen": 1790550182
+   },
+   {
+    "endpoint_id": "ep_LT-SG-3310",
+    "host": "LT-SG-3310",
+    "ip": "10.40.27.6",
+    "type": "laptop",
+    "user": "Marcus Lee",
+    "department": "Engineering — Digital Banking",
+    "hits": 30,
+    "last_seen": 1790549162
+   },
+   {
+    "endpoint_id": "ep_LT-SG-1961",
+    "host": "LT-SG-1961",
+    "ip": "10.40.47.200",
+    "type": "laptop",
+    "user": "Isaac Low",
+    "department": "Engineering — Payments",
+    "hits": 37,
+    "last_seen": 1790559539
+   },
+   {
+    "endpoint_id": "ep_LT-SG-4130",
+    "host": "LT-SG-4130",
+    "ip": "10.40.27.219",
+    "type": "laptop",
+    "user": "Farhan Loh",
+    "department": "Engineering — Payments",
+    "hits": 30,
+    "last_seen": 1790559491
+   },
+   {
+    "endpoint_id": "ep_LT-SG-5639",
+    "host": "LT-SG-5639",
+    "ip": "10.40.20.181",
+    "type": "laptop",
+    "user": "Nurul Abdullah",
+    "department": "Engineering — Payments",
+    "hits": 59,
+    "last_seen": 1790559666
+   }
+  ],
+  "status_history": [
+   {
+    "status": "unlabelled",
+    "by": "system",
+    "at": 1778464800,
+    "note": null
+   },
+   {
+    "status": "approved",
+    "by": "Tan Wei Ling",
+    "at": 1779310800,
+    "note": null
+   }
+  ]
+ }
+}

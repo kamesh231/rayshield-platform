@@ -1,0 +1,57 @@
+{
+ "operationId": "getDetection",
+ "access": "redacted",
+ "status": 200,
+ "headers": {},
+ "body": {
+  "detection_id": "det_01JAT9KJZT8",
+  "ts": 1790315558,
+  "rule_id": "SENSITIVE-ACCESS",
+  "rule_label": "Sensitive file access",
+  "severity": "medium",
+  "disposition": "blocked",
+  "device_id": "dffa7dc4-b5ca-453d-9af6-9c23d89b14de",
+  "host": "LT-SG-9530",
+  "owner": "Terence Sim",
+  "owner_kind": "person",
+  "department": "Engineering — Digital Banking",
+  "group": {
+   "id": "grp_digital_eng",
+   "name": "Engineering — Digital Banking"
+  },
+  "session_id": "sbx_0e0283e7283c",
+  "teaser": "Sensitive file access · file read",
+  "description": "Access to a secret, judged by file content rather than filename or path.",
+  "owasp": "ASI04",
+  "signal": "guest",
+  "classification": "regulated data",
+  "backend": "aegis-engine 0.9.6",
+  "evidence": {
+   "type": "sensitive_content",
+   "decoded_command": null,
+   "sensitive_content": null,
+   "exfil": null,
+   "egress_spike": null,
+   "persistence": null,
+   "undisclosed_action": null
+  },
+  "chain": [
+   {
+    "ts": 1790315558,
+    "label": "Sensitive file access",
+    "detail": null,
+    "is_current": true,
+    "is_detection": true,
+    "severity": "medium",
+    "disposition": "blocked"
+   }
+  ],
+  "signature": {
+   "alg": "ed25519",
+   "key_id": "aegis-smb-2026-09",
+   "value": "MEUCIQook5lj1ggsgf…",
+   "signed_at": 1790315559,
+   "verify_hint": "aegis verify det_01JAT9KJZT8"
+  }
+ }
+}

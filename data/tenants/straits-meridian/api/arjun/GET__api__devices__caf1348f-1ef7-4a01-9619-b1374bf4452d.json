@@ -1,0 +1,38 @@
+{
+ "operationId": "getDevice",
+ "access": "read",
+ "status": 200,
+ "headers": {
+  "X-Window-From": "1789956000",
+  "X-Window-To": "1790560800",
+  "X-Data-As-Of": "1790560680"
+ },
+ "body": {
+  "id": "caf1348f-1ef7-4a01-9619-b1374bf4452d",
+  "device_name": "LT-SG-5120",
+  "status": "active",
+  "health_score": 94,
+  "risk_level": "low",
+  "blocks_24h": 1,
+  "last_heartbeat": 1790560658,
+  "endpoint_id": "ep_LT-SG-5120",
+  "ip": "10.40.36.162",
+  "type": "laptop",
+  "owner": "Benjamin Chua",
+  "owner_kind": "person",
+  "department": "Treasury & Markets",
+  "group": {
+   "id": "grp_treasury",
+   "name": "Treasury & Markets"
+  },
+  "agent_state": "enforcing",
+  "agent_version": "0.9.6",
+  "tools": [
+   "claude-desktop"
+  ],
+  "allowed": 215,
+  "blocked": 5,
+  "recorded": 9,
+  "os": "macOS 14.6"
+ }
+}

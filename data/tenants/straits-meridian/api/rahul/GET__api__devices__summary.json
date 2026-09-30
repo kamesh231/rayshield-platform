@@ -1,0 +1,20 @@
+{
+ "operationId": "getFleetSummary",
+ "access": "self",
+ "status": 200,
+ "headers": {
+  "X-Window-From": "1789956000",
+  "X-Window-To": "1790560800",
+  "X-Data-As-Of": "1790560680"
+ },
+ "body": {
+  "endpoints": 2,
+  "enforcing": 2,
+  "record_only": 0,
+  "offline": 0,
+  "no_agent": 0,
+  "allowed": 470,
+  "blocked": 10,
+  "recorded": 27
+ }
+}

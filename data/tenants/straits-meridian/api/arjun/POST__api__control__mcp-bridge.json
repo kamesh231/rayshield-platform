@@ -1,0 +1,11 @@
+{
+ "operationId": "onboardMcp",
+ "access": "deny",
+ "status": 403,
+ "headers": {},
+ "body": {
+  "error": "Role 'security' (Arjun Menon) cannot call onboardMcp.",
+  "code": "FORBIDDEN",
+  "request_id": "req_Qcl0YOAB"
+ }
+}

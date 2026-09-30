@@ -1,0 +1,62 @@
+{
+ "operationId": "getDetection",
+ "access": "read",
+ "status": 200,
+ "headers": {},
+ "body": {
+  "detection_id": "det_01JAGS2DYTG",
+  "ts": 1790171442,
+  "rule_id": "SWIFT-MSG",
+  "rule_label": "SWIFT payment message in agent context",
+  "severity": "high",
+  "disposition": "blocked",
+  "device_id": "a497c981-1b88-4af4-b21f-6d94c7af60ef",
+  "host": "LT-SG-2231",
+  "owner": "Rahul Iyer",
+  "owner_kind": "person",
+  "department": "Engineering — Payments",
+  "group": {
+   "id": "grp_payments_eng",
+   "name": "Engineering — Payments"
+  },
+  "session_id": "sbx_cc12d9ff240b",
+  "teaser": "pacs.008 message in a test file (blocked)",
+  "description": "An MT103 or pacs.008 customer credit transfer reached an agent prompt.",
+  "owasp": null,
+  "signal": "guest",
+  "classification": "regulated data",
+  "backend": "aegis-engine 0.9.6",
+  "evidence": {
+   "type": "sensitive_content",
+   "decoded_command": null,
+   "sensitive_content": {
+    "path": "samples/pacs008.xml",
+    "basis": "ISO 20022 pacs.008 credit transfer",
+    "pattern": "<FIToFICstmrCdtTrf>",
+    "snippet_redacted": "<DbtrAcct><Id>••••••••</Id></DbtrAcct>"
+   },
+   "exfil": null,
+   "egress_spike": null,
+   "persistence": null,
+   "undisclosed_action": null
+  },
+  "chain": [
+   {
+    "ts": 1790171442,
+    "label": "SWIFT payment message in agent context",
+    "detail": "pacs.008 message in a test file (blocked)",
+    "is_current": true,
+    "is_detection": true,
+    "severity": "high",
+    "disposition": "blocked"
+   }
+  ],
+  "signature": {
+   "alg": "ed25519",
+   "key_id": "aegis-smb-2026-09",
+   "value": "MEUCIQ6jfvjx8y9u43…",
+   "signed_at": 1790171443,
+   "verify_hint": "aegis verify det_01JAGS2DYTG"
+  }
+ }
+}

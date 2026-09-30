@@ -1,0 +1,117 @@
+{
+ "operationId": "getService",
+ "access": "read",
+ "status": 200,
+ "headers": {
+  "X-Window-From": "1789956000",
+  "X-Window-To": "1790560800",
+  "X-Data-As-Of": "1790560680"
+ },
+ "body": {
+  "service": {
+   "ai_service": "Microsoft 365 Copilot",
+   "category": "Assistant",
+   "icon": null,
+   "separability": "embedded",
+   "confidence": "confirmed",
+   "hits": 24800,
+   "bytes": 1022504000,
+   "users": 283,
+   "risk_score": 22,
+   "jurisdiction": "SG",
+   "ever_agentic": false,
+   "sandbox_candidate": false,
+   "agent_sdks": null,
+   "collector_count": 2,
+   "first_seen": 1774144800,
+   "last_seen": 1790559680,
+   "personal_account": false,
+   "oauth_scopes": null,
+   "service_id": "m365-copilot",
+   "vendor": "Microsoft",
+   "embedded_in": "Microsoft 365",
+   "status": "approved",
+   "reviewed_by": "Tan Wei Ling",
+   "reviewed_at": 1774990800,
+   "endpoints": 298,
+   "is_new": false
+  },
+  "description": "Copilot inside the bank’s Microsoft 365 tenant.",
+  "top_endpoints": [
+   {
+    "endpoint_id": "ep_LT-SG-5141",
+    "host": "LT-SG-5141",
+    "ip": "10.40.9.132",
+    "type": "laptop",
+    "user": "Kenji Watanabe",
+    "department": "Treasury & Markets",
+    "hits": 89,
+    "last_seen": 1790499054
+   },
+   {
+    "endpoint_id": "ep_LT-VN-0412",
+    "host": "LT-VN-0412",
+    "ip": "10.40.21.23",
+    "type": "laptop",
+    "user": "Thanh Nguyen",
+    "department": "Vendor Engineering (contractors)",
+    "hits": 42,
+    "last_seen": 1790560507
+   },
+   {
+    "endpoint_id": "ep_LT-SG-3833",
+    "host": "LT-SG-3833",
+    "ip": "10.40.25.135",
+    "type": "laptop",
+    "user": "Serena Seah",
+    "department": "Engineering — Payments",
+    "hits": 93,
+    "last_seen": 1790560479
+   },
+   {
+    "endpoint_id": "ep_LT-SG-4281",
+    "host": "LT-SG-4281",
+    "ip": "10.40.56.39",
+    "type": "laptop",
+    "user": "Nurul Loh",
+    "department": "Engineering — Payments",
+    "hits": 53,
+    "last_seen": 1790560149
+   },
+   {
+    "endpoint_id": "ep_LT-SG-8688",
+    "host": "LT-SG-8688",
+    "ip": "10.40.11.216",
+    "type": "laptop",
+    "user": "Lakshmi Kwok",
+    "department": "Engineering — Payments",
+    "hits": 59,
+    "last_seen": 1790559804
+   },
+   {
+    "endpoint_id": "ep_LT-SG-8766",
+    "host": "LT-SG-8766",
+    "ip": "10.40.36.205",
+    "type": "laptop",
+    "user": "Priyanka Foo",
+    "department": "Engineering — Payments",
+    "hits": 76,
+    "last_seen": 1790559436
+   }
+  ],
+  "status_history": [
+   {
+    "status": "unlabelled",
+    "by": "system",
+    "at": 1774144800,
+    "note": null
+   },
+   {
+    "status": "approved",
+    "by": "Tan Wei Ling",
+    "at": 1774990800,
+    "note": null
+   }
+  ]
+ }
+}

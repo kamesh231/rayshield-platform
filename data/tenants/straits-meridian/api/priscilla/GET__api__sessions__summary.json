@@ -1,0 +1,16 @@
+{
+ "operationId": "getSessionsSummary",
+ "access": "read",
+ "status": 200,
+ "headers": {
+  "X-Window-From": "1789956000",
+  "X-Window-To": "1790560800",
+  "X-Data-As-Of": "1790560680"
+ },
+ "body": {
+  "total": 1934,
+  "clean": 1861,
+  "detected": 51,
+  "stopped": 22
+ }
+}

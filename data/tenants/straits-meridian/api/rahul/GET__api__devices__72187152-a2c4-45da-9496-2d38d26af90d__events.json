@@ -1,0 +1,11 @@
+{
+ "operationId": "listDeviceEvents",
+ "access": "self",
+ "status": 403,
+ "headers": {},
+ "body": {
+  "error": "Role 'developer' (Rahul Iyer) cannot call listDeviceEvents.",
+  "code": "FORBIDDEN",
+  "request_id": "req_HtY8K7ZZ"
+ }
+}

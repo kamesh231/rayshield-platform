@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<sc-if value="{{isApproved}}" hint-placeholder-val="{{true}}">
+  <span style="display:inline-flex;align-items:center;gap:6px;padding:5px 10px 5px 8px;border-radius:2px;background:#E7F6EE;color:#157F4E;font-size:13px;font-weight:500;font-family:'IBM Plex Sans',sans-serif;"><span style="width:6px;height:6px;border-radius:50%;background:#157F4E;"></span>Approved</span>
+</sc-if>
+<sc-if value="{{isUnapproved}}">
+  <span style="display:inline-flex;align-items:center;gap:6px;padding:5px 10px 5px 8px;border-radius:2px;background:#FDF1E4;color:#B4530A;font-size:13px;font-weight:500;font-family:'IBM Plex Sans',sans-serif;"><span style="width:6px;height:6px;border-radius:50%;background:#B4530A;"></span>Unapproved</span>
+</sc-if>
+<sc-if value="{{isProhibited}}">
+  <span style="display:inline-flex;align-items:center;gap:6px;padding:5px 10px 5px 8px;border-radius:2px;background:#FCE9EA;color:#C4293A;font-size:13px;font-weight:500;font-family:'IBM Plex Sans',sans-serif;"><span style="width:6px;height:6px;border-radius:50%;background:#C4293A;"></span>Prohibited</span>
+</sc-if>
+<sc-if value="{{isUnderReview}}">
+  <span style="display:inline-flex;align-items:center;gap:6px;padding:5px 10px 5px 8px;border-radius:2px;background:#EAF0FC;color:#2B5FCB;font-size:13px;font-weight:500;font-family:'IBM Plex Sans',sans-serif;"><span style="width:6px;height:6px;border-radius:50%;background:#2B5FCB;"></span>Under review</span>
+</sc-if>
+<sc-if value="{{isBeta}}">
+  <span style="display:inline-flex;align-items:center;gap:6px;padding:5px 10px 5px 8px;border-radius:2px;background:#F1E9FB;color:#7A3FC4;font-size:13px;font-weight:500;font-family:'IBM Plex Sans',sans-serif;"><span style="width:6px;height:6px;border-radius:50%;background:#7A3FC4;"></span>Beta</span>
+</sc-if>
+<sc-if value="{{isUnlabelled}}">
+  <span style="display:inline-flex;align-items:center;gap:6px;padding:5px 10px 5px 8px;border-radius:2px;background:transparent;border:1px solid #C3CBD3;color:#6B7686;font-size:13px;font-weight:500;font-family:'IBM Plex Sans',sans-serif;"><span style="width:6px;height:6px;border-radius:50%;border:1px solid #6B7686;"></span>Unlabelled</span>
+</sc-if>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:150,&quot;height&quot;:30},&quot;status&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;approved&quot;,&quot;options&quot;:[&quot;approved&quot;,&quot;unapproved&quot;,&quot;prohibited&quot;,&quot;under-review&quot;,&quot;beta&quot;,&quot;unlabelled&quot;],&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    const s = this.props.status || 'unlabelled';
+    return {
+      isApproved: s === 'approved',
+      isUnapproved: s === 'unapproved',
+      isProhibited: s === 'prohibited',
+      isUnderReview: s === 'under-review',
+      isBeta: s === 'beta',
+      isUnlabelled: s === 'unlabelled',
+    };
+  }
+}
+</script>
+</body>
+</html>

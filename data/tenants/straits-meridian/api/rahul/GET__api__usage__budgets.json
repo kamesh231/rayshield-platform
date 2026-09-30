@@ -1,0 +1,25 @@
+{
+ "operationId": "getUsageBudgets",
+ "access": "self",
+ "status": 200,
+ "headers": {},
+ "body": {
+  "groups": [
+   {
+    "group": {
+     "id": "grp_payments_eng",
+     "name": "Engineering — Payments"
+    },
+    "cap_usd": 40,
+    "cap_scope": "per_user_24h",
+    "mode": "hard_stop",
+    "cost_usd": 1740.12,
+    "sessions": 402,
+    "users": 46,
+    "avg_usd_per_user": 5.4,
+    "stops": 6
+   }
+  ],
+  "stops": []
+ }
+}

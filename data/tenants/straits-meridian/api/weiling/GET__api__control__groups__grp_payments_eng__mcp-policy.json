@@ -1,0 +1,20 @@
+{
+ "operationId": "getGroupMcpPolicy",
+ "access": "read",
+ "status": 200,
+ "headers": {},
+ "body": {
+  "group_id": "grp_payments_eng",
+  "allow": [
+   "mcp_postgres",
+   "mcp_github_enterprise",
+   "mcp_jira"
+  ],
+  "deny": [
+   "mcp_slack",
+   "mcp_filesystem"
+  ],
+  "updated_by": "Tan Wei Ling",
+  "updated_at": 1789783200
+ }
+}

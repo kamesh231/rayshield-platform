@@ -1,0 +1,61 @@
+{
+ "operationId": "getDetection",
+ "access": "read",
+ "status": 200,
+ "headers": {},
+ "body": {
+  "detection_id": "det_01JAJYW1HFH",
+  "ts": 1790528400,
+  "rule_id": "EXFIL",
+  "rule_label": "Data exfiltration",
+  "severity": "critical",
+  "disposition": "escalated",
+  "device_id": "d742380f-43b1-4c63-9dbf-988133b13c4f",
+  "host": "LT-VN-0412",
+  "owner": "Thanh Nguyen",
+  "owner_kind": "person",
+  "department": "Vendor Engineering (contractors)",
+  "group": {
+   "id": "grp_contractors",
+   "name": "Vendor Engineering (contractors)"
+  },
+  "session_id": "sbx_eeaf3a5cefec",
+  "teaser": "mobile-app-src.tar.gz · 18.4 MB → paste.ee (blocked by CUE egress)",
+  "description": "A transfer of sensitive data toward a destination outside the CUE egress allow-list.",
+  "owasp": "ASI05",
+  "signal": "guest",
+  "classification": "transfer",
+  "backend": "aegis-engine 0.9.6",
+  "evidence": {
+   "type": "exfil",
+   "decoded_command": null,
+   "sensitive_content": null,
+   "exfil": {
+    "destination": "paste.ee",
+    "bytes": 19293798,
+    "classification": "internal source archive"
+   },
+   "egress_spike": null,
+   "persistence": null,
+   "undisclosed_action": null
+  },
+  "chain": [
+   {
+    "ts": 1790528400,
+    "label": "Data exfiltration",
+    "detail": "mobile-app-src.tar.gz · 18.4 MB → paste.ee (blocked by CUE egress)",
+    "is_current": true,
+    "is_detection": true,
+    "severity": "critical",
+    "disposition": "escalated"
+   }
+  ],
+  "signature": {
+   "alg": "ed25519",
+   "key_id": "aegis-smb-2026-09",
+   "value": "MEUCIQ1yljxxe1m1c9…",
+   "signed_at": 1790528401,
+   "verify_hint": "aegis verify det_01JAJYW1HFH"
+  }
+ }
+}

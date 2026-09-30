@@ -1,0 +1,47 @@
+{
+ "operationId": "listDiscoveryEndpoints",
+ "access": "self",
+ "status": 200,
+ "headers": {
+  "X-Window-From": "1789956000",
+  "X-Window-To": "1790560800",
+  "X-Data-As-Of": "1790560680",
+  "X-Total-Count": "2"
+ },
+ "body": [
+  {
+   "endpoint": "10.40.13.160",
+   "host": "LT-SG-2231",
+   "hits": 343,
+   "bytes": 13082002,
+   "services": 2,
+   "endpoint_id": "ep_LT-SG-2231",
+   "device_id": "a497c981-1b88-4af4-b21f-6d94c7af60ef",
+   "type": "laptop",
+   "ephemeral": false,
+   "user": "Rahul Iyer",
+   "department": "Engineering — Payments",
+   "identity_source": "idp",
+   "sensor": "pcap",
+   "first_seen": 1781920800,
+   "last_seen": 1790560403
+  },
+  {
+   "endpoint": "10.60.21.214",
+   "host": "vm-dev-rahul-07",
+   "hits": 161,
+   "bytes": 6124271,
+   "services": 5,
+   "endpoint_id": "ep_vm-dev-rahul-07",
+   "device_id": "18fcef06-5ea0-4b62-89d0-7868e89ab483",
+   "type": "vm",
+   "ephemeral": false,
+   "user": "Rahul Iyer",
+   "department": "Engineering — Payments",
+   "identity_source": "idp",
+   "sensor": "pcap",
+   "first_seen": 1772416800,
+   "last_seen": 1790560789
+  }
+ ]
+}

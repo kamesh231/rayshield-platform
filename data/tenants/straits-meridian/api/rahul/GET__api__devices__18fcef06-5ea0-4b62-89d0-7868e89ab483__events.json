@@ -1,0 +1,25 @@
+{
+ "operationId": "listDeviceEvents",
+ "access": "self",
+ "status": 200,
+ "headers": {},
+ "body": [
+  {
+   "id": "3a709791-43ea-4d3e-ad15-5c8059189556",
+   "ts": 1790452800,
+   "identity": "rahul.iyer",
+   "device": "vm-dev-rahul-07",
+   "app": "Anthropic Claude (API)",
+   "action": "detection",
+   "target": "file → model prompt",
+   "source": "sandbox",
+   "decision": "block",
+   "reason": "~/.config/settlement/credentials · connection string with password (blocked)",
+   "rule_id": "SECRET-IN-PROMPT",
+   "session_id": "sbx_298fafe63451",
+   "tool": "claude-code",
+   "channel": "agent",
+   "enforced_by": "dlp"
+  }
+ ]
+}

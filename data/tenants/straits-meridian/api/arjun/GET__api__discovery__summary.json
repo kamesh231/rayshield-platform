@@ -1,0 +1,42 @@
+{
+ "operationId": "getDiscoverySummary",
+ "access": "read",
+ "status": 200,
+ "headers": {
+  "X-Window-From": "1789956000",
+  "X-Window-To": "1790560800",
+  "X-Data-As-Of": "1790560680"
+ },
+ "body": {
+  "services": 27,
+  "users": 344,
+  "departments": 13,
+  "bytes": 3898549719,
+  "hits": 102110,
+  "agent_alerts": 3,
+  "new_services": 2,
+  "embedded_services": 7,
+  "endpoints": {
+   "total": 412,
+   "laptop": 318,
+   "vm": 78,
+   "other": 16
+  },
+  "governance": {
+   "approved": 14,
+   "unapproved": 3,
+   "prohibited": 3,
+   "under_review": 2,
+   "beta": 1,
+   "unlabelled": 4
+  },
+  "unreviewed": 4,
+  "unreviewed_new": 2,
+  "shadow_share_pct": 3.1,
+  "previous": {
+   "services": 25,
+   "hits": 97420,
+   "shadow_share_pct": 5.4
+  }
+ }
+}

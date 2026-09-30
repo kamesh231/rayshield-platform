@@ -1,0 +1,50 @@
+{
+ "operationId": "getBridgeMcp",
+ "access": "read",
+ "status": 200,
+ "headers": {},
+ "body": {
+  "id": "mcp_jira",
+  "name": "jira",
+  "source": "jira.straitsmeridian.example/mcp",
+  "kind": "remote",
+  "status": "approved",
+  "risk_score": 18,
+  "risk_tier": "low",
+  "capabilities": {
+   "tools": [
+    "search_issues",
+    "get_issue",
+    "add_comment"
+   ],
+   "writes": true
+  },
+  "findings": {
+   "high": 0,
+   "medium": 0,
+   "low": 1,
+   "summary": "Comment-only writes"
+  },
+  "approved_by": "Tan Wei Ling",
+  "approved_reason": "Ticket context for engineering and SOC",
+  "groups_with_access": [
+   {
+    "id": "grp_payments_eng",
+    "name": "Engineering — Payments"
+   },
+   {
+    "id": "grp_digital_eng",
+    "name": "Engineering — Digital Banking"
+   },
+   {
+    "id": "grp_data",
+    "name": "Data & Analytics"
+   },
+   {
+    "id": "grp_soc",
+    "name": "Cyber Defence (SOC)"
+   }
+  ],
+  "created_at": 1785376800
+ }
+}

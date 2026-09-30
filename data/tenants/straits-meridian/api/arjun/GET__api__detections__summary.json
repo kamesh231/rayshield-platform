@@ -1,0 +1,133 @@
+{
+ "operationId": "getDetectionsSummary",
+ "access": "read",
+ "status": 200,
+ "headers": {
+  "X-Window-From": "1789956000",
+  "X-Window-To": "1790560800",
+  "X-Data-As-Of": "1790560680"
+ },
+ "body": {
+  "totals": {
+   "detections": 58,
+   "families": 8,
+   "critical": 17,
+   "escalated": 3,
+   "devices": 45
+  },
+  "families": [
+   {
+    "rule_id": "CARD-PAN",
+    "label": "Card number (PAN) in agent context",
+    "description": "A card primary account number reached an agent prompt or tool result. DLP inspects the turn before it leaves the sandbox.",
+    "severity": "critical",
+    "owasp": null,
+    "signal": "guest",
+    "hits": 6,
+    "devices": 4,
+    "groups": 2,
+    "blocked": 5,
+    "recorded": 0,
+    "escalated": 1
+   },
+   {
+    "rule_id": "PII-NRIC",
+    "label": "NRIC / FIN in agent context",
+    "description": "A Singapore NRIC or FIN number reached an agent prompt or tool result.",
+    "severity": "critical",
+    "owasp": null,
+    "signal": "guest",
+    "hits": 9,
+    "devices": 6,
+    "groups": 3,
+    "blocked": 8,
+    "recorded": 0,
+    "escalated": 1
+   },
+   {
+    "rule_id": "EXFIL",
+    "label": "Data exfiltration",
+    "description": "A transfer of sensitive data toward a destination outside the CUE egress allow-list.",
+    "severity": "critical",
+    "owasp": "ASI05",
+    "signal": "guest",
+    "hits": 2,
+    "devices": 2,
+    "groups": 1,
+    "blocked": 1,
+    "recorded": 0,
+    "escalated": 1
+   },
+   {
+    "rule_id": "SWIFT-MSG",
+    "label": "SWIFT payment message in agent context",
+    "description": "An MT103 or pacs.008 customer credit transfer reached an agent prompt.",
+    "severity": "high",
+    "owasp": null,
+    "signal": "guest",
+    "hits": 3,
+    "devices": 3,
+    "groups": 3,
+    "blocked": 3,
+    "recorded": 0,
+    "escalated": 0
+   },
+   {
+    "rule_id": "SECRET-IN-PROMPT",
+    "label": "Secret in prompt",
+    "description": "An API key, token, private key or connection string in a prompt or file sent to the model.",
+    "severity": "high",
+    "owasp": null,
+    "signal": "guest",
+    "hits": 8,
+    "devices": 8,
+    "groups": 4,
+    "blocked": 7,
+    "recorded": 1,
+    "escalated": 0
+   },
+   {
+    "rule_id": "PROHIBITED-SERVICE",
+    "label": "Prohibited AI service",
+    "description": "Traffic to a service labelled Prohibited in Discover (data residency).",
+    "severity": "high",
+    "owasp": null,
+    "signal": "wire",
+    "hits": 11,
+    "devices": 11,
+    "groups": 1,
+    "blocked": 11,
+    "recorded": 0,
+    "escalated": 0
+   },
+   {
+    "rule_id": "SENSITIVE-ACCESS",
+    "label": "Sensitive file access",
+    "description": "Access to a secret, judged by file content rather than filename or path.",
+    "severity": "medium",
+    "owasp": "ASI04",
+    "signal": "guest",
+    "hits": 14,
+    "devices": 13,
+    "groups": 3,
+    "blocked": 12,
+    "recorded": 2,
+    "escalated": 0
+   },
+   {
+    "rule_id": "UNDISCLOSED-ACTION",
+    "label": "Undisclosed action",
+    "description": "The agent did more than it declared; the engine cross-checks the declared manifest against what it observed.",
+    "severity": "medium",
+    "owasp": null,
+    "signal": "guest",
+    "hits": 5,
+    "devices": 5,
+    "groups": 2,
+    "blocked": 0,
+    "recorded": 5,
+    "escalated": 0
+   }
+  ]
+ }
+}

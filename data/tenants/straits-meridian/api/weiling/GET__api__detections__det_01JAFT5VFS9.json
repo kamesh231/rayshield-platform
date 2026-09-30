@@ -1,0 +1,62 @@
+{
+ "operationId": "getDetection",
+ "access": "read",
+ "status": 200,
+ "headers": {},
+ "body": {
+  "detection_id": "det_01JAFT5VFS9",
+  "ts": 1790126853,
+  "rule_id": "PII-NRIC",
+  "rule_label": "NRIC / FIN in agent context",
+  "severity": "critical",
+  "disposition": "blocked",
+  "device_id": "695a4372-7e2e-48ca-9b31-f692866c8a95",
+  "host": "LT-SG-7344",
+  "owner": "Hui Min Hassan",
+  "owner_kind": "person",
+  "department": "Engineering — Digital Banking",
+  "group": {
+   "id": "grp_digital_eng",
+   "name": "Engineering — Digital Banking"
+  },
+  "session_id": "sbx_cb0aa016c099",
+  "teaser": "NRIC values in tool result (blocked)",
+  "description": "A Singapore NRIC or FIN number reached an agent prompt or tool result.",
+  "owasp": null,
+  "signal": "guest",
+  "classification": "regulated data",
+  "backend": "aegis-engine 0.9.6",
+  "evidence": {
+   "type": "sensitive_content",
+   "decoded_command": null,
+   "sensitive_content": {
+    "path": "tool result",
+    "basis": "NRIC values",
+    "pattern": "NRIC checksum",
+    "snippet_redacted": "nric=S•••••••D"
+   },
+   "exfil": null,
+   "egress_spike": null,
+   "persistence": null,
+   "undisclosed_action": null
+  },
+  "chain": [
+   {
+    "ts": 1790126853,
+    "label": "NRIC / FIN in agent context",
+    "detail": "NRIC values in tool result (blocked)",
+    "is_current": true,
+    "is_detection": true,
+    "severity": "critical",
+    "disposition": "blocked"
+   }
+  ],
+  "signature": {
+   "alg": "ed25519",
+   "key_id": "aegis-smb-2026-09",
+   "value": "MEUCIQ100hkci28mis…",
+   "signed_at": 1790126854,
+   "verify_hint": "aegis verify det_01JAFT5VFS9"
+  }
+ }
+}

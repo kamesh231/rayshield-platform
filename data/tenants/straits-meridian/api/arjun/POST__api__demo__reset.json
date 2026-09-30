@@ -1,0 +1,11 @@
+{
+ "operationId": "resetDemo",
+ "access": "deny",
+ "status": 403,
+ "headers": {},
+ "body": {
+  "error": "Role 'security' (Arjun Menon) cannot call resetDemo.",
+  "code": "FORBIDDEN",
+  "request_id": "req_VRBjq2Pb"
+ }
+}

@@ -1,0 +1,69 @@
+{
+ "operationId": "getDetection",
+ "access": "read",
+ "status": 200,
+ "headers": {},
+ "body": {
+  "detection_id": "det_01JAM5GQ094",
+  "ts": 1790294599,
+  "rule_id": "UNDISCLOSED-ACTION",
+  "rule_label": "Undisclosed action",
+  "severity": "medium",
+  "disposition": "recorded",
+  "device_id": "f99daebb-417b-410a-bb69-a112856766a6",
+  "host": "LT-SG-7008",
+  "owner": "Kelvin Tay",
+  "owner_kind": "person",
+  "department": "Engineering — Digital Banking",
+  "group": {
+   "id": "grp_digital_eng",
+   "name": "Engineering — Digital Banking"
+  },
+  "session_id": "sbx_754e64a852ba",
+  "teaser": "declared 5 · observed 6",
+  "description": "The agent did more than it declared; the engine cross-checks the declared manifest against what it observed.",
+  "owasp": null,
+  "signal": "guest",
+  "classification": "regulated data",
+  "backend": "aegis-engine 0.9.6",
+  "evidence": {
+   "type": "undisclosed_action",
+   "decoded_command": null,
+   "sensitive_content": null,
+   "exfil": null,
+   "egress_spike": null,
+   "persistence": null,
+   "undisclosed_action": {
+    "declared": 5,
+    "observed": 6,
+    "undeclared": 1,
+    "declared_list": [
+     "Read files under ./src",
+     "Ran the test suite",
+     "Formatted changed files"
+    ],
+    "observed_extra": [
+     "Egress to an unlisted host"
+    ]
+   }
+  },
+  "chain": [
+   {
+    "ts": 1790294599,
+    "label": "Undisclosed action",
+    "detail": "declared 5 · observed 6",
+    "is_current": true,
+    "is_detection": true,
+    "severity": "medium",
+    "disposition": "recorded"
+   }
+  ],
+  "signature": {
+   "alg": "ed25519",
+   "key_id": "aegis-smb-2026-09",
+   "value": "MEUCIQ1cpa38o1a60z…",
+   "signed_at": 1790294600,
+   "verify_hint": "aegis verify det_01JAM5GQ094"
+  }
+ }
+}

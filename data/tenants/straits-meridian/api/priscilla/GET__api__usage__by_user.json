@@ -1,0 +1,761 @@
+{
+ "operationId": "getUsageByUser",
+ "access": "read",
+ "status": 200,
+ "headers": {
+  "X-Total-Count": "244",
+  "X-Next-Cursor": "bzo1MA"
+ },
+ "body": [
+  {
+   "person": "Marcus Lee",
+   "turns": 212,
+   "sessions": 31,
+   "input": 44725091,
+   "output": 5770979,
+   "cost_usd": 212.75,
+   "department": "Engineering — Digital Banking",
+   "group": {
+    "id": "grp_digital_eng",
+    "name": "Engineering — Digital Banking"
+   },
+   "cache_read": 21641173,
+   "tokens": 72137243
+  },
+  {
+   "person": "Rahul Iyer",
+   "turns": 260,
+   "sessions": 26,
+   "input": 27005509,
+   "output": 3484582,
+   "cost_usd": 118.4,
+   "department": "Engineering — Payments",
+   "group": {
+    "id": "grp_payments_eng",
+    "name": "Engineering — Payments"
+   },
+   "cache_read": 13067182,
+   "tokens": 43557273
+  },
+  {
+   "person": "Quang Le",
+   "turns": 197,
+   "sessions": 19,
+   "input": 33860564,
+   "output": 4369105,
+   "cost_usd": 88.11,
+   "department": "Vendor Engineering (contractors)",
+   "group": {
+    "id": "grp_contractors",
+    "name": "Vendor Engineering (contractors)"
+   },
+   "cache_read": 16384144,
+   "tokens": 54613813
+  },
+  {
+   "person": "Hui Min Ismail",
+   "turns": 126,
+   "sessions": 14,
+   "input": 24911511,
+   "output": 3214388,
+   "cost_usd": 67.02,
+   "department": "Data & Analytics",
+   "group": {
+    "id": "grp_data",
+    "name": "Data & Analytics"
+   },
+   "cache_read": 12053957,
+   "tokens": 40179856
+  },
+  {
+   "person": "Hui Min Krishnan",
+   "turns": 120,
+   "sessions": 15,
+   "input": 15028657,
+   "output": 1939181,
+   "cost_usd": 65.89,
+   "department": "Engineering — Payments",
+   "group": {
+    "id": "grp_payments_eng",
+    "name": "Engineering — Payments"
+   },
+   "cache_read": 7271930,
+   "tokens": 24239768
+  },
+  {
+   "person": "Clement Soh",
+   "turns": 151,
+   "sessions": 14,
+   "input": 24353957,
+   "output": 3142446,
+   "cost_usd": 65.52,
+   "department": "Data & Analytics",
+   "group": {
+    "id": "grp_data",
+    "name": "Data & Analytics"
+   },
+   "cache_read": 11784173,
+   "tokens": 39280576
+  },
+  {
+   "person": "Nurul Ho",
+   "turns": 151,
+   "sessions": 14,
+   "input": 24052878,
+   "output": 3103597,
+   "cost_usd": 64.71,
+   "department": "Data & Analytics",
+   "group": {
+    "id": "grp_data",
+    "name": "Data & Analytics"
+   },
+   "cache_read": 11638489,
+   "tokens": 38794964
+  },
+  {
+   "person": "Joanne Nair",
+   "turns": 85,
+   "sessions": 14,
+   "input": 14549674,
+   "output": 1877377,
+   "cost_usd": 63.79,
+   "department": "Engineering — Payments",
+   "group": {
+    "id": "grp_payments_eng",
+    "name": "Engineering — Payments"
+   },
+   "cache_read": 7040165,
+   "tokens": 23467216
+  },
+  {
+   "person": "Hui Min Teo",
+   "turns": 137,
+   "sessions": 13,
+   "input": 23149640,
+   "output": 2987050,
+   "cost_usd": 62.28,
+   "department": "Data & Analytics",
+   "group": {
+    "id": "grp_data",
+    "name": "Data & Analytics"
+   },
+   "cache_read": 11201439,
+   "tokens": 37338129
+  },
+  {
+   "person": "Hui Min Lim",
+   "turns": 85,
+   "sessions": 14,
+   "input": 14150523,
+   "output": 1825874,
+   "cost_usd": 62.04,
+   "department": "Engineering — Payments",
+   "group": {
+    "id": "grp_payments_eng",
+    "name": "Engineering — Payments"
+   },
+   "cache_read": 6847027,
+   "tokens": 22823424
+  },
+  {
+   "person": "Hafiz Wong",
+   "turns": 145,
+   "sessions": 14,
+   "input": 14079815,
+   "output": 1816750,
+   "cost_usd": 61.73,
+   "department": "Engineering — Payments",
+   "group": {
+    "id": "grp_payments_eng",
+    "name": "Engineering — Payments"
+   },
+   "cache_read": 6812813,
+   "tokens": 22709378
+  },
+  {
+   "person": "Priyanka Sim",
+   "turns": 119,
+   "sessions": 13,
+   "input": 22424820,
+   "output": 2893525,
+   "cost_usd": 60.33,
+   "department": "Data & Analytics",
+   "group": {
+    "id": "grp_data",
+    "name": "Data & Analytics"
+   },
+   "cache_read": 10850720,
+   "tokens": 36169065
+  },
+  {
+   "person": "Minh Pham",
+   "turns": 107,
+   "sessions": 13,
+   "input": 23169372,
+   "output": 2989596,
+   "cost_usd": 60.29,
+   "department": "Vendor Engineering (contractors)",
+   "group": {
+    "id": "grp_contractors",
+    "name": "Vendor Engineering (contractors)"
+   },
+   "cache_read": 11210986,
+   "tokens": 37369954
+  },
+  {
+   "person": "Ethan Soh",
+   "turns": 128,
+   "sessions": 13,
+   "input": 13648730,
+   "output": 1761127,
+   "cost_usd": 59.84,
+   "department": "Engineering — Payments",
+   "group": {
+    "id": "grp_payments_eng",
+    "name": "Engineering — Payments"
+   },
+   "cache_read": 6604225,
+   "tokens": 22014082
+  },
+  {
+   "person": "Nurul Abdullah",
+   "turns": 110,
+   "sessions": 13,
+   "input": 13128692,
+   "output": 1694024,
+   "cost_usd": 57.56,
+   "department": "Engineering — Payments",
+   "group": {
+    "id": "grp_payments_eng",
+    "name": "Engineering — Payments"
+   },
+   "cache_read": 6352593,
+   "tokens": 21175309
+  },
+  {
+   "person": "Bryan Ang",
+   "turns": 125,
+   "sessions": 13,
+   "input": 13014648,
+   "output": 1679309,
+   "cost_usd": 57.06,
+   "department": "Engineering — Payments",
+   "group": {
+    "id": "grp_payments_eng",
+    "name": "Engineering — Payments"
+   },
+   "cache_read": 6297411,
+   "tokens": 20991368
+  },
+  {
+   "person": "Wei Jie Chong",
+   "turns": 110,
+   "sessions": 13,
+   "input": 12896043,
+   "output": 1664005,
+   "cost_usd": 56.54,
+   "department": "Engineering — Payments",
+   "group": {
+    "id": "grp_payments_eng",
+    "name": "Engineering — Payments"
+   },
+   "cache_read": 6240021,
+   "tokens": 20800069
+  },
+  {
+   "person": "Sheng Nair",
+   "turns": 130,
+   "sessions": 12,
+   "input": 20945444,
+   "output": 2702638,
+   "cost_usd": 56.35,
+   "department": "Data & Analytics",
+   "group": {
+    "id": "grp_data",
+    "name": "Data & Analytics"
+   },
+   "cache_read": 10134892,
+   "tokens": 33782974
+  },
+  {
+   "person": "Serena Low",
+   "turns": 115,
+   "sessions": 12,
+   "input": 20607194,
+   "output": 2658993,
+   "cost_usd": 55.44,
+   "department": "Data & Analytics",
+   "group": {
+    "id": "grp_data",
+    "name": "Data & Analytics"
+   },
+   "cache_read": 9971223,
+   "tokens": 33237410
+  },
+  {
+   "person": "Yuki Abdullah",
+   "turns": 131,
+   "sessions": 12,
+   "input": 20387890,
+   "output": 2630695,
+   "cost_usd": 54.85,
+   "department": "Data & Analytics",
+   "group": {
+    "id": "grp_data",
+    "name": "Data & Analytics"
+   },
+   "cache_read": 9865108,
+   "tokens": 32883693
+  },
+  {
+   "person": "Mei Ling Wong",
+   "turns": 70,
+   "sessions": 11,
+   "input": 19952997,
+   "output": 2574580,
+   "cost_usd": 53.68,
+   "department": "Data & Analytics",
+   "group": {
+    "id": "grp_data",
+    "name": "Data & Analytics"
+   },
+   "cache_read": 9654676,
+   "tokens": 32182253
+  },
+  {
+   "person": "Tuan Le",
+   "turns": 127,
+   "sessions": 12,
+   "input": 20594570,
+   "output": 2657364,
+   "cost_usd": 53.59,
+   "department": "Vendor Engineering (contractors)",
+   "group": {
+    "id": "grp_contractors",
+    "name": "Vendor Engineering (contractors)"
+   },
+   "cache_read": 9965114,
+   "tokens": 33217048
+  },
+  {
+   "person": "Xin Yi Lau",
+   "turns": 107,
+   "sessions": 12,
+   "input": 12152479,
+   "output": 1568062,
+   "cost_usd": 53.28,
+   "department": "Engineering — Payments",
+   "group": {
+    "id": "grp_payments_eng",
+    "name": "Engineering — Payments"
+   },
+   "cache_read": 5880232,
+   "tokens": 19600773
+  },
+  {
+   "person": "Priyanka Kumar",
+   "turns": 113,
+   "sessions": 11,
+   "input": 19183573,
+   "output": 2475300,
+   "cost_usd": 51.61,
+   "department": "Data & Analytics",
+   "group": {
+    "id": "grp_data",
+    "name": "Data & Analytics"
+   },
+   "cache_read": 9282374,
+   "tokens": 30941247
+  },
+  {
+   "person": "Sheng Toh",
+   "turns": 110,
+   "sessions": 11,
+   "input": 18941967,
+   "output": 2444125,
+   "cost_usd": 50.96,
+   "department": "Data & Analytics",
+   "group": {
+    "id": "grp_data",
+    "name": "Data & Analytics"
+   },
+   "cache_read": 9165468,
+   "tokens": 30551560
+  },
+  {
+   "person": "Terence Hassan",
+   "turns": 116,
+   "sessions": 11,
+   "input": 11502431,
+   "output": 1484184,
+   "cost_usd": 50.43,
+   "department": "Engineering — Payments",
+   "group": {
+    "id": "grp_payments_eng",
+    "name": "Engineering — Payments"
+   },
+   "cache_read": 5565693,
+   "tokens": 18552308
+  },
+  {
+   "person": "Quang Vu",
+   "turns": 82,
+   "sessions": 11,
+   "input": 19341757,
+   "output": 2495710,
+   "cost_usd": 50.33,
+   "department": "Vendor Engineering (contractors)",
+   "group": {
+    "id": "grp_contractors",
+    "name": "Vendor Engineering (contractors)"
+   },
+   "cache_read": 9358915,
+   "tokens": 31196382
+  },
+  {
+   "person": "Li Ting Chan",
+   "turns": 117,
+   "sessions": 14,
+   "input": 10509082,
+   "output": 1356010,
+   "cost_usd": 49.99,
+   "department": "Engineering — Digital Banking",
+   "group": {
+    "id": "grp_digital_eng",
+    "name": "Engineering — Digital Banking"
+   },
+   "cache_read": 5085040,
+   "tokens": 16950132
+  },
+  {
+   "person": "Nadia Teo",
+   "turns": 116,
+   "sessions": 11,
+   "input": 18551678,
+   "output": 2393765,
+   "cost_usd": 49.91,
+   "department": "Data & Analytics",
+   "group": {
+    "id": "grp_data",
+    "name": "Data & Analytics"
+   },
+   "cache_read": 8976619,
+   "tokens": 29922062
+  },
+  {
+   "person": "Priyanka Foo",
+   "turns": 117,
+   "sessions": 11,
+   "input": 11294872,
+   "output": 1457403,
+   "cost_usd": 49.52,
+   "department": "Engineering — Payments",
+   "group": {
+    "id": "grp_payments_eng",
+    "name": "Engineering — Payments"
+   },
+   "cache_read": 5465261,
+   "tokens": 18217536
+  },
+  {
+   "person": "Quang Dang",
+   "turns": 75,
+   "sessions": 11,
+   "input": 18892127,
+   "output": 2437694,
+   "cost_usd": 49.16,
+   "department": "Vendor Engineering (contractors)",
+   "group": {
+    "id": "grp_contractors",
+    "name": "Vendor Engineering (contractors)"
+   },
+   "cache_read": 9141352,
+   "tokens": 30471173
+  },
+  {
+   "person": "Chloe Nair",
+   "turns": 102,
+   "sessions": 14,
+   "input": 10271530,
+   "output": 1325359,
+   "cost_usd": 48.86,
+   "department": "Engineering — Digital Banking",
+   "group": {
+    "id": "grp_digital_eng",
+    "name": "Engineering — Digital Banking"
+   },
+   "cache_read": 4970095,
+   "tokens": 16566984
+  },
+  {
+   "person": "Phuong Ngo",
+   "turns": 85,
+   "sessions": 10,
+   "input": 18746093,
+   "output": 2418851,
+   "cost_usd": 48.78,
+   "department": "Vendor Engineering (contractors)",
+   "group": {
+    "id": "grp_contractors",
+    "name": "Vendor Engineering (contractors)"
+   },
+   "cache_read": 9070691,
+   "tokens": 30235635
+  },
+  {
+   "person": "Hui Min Nair",
+   "turns": 76,
+   "sessions": 11,
+   "input": 11116964,
+   "output": 1434447,
+   "cost_usd": 48.74,
+   "department": "Engineering — Payments",
+   "group": {
+    "id": "grp_payments_eng",
+    "name": "Engineering — Payments"
+   },
+   "cache_read": 5379177,
+   "tokens": 17930588
+  },
+  {
+   "person": "Vincent Pillai",
+   "turns": 94,
+   "sessions": 14,
+   "input": 10244200,
+   "output": 1321832,
+   "cost_usd": 48.73,
+   "department": "Engineering — Digital Banking",
+   "group": {
+    "id": "grp_digital_eng",
+    "name": "Engineering — Digital Banking"
+   },
+   "cache_read": 4956871,
+   "tokens": 16522903
+  },
+  {
+   "person": "Thanh Nguyen",
+   "turns": 79,
+   "sessions": 10,
+   "input": 18404068,
+   "output": 2374718,
+   "cost_usd": 47.89,
+   "department": "Vendor Engineering (contractors)",
+   "group": {
+    "id": "grp_contractors",
+    "name": "Vendor Engineering (contractors)"
+   },
+   "cache_read": 8905194,
+   "tokens": 29683980
+  },
+  {
+   "person": "Deepa Chan",
+   "turns": 122,
+   "sessions": 14,
+   "input": 9958296,
+   "output": 1284942,
+   "cost_usd": 47.37,
+   "department": "Engineering — Digital Banking",
+   "group": {
+    "id": "grp_digital_eng",
+    "name": "Engineering — Digital Banking"
+   },
+   "cache_read": 4818531,
+   "tokens": 16061769
+  },
+  {
+   "person": "Nadia Chong",
+   "turns": 85,
+   "sessions": 10,
+   "input": 10786238,
+   "output": 1391773,
+   "cost_usd": 47.29,
+   "department": "Engineering — Payments",
+   "group": {
+    "id": "grp_payments_eng",
+    "name": "Engineering — Payments"
+   },
+   "cache_read": 5219148,
+   "tokens": 17397159
+  },
+  {
+   "person": "Wen Hui Hassan",
+   "turns": 95,
+   "sessions": 14,
+   "input": 9863695,
+   "output": 1272735,
+   "cost_usd": 46.92,
+   "department": "Engineering — Digital Banking",
+   "group": {
+    "id": "grp_digital_eng",
+    "name": "Engineering — Digital Banking"
+   },
+   "cache_read": 4772756,
+   "tokens": 15909186
+  },
+  {
+   "person": "Priyanka Chong",
+   "turns": 132,
+   "sessions": 13,
+   "input": 9809038,
+   "output": 1265682,
+   "cost_usd": 46.66,
+   "department": "Engineering — Digital Banking",
+   "group": {
+    "id": "grp_digital_eng",
+    "name": "Engineering — Digital Banking"
+   },
+   "cache_read": 4746308,
+   "tokens": 15821028
+  },
+  {
+   "person": "Harith Krishnan",
+   "turns": 79,
+   "sessions": 10,
+   "input": 10514814,
+   "output": 1356750,
+   "cost_usd": 46.1,
+   "department": "Engineering — Payments",
+   "group": {
+    "id": "grp_payments_eng",
+    "name": "Engineering — Payments"
+   },
+   "cache_read": 5087813,
+   "tokens": 16959377
+  },
+  {
+   "person": "Aravind Low",
+   "turns": 140,
+   "sessions": 13,
+   "input": 9605120,
+   "output": 1239371,
+   "cost_usd": 45.69,
+   "department": "Engineering — Digital Banking",
+   "group": {
+    "id": "grp_digital_eng",
+    "name": "Engineering — Digital Banking"
+   },
+   "cache_read": 4647639,
+   "tokens": 15492130
+  },
+  {
+   "person": "Nurul Singh",
+   "turns": 105,
+   "sessions": 13,
+   "input": 9600916,
+   "output": 1238828,
+   "cost_usd": 45.67,
+   "department": "Engineering — Digital Banking",
+   "group": {
+    "id": "grp_digital_eng",
+    "name": "Engineering — Digital Banking"
+   },
+   "cache_read": 4645604,
+   "tokens": 15485348
+  },
+  {
+   "person": "Isaac Low",
+   "turns": 96,
+   "sessions": 10,
+   "input": 10414455,
+   "output": 1343800,
+   "cost_usd": 45.66,
+   "department": "Engineering — Payments",
+   "group": {
+    "id": "grp_payments_eng",
+    "name": "Engineering — Payments"
+   },
+   "cache_read": 5039252,
+   "tokens": 16797507
+  },
+  {
+   "person": "Serena Lau",
+   "turns": 101,
+   "sessions": 10,
+   "input": 16905036,
+   "output": 2181295,
+   "cost_usd": 45.48,
+   "department": "Data & Analytics",
+   "group": {
+    "id": "grp_data",
+    "name": "Data & Analytics"
+   },
+   "cache_read": 8179856,
+   "tokens": 27266187
+  },
+  {
+   "person": "Daniel Koh",
+   "turns": 141,
+   "sessions": 13,
+   "input": 9491600,
+   "output": 1224722,
+   "cost_usd": 45.15,
+   "department": "Engineering — Digital Banking",
+   "group": {
+    "id": "grp_digital_eng",
+    "name": "Engineering — Digital Banking"
+   },
+   "cache_read": 4592710,
+   "tokens": 15309032
+  },
+  {
+   "person": "Vincent Yeo",
+   "turns": 103,
+   "sessions": 13,
+   "input": 9487395,
+   "output": 1224180,
+   "cost_usd": 45.13,
+   "department": "Engineering — Digital Banking",
+   "group": {
+    "id": "grp_digital_eng",
+    "name": "Engineering — Digital Banking"
+   },
+   "cache_read": 4590675,
+   "tokens": 15302250
+  },
+  {
+   "person": "Isaac Chong",
+   "turns": 120,
+   "sessions": 13,
+   "input": 9485294,
+   "output": 1223909,
+   "cost_usd": 45.12,
+   "department": "Engineering — Digital Banking",
+   "group": {
+    "id": "grp_digital_eng",
+    "name": "Engineering — Digital Banking"
+   },
+   "cache_read": 4589659,
+   "tokens": 15298862
+  },
+  {
+   "person": "Xin Yi Tan",
+   "turns": 117,
+   "sessions": 13,
+   "input": 9468476,
+   "output": 1221739,
+   "cost_usd": 45.04,
+   "department": "Engineering — Digital Banking",
+   "group": {
+    "id": "grp_digital_eng",
+    "name": "Engineering — Digital Banking"
+   },
+   "cache_read": 4581520,
+   "tokens": 15271735
+  },
+  {
+   "person": "Farhan Teo",
+   "turns": 107,
+   "sessions": 10,
+   "input": 10220581,
+   "output": 1318785,
+   "cost_usd": 44.81,
+   "department": "Engineering — Payments",
+   "group": {
+    "id": "grp_payments_eng",
+    "name": "Engineering — Payments"
+   },
+   "cache_read": 4945443,
+   "tokens": 16484809
+  }
+ ]
+}

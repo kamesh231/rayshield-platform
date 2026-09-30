@@ -1,0 +1,117 @@
+{
+ "operationId": "getService",
+ "access": "read",
+ "status": 200,
+ "headers": {
+  "X-Window-From": "1789956000",
+  "X-Window-To": "1790560800",
+  "X-Data-As-Of": "1790560680"
+ },
+ "body": {
+  "service": {
+   "ai_service": "Gemini CLI",
+   "category": "Coding agent",
+   "icon": null,
+   "separability": "distinct",
+   "confidence": "confirmed",
+   "hits": 3050,
+   "bytes": 125751500,
+   "users": 36,
+   "risk_score": 22,
+   "jurisdiction": "US",
+   "ever_agentic": true,
+   "sandbox_candidate": true,
+   "agent_sdks": null,
+   "collector_count": 2,
+   "first_seen": 1782784800,
+   "last_seen": 1790559330,
+   "personal_account": false,
+   "oauth_scopes": null,
+   "service_id": "gemini-cli",
+   "vendor": "Google",
+   "embedded_in": null,
+   "status": "approved",
+   "reviewed_by": "Tan Wei Ling",
+   "reviewed_at": 1783198800,
+   "endpoints": 38,
+   "is_new": false
+  },
+  "description": "Agentic CLI used by Data & Analytics under a signed CUE.",
+  "top_endpoints": [
+   {
+    "endpoint_id": "ep_LT-SG-2231",
+    "host": "LT-SG-2231",
+    "ip": "10.40.13.160",
+    "type": "laptop",
+    "user": "Rahul Iyer",
+    "department": "Engineering — Payments",
+    "hits": 115,
+    "last_seen": 1790560403
+   },
+   {
+    "endpoint_id": "ep_LT-SG-4402",
+    "host": "LT-SG-4402",
+    "ip": "10.40.47.164",
+    "type": "laptop",
+    "user": "Jia Hui Ong",
+    "department": "Data & Analytics",
+    "hits": 59,
+    "last_seen": 1790559812
+   },
+   {
+    "endpoint_id": "ep_LT-SG-5795",
+    "host": "LT-SG-5795",
+    "ip": "10.40.5.59",
+    "type": "laptop",
+    "user": "Nadia Teo",
+    "department": "Data & Analytics",
+    "hits": 88,
+    "last_seen": 1790559702
+   },
+   {
+    "endpoint_id": "ep_LT-SG-4800",
+    "host": "LT-SG-4800",
+    "ip": "10.40.20.205",
+    "type": "laptop",
+    "user": "Yuki Abdullah",
+    "department": "Data & Analytics",
+    "hits": 98,
+    "last_seen": 1790559899
+   },
+   {
+    "endpoint_id": "ep_LT-SG-4229",
+    "host": "LT-SG-4229",
+    "ip": "10.40.41.29",
+    "type": "laptop",
+    "user": "Darren Seah",
+    "department": "Data & Analytics",
+    "hits": 147,
+    "last_seen": 1790560450
+   },
+   {
+    "endpoint_id": "ep_LT-SG-2974",
+    "host": "LT-SG-2974",
+    "ip": "10.40.55.225",
+    "type": "laptop",
+    "user": "Wen Hui Kumar",
+    "department": "Data & Analytics",
+    "hits": 162,
+    "last_seen": 1790559891
+   }
+  ],
+  "status_history": [
+   {
+    "status": "unlabelled",
+    "by": "system",
+    "at": 1782784800,
+    "note": null
+   },
+   {
+    "status": "approved",
+    "by": "Tan Wei Ling",
+    "at": 1783198800,
+    "note": null
+   }
+  ]
+ }
+}

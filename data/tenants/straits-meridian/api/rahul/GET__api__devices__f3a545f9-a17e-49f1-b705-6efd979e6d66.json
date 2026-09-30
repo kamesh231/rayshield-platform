@@ -1,0 +1,11 @@
+{
+ "operationId": "getDevice",
+ "access": "self",
+ "status": 403,
+ "headers": {},
+ "body": {
+  "error": "Role 'developer' (Rahul Iyer) cannot call getDevice.",
+  "code": "FORBIDDEN",
+  "request_id": "req_zA6SD6JZ"
+ }
+}

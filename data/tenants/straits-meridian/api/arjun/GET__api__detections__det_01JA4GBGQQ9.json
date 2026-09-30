@@ -1,0 +1,61 @@
+{
+ "operationId": "getDetection",
+ "access": "read",
+ "status": 200,
+ "headers": {},
+ "body": {
+  "detection_id": "det_01JA4GBGQQ9",
+  "ts": 1790107200,
+  "rule_id": "PROHIBITED-SERVICE",
+  "rule_label": "Prohibited AI service",
+  "severity": "high",
+  "disposition": "blocked",
+  "device_id": "dbc964c1-beb7-458b-8f87-4d2cbfbc4109",
+  "host": "LT-SG-5680",
+  "owner": "Harith Toh",
+  "owner_kind": "person",
+  "department": "Treasury & Markets",
+  "group": {
+   "id": "grp_treasury",
+   "name": "Treasury & Markets"
+  },
+  "session_id": "sbx_e9def1afa1b3",
+  "teaser": "chat.qwen.ai · Qwen Chat is labelled Prohibited (blocked)",
+  "description": "Traffic to a service labelled Prohibited in Discover (data residency).",
+  "owasp": null,
+  "signal": "wire",
+  "classification": "transfer",
+  "backend": "aegis-engine 0.9.6",
+  "evidence": {
+   "type": "exfil",
+   "decoded_command": null,
+   "sensitive_content": null,
+   "exfil": {
+    "destination": "chat.qwen.ai",
+    "bytes": 4001,
+    "classification": "prohibited AI service (data residency)"
+   },
+   "egress_spike": null,
+   "persistence": null,
+   "undisclosed_action": null
+  },
+  "chain": [
+   {
+    "ts": 1790107200,
+    "label": "Prohibited AI service",
+    "detail": "chat.qwen.ai · Qwen Chat is labelled Prohibited (blocked)",
+    "is_current": true,
+    "is_detection": true,
+    "severity": "high",
+    "disposition": "blocked"
+   }
+  ],
+  "signature": {
+   "alg": "ed25519",
+   "key_id": "aegis-smb-2026-09",
+   "value": "MEUCIQ10aedvo1flt6…",
+   "signed_at": 1790107201,
+   "verify_hint": "aegis verify det_01JA4GBGQQ9"
+  }
+ }
+}

@@ -1,0 +1,63 @@
+{
+ "operationId": "getDiscoveryEndpoint",
+ "access": "read",
+ "status": 200,
+ "headers": {
+  "X-Window-From": "1789956000",
+  "X-Window-To": "1790560800",
+  "X-Data-As-Of": "1790560680"
+ },
+ "body": {
+  "endpoint": {
+   "endpoint": "10.60.21.214",
+   "host": "vm-dev-rahul-07",
+   "endpoint_id": "ep_vm-dev-rahul-07",
+   "device_id": "18fcef06-5ea0-4b62-89d0-7868e89ab483",
+   "type": "vm",
+   "ephemeral": false,
+   "user": "Rahul Iyer",
+   "department": "Engineering — Payments",
+   "identity_source": "idp",
+   "sensor": "pcap",
+   "first_seen": 1772416800,
+   "last_seen": 1790560789
+  },
+  "services": [
+   {
+    "service_id": "claude-code",
+    "ai_service": "Claude Code",
+    "status": "approved",
+    "hits": 53,
+    "last_seen": 1790560789
+   },
+   {
+    "service_id": "zoom-ai",
+    "ai_service": "Zoom AI Companion",
+    "status": "approved",
+    "hits": 42,
+    "last_seen": 1790560789
+   },
+   {
+    "service_id": "amazon-bedrock",
+    "ai_service": "Amazon Bedrock",
+    "status": "approved",
+    "hits": 32,
+    "last_seen": 1790560789
+   },
+   {
+    "service_id": "gemini-workspace",
+    "ai_service": "Gemini (Workspace)",
+    "status": "approved",
+    "hits": 21,
+    "last_seen": 1790560789
+   },
+   {
+    "service_id": "chatgpt-enterprise",
+    "ai_service": "ChatGPT Enterprise",
+    "status": "approved",
+    "hits": 13,
+    "last_seen": 1790560789
+   }
+  ]
+ }
+}

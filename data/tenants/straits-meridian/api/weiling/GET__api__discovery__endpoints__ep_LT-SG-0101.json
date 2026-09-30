@@ -1,0 +1,42 @@
+{
+ "operationId": "getDiscoveryEndpoint",
+ "access": "read",
+ "status": 200,
+ "headers": {
+  "X-Window-From": "1789956000",
+  "X-Window-To": "1790560800",
+  "X-Data-As-Of": "1790560680"
+ },
+ "body": {
+  "endpoint": {
+   "endpoint": "10.40.59.161",
+   "host": "LT-SG-0101",
+   "endpoint_id": "ep_LT-SG-0101",
+   "device_id": "e0702984-bbe6-44bb-b840-2949a4b182c9",
+   "type": "laptop",
+   "ephemeral": false,
+   "user": "Priscilla Goh",
+   "department": null,
+   "identity_source": "idp",
+   "sensor": "pcap",
+   "first_seen": 1776045600,
+   "last_seen": 1790560556
+  },
+  "services": [
+   {
+    "service_id": "claude-code",
+    "ai_service": "Claude Code",
+    "status": "approved",
+    "hits": 292,
+    "last_seen": 1790560556
+   },
+   {
+    "service_id": "gemini-workspace",
+    "ai_service": "Gemini (Workspace)",
+    "status": "approved",
+    "hits": 146,
+    "last_seen": 1790560556
+   }
+  ]
+ }
+}

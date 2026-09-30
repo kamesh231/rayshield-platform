@@ -1,0 +1,117 @@
+{
+ "operationId": "getService",
+ "access": "read",
+ "status": 200,
+ "headers": {
+  "X-Window-From": "1789956000",
+  "X-Window-To": "1790560800",
+  "X-Data-As-Of": "1790560680"
+ },
+ "body": {
+  "service": {
+   "ai_service": "Azure OpenAI",
+   "category": "Model API",
+   "icon": null,
+   "separability": "distinct",
+   "confidence": "confirmed",
+   "hits": 5400,
+   "bytes": 222642000,
+   "users": 42,
+   "risk_score": 22,
+   "jurisdiction": "SG",
+   "ever_agentic": false,
+   "sandbox_candidate": false,
+   "agent_sdks": null,
+   "collector_count": 2,
+   "first_seen": 1773280800,
+   "last_seen": 1790560380,
+   "personal_account": false,
+   "oauth_scopes": null,
+   "service_id": "azure-openai",
+   "vendor": "Microsoft",
+   "embedded_in": null,
+   "status": "approved",
+   "reviewed_by": "Tan Wei Ling",
+   "reviewed_at": 1773694800,
+   "endpoints": 44,
+   "is_new": false
+  },
+  "description": "Model API in the bank’s Azure Southeast Asia region.",
+  "top_endpoints": [
+   {
+    "endpoint_id": "ep_LT-SG-0142",
+    "host": "LT-SG-0142",
+    "ip": "10.40.42.169",
+    "type": "laptop",
+    "user": "Tan Wei Ling",
+    "department": null,
+    "hits": 93,
+    "last_seen": 1790560307
+   },
+   {
+    "endpoint_id": "ep_LT-SG-4402",
+    "host": "LT-SG-4402",
+    "ip": "10.40.47.164",
+    "type": "laptop",
+    "user": "Jia Hui Ong",
+    "department": "Data & Analytics",
+    "hits": 23,
+    "last_seen": 1790559812
+   },
+   {
+    "endpoint_id": "ep_LT-VN-0412",
+    "host": "LT-VN-0412",
+    "ip": "10.40.21.23",
+    "type": "laptop",
+    "user": "Thanh Nguyen",
+    "department": "Vendor Engineering (contractors)",
+    "hits": 121,
+    "last_seen": 1790560507
+   },
+   {
+    "endpoint_id": "ep_vm-ci-build-214",
+    "host": "vm-ci-build-214",
+    "ip": "10.60.58.106",
+    "type": "vm",
+    "user": "svc-ci",
+    "department": "Service accounts (CI / ETL)",
+    "hits": 32,
+    "last_seen": 1790559789
+   },
+   {
+    "endpoint_id": "ep_vm-dev-wei-34",
+    "host": "vm-dev-wei-34",
+    "ip": "10.60.52.158",
+    "type": "vm",
+    "user": "Wei Jie Chan",
+    "department": "Engineering — Payments",
+    "hits": 57,
+    "last_seen": 1790560452
+   },
+   {
+    "endpoint_id": "ep_vm-dev-hui-39",
+    "host": "vm-dev-hui-39",
+    "ip": "10.60.46.129",
+    "type": "vm",
+    "user": "Hui Min Lim",
+    "department": "Engineering — Payments",
+    "hits": 32,
+    "last_seen": 1790559928
+   }
+  ],
+  "status_history": [
+   {
+    "status": "unlabelled",
+    "by": "system",
+    "at": 1773280800,
+    "note": null
+   },
+   {
+    "status": "approved",
+    "by": "Tan Wei Ling",
+    "at": 1773694800,
+    "note": null
+   }
+  ]
+ }
+}

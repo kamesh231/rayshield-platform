@@ -1,0 +1,38 @@
+{
+ "operationId": "getDevice",
+ "access": "read",
+ "status": 200,
+ "headers": {
+  "X-Window-From": "1789956000",
+  "X-Window-To": "1790560800",
+  "X-Data-As-Of": "1790560680"
+ },
+ "body": {
+  "id": "a65e7111-5b2d-4a17-aad3-a933ce0f06b6",
+  "device_name": "vm-etl-nightly-03",
+  "status": "active",
+  "health_score": 92,
+  "risk_level": "low",
+  "blocks_24h": 0,
+  "last_heartbeat": 1790560781,
+  "endpoint_id": "ep_vm-etl-nightly-03",
+  "ip": "10.60.49.107",
+  "type": "vm",
+  "owner": "svc-etl",
+  "owner_kind": "service",
+  "department": "Service accounts (CI / ETL)",
+  "group": {
+   "id": "grp_svc",
+   "name": "Service accounts (CI / ETL)"
+  },
+  "agent_state": "enforcing",
+  "agent_version": "0.9.6",
+  "tools": [
+   "claude-code"
+  ],
+  "allowed": 66,
+  "blocked": 1,
+  "recorded": 3,
+  "os": "Ubuntu 22.04"
+ }
+}

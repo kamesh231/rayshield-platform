@@ -1,0 +1,61 @@
+{
+ "operationId": "getDetection",
+ "access": "read",
+ "status": 200,
+ "headers": {},
+ "body": {
+  "detection_id": "det_01JAF1HRB0Q",
+  "ts": 1790154720,
+  "rule_id": "PROHIBITED-SERVICE",
+  "rule_label": "Prohibited AI service",
+  "severity": "high",
+  "disposition": "blocked",
+  "device_id": "3b818ed2-4daf-481f-af0c-bd237932e859",
+  "host": "LT-SG-5712",
+  "owner": "Aisha Low",
+  "owner_kind": "person",
+  "department": "Treasury & Markets",
+  "group": {
+   "id": "grp_treasury",
+   "name": "Treasury & Markets"
+  },
+  "session_id": "sbx_882e030c4e0c",
+  "teaser": "kimi.moonshot.cn · Kimi is labelled Prohibited (blocked)",
+  "description": "Traffic to a service labelled Prohibited in Discover (data residency).",
+  "owasp": null,
+  "signal": "wire",
+  "classification": "transfer",
+  "backend": "aegis-engine 0.9.6",
+  "evidence": {
+   "type": "exfil",
+   "decoded_command": null,
+   "sensitive_content": null,
+   "exfil": {
+    "destination": "kimi.moonshot.cn",
+    "bytes": 22771,
+    "classification": "prohibited AI service (data residency)"
+   },
+   "egress_spike": null,
+   "persistence": null,
+   "undisclosed_action": null
+  },
+  "chain": [
+   {
+    "ts": 1790154720,
+    "label": "Prohibited AI service",
+    "detail": "kimi.moonshot.cn · Kimi is labelled Prohibited (blocked)",
+    "is_current": true,
+    "is_detection": true,
+    "severity": "high",
+    "disposition": "blocked"
+   }
+  ],
+  "signature": {
+   "alg": "ed25519",
+   "key_id": "aegis-smb-2026-09",
+   "value": "MEUCIQ1eo0qsz1fbme…",
+   "signed_at": 1790154721,
+   "verify_hint": "aegis verify det_01JAF1HRB0Q"
+  }
+ }
+}

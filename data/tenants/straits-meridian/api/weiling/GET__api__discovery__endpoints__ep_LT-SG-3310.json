@@ -1,0 +1,63 @@
+{
+ "operationId": "getDiscoveryEndpoint",
+ "access": "read",
+ "status": 200,
+ "headers": {
+  "X-Window-From": "1789956000",
+  "X-Window-To": "1790560800",
+  "X-Data-As-Of": "1790560680"
+ },
+ "body": {
+  "endpoint": {
+   "endpoint": "10.40.27.6",
+   "host": "LT-SG-3310",
+   "endpoint_id": "ep_LT-SG-3310",
+   "device_id": "b32e2009-f4f2-4f2e-b2e6-2632e7bdf2a9",
+   "type": "laptop",
+   "ephemeral": false,
+   "user": "Marcus Lee",
+   "department": "Engineering — Digital Banking",
+   "identity_source": "idp",
+   "sensor": "sase_zscaler",
+   "first_seen": 1777428000,
+   "last_seen": 1790549162
+  },
+  "services": [
+   {
+    "service_id": "claude-code",
+    "ai_service": "Claude Code",
+    "status": "approved",
+    "hits": 143,
+    "last_seen": 1790549162
+   },
+   {
+    "service_id": "chatgpt-enterprise",
+    "ai_service": "ChatGPT Enterprise",
+    "status": "approved",
+    "hits": 114,
+    "last_seen": 1790549162
+   },
+   {
+    "service_id": "gemini-workspace",
+    "ai_service": "Gemini (Workspace)",
+    "status": "approved",
+    "hits": 85,
+    "last_seen": 1790549162
+   },
+   {
+    "service_id": "github-copilot",
+    "ai_service": "GitHub Copilot",
+    "status": "approved",
+    "hits": 57,
+    "last_seen": 1790549162
+   },
+   {
+    "service_id": "amazon-bedrock",
+    "ai_service": "Amazon Bedrock",
+    "status": "approved",
+    "hits": 30,
+    "last_seen": 1790549162
+   }
+  ]
+ }
+}

@@ -1,0 +1,75 @@
+{
+ "operationId": "getBlastGraph",
+ "access": "read",
+ "status": 200,
+ "headers": {},
+ "body": {
+  "execution_id": "exec_01JA3ZMT103",
+  "nodes": [
+   {
+    "id": "n1",
+    "kind": "endpoint",
+    "label": "LT-SG-5120 · Benjamin Chua",
+    "detail": "Treasury & Markets",
+    "verdict": null
+   },
+   {
+    "id": "n2",
+    "kind": "cue",
+    "label": "no CUE",
+    "detail": null,
+    "verdict": "allow"
+   },
+   {
+    "id": "n3",
+    "kind": "mcp_sandbox",
+    "label": "gmail-mcp (not onboarded)",
+    "detail": "host · no sandbox",
+    "verdict": "allow"
+   },
+   {
+    "id": "n4",
+    "kind": "credential",
+    "label": "Gmail OAuth token",
+    "detail": "OAuth token for a Gmail account configured in Claude Desktop",
+    "verdict": "allow"
+   },
+   {
+    "id": "n5",
+    "kind": "data",
+    "label": "MT103 · 1 customer credit transfer",
+    "detail": "draft email with pasted MT103",
+    "verdict": "flag"
+   },
+   {
+    "id": "n6",
+    "kind": "dlp_outcome",
+    "label": "Blocked before prompt left the endpoint",
+    "detail": "Flagged an MT103 customer credit transfer in a prompt. Blocked; gmail-mcp is not onboarded in the MCP Bridge.",
+    "verdict": "block"
+   }
+  ],
+  "edges": [
+   {
+    "from": "n1",
+    "to": "n2"
+   },
+   {
+    "from": "n2",
+    "to": "n3"
+   },
+   {
+    "from": "n3",
+    "to": "n4"
+   },
+   {
+    "from": "n4",
+    "to": "n5"
+   },
+   {
+    "from": "n5",
+    "to": "n6"
+   }
+  ]
+ }
+}

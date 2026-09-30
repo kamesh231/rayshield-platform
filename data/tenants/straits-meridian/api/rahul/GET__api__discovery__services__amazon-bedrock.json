@@ -1,0 +1,67 @@
+{
+ "operationId": "getService",
+ "access": "self",
+ "status": 200,
+ "headers": {
+  "X-Window-From": "1789956000",
+  "X-Window-To": "1790560800",
+  "X-Data-As-Of": "1790560680"
+ },
+ "body": {
+  "service": {
+   "ai_service": "Amazon Bedrock",
+   "category": "Model API",
+   "icon": null,
+   "separability": "distinct",
+   "confidence": "confirmed",
+   "hits": 2300,
+   "bytes": 94829000,
+   "users": 16,
+   "risk_score": 22,
+   "jurisdiction": "SG",
+   "ever_agentic": false,
+   "sandbox_candidate": false,
+   "agent_sdks": null,
+   "collector_count": 2,
+   "first_seen": 1778464800,
+   "last_seen": 1790560080,
+   "personal_account": false,
+   "oauth_scopes": null,
+   "service_id": "amazon-bedrock",
+   "vendor": "AWS",
+   "embedded_in": null,
+   "status": "approved",
+   "reviewed_by": "Tan Wei Ling",
+   "reviewed_at": 1779310800,
+   "endpoints": 17,
+   "is_new": false
+  },
+  "description": "Model API in the bank’s AWS Singapore account.",
+  "top_endpoints": [
+   {
+    "endpoint_id": "ep_vm-dev-rahul-07",
+    "host": "vm-dev-rahul-07",
+    "ip": "10.60.21.214",
+    "type": "vm",
+    "user": "Rahul Iyer",
+    "department": "Engineering — Payments",
+    "hits": 32,
+    "last_seen": 1790560789
+   }
+  ],
+  "status_history": [
+   {
+    "status": "unlabelled",
+    "by": "system",
+    "at": 1778464800,
+    "note": null
+   },
+   {
+    "status": "approved",
+    "by": "Tan Wei Ling",
+    "at": 1779310800,
+    "note": null
+   }
+  ]
+ }
+}

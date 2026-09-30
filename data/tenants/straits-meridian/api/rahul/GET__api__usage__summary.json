@@ -1,0 +1,22 @@
+{
+ "operationId": "getUsageSummary",
+ "access": "self",
+ "status": 200,
+ "headers": {
+  "X-Window-From": "1789956000",
+  "X-Window-To": "1790560800",
+  "X-Data-As-Of": "1790560680"
+ },
+ "body": {
+  "turns": 260,
+  "users": 1,
+  "sessions": 26,
+  "cost_usd": 118.4,
+  "tokens": 43557273,
+  "input_tokens": 27005509,
+  "output_tokens": 3484582,
+  "cache_read_tokens": 13067182,
+  "hard_stops": 0,
+  "rate_card_id": "smb-illustrative-2026-09"
+ }
+}

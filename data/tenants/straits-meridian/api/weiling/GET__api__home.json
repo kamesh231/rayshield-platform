@@ -1,0 +1,180 @@
+{
+ "operationId": "getHome",
+ "access": "read",
+ "status": 200,
+ "headers": {
+  "X-Window-From": "1789956000",
+  "X-Window-To": "1790560800",
+  "X-Data-As-Of": "1790560680"
+ },
+ "body": {
+  "planes": [
+   {
+    "name": "Discover",
+    "rows": [
+     {
+      "key": "services_detected",
+      "label": "AI services detected",
+      "value": 27,
+      "total": null,
+      "link": {
+       "screen": "services",
+       "params": {}
+      }
+     },
+     {
+      "key": "services_unlabelled",
+      "label": "Awaiting a governance decision",
+      "value": 4,
+      "total": null,
+      "link": {
+       "screen": "services",
+       "params": {
+        "status": "unlabelled"
+       }
+      }
+     },
+     {
+      "key": "endpoints_using_ai",
+      "label": "Endpoints using AI",
+      "value": 412,
+      "total": null,
+      "link": {
+       "screen": "endpoints",
+       "params": {}
+      }
+     }
+    ]
+   },
+   {
+    "name": "Protect",
+    "rows": [
+     {
+      "key": "agents_enforcing",
+      "label": "Endpoints with an enforcing agent",
+      "value": 371,
+      "total": 412,
+      "link": {
+       "screen": "fleet",
+       "params": {
+        "agent_state": "enforcing"
+       }
+      }
+     },
+     {
+      "key": "detections",
+      "label": "Detections",
+      "value": 58,
+      "total": null,
+      "link": {
+       "screen": "detections",
+       "params": {}
+      }
+     },
+     {
+      "key": "detections_escalated",
+      "label": "Escalated to a human",
+      "value": 3,
+      "total": null,
+      "link": {
+       "screen": "detections",
+       "params": {
+        "disposition": "escalated"
+       }
+      }
+     },
+     {
+      "key": "critical_contained",
+      "label": "Critical detections contained",
+      "value": 17,
+      "total": 17,
+      "link": {
+       "screen": "detections",
+       "params": {
+        "severity": "critical"
+       }
+      }
+     }
+    ]
+   }
+  ],
+  "attention": [
+   {
+    "kind": "protect",
+    "severity": "critical",
+    "text": "Card data blocked on LT-SG-2231 · escalated (det_01JA4K9PAN1)",
+    "meta": "Card number (PAN) in agent context",
+    "ts": 1790553600,
+    "link": {
+     "screen": "detection",
+     "params": {
+      "detection_id": "det_01JA4K9PAN1"
+     }
+    }
+   },
+   {
+    "kind": "discover",
+    "severity": "critical",
+    "text": "Activity on a prohibited service: DeepSeek on 6 Treasury endpoints",
+    "meta": "6 endpoints",
+    "ts": 1790555400,
+    "link": {
+     "screen": "service",
+     "params": {
+      "service_id": "deepseek"
+     }
+    }
+   },
+   {
+    "kind": "discover",
+    "severity": "warning",
+    "text": "New AI service detected: Perplexity · no governance status yet",
+    "meta": "4 endpoints",
+    "ts": 1790551140,
+    "link": {
+     "screen": "service",
+     "params": {
+      "service_id": "perplexity"
+     }
+    }
+   },
+   {
+    "kind": "discover",
+    "severity": "warning",
+    "text": "Unonboarded MCP server gmail-mcp on LT-SG-5120 (Treasury)",
+    "meta": "risk high",
+    "ts": 1790388000,
+    "link": {
+     "screen": "endpoint",
+     "params": {
+      "endpoint_id": "ep_LT-SG-5120"
+     }
+    }
+   },
+   {
+    "kind": "system",
+    "severity": "warning",
+    "text": "Sensor sase_zscaler has sent no data for 2 h 40 m",
+    "meta": null,
+    "ts": 1790551200,
+    "link": {
+     "screen": "sensors",
+     "params": {}
+    }
+   },
+   {
+    "kind": "protect",
+    "severity": "warning",
+    "text": "9 agents offline for more than 10 minutes",
+    "meta": "9 endpoints",
+    "ts": 1790557200,
+    "link": {
+     "screen": "fleet",
+     "params": {
+      "agent_state": "offline"
+     }
+    }
+   }
+  ]
+ }
+}

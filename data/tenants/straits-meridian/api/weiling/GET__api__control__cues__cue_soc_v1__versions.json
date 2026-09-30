@@ -1,0 +1,16 @@
+{
+ "operationId": "listCueVersions",
+ "access": "read",
+ "status": 200,
+ "headers": {},
+ "body": [
+  {
+   "version": 1,
+   "state": "published",
+   "published_at": 1787968800,
+   "published_by": "Tan Wei Ling",
+   "change": "inherits Bank baseline · + MCP jira",
+   "endpoints": 14
+  }
+ ]
+}

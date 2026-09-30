@@ -1,0 +1,25 @@
+{
+ "operationId": "listDeviceEvents",
+ "access": "read",
+ "status": 200,
+ "headers": {},
+ "body": [
+  {
+   "id": "4324baac-2024-48f7-a580-e6cc89e22a00",
+   "ts": 1790528400,
+   "identity": "thanh.nguyen",
+   "device": "LT-VN-0412",
+   "app": "paste.ee",
+   "action": "detection",
+   "target": "archive → external host",
+   "source": "sandbox",
+   "decision": "block",
+   "reason": "mobile-app-src.tar.gz · 18.4 MB → paste.ee (blocked by CUE egress)",
+   "rule_id": "EXFIL",
+   "session_id": "sbx_eeaf3a5cefec",
+   "tool": "codex-cli",
+   "channel": "agent",
+   "enforced_by": "dlp"
+  }
+ ]
+}

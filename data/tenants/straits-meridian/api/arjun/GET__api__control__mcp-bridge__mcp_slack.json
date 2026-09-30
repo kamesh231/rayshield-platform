@@ -1,0 +1,32 @@
+{
+ "operationId": "getBridgeMcp",
+ "access": "read",
+ "status": 200,
+ "headers": {},
+ "body": {
+  "id": "mcp_slack",
+  "name": "slack",
+  "source": "npm · @modelcontextprotocol/server-slack",
+  "kind": "remote",
+  "status": "blocked",
+  "risk_score": 77,
+  "risk_tier": "high",
+  "capabilities": {
+   "tools": [
+    "read_channel",
+    "post_message"
+   ],
+   "writes": true
+  },
+  "findings": {
+   "high": 1,
+   "medium": 1,
+   "low": 0,
+   "summary": "Customer data in channels"
+  },
+  "approved_by": "Priscilla Goh",
+  "approved_reason": "Blocked: customer data in channels",
+  "groups_with_access": [],
+  "created_at": 1786672800
+ }
+}

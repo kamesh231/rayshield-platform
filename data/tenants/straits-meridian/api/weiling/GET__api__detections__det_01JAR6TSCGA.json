@@ -1,0 +1,62 @@
+{
+ "operationId": "getDetection",
+ "access": "read",
+ "status": 200,
+ "headers": {},
+ "body": {
+  "detection_id": "det_01JAR6TSCGA",
+  "ts": 1790444969,
+  "rule_id": "SECRET-IN-PROMPT",
+  "rule_label": "Secret in prompt",
+  "severity": "high",
+  "disposition": "blocked",
+  "device_id": "9c68f690-207e-487b-8115-a73a893ccb9f",
+  "host": "LT-VN-6679",
+  "owner": "Linh Hoang",
+  "owner_kind": "person",
+  "department": "Vendor Engineering (contractors)",
+  "group": {
+   "id": "grp_contractors",
+   "name": "Vendor Engineering (contractors)"
+  },
+  "session_id": "sbx_d13d627495d9",
+  "teaser": "notes.md · bearer token (blocked)",
+  "description": "An API key, token, private key or connection string in a prompt or file sent to the model.",
+  "owasp": null,
+  "signal": "guest",
+  "classification": "regulated data",
+  "backend": "aegis-engine 0.9.6",
+  "evidence": {
+   "type": "sensitive_content",
+   "decoded_command": null,
+   "sensitive_content": {
+    "path": "config.yaml",
+    "basis": "API token",
+    "pattern": "high-entropy token",
+    "snippet_redacted": "TOKEN=••••••••"
+   },
+   "exfil": null,
+   "egress_spike": null,
+   "persistence": null,
+   "undisclosed_action": null
+  },
+  "chain": [
+   {
+    "ts": 1790444969,
+    "label": "Secret in prompt",
+    "detail": "notes.md · bearer token (blocked)",
+    "is_current": true,
+    "is_detection": true,
+    "severity": "high",
+    "disposition": "blocked"
+   }
+  ],
+  "signature": {
+   "alg": "ed25519",
+   "key_id": "aegis-smb-2026-09",
+   "value": "MEUCIQ17iwvxdzhorb…",
+   "signed_at": 1790444970,
+   "verify_hint": "aegis verify det_01JAR6TSCGA"
+  }
+ }
+}

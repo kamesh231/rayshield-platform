@@ -1,0 +1,25 @@
+{
+ "operationId": "listDeviceEvents",
+ "access": "read",
+ "status": 200,
+ "headers": {},
+ "body": [
+  {
+   "id": "dbefc973-867f-4664-a1f3-b07dce35efea",
+   "ts": 1790535600,
+   "identity": "benjamin.chua",
+   "device": "LT-SG-5120",
+   "app": "Anthropic Claude (API)",
+   "action": "detection",
+   "target": "pasted text → model prompt",
+   "source": "sandbox",
+   "decision": "block",
+   "reason": "MT103 customer credit transfer pasted into a prompt (blocked)",
+   "rule_id": "SWIFT-MSG",
+   "session_id": "sbx_8971ab664fd6",
+   "tool": "claude-desktop",
+   "channel": "agent",
+   "enforced_by": "dlp"
+  }
+ ]
+}

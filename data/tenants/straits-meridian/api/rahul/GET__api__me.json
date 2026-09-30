@@ -1,0 +1,19 @@
+{
+ "operationId": "getMe",
+ "access": "self",
+ "status": 200,
+ "headers": {},
+ "body": {
+  "id": "usr_rahul",
+  "name": "Rahul Iyer",
+  "email": "rahul.iyer@straitsmeridian.example",
+  "role": "developer",
+  "org": {
+   "id": "org_straits_meridian",
+   "name": "Straits Meridian Bank"
+  },
+  "title": "Senior Engineer, Payments",
+  "console_role": null,
+  "data_scope": "self"
+ }
+}

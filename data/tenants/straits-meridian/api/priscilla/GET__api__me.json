@@ -1,0 +1,19 @@
+{
+ "operationId": "getMe",
+ "access": "read",
+ "status": 200,
+ "headers": {},
+ "body": {
+  "id": "usr_priscilla",
+  "name": "Priscilla Goh",
+  "email": "priscilla.goh@straitsmeridian.example",
+  "role": "ciso",
+  "org": {
+   "id": "org_straits_meridian",
+   "name": "Straits Meridian Bank"
+  },
+  "title": "Chief Information Security Officer",
+  "console_role": "Administrator",
+  "data_scope": "org"
+ }
+}

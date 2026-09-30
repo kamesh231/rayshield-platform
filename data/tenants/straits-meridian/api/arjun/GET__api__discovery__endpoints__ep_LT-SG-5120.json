@@ -1,0 +1,49 @@
+{
+ "operationId": "getDiscoveryEndpoint",
+ "access": "read",
+ "status": 200,
+ "headers": {
+  "X-Window-From": "1789956000",
+  "X-Window-To": "1790560800",
+  "X-Data-As-Of": "1790560680"
+ },
+ "body": {
+  "endpoint": {
+   "endpoint": "10.40.36.162",
+   "host": "LT-SG-5120",
+   "endpoint_id": "ep_LT-SG-5120",
+   "device_id": "caf1348f-1ef7-4a01-9619-b1374bf4452d",
+   "type": "laptop",
+   "ephemeral": false,
+   "user": "Benjamin Chua",
+   "department": "Treasury & Markets",
+   "identity_source": "idp",
+   "sensor": "pcap",
+   "first_seen": 1774922400,
+   "last_seen": 1790560264
+  },
+  "services": [
+   {
+    "service_id": "claude-personal",
+    "ai_service": "Claude.ai (personal)",
+    "status": "unapproved",
+    "hits": 119,
+    "last_seen": 1790560264
+   },
+   {
+    "service_id": "github-copilot",
+    "ai_service": "GitHub Copilot",
+    "status": "approved",
+    "hits": 79,
+    "last_seen": 1790560264
+   },
+   {
+    "service_id": "notion-ai",
+    "ai_service": "Notion AI",
+    "status": "approved",
+    "hits": 41,
+    "last_seen": 1790560264
+   }
+  ]
+ }
+}

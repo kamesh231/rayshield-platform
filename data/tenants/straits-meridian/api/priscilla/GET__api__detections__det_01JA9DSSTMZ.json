@@ -1,0 +1,57 @@
+{
+ "operationId": "getDetection",
+ "access": "redacted",
+ "status": 200,
+ "headers": {},
+ "body": {
+  "detection_id": "det_01JA9DSSTMZ",
+  "ts": 1790287290,
+  "rule_id": "CARD-PAN",
+  "rule_label": "Card number (PAN) in agent context",
+  "severity": "critical",
+  "disposition": "blocked",
+  "device_id": "da864b31-bee5-4b9b-aa9a-09da32e37f7b",
+  "host": "LT-VN-0419",
+  "owner": "Minh Pham",
+  "owner_kind": "person",
+  "department": "Vendor Engineering (contractors)",
+  "group": {
+   "id": "grp_contractors",
+   "name": "Vendor Engineering (contractors)"
+  },
+  "session_id": "sbx_ae4f9544a796",
+  "teaser": "Card number (PAN) in agent context · MCP tool result → model prompt",
+  "description": "A card primary account number reached an agent prompt or tool result. DLP inspects the turn before it leaves the sandbox.",
+  "owasp": null,
+  "signal": "guest",
+  "classification": "regulated data",
+  "backend": "aegis-engine 0.9.6",
+  "evidence": {
+   "type": "sensitive_content",
+   "decoded_command": null,
+   "sensitive_content": null,
+   "exfil": null,
+   "egress_spike": null,
+   "persistence": null,
+   "undisclosed_action": null
+  },
+  "chain": [
+   {
+    "ts": 1790287290,
+    "label": "Card number (PAN) in agent context",
+    "detail": null,
+    "is_current": true,
+    "is_detection": true,
+    "severity": "critical",
+    "disposition": "blocked"
+   }
+  ],
+  "signature": {
+   "alg": "ed25519",
+   "key_id": "aegis-smb-2026-09",
+   "value": "MEUCIQ1chp9b1cs9ia…",
+   "signed_at": 1790287291,
+   "verify_hint": "aegis verify det_01JA9DSSTMZ"
+  }
+ }
+}

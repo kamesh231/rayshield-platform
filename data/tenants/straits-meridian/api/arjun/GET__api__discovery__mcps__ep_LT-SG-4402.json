@@ -1,0 +1,30 @@
+{
+ "operationId": "getEndpointMcps",
+ "access": "read",
+ "status": 200,
+ "headers": {},
+ "body": {
+  "endpoint_id": "ep_LT-SG-4402",
+  "core_installed": true,
+  "mcps": [
+   {
+    "mcp_id": "mcp_warehouse",
+    "name": "warehouse-mcp",
+    "kind": "remote",
+    "bridge_state": "onboarded",
+    "risk_tier": "high",
+    "flags": []
+   }
+  ],
+  "skills": [
+   {
+    "skill_id": "skl_xlsx_ltsg4402",
+    "name": "xlsx",
+    "tool": "claude-code",
+    "source": "builtin",
+    "flags": [],
+    "last_seen": 1790554644
+   }
+  ]
+ }
+}

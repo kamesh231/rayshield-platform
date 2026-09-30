@@ -1,0 +1,25 @@
+{
+ "operationId": "listDeviceEvents",
+ "access": "read",
+ "status": 200,
+ "headers": {},
+ "body": [
+  {
+   "id": "d8b0dd5d-3ab1-401c-a208-10627fe42817",
+   "ts": 1790289224,
+   "identity": "svc-etl",
+   "device": "vm-etl-nightly-03",
+   "app": "Anthropic Claude (API)",
+   "action": "detection",
+   "target": "file → model prompt",
+   "source": "sandbox",
+   "decision": "block",
+   "reason": ".env · API token (blocked)",
+   "rule_id": "SECRET-IN-PROMPT",
+   "session_id": "sbx_05d281247cdc",
+   "tool": "claude-code",
+   "channel": "agent",
+   "enforced_by": "dlp"
+  }
+ ]
+}

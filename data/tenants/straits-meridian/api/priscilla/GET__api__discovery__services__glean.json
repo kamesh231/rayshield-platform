@@ -1,0 +1,56 @@
+{
+ "operationId": "getService",
+ "access": "read",
+ "status": 200,
+ "headers": {
+  "X-Window-From": "1789956000",
+  "X-Window-To": "1790560800",
+  "X-Data-As-Of": "1790560680"
+ },
+ "body": {
+  "service": {
+   "ai_service": "Glean",
+   "category": "Enterprise search",
+   "icon": null,
+   "separability": "distinct",
+   "confidence": "confirmed",
+   "hits": 480,
+   "bytes": 19790400,
+   "users": 10,
+   "risk_score": 45,
+   "jurisdiction": "US",
+   "ever_agentic": false,
+   "sandbox_candidate": false,
+   "agent_sdks": null,
+   "collector_count": 2,
+   "first_seen": 1788746400,
+   "last_seen": 1790560200,
+   "personal_account": false,
+   "oauth_scopes": null,
+   "service_id": "glean",
+   "vendor": "Glean",
+   "embedded_in": null,
+   "status": "under_review",
+   "reviewed_by": "Arjun Menon",
+   "reviewed_at": 1789333200,
+   "endpoints": 11,
+   "is_new": false
+  },
+  "description": "Enterprise search pilot. Under review by Technology Risk.",
+  "top_endpoints": [],
+  "status_history": [
+   {
+    "status": "unlabelled",
+    "by": "system",
+    "at": 1788746400,
+    "note": null
+   },
+   {
+    "status": "under_review",
+    "by": "Arjun Menon",
+    "at": 1789333200,
+    "note": null
+   }
+  ]
+ }
+}

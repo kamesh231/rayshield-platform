@@ -1,0 +1,92 @@
+{
+ "operationId": "getSessionActivity",
+ "access": "self",
+ "status": 200,
+ "headers": {},
+ "body": {
+  "session": "sbx_298fafe63451",
+  "header": {
+   "device_id": "18fcef06-5ea0-4b62-89d0-7868e89ab483",
+   "host": "vm-dev-rahul-07",
+   "owner": "Rahul Iyer",
+   "department": "Engineering — Payments",
+   "group": {
+    "id": "grp_payments_eng",
+    "name": "Engineering — Payments"
+   },
+   "tool": "claude-code",
+   "outcome": "detected",
+   "started": 1790452132,
+   "last_seen": 1790454694
+  },
+  "origin": {
+   "source": "sandbox",
+   "writable": true,
+   "profile": "claude-code",
+   "workspace": "~/src/settlement-recon",
+   "identity": "spiffe://straitsmeridian.example/user/rahul.iyer",
+   "initial_prompt": "fix the failing build in settlement-recon"
+  },
+  "boot": {
+   "count": 10,
+   "items": [
+    {
+     "label": "egress allow",
+     "count": 5
+    },
+    {
+     "label": "mcps",
+     "count": 2
+    },
+    {
+     "label": "dlp rules",
+     "count": 3
+    }
+   ]
+  },
+  "activity": [
+   {
+    "cat": "prompt",
+    "kind": "turn",
+    "label": "fix the failing build in settlement-recon",
+    "detail": "model turn",
+    "count": 1,
+    "verdict": "allow",
+    "severity": null,
+    "first_ts": 1790452137,
+    "last_ts": 1790452137,
+    "rule_id": null,
+    "reason": null,
+    "owasp": null
+   },
+   {
+    "cat": "file_read",
+    "kind": "read",
+    "label": "Read files under ./src",
+    "detail": null,
+    "count": 4,
+    "verdict": "allow",
+    "severity": null,
+    "first_ts": 1790452172,
+    "last_ts": 1790452222,
+    "rule_id": null,
+    "reason": null,
+    "owasp": null
+   },
+   {
+    "cat": "detection",
+    "kind": "SECRET-IN-PROMPT",
+    "label": "Secret in prompt",
+    "detail": "~/.config/settlement/credentials · connection string with password (blocked)",
+    "count": 1,
+    "verdict": "block",
+    "severity": "high",
+    "first_ts": 1790452800,
+    "last_ts": 1790452800,
+    "rule_id": "SECRET-IN-PROMPT",
+    "reason": "~/.config/settlement/credentials · connection string with password (blocked)",
+    "owasp": null
+   }
+  ]
+ }
+}

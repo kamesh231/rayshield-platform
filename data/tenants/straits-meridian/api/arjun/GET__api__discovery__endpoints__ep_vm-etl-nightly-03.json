@@ -1,0 +1,63 @@
+{
+ "operationId": "getDiscoveryEndpoint",
+ "access": "read",
+ "status": 200,
+ "headers": {
+  "X-Window-From": "1789956000",
+  "X-Window-To": "1790560800",
+  "X-Data-As-Of": "1790560680"
+ },
+ "body": {
+  "endpoint": {
+   "endpoint": "10.60.49.107",
+   "host": "vm-etl-nightly-03",
+   "endpoint_id": "ep_vm-etl-nightly-03",
+   "device_id": "a65e7111-5b2d-4a17-aad3-a933ce0f06b6",
+   "type": "vm",
+   "ephemeral": false,
+   "user": "svc-etl",
+   "department": "Service accounts (CI / ETL)",
+   "identity_source": "idp",
+   "sensor": "pcap",
+   "first_seen": 1777600800,
+   "last_seen": 1790560452
+  },
+  "services": [
+   {
+    "service_id": "claude-code",
+    "ai_service": "Claude Code",
+    "status": "approved",
+    "hits": 23,
+    "last_seen": 1790560452
+   },
+   {
+    "service_id": "databricks-assistant",
+    "ai_service": "Databricks Assistant",
+    "status": "approved",
+    "hits": 18,
+    "last_seen": 1790560452
+   },
+   {
+    "service_id": "grammarly-business",
+    "ai_service": "Grammarly Business",
+    "status": "approved",
+    "hits": 14,
+    "last_seen": 1790560452
+   },
+   {
+    "service_id": "salesforce-einstein",
+    "ai_service": "Salesforce Einstein",
+    "status": "approved",
+    "hits": 9,
+    "last_seen": 1790560452
+   },
+   {
+    "service_id": "anthropic-api",
+    "ai_service": "Anthropic Claude (API)",
+    "status": "approved",
+    "hits": 6,
+    "last_seen": 1790560452
+   }
+  ]
+ }
+}

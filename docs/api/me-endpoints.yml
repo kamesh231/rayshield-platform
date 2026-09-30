@@ -1,0 +1,260 @@
+openapi: 3.0.3
+info:
+  title: RayShield Console API — proposed developer self-service (/api/me/*) and demo-only settings
+  version: "2.3.0-proposed"
+  license: { name: Proprietary, url: "https://rayshield.example/terms" }
+  description: |
+    PROPOSED — not in v2.1.0-draft (rayshield-console-api-v1.yml) or v2.2.0-draft
+    (rayshield-console-api-v2.2-control.yml). Every operation carries `x-status: proposed`.
+
+    Added for the Straits Meridian Bank demo tenant (fictional) so a developer persona can see their
+    own access, blocked events and MCP requests without Control or org-wide read access.
+    Scope is always the caller (`sub` in the JWT). Needs two new role claims, `developer` and `ciso`,
+    on top of admin | security | viewer (open item).
+
+    Reuses from v2.1.0: bearerAuth, Error, GroupRef, Device, SessionRow, DetectionRow.
+servers:
+  - url: https://aegis.example.internal:8091
+security:
+  - bearerAuth: []
+x-reuses:
+  from_v2_1_0: { schemas: [Error, GroupRef, Device, SessionRow, DetectionRow] }
+
+components:
+  securitySchemes:
+    bearerAuth: { type: http, scheme: bearer, bearerFormat: JWT }
+  schemas:
+    Error:
+      type: object
+      required: [error]
+      properties:
+        error: { type: string }
+        code: { type: string, enum: [INVALID_PARAMETER, UNAUTHENTICATED, FORBIDDEN, NOT_FOUND, RATE_LIMITED] }
+        request_id: { type: string }
+    GroupRef:
+      type: object
+      nullable: true
+      properties: { id: { type: string }, name: { type: string } }
+    MyAccess:
+      type: object
+      required: [user, tools, models, mcp_servers, egress_allow, dlp_rules]
+      properties:
+        user:
+          type: object
+          properties:
+            name: { type: string }
+            email: { type: string }
+            role: { type: string, enum: [admin, security, ciso, developer, viewer] }
+            group: { $ref: '#/components/schemas/GroupRef' }
+        tools: { type: array, items: { type: string }, description: "Wrapped agent CLIs on the caller's devices" }
+        models: { type: array, items: { type: string } }
+        cue:
+          type: object
+          nullable: true
+          properties:
+            id: { type: string }
+            name: { type: string }
+            version: { type: integer }
+            base: { type: string, nullable: true, description: "Base CUE name; inherited fields are locked" }
+            pending_draft:
+              type: object
+              nullable: true
+              properties: { version: { type: integer }, adds: { type: array, items: { type: string } }, by: { type: string } }
+        mcp_servers: { type: array, items: { type: string }, description: "group MCP policy ∩ CUE, onboarded in the MCP Bridge only" }
+        mcp_policy:
+          type: object
+          nullable: true
+          properties: { allow: { type: array, items: { type: string } }, deny: { type: array, items: { type: string } } }
+        egress_allow: { type: array, items: { type: string } }
+        dlp_rules: { type: array, items: { type: string } }
+        budget:
+          type: object
+          nullable: true
+          properties:
+            cap_usd: { type: number }
+            cap_scope: { type: string, enum: [per_user_24h] }
+            mode: { type: string, enum: [hard_stop, warn] }
+            spend_today_usd: { type: number, nullable: true }
+        writable_mounts_note: { type: string }
+    MyMcpRequest:
+      type: object
+      required: [id, name, status]
+      properties:
+        id: { type: string, description: "MCP Bridge record id" }
+        name: { type: string }
+        status: { type: string, enum: [scanning, awaiting_decision, approved, blocked] }
+        bridge_status: { type: string, enum: [scanning, approved, blocked] }
+        reason: { type: string, nullable: true }
+        requested_at: { type: integer, format: int64 }
+        decided_by: { type: string, nullable: true }
+        decided_at: { type: integer, format: int64, nullable: true }
+    MyDetection:
+      type: object
+      description: DetectionRow (v2.1) plus a plain-English explanation and fix.
+      properties:
+        detection_id: { type: string }
+        ts: { type: integer, format: int64 }
+        rule_id: { type: string }
+        rule_label: { type: string }
+        severity: { type: string, enum: [critical, high, medium] }
+        disposition: { type: string, enum: [blocked, recorded, escalated] }
+        device_id: { type: string }
+        host: { type: string }
+        owner: { type: string, nullable: true }
+        owner_kind: { type: string, enum: [person, service] }
+        department: { type: string, nullable: true }
+        group: { $ref: '#/components/schemas/GroupRef' }
+        session_id: { type: string, nullable: true }
+        teaser: { type: string }
+        why: { type: string }
+        fix_hint: { type: string, nullable: true }
+    MyDevice:
+      type: object
+      description: v2.1 Device plus `os`, filtered to devices the caller owns.
+      properties:
+        id: { type: string }
+        device_name: { type: string }
+        agent_state: { type: string, enum: [enforcing, record_only, offline, no_agent] }
+        agent_version: { type: string, nullable: true }
+        tools: { type: array, items: { type: string } }
+        os: { type: string }
+        group: { $ref: '#/components/schemas/GroupRef' }
+        status: { type: string }
+        health_score: { type: integer }
+        risk_level: { type: string, enum: [low, medium, high] }
+        blocks_24h: { type: integer }
+        last_heartbeat: { type: integer, format: int64, nullable: true }
+        endpoint_id: { type: string }
+        ip: { type: string }
+        type: { type: string, enum: [laptop, vm, other] }
+        owner: { type: string, nullable: true }
+        owner_kind: { type: string, enum: [person, service] }
+        department: { type: string, nullable: true }
+        allowed: { type: integer }
+        blocked: { type: integer }
+        recorded: { type: integer }
+    MySession:
+      type: object
+      description: v2.1 SessionRow, filtered to sessions on the caller's devices.
+      properties:
+        sid: { type: string }
+        name: { type: string }
+        started: { type: integer, format: int64 }
+        host: { type: string }
+        tool: { type: string, nullable: true }
+        detections: { type: integer }
+        outcome: { type: string, enum: [clean, detected, stopped] }
+        egress: { type: integer }
+        actions: { type: integer }
+        prompts: { type: integer }
+        dlp: { type: integer }
+        rules: { type: integer }
+        denies: { type: integer }
+        last_seen: { type: integer, format: int64 }
+        device_id: { type: string }
+        owner: { type: string, nullable: true }
+        department: { type: string, nullable: true }
+        group: { $ref: '#/components/schemas/GroupRef' }
+
+paths:
+  /api/me/access:
+    get:
+      operationId: getMyAccess
+      x-status: proposed
+      x-min-role: self
+      summary: My tools, models, approved MCP servers, egress, assigned CUE + version and budget
+      responses:
+        '200': { description: OK, content: { application/json: { schema: { $ref: '#/components/schemas/MyAccess' } } } }
+  /api/me/mcp-requests:
+    get:
+      operationId: listMyMcpRequests
+      x-status: proposed
+      x-min-role: self
+      summary: MCP servers I asked for and where each stands
+      responses:
+        '200': { description: OK, content: { application/json: { schema: { type: array, items: { $ref: '#/components/schemas/MyMcpRequest' } } } } }
+    post:
+      operationId: createMyMcpRequest
+      x-status: proposed
+      x-min-role: self
+      summary: Ask for an MCP server — creates (or attaches to) a Bridge record with status scanning and emits mcpRequest
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { type: object, required: [name], properties: { name: { type: string }, reason: { type: string, maxLength: 500 } } }
+      responses:
+        '200': { description: Requested, content: { application/json: { schema: { $ref: '#/components/schemas/MyMcpRequest' } } } }
+        '400': { description: Invalid, content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } } }
+  /api/me/devices:
+    get:
+      operationId: listMyDevices
+      x-status: proposed
+      x-min-role: self
+      responses:
+        '200': { description: OK, content: { application/json: { schema: { type: array, items: { $ref: '#/components/schemas/MyDevice' } } } } }
+  /api/me/sessions:
+    get:
+      operationId: listMySessions
+      x-status: proposed
+      x-min-role: self
+      responses:
+        '200': { description: OK, content: { application/json: { schema: { type: array, items: { $ref: '#/components/schemas/MySession' } } } } }
+  /api/me/detections:
+    get:
+      operationId: listMyDetections
+      x-status: proposed
+      x-min-role: self
+      summary: My detections (7 days) with why it was blocked and how to fix it
+      responses:
+        '200': { description: OK, content: { application/json: { schema: { type: array, items: { $ref: '#/components/schemas/MyDetection' } } } } }
+
+  # ───── demo-only (settings writes and reset have no operation in v2.1 / v2.2) ─────
+  /api/settings/sensors:
+    get: { operationId: getSettingsSensors, x-status: proposed, x-min-role: security, summary: Same body as getSensors, responses: { '200': { description: OK } } }
+  /api/settings/sensors/{id}:
+    put: { operationId: updateSensor, x-status: proposed, x-min-role: admin, parameters: [ { name: id, in: path, required: true, schema: { type: string } } ], responses: { '200': { description: OK }, '403': { description: Forbidden, content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } } } } }
+  /api/settings/directory:
+    get: { operationId: getSettingsDirectory, x-status: proposed, x-min-role: security, responses: { '200': { description: OK } } }
+    put: { operationId: updateDirectory, x-status: proposed, x-min-role: admin, responses: { '200': { description: OK }, '403': { description: Forbidden, content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } } } } }
+  /api/settings/users:
+    get: { operationId: listConsoleUsers, x-status: proposed, x-min-role: security, responses: { '200': { description: OK } } }
+  /api/settings/users/{id}:
+    put: { operationId: updateConsoleUser, x-status: proposed, x-min-role: admin, parameters: [ { name: id, in: path, required: true, schema: { type: string } } ], responses: { '200': { description: OK }, '403': { description: Forbidden, content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } } } } }
+  /api/demo/reset:
+    post: { operationId: resetDemo, x-status: proposed, x-min-role: admin, summary: Demo only — return the tenant to its seed state, responses: { '200': { description: OK }, '403': { description: Forbidden, content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } } } } }
+  /api/console/state:
+    get:
+      operationId: getConsoleState
+      x-status: proposed
+      x-min-role: security
+      summary: Demo only — console edits the server has saved (groups, policies, CUEs, settings, device-to-group moves)
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  saved_at: { type: integer, format: int64, nullable: true }
+                  slices: { type: object, description: "keyed by area: roles, policies, cues, settings, fleetRoles, bridge, access" }
+    post:
+      operationId: saveConsoleState
+      x-status: proposed
+      x-min-role: admin
+      summary: Demo only — save one edited console area; checked against the permission that area needs, persisted to live-state.json, pushed to other open consoles
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [slice, value]
+              properties:
+                slice: { type: string, enum: [roles, policies, cues, settings, fleetRoles, bridge, access] }
+                op: { type: string, description: "the action, used to pick the permission (e.g. createGroup vs assignPolicy)" }
+                value: { description: "the full new value of that area" }
+      responses:
+        '200': { description: Saved }
+        '403': { description: Forbidden, content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } } }

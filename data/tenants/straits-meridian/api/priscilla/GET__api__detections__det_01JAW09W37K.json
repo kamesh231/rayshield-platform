@@ -1,0 +1,57 @@
+{
+ "operationId": "getDetection",
+ "access": "redacted",
+ "status": 200,
+ "headers": {},
+ "body": {
+  "detection_id": "det_01JAW09W37K",
+  "ts": 1790535600,
+  "rule_id": "SWIFT-MSG",
+  "rule_label": "SWIFT payment message in agent context",
+  "severity": "high",
+  "disposition": "blocked",
+  "device_id": "caf1348f-1ef7-4a01-9619-b1374bf4452d",
+  "host": "LT-SG-5120",
+  "owner": "Benjamin Chua",
+  "owner_kind": "person",
+  "department": "Treasury & Markets",
+  "group": {
+   "id": "grp_treasury",
+   "name": "Treasury & Markets"
+  },
+  "session_id": "sbx_8971ab664fd6",
+  "teaser": "SWIFT payment message in agent context · pasted text → model prompt",
+  "description": "An MT103 or pacs.008 customer credit transfer reached an agent prompt.",
+  "owasp": null,
+  "signal": "guest",
+  "classification": "regulated data",
+  "backend": "aegis-engine 0.9.6",
+  "evidence": {
+   "type": "sensitive_content",
+   "decoded_command": null,
+   "sensitive_content": null,
+   "exfil": null,
+   "egress_spike": null,
+   "persistence": null,
+   "undisclosed_action": null
+  },
+  "chain": [
+   {
+    "ts": 1790535600,
+    "label": "SWIFT payment message in agent context",
+    "detail": null,
+    "is_current": true,
+    "is_detection": true,
+    "severity": "high",
+    "disposition": "blocked"
+   }
+  ],
+  "signature": {
+   "alg": "ed25519",
+   "key_id": "aegis-smb-2026-09",
+   "value": "MEUCIQkcypu11qocaa…",
+   "signed_at": 1790535601,
+   "verify_hint": "aegis verify det_01JAW09W37K"
+  }
+ }
+}

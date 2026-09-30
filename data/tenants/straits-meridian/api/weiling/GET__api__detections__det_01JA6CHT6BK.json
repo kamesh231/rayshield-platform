@@ -1,0 +1,62 @@
+{
+ "operationId": "getDetection",
+ "access": "read",
+ "status": 200,
+ "headers": {},
+ "body": {
+  "detection_id": "det_01JA6CHT6BK",
+  "ts": 1790105975,
+  "rule_id": "SENSITIVE-ACCESS",
+  "rule_label": "Sensitive file access",
+  "severity": "medium",
+  "disposition": "recorded",
+  "device_id": "5ab919da-ed3d-46f5-af8b-3d7beb07c43b",
+  "host": "vm-dev-yuki-19",
+  "owner": "Yuki Singh",
+  "owner_kind": "person",
+  "department": "Engineering — Digital Banking",
+  "group": {
+   "id": "grp_digital_eng",
+   "name": "Engineering — Digital Banking"
+  },
+  "session_id": "sbx_8bcd693c978e",
+  "teaser": "prod.env~ read",
+  "description": "Access to a secret, judged by file content rather than filename or path.",
+  "owasp": "ASI04",
+  "signal": "guest",
+  "classification": "regulated data",
+  "backend": "aegis-engine 0.9.6",
+  "evidence": {
+   "type": "sensitive_content",
+   "decoded_command": null,
+   "sensitive_content": {
+    "path": "~/.aws/credentials",
+    "basis": "credential material by content",
+    "pattern": "credential file content",
+    "snippet_redacted": "•••••••• (redacted at source)"
+   },
+   "exfil": null,
+   "egress_spike": null,
+   "persistence": null,
+   "undisclosed_action": null
+  },
+  "chain": [
+   {
+    "ts": 1790105975,
+    "label": "Sensitive file access",
+    "detail": "prod.env~ read",
+    "is_current": true,
+    "is_detection": true,
+    "severity": "medium",
+    "disposition": "recorded"
+   }
+  ],
+  "signature": {
+   "alg": "ed25519",
+   "key_id": "aegis-smb-2026-09",
+   "value": "MEUCIQ1odvtqve1mxx…",
+   "signed_at": 1790105976,
+   "verify_hint": "aegis verify det_01JA6CHT6BK"
+  }
+ }
+}

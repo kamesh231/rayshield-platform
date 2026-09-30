@@ -1,0 +1,38 @@
+{
+ "operationId": "getDevice",
+ "access": "read",
+ "status": 200,
+ "headers": {
+  "X-Window-From": "1789956000",
+  "X-Window-To": "1790560800",
+  "X-Data-As-Of": "1790560680"
+ },
+ "body": {
+  "id": "da864b31-bee5-4b9b-aa9a-09da32e37f7b",
+  "device_name": "LT-VN-0419",
+  "status": "active",
+  "health_score": 93,
+  "risk_level": "low",
+  "blocks_24h": 1,
+  "last_heartbeat": 1790560610,
+  "endpoint_id": "ep_LT-VN-0419",
+  "ip": "10.40.38.191",
+  "type": "laptop",
+  "owner": "Minh Pham",
+  "owner_kind": "person",
+  "department": "Vendor Engineering (contractors)",
+  "group": {
+   "id": "grp_contractors",
+   "name": "Vendor Engineering (contractors)"
+  },
+  "agent_state": "enforcing",
+  "agent_version": "0.9.6",
+  "tools": [
+   "codex-cli"
+  ],
+  "allowed": 346,
+  "blocked": 5,
+  "recorded": 18,
+  "os": "Ubuntu 22.04"
+ }
+}

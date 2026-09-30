@@ -1,0 +1,117 @@
+{
+ "operationId": "getService",
+ "access": "read",
+ "status": 200,
+ "headers": {
+  "X-Window-From": "1789956000",
+  "X-Window-To": "1790560800",
+  "X-Data-As-Of": "1790560680"
+ },
+ "body": {
+  "service": {
+   "ai_service": "Grammarly Business",
+   "category": "Writing",
+   "icon": null,
+   "separability": "distinct",
+   "confidence": "confirmed",
+   "hits": 1900,
+   "bytes": 78337000,
+   "users": 116,
+   "risk_score": 22,
+   "jurisdiction": "US",
+   "ever_agentic": false,
+   "sandbox_candidate": false,
+   "agent_sdks": null,
+   "collector_count": 2,
+   "first_seen": 1772416800,
+   "last_seen": 1790560480,
+   "personal_account": false,
+   "oauth_scopes": null,
+   "service_id": "grammarly-business",
+   "vendor": "Grammarly",
+   "embedded_in": null,
+   "status": "approved",
+   "reviewed_by": "Arjun Menon",
+   "reviewed_at": 1772830800,
+   "endpoints": 122,
+   "is_new": false
+  },
+  "description": "Writing assistant browser extension (business plan).",
+  "top_endpoints": [
+   {
+    "endpoint_id": "ep_LT-SG-0142",
+    "host": "LT-SG-0142",
+    "ip": "10.40.42.169",
+    "type": "laptop",
+    "user": "Tan Wei Ling",
+    "department": null,
+    "hits": 48,
+    "last_seen": 1790560307
+   },
+   {
+    "endpoint_id": "ep_LT-SG-4402",
+    "host": "LT-SG-4402",
+    "ip": "10.40.47.164",
+    "type": "laptop",
+    "user": "Jia Hui Ong",
+    "department": "Data & Analytics",
+    "hits": 35,
+    "last_seen": 1790559812
+   },
+   {
+    "endpoint_id": "ep_LT-SG-5141",
+    "host": "LT-SG-5141",
+    "ip": "10.40.9.132",
+    "type": "laptop",
+    "user": "Kenji Watanabe",
+    "department": "Treasury & Markets",
+    "hits": 47,
+    "last_seen": 1790499054
+   },
+   {
+    "endpoint_id": "ep_vm-etl-nightly-03",
+    "host": "vm-etl-nightly-03",
+    "ip": "10.60.49.107",
+    "type": "vm",
+    "user": "svc-etl",
+    "department": "Service accounts (CI / ETL)",
+    "hits": 14,
+    "last_seen": 1790560452
+   },
+   {
+    "endpoint_id": "ep_LT-SG-1342",
+    "host": "LT-SG-1342",
+    "ip": "10.40.0.120",
+    "type": "laptop",
+    "user": "Sheng Ho",
+    "department": "Engineering — Payments",
+    "hits": 37,
+    "last_seen": 1790559576
+   },
+   {
+    "endpoint_id": "ep_LT-SG-2718",
+    "host": "LT-SG-2718",
+    "ip": "10.40.5.47",
+    "type": "laptop",
+    "user": "Sheng Chan",
+    "department": "Engineering — Payments",
+    "hits": 100,
+    "last_seen": 1790560563
+   }
+  ],
+  "status_history": [
+   {
+    "status": "unlabelled",
+    "by": "system",
+    "at": 1772416800,
+    "note": null
+   },
+   {
+    "status": "approved",
+    "by": "Arjun Menon",
+    "at": 1772830800,
+    "note": null
+   }
+  ]
+ }
+}

@@ -1,0 +1,62 @@
+{
+ "operationId": "getDetection",
+ "access": "read",
+ "status": 200,
+ "headers": {},
+ "body": {
+  "detection_id": "det_01JADFKN9QJ",
+  "ts": 1790068503,
+  "rule_id": "SENSITIVE-ACCESS",
+  "rule_label": "Sensitive file access",
+  "severity": "medium",
+  "disposition": "blocked",
+  "device_id": "0ed0b7cb-0b9c-48fb-a446-b55b4d660f2b",
+  "host": "LT-SG-2172",
+  "owner": "Harith Loh",
+  "owner_kind": "person",
+  "department": "Data & Analytics",
+  "group": {
+   "id": "grp_data",
+   "name": "Data & Analytics"
+  },
+  "session_id": "sbx_a8cf7263bfea",
+  "teaser": "~/.aws/credentials read",
+  "description": "Access to a secret, judged by file content rather than filename or path.",
+  "owasp": "ASI04",
+  "signal": "guest",
+  "classification": "regulated data",
+  "backend": "aegis-engine 0.9.6",
+  "evidence": {
+   "type": "sensitive_content",
+   "decoded_command": null,
+   "sensitive_content": {
+    "path": "~/.ssh/id_ed25519",
+    "basis": "credential material by content",
+    "pattern": "credential file content",
+    "snippet_redacted": "•••••••• (redacted at source)"
+   },
+   "exfil": null,
+   "egress_spike": null,
+   "persistence": null,
+   "undisclosed_action": null
+  },
+  "chain": [
+   {
+    "ts": 1790068503,
+    "label": "Sensitive file access",
+    "detail": "~/.aws/credentials read",
+    "is_current": true,
+    "is_detection": true,
+    "severity": "medium",
+    "disposition": "blocked"
+   }
+  ],
+  "signature": {
+   "alg": "ed25519",
+   "key_id": "aegis-smb-2026-09",
+   "value": "MEUCIQ1hs51la1urc1…",
+   "signed_at": 1790068504,
+   "verify_hint": "aegis verify det_01JADFKN9QJ"
+  }
+ }
+}

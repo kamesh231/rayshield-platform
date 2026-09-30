@@ -1,0 +1,53 @@
+{
+ "operationId": "getCue",
+ "access": "read",
+ "status": 200,
+ "headers": {},
+ "body": {
+  "id": "cue_contractors_v1",
+  "name": "Codex CLI — Vendor contractors",
+  "tool": "codex-cli",
+  "scope": "group",
+  "scope_ref": "grp_contractors",
+  "base_cue_id": null,
+  "version": 1,
+  "state": "published",
+  "egress_allow": [
+   {
+    "value": "api.openai.com",
+    "inherited": false,
+    "source": null
+   },
+   {
+    "value": "github.straitsmeridian.example",
+    "inherited": false,
+    "source": null
+   }
+  ],
+  "mcp_servers": [
+   {
+    "value": "github-enterprise",
+    "inherited": false,
+    "source": null
+   }
+  ],
+  "dlp_rules": [
+   {
+    "value": "dlp-secrets",
+    "inherited": false,
+    "source": null
+   },
+   {
+    "value": "dlp-source-archive",
+    "inherited": false,
+    "source": null
+   },
+   {
+    "value": "dlp-card-pan",
+    "inherited": false,
+    "source": null
+   }
+  ],
+  "internal_tools": []
+ }
+}

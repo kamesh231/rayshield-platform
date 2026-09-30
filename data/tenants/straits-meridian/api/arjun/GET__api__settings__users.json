@@ -1,0 +1,36 @@
+{
+ "operationId": "listConsoleUsers",
+ "access": "read",
+ "status": 200,
+ "headers": {},
+ "body": [
+  {
+   "id": "usr_weiling",
+   "name": "Tan Wei Ling",
+   "email": "tan.wei.ling@straitsmeridian.example",
+   "role": "admin",
+   "console_role": "Administrator"
+  },
+  {
+   "id": "usr_arjun",
+   "name": "Arjun Menon",
+   "email": "arjun.menon@straitsmeridian.example",
+   "role": "security",
+   "console_role": "Security"
+  },
+  {
+   "id": "usr_priscilla",
+   "name": "Priscilla Goh",
+   "email": "priscilla.goh@straitsmeridian.example",
+   "role": "ciso",
+   "console_role": "Administrator"
+  },
+  {
+   "id": "usr_rahul",
+   "name": "Rahul Iyer",
+   "email": "rahul.iyer@straitsmeridian.example",
+   "role": "developer",
+   "console_role": null
+  }
+ ]
+}

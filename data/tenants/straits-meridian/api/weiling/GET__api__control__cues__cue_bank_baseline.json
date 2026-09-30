@@ -1,0 +1,62 @@
+{
+ "operationId": "getCue",
+ "access": "read",
+ "status": 200,
+ "headers": {},
+ "body": {
+  "id": "cue_bank_baseline",
+  "name": "Claude Code — Bank baseline",
+  "tool": "claude-code",
+  "scope": "tool",
+  "scope_ref": "claude-code",
+  "base_cue_id": null,
+  "version": 5,
+  "state": "published",
+  "egress_allow": [
+   {
+    "value": "api.anthropic.com",
+    "inherited": false,
+    "source": null
+   },
+   {
+    "value": "registry.npmjs.org",
+    "inherited": false,
+    "source": null
+   },
+   {
+    "value": "pypi.org",
+    "inherited": false,
+    "source": null
+   },
+   {
+    "value": "github.straitsmeridian.example",
+    "inherited": false,
+    "source": null
+   }
+  ],
+  "mcp_servers": [],
+  "dlp_rules": [
+   {
+    "value": "dlp-card-pan",
+    "inherited": false,
+    "source": null
+   },
+   {
+    "value": "dlp-nric",
+    "inherited": false,
+    "source": null
+   },
+   {
+    "value": "dlp-secrets",
+    "inherited": false,
+    "source": null
+   },
+   {
+    "value": "dlp-swift-mt",
+    "inherited": false,
+    "source": null
+   }
+  ],
+  "internal_tools": []
+ }
+}

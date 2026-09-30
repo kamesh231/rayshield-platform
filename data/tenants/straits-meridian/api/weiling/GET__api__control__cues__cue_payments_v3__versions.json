@@ -1,0 +1,32 @@
+{
+ "operationId": "listCueVersions",
+ "access": "read",
+ "status": 200,
+ "headers": {},
+ "body": [
+  {
+   "version": 3,
+   "state": "published",
+   "published_at": 1789783200,
+   "published_by": "Tan Wei Ling",
+   "change": "+ MCP jira",
+   "endpoints": 41
+  },
+  {
+   "version": 2,
+   "state": "superseded",
+   "published_at": 1787536800,
+   "published_by": "Tan Wei Ling",
+   "change": "+ MCP postgres-mcp (read-only replica)",
+   "endpoints": 6
+  },
+  {
+   "version": 1,
+   "state": "superseded",
+   "published_at": 1783648800,
+   "published_by": "Tan Wei Ling",
+   "change": "inherits Bank baseline · + MCP github-enterprise",
+   "endpoints": 0
+  }
+ ]
+}

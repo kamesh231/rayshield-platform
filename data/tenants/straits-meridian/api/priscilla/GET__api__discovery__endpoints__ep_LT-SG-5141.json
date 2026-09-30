@@ -1,0 +1,56 @@
+{
+ "operationId": "getDiscoveryEndpoint",
+ "access": "read",
+ "status": 200,
+ "headers": {
+  "X-Window-From": "1789956000",
+  "X-Window-To": "1790560800",
+  "X-Data-As-Of": "1790560680"
+ },
+ "body": {
+  "endpoint": {
+   "endpoint": "10.40.9.132",
+   "host": "LT-SG-5141",
+   "endpoint_id": "ep_LT-SG-5141",
+   "device_id": "72187152-a2c4-45da-9496-2d38d26af90d",
+   "type": "laptop",
+   "ephemeral": false,
+   "user": "Kenji Watanabe",
+   "department": "Treasury & Markets",
+   "identity_source": "idp",
+   "sensor": "sase_zscaler",
+   "first_seen": 1778378400,
+   "last_seen": 1790499054
+  },
+  "services": [
+   {
+    "service_id": "databricks-assistant",
+    "ai_service": "Databricks Assistant",
+    "status": "approved",
+    "hits": 179,
+    "last_seen": 1790499054
+   },
+   {
+    "service_id": "anthropic-api",
+    "ai_service": "Anthropic Claude (API)",
+    "status": "approved",
+    "hits": 134,
+    "last_seen": 1790499054
+   },
+   {
+    "service_id": "m365-copilot",
+    "ai_service": "Microsoft 365 Copilot",
+    "status": "approved",
+    "hits": 89,
+    "last_seen": 1790499054
+   },
+   {
+    "service_id": "grammarly-business",
+    "ai_service": "Grammarly Business",
+    "status": "approved",
+    "hits": 47,
+    "last_seen": 1790499054
+   }
+  ]
+ }
+}

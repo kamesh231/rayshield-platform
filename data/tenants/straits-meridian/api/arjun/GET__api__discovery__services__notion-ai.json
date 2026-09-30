@@ -1,0 +1,117 @@
+{
+ "operationId": "getService",
+ "access": "read",
+ "status": 200,
+ "headers": {
+  "X-Window-From": "1789956000",
+  "X-Window-To": "1790560800",
+  "X-Data-As-Of": "1790560680"
+ },
+ "body": {
+  "service": {
+   "ai_service": "Notion AI",
+   "category": "Productivity · embedded",
+   "icon": null,
+   "separability": "embedded",
+   "confidence": "confirmed",
+   "hits": 1150,
+   "bytes": 47414500,
+   "users": 61,
+   "risk_score": 22,
+   "jurisdiction": "US",
+   "ever_agentic": false,
+   "sandbox_candidate": false,
+   "agent_sdks": null,
+   "collector_count": 2,
+   "first_seen": 1779328800,
+   "last_seen": 1790559530,
+   "personal_account": false,
+   "oauth_scopes": null,
+   "service_id": "notion-ai",
+   "vendor": "Notion",
+   "embedded_in": "Notion",
+   "status": "approved",
+   "reviewed_by": "Arjun Menon",
+   "reviewed_at": 1779742800,
+   "endpoints": 64,
+   "is_new": false
+  },
+  "description": "AI features inside the Notion workspace.",
+  "top_endpoints": [
+   {
+    "endpoint_id": "ep_LT-SG-5120",
+    "host": "LT-SG-5120",
+    "ip": "10.40.36.162",
+    "type": "laptop",
+    "user": "Benjamin Chua",
+    "department": "Treasury & Markets",
+    "hits": 41,
+    "last_seen": 1790560264
+   },
+   {
+    "endpoint_id": "ep_LT-SG-6095",
+    "host": "LT-SG-6095",
+    "ip": "10.40.54.60",
+    "type": "laptop",
+    "user": "Joanne Nair",
+    "department": "Engineering — Payments",
+    "hits": 82,
+    "last_seen": 1790560466
+   },
+   {
+    "endpoint_id": "ep_LT-SG-1865",
+    "host": "LT-SG-1865",
+    "ip": "10.40.14.233",
+    "type": "laptop",
+    "user": "Kavitha Seah",
+    "department": "Engineering — Payments",
+    "hits": 45,
+    "last_seen": 1790559901
+   },
+   {
+    "endpoint_id": "ep_LT-SG-4130",
+    "host": "LT-SG-4130",
+    "ip": "10.40.27.219",
+    "type": "laptop",
+    "user": "Farhan Loh",
+    "department": "Engineering — Payments",
+    "hits": 45,
+    "last_seen": 1790559491
+   },
+   {
+    "endpoint_id": "ep_LT-SG-9212",
+    "host": "LT-SG-9212",
+    "ip": "10.40.34.211",
+    "type": "laptop",
+    "user": "Xin Yi Lau",
+    "department": "Engineering — Payments",
+    "hits": 54,
+    "last_seen": 1790560168
+   },
+   {
+    "endpoint_id": "ep_LT-SG-7211",
+    "host": "LT-SG-7211",
+    "ip": "10.40.58.31",
+    "type": "laptop",
+    "user": "Harith Krishnan",
+    "department": "Engineering — Payments",
+    "hits": 47,
+    "last_seen": 1790559936
+   }
+  ],
+  "status_history": [
+   {
+    "status": "unlabelled",
+    "by": "system",
+    "at": 1779328800,
+    "note": null
+   },
+   {
+    "status": "approved",
+    "by": "Arjun Menon",
+    "at": 1779742800,
+    "note": null
+   }
+  ]
+ }
+}

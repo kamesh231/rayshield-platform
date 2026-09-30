@@ -1,0 +1,18 @@
+{
+ "operationId": "listMyMcpRequests",
+ "access": "self",
+ "status": 200,
+ "headers": {},
+ "body": [
+  {
+   "id": "mcp_confluence",
+   "name": "confluence",
+   "status": "awaiting_decision",
+   "bridge_status": "scanning",
+   "reason": "Read runbooks while debugging settlement jobs",
+   "requested_at": 1790550000,
+   "decided_by": null,
+   "decided_at": null
+  }
+ ]
+}

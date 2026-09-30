@@ -1,0 +1,244 @@
+{
+ "operationId": "listBridgeMcps",
+ "access": "read",
+ "status": 200,
+ "headers": {},
+ "body": [
+  {
+   "id": "mcp_postgres",
+   "name": "postgres-mcp",
+   "source": "npm · @modelcontextprotocol/server-postgres",
+   "kind": "local",
+   "status": "approved",
+   "risk_score": 58,
+   "risk_tier": "medium",
+   "capabilities": {
+    "tools": [
+     "query",
+     "list_tables",
+     "describe_table"
+    ],
+    "writes": false,
+    "target": "payments-replica (Postgres, read-only)"
+   },
+   "findings": {
+    "high": 0,
+    "medium": 1,
+    "low": 2,
+    "summary": "Read-only replica role; query results can carry PAN and NRIC columns"
+   },
+   "approved_by": "Priscilla Goh",
+   "approved_reason": "Read-only replica for settlement debugging; Payments Engineering only",
+   "groups_with_access": [
+    {
+     "id": "grp_payments_eng",
+     "name": "Engineering — Payments"
+    }
+   ],
+   "created_at": 1787104800
+  },
+  {
+   "id": "mcp_github_enterprise",
+   "name": "github-enterprise",
+   "source": "github.straitsmeridian.example/platform/github-mcp",
+   "kind": "remote",
+   "status": "approved",
+   "risk_score": 44,
+   "risk_tier": "medium",
+   "capabilities": {
+    "tools": [
+     "search_code",
+     "get_file",
+     "create_pull_request"
+    ],
+    "disabled_tools": [
+     "push_files"
+    ],
+    "writes": true
+   },
+   "findings": {
+    "high": 0,
+    "medium": 1,
+    "low": 1,
+    "summary": "push_files disabled at the Bridge"
+   },
+   "approved_by": "Tan Wei Ling",
+   "approved_reason": "Source hosting; push only through pull requests",
+   "groups_with_access": [
+    {
+     "id": "grp_payments_eng",
+     "name": "Engineering — Payments"
+    },
+    {
+     "id": "grp_digital_eng",
+     "name": "Engineering — Digital Banking"
+    },
+    {
+     "id": "grp_contractors",
+     "name": "Vendor Engineering (contractors)"
+    },
+    {
+     "id": "grp_svc",
+     "name": "Service accounts (CI / ETL)"
+    }
+   ],
+   "created_at": 1783648800
+  },
+  {
+   "id": "mcp_jira",
+   "name": "jira",
+   "source": "jira.straitsmeridian.example/mcp",
+   "kind": "remote",
+   "status": "approved",
+   "risk_score": 18,
+   "risk_tier": "low",
+   "capabilities": {
+    "tools": [
+     "search_issues",
+     "get_issue",
+     "add_comment"
+    ],
+    "writes": true
+   },
+   "findings": {
+    "high": 0,
+    "medium": 0,
+    "low": 1,
+    "summary": "Comment-only writes"
+   },
+   "approved_by": "Tan Wei Ling",
+   "approved_reason": "Ticket context for engineering and SOC",
+   "groups_with_access": [
+    {
+     "id": "grp_payments_eng",
+     "name": "Engineering — Payments"
+    },
+    {
+     "id": "grp_digital_eng",
+     "name": "Engineering — Digital Banking"
+    },
+    {
+     "id": "grp_data",
+     "name": "Data & Analytics"
+    },
+    {
+     "id": "grp_soc",
+     "name": "Cyber Defence (SOC)"
+    }
+   ],
+   "created_at": 1785376800
+  },
+  {
+   "id": "mcp_warehouse",
+   "name": "warehouse-mcp",
+   "source": "internal · data-platform/warehouse-mcp",
+   "kind": "remote",
+   "status": "approved",
+   "risk_score": 71,
+   "risk_tier": "high",
+   "capabilities": {
+    "tools": [
+     "run_query",
+     "list_datasets"
+    ],
+    "writes": false,
+    "target": "customer_360 warehouse"
+   },
+   "findings": {
+    "high": 1,
+    "medium": 1,
+    "low": 0,
+    "summary": "Reaches customer_360 PII; allowed only with dlp-nric in Enforce"
+   },
+   "approved_by": "Priscilla Goh",
+   "approved_reason": "Data & Analytics only, with dlp-nric Enforce",
+   "groups_with_access": [
+    {
+     "id": "grp_data",
+     "name": "Data & Analytics"
+    }
+   ],
+   "created_at": 1789178400
+  },
+  {
+   "id": "mcp_confluence",
+   "name": "confluence",
+   "source": "confluence.straitsmeridian.example/mcp",
+   "kind": "remote",
+   "status": "scanning",
+   "risk_score": 24,
+   "risk_tier": "low",
+   "capabilities": {
+    "tools": [
+     "search",
+     "get_page"
+    ],
+    "writes": false
+   },
+   "findings": {
+    "high": 0,
+    "medium": 0,
+    "low": 1,
+    "summary": "Scan complete · read-only · awaiting an Admin or CISO decision",
+    "scan_complete": true
+   },
+   "approved_by": null,
+   "approved_reason": null,
+   "groups_with_access": [],
+   "created_at": 1790550000
+  },
+  {
+   "id": "mcp_filesystem",
+   "name": "filesystem",
+   "source": "npm · @modelcontextprotocol/server-filesystem",
+   "kind": "local",
+   "status": "blocked",
+   "risk_score": 82,
+   "risk_tier": "high",
+   "capabilities": {
+    "tools": [
+     "read_file",
+     "list_directory",
+     "write_file"
+    ],
+    "writes": true
+   },
+   "findings": {
+    "high": 1,
+    "medium": 0,
+    "low": 0,
+    "summary": "Writes outside the workspace"
+   },
+   "approved_by": "Tan Wei Ling",
+   "approved_reason": "Blocked: writes outside workspace",
+   "groups_with_access": [],
+   "created_at": 1786240800
+  },
+  {
+   "id": "mcp_slack",
+   "name": "slack",
+   "source": "npm · @modelcontextprotocol/server-slack",
+   "kind": "remote",
+   "status": "blocked",
+   "risk_score": 77,
+   "risk_tier": "high",
+   "capabilities": {
+    "tools": [
+     "read_channel",
+     "post_message"
+    ],
+    "writes": true
+   },
+   "findings": {
+    "high": 1,
+    "medium": 1,
+    "low": 0,
+    "summary": "Customer data in channels"
+   },
+   "approved_by": "Priscilla Goh",
+   "approved_reason": "Blocked: customer data in channels",
+   "groups_with_access": [],
+   "created_at": 1786672800
+  }
+ ]
+}

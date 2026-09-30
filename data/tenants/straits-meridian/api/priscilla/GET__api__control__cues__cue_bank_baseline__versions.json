@@ -1,0 +1,48 @@
+{
+ "operationId": "listCueVersions",
+ "access": "read",
+ "status": 200,
+ "headers": {},
+ "body": [
+  {
+   "version": 5,
+   "state": "published",
+   "published_at": 1789351200,
+   "published_by": "Tan Wei Ling",
+   "change": "+ DLP dlp-swift-mt",
+   "endpoints": 231
+  },
+  {
+   "version": 4,
+   "state": "superseded",
+   "published_at": 1787104800,
+   "published_by": "Tan Wei Ling",
+   "change": "+ egress github.straitsmeridian.example",
+   "endpoints": 0
+  },
+  {
+   "version": 3,
+   "state": "superseded",
+   "published_at": 1784512800,
+   "published_by": "Priscilla Goh",
+   "change": "+ DLP dlp-nric",
+   "endpoints": 0
+  },
+  {
+   "version": 2,
+   "state": "superseded",
+   "published_at": 1781056800,
+   "published_by": "Tan Wei Ling",
+   "change": "+ DLP dlp-card-pan, dlp-secrets",
+   "endpoints": 0
+  },
+  {
+   "version": 1,
+   "state": "superseded",
+   "published_at": 1776736800,
+   "published_by": "aegis",
+   "change": "claude-code shipped default",
+   "endpoints": 0
+  }
+ ]
+}

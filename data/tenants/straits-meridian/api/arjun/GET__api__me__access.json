@@ -1,0 +1,55 @@
+{
+ "operationId": "getMyAccess",
+ "access": "self",
+ "status": 200,
+ "headers": {},
+ "body": {
+  "user": {
+   "name": "Arjun Menon",
+   "email": "arjun.menon@straitsmeridian.example",
+   "role": "security",
+   "group": {
+    "id": "grp_soc",
+    "name": "Cyber Defence (SOC)"
+   }
+  },
+  "tools": [
+   "claude-code"
+  ],
+  "models": [
+   "claude-sonnet-5"
+  ],
+  "cue": {
+   "id": "cue_soc_v1",
+   "name": "Claude Code — Cyber Defence",
+   "version": 1,
+   "base": "Claude Code — Bank baseline",
+   "pending_draft": null
+  },
+  "mcp_servers": [
+   "jira"
+  ],
+  "mcp_policy": {
+   "allow": [
+    "jira"
+   ],
+   "deny": [
+    "slack"
+   ]
+  },
+  "egress_allow": [
+   "api.anthropic.com",
+   "registry.npmjs.org",
+   "pypi.org",
+   "github.straitsmeridian.example"
+  ],
+  "dlp_rules": [
+   "dlp-card-pan",
+   "dlp-nric",
+   "dlp-secrets",
+   "dlp-swift-mt"
+  ],
+  "budget": null,
+  "writable_mounts_note": "Writable paths are passed at launch with --src/--writable; they are not part of a CUE."
+ }
+}

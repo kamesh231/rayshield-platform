@@ -1,0 +1,35 @@
+{
+ "operationId": "getDevice",
+ "access": "read",
+ "status": 200,
+ "headers": {
+  "X-Window-From": "1789956000",
+  "X-Window-To": "1790560800",
+  "X-Data-As-Of": "1790560680"
+ },
+ "body": {
+  "id": "f3a545f9-a17e-49f1-b705-6efd979e6d66",
+  "device_name": "LT-SG-0142",
+  "status": "active",
+  "health_score": 91,
+  "risk_level": "low",
+  "blocks_24h": 0,
+  "last_heartbeat": 1790560566,
+  "endpoint_id": "ep_LT-SG-0142",
+  "ip": "10.40.42.169",
+  "type": "laptop",
+  "owner": "Tan Wei Ling",
+  "owner_kind": "person",
+  "department": null,
+  "group": null,
+  "agent_state": "enforcing",
+  "agent_version": "0.9.6",
+  "tools": [
+   "claude-code"
+  ],
+  "allowed": 249,
+  "blocked": 3,
+  "recorded": 10,
+  "os": "macOS 15.0"
+ }
+}

@@ -1,0 +1,74 @@
+{
+ "operationId": "getMyAccess",
+ "access": "self",
+ "status": 200,
+ "headers": {},
+ "body": {
+  "user": {
+   "name": "Rahul Iyer",
+   "email": "rahul.iyer@straitsmeridian.example",
+   "role": "developer",
+   "group": {
+    "id": "grp_payments_eng",
+    "name": "Engineering — Payments"
+   }
+  },
+  "tools": [
+   "claude-code",
+   "gemini-cli"
+  ],
+  "models": [
+   "claude-sonnet-5",
+   "gemini-2.5-pro"
+  ],
+  "cue": {
+   "id": "cue_payments_v3",
+   "name": "Claude Code — Payments Engineering",
+   "version": 3,
+   "base": "Claude Code — Bank baseline",
+   "pending_draft": {
+    "version": 4,
+    "adds": [
+     "dlp-mask-query-results"
+    ],
+    "by": "Arjun Menon"
+   }
+  },
+  "mcp_servers": [
+   "postgres-mcp",
+   "github-enterprise",
+   "jira"
+  ],
+  "mcp_policy": {
+   "allow": [
+    "postgres-mcp",
+    "github-enterprise",
+    "jira"
+   ],
+   "deny": [
+    "slack",
+    "filesystem"
+   ]
+  },
+  "egress_allow": [
+   "api.anthropic.com",
+   "registry.npmjs.org",
+   "pypi.org",
+   "github.straitsmeridian.example",
+   "payments-replica.db.straitsmeridian.example"
+  ],
+  "dlp_rules": [
+   "dlp-card-pan",
+   "dlp-nric",
+   "dlp-secrets",
+   "dlp-swift-mt"
+  ],
+  "budget": {
+   "cap_usd": 40,
+   "cap_scope": "per_user_24h",
+   "mode": "hard_stop",
+   "spend_today_usd": 18.4
+  },
+  "writable_mounts_note": "Writable paths are passed at launch with --src/--writable; they are not part of a CUE."
+ }
+}

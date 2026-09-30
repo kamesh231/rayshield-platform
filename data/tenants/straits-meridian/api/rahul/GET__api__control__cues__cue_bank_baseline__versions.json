@@ -1,0 +1,11 @@
+{
+ "operationId": "listCueVersions",
+ "access": "deny",
+ "status": 403,
+ "headers": {},
+ "body": {
+  "error": "Role 'developer' (Rahul Iyer) cannot call listCueVersions.",
+  "code": "FORBIDDEN",
+  "request_id": "req_gK8QjIjv"
+ }
+}

@@ -1,0 +1,78 @@
+{
+ "operationId": "getSessionActivity",
+ "access": "self",
+ "status": 200,
+ "headers": {},
+ "body": {
+  "session": "sbx_b53e7374dec1",
+  "header": {
+   "device_id": "18fcef06-5ea0-4b62-89d0-7868e89ab483",
+   "host": "vm-dev-rahul-07",
+   "owner": "Rahul Iyer",
+   "department": "Engineering — Payments",
+   "group": {
+    "id": "grp_payments_eng",
+    "name": "Engineering — Payments"
+   },
+   "tool": "claude-code",
+   "outcome": "clean",
+   "started": 1790352576,
+   "last_seen": 1790355896
+  },
+  "origin": {
+   "source": "sandbox",
+   "writable": true,
+   "profile": "claude-code",
+   "workspace": "~/src/mobile-app",
+   "identity": "spiffe://straitsmeridian.example/user/rahul.iyer",
+   "initial_prompt": "fix the failing build in mobile-app"
+  },
+  "boot": {
+   "count": 10,
+   "items": [
+    {
+     "label": "egress allow",
+     "count": 5
+    },
+    {
+     "label": "mcps",
+     "count": 2
+    },
+    {
+     "label": "dlp rules",
+     "count": 3
+    }
+   ]
+  },
+  "activity": [
+   {
+    "cat": "prompt",
+    "kind": "turn",
+    "label": "fix the failing build in mobile-app",
+    "detail": "model turn",
+    "count": 1,
+    "verdict": "allow",
+    "severity": null,
+    "first_ts": 1790352581,
+    "last_ts": 1790352581,
+    "rule_id": null,
+    "reason": null,
+    "owasp": null
+   },
+   {
+    "cat": "file_read",
+    "kind": "read",
+    "label": "Read files under ./src",
+    "detail": null,
+    "count": 4,
+    "verdict": "allow",
+    "severity": null,
+    "first_ts": 1790352616,
+    "last_ts": 1790352666,
+    "rule_id": null,
+    "reason": null,
+    "owasp": null
+   }
+  ]
+ }
+}

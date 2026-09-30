@@ -1,0 +1,32 @@
+{
+ "operationId": "getEndpointMcps",
+ "access": "read",
+ "status": 200,
+ "headers": {},
+ "body": {
+  "endpoint_id": "ep_LT-VN-0412",
+  "core_installed": true,
+  "mcps": [
+   {
+    "mcp_id": "mcp_github_enterprise",
+    "name": "github-enterprise",
+    "kind": "remote",
+    "bridge_state": "onboarded",
+    "risk_tier": "medium",
+    "flags": []
+   }
+  ],
+  "skills": [
+   {
+    "skill_id": "skl_web_scraper_ltvn0412",
+    "name": "web-scraper",
+    "tool": "codex-cli",
+    "source": "user",
+    "flags": [
+     "network-egress"
+    ],
+    "last_seen": 1790553689
+   }
+  ]
+ }
+}

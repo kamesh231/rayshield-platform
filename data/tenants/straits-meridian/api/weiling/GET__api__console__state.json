@@ -1,0 +1,10 @@
+{
+ "operationId": "getConsoleState",
+ "access": "read",
+ "status": 200,
+ "headers": {},
+ "body": {
+  "saved_at": null,
+  "slices": {}
+ }
+}

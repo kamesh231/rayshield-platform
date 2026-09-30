@@ -1,0 +1,33 @@
+{
+ "operationId": "getBridgeMcp",
+ "access": "read",
+ "status": 200,
+ "headers": {},
+ "body": {
+  "id": "mcp_filesystem",
+  "name": "filesystem",
+  "source": "npm · @modelcontextprotocol/server-filesystem",
+  "kind": "local",
+  "status": "blocked",
+  "risk_score": 82,
+  "risk_tier": "high",
+  "capabilities": {
+   "tools": [
+    "read_file",
+    "list_directory",
+    "write_file"
+   ],
+   "writes": true
+  },
+  "findings": {
+   "high": 1,
+   "medium": 0,
+   "low": 0,
+   "summary": "Writes outside the workspace"
+  },
+  "approved_by": "Tan Wei Ling",
+  "approved_reason": "Blocked: writes outside workspace",
+  "groups_with_access": [],
+  "created_at": 1786240800
+ }
+}

@@ -1,0 +1,16 @@
+{
+ "operationId": "getBridgeScan",
+ "access": "read",
+ "status": 200,
+ "headers": {},
+ "body": {
+  "status": "blocked",
+  "risk_score": 82,
+  "findings": {
+   "high": 1,
+   "medium": 0,
+   "low": 0,
+   "summary": "Writes outside the workspace"
+  }
+ }
+}

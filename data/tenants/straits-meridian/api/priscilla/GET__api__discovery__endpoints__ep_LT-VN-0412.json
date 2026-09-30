@@ -1,0 +1,56 @@
+{
+ "operationId": "getDiscoveryEndpoint",
+ "access": "read",
+ "status": 200,
+ "headers": {
+  "X-Window-From": "1789956000",
+  "X-Window-To": "1790560800",
+  "X-Data-As-Of": "1790560680"
+ },
+ "body": {
+  "endpoint": {
+   "endpoint": "10.40.21.23",
+   "host": "LT-VN-0412",
+   "endpoint_id": "ep_LT-VN-0412",
+   "device_id": "d742380f-43b1-4c63-9dbf-988133b13c4f",
+   "type": "laptop",
+   "ephemeral": false,
+   "user": "Thanh Nguyen",
+   "department": "Vendor Engineering (contractors)",
+   "identity_source": "idp",
+   "sensor": "pcap",
+   "first_seen": 1774663200,
+   "last_seen": 1790560507
+  },
+  "services": [
+   {
+    "service_id": "codex-cli",
+    "ai_service": "Codex CLI",
+    "status": "unlabelled",
+    "hits": 162,
+    "last_seen": 1790560507
+   },
+   {
+    "service_id": "azure-openai",
+    "ai_service": "Azure OpenAI",
+    "status": "approved",
+    "hits": 121,
+    "last_seen": 1790560507
+   },
+   {
+    "service_id": "salesforce-einstein",
+    "ai_service": "Salesforce Einstein",
+    "status": "approved",
+    "hits": 81,
+    "last_seen": 1790560507
+   },
+   {
+    "service_id": "m365-copilot",
+    "ai_service": "Microsoft 365 Copilot",
+    "status": "approved",
+    "hits": 42,
+    "last_seen": 1790560507
+   }
+  ]
+ }
+}

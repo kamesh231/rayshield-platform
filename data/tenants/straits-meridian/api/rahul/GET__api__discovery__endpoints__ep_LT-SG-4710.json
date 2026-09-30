@@ -1,0 +1,11 @@
+{
+ "operationId": "getDiscoveryEndpoint",
+ "access": "self",
+ "status": 403,
+ "headers": {},
+ "body": {
+  "error": "Role 'developer' (Rahul Iyer) cannot call getDiscoveryEndpoint.",
+  "code": "FORBIDDEN",
+  "request_id": "req_wFgSCy_n"
+ }
+}

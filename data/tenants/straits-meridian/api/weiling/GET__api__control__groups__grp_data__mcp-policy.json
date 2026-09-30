@@ -1,0 +1,19 @@
+{
+ "operationId": "getGroupMcpPolicy",
+ "access": "read",
+ "status": 200,
+ "headers": {},
+ "body": {
+  "group_id": "grp_data",
+  "allow": [
+   "mcp_warehouse",
+   "mcp_jira"
+  ],
+  "deny": [
+   "mcp_postgres",
+   "mcp_slack"
+  ],
+  "updated_by": "Tan Wei Ling",
+  "updated_at": 1789783200
+ }
+}

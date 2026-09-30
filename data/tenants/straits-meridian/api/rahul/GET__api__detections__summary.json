@@ -1,0 +1,77 @@
+{
+ "operationId": "getDetectionsSummary",
+ "access": "self",
+ "status": 200,
+ "headers": {
+  "X-Window-From": "1789956000",
+  "X-Window-To": "1790560800",
+  "X-Data-As-Of": "1790560680"
+ },
+ "body": {
+  "totals": {
+   "detections": 4,
+   "families": 4,
+   "critical": 2,
+   "escalated": 1,
+   "devices": 2
+  },
+  "families": [
+   {
+    "rule_id": "CARD-PAN",
+    "label": "Card number (PAN) in agent context",
+    "description": "A card primary account number reached an agent prompt or tool result. DLP inspects the turn before it leaves the sandbox.",
+    "severity": "critical",
+    "owasp": null,
+    "signal": "guest",
+    "hits": 1,
+    "devices": 1,
+    "groups": 1,
+    "blocked": 0,
+    "recorded": 0,
+    "escalated": 1
+   },
+   {
+    "rule_id": "PII-NRIC",
+    "label": "NRIC / FIN in agent context",
+    "description": "A Singapore NRIC or FIN number reached an agent prompt or tool result.",
+    "severity": "critical",
+    "owasp": null,
+    "signal": "guest",
+    "hits": 1,
+    "devices": 1,
+    "groups": 1,
+    "blocked": 1,
+    "recorded": 0,
+    "escalated": 0
+   },
+   {
+    "rule_id": "SWIFT-MSG",
+    "label": "SWIFT payment message in agent context",
+    "description": "An MT103 or pacs.008 customer credit transfer reached an agent prompt.",
+    "severity": "high",
+    "owasp": null,
+    "signal": "guest",
+    "hits": 1,
+    "devices": 1,
+    "groups": 1,
+    "blocked": 1,
+    "recorded": 0,
+    "escalated": 0
+   },
+   {
+    "rule_id": "SECRET-IN-PROMPT",
+    "label": "Secret in prompt",
+    "description": "An API key, token, private key or connection string in a prompt or file sent to the model.",
+    "severity": "high",
+    "owasp": null,
+    "signal": "guest",
+    "hits": 1,
+    "devices": 1,
+    "groups": 1,
+    "blocked": 1,
+    "recorded": 0,
+    "escalated": 0
+   }
+  ]
+ }
+}

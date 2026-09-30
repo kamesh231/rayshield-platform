@@ -1,0 +1,75 @@
+{
+ "operationId": "getBlastGraph",
+ "access": "read",
+ "status": 200,
+ "headers": {},
+ "body": {
+  "execution_id": "exec_01JA4F2NRIC7",
+  "nodes": [
+   {
+    "id": "n1",
+    "kind": "endpoint",
+    "label": "LT-SG-4402 · Jia Hui Ong",
+    "detail": "Data & Analytics",
+    "verdict": null
+   },
+   {
+    "id": "n2",
+    "kind": "cue",
+    "label": "Data & Analytics v2",
+    "detail": "Gemini CLI — Data & Analytics",
+    "verdict": "allow"
+   },
+   {
+    "id": "n3",
+    "kind": "mcp_sandbox",
+    "label": "warehouse-mcp (Aegis Bridge)",
+    "detail": "sbx-wh-4402",
+    "verdict": "allow"
+   },
+   {
+    "id": "n4",
+    "kind": "credential",
+    "label": "Bridge vault token",
+    "detail": "Warehouse service token held by the Aegis Bridge",
+    "verdict": "allow"
+   },
+   {
+    "id": "n5",
+    "kind": "data",
+    "label": "customer_360.party — 612 rows",
+    "detail": "SELECT party_id, nric, segment FROM customer_360.party LIMIT 1000",
+    "verdict": "flag"
+   },
+   {
+    "id": "n6",
+    "kind": "dlp_outcome",
+    "label": "Blocked before prompt left the sandbox",
+    "detail": "Flagged 612 NRICs (e.g. S•••••••D) in the tool result headed to generativelanguage.googleapis.com. Blocked.",
+    "verdict": "block"
+   }
+  ],
+  "edges": [
+   {
+    "from": "n1",
+    "to": "n2"
+   },
+   {
+    "from": "n2",
+    "to": "n3"
+   },
+   {
+    "from": "n3",
+    "to": "n4"
+   },
+   {
+    "from": "n4",
+    "to": "n5"
+   },
+   {
+    "from": "n5",
+    "to": "n6"
+   }
+  ]
+ }
+}

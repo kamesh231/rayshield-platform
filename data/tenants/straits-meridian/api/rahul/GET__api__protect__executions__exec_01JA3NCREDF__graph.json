@@ -1,0 +1,75 @@
+{
+ "operationId": "getBlastGraph",
+ "access": "self",
+ "status": 200,
+ "headers": {},
+ "body": {
+  "execution_id": "exec_01JA3NCREDF",
+  "nodes": [
+   {
+    "id": "n1",
+    "kind": "endpoint",
+    "label": "vm-dev-rahul-07 · Rahul Iyer",
+    "detail": "Engineering — Payments",
+    "verdict": null
+   },
+   {
+    "id": "n2",
+    "kind": "cue",
+    "label": "Payments Engineering v3",
+    "detail": "Claude Code — Payments Engineering",
+    "verdict": "allow"
+   },
+   {
+    "id": "n3",
+    "kind": "mcp_sandbox",
+    "label": "postgres-mcp (Aegis Bridge)",
+    "detail": "sbx-pg-r07a",
+    "verdict": "allow"
+   },
+   {
+    "id": "n4",
+    "kind": "credential",
+    "label": "credential file",
+    "detail": "Read ~/.config/settlement/credentials",
+    "verdict": "allow"
+   },
+   {
+    "id": "n5",
+    "kind": "data",
+    "label": "credentials file · 1 connection string",
+    "detail": "read ~/.config/settlement/credentials",
+    "verdict": "flag"
+   },
+   {
+    "id": "n6",
+    "kind": "dlp_outcome",
+    "label": "Blocked before prompt left the sandbox",
+    "detail": "Flagged a connection string with an inline password in file content sent to the model. Blocked.",
+    "verdict": "block"
+   }
+  ],
+  "edges": [
+   {
+    "from": "n1",
+    "to": "n2"
+   },
+   {
+    "from": "n2",
+    "to": "n3"
+   },
+   {
+    "from": "n3",
+    "to": "n4"
+   },
+   {
+    "from": "n4",
+    "to": "n5"
+   },
+   {
+    "from": "n5",
+    "to": "n6"
+   }
+  ]
+ }
+}

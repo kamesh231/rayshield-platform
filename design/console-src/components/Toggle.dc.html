@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<sc-if value="{{isOnEnabled}}" hint-placeholder-val="{{true}}">
+  <div onClick="{{toggle}}" style="width:34px;height:19px;background:#0F766E;border-radius:10px;position:relative;cursor:pointer;"><div style="width:15px;height:15px;background:#fff;border-radius:50%;position:absolute;top:2px;right:2px;"></div></div>
+</sc-if>
+<sc-if value="{{isOffEnabled}}">
+  <div onClick="{{toggle}}" style="width:34px;height:19px;background:#C3CBD3;border-radius:10px;position:relative;cursor:pointer;"><div style="width:15px;height:15px;background:#fff;border-radius:50%;position:absolute;top:2px;left:2px;"></div></div>
+</sc-if>
+<sc-if value="{{isDisabled}}">
+  <div style="width:34px;height:19px;background:#E4E8EC;border-radius:10px;position:relative;opacity:0.6;"><div style="width:15px;height:15px;background:#fff;border-radius:50%;position:absolute;top:2px;left:2px;"></div></div>
+</sc-if>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:50,&quot;height&quot;:30},&quot;checked&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;disabled&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;onChange&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(checked:boolean) =&gt; void&quot;}}">
+class Component extends DCLogic {
+  state = { checked: null };
+  renderVals() {
+    const checked = this.state.checked ?? this.props.checked ?? false;
+    const disabled = this.props.disabled ?? false;
+    return {
+      isOnEnabled: checked && !disabled,
+      isOffEnabled: !checked && !disabled,
+      isDisabled: disabled,
+      toggle: () => {
+        if (disabled) return;
+        const next = !checked;
+        this.setState({ checked: next });
+        if (this.props.onChange) this.props.onChange(next);
+      },
+    };
+  }
+}
+</script>
+</body>
+</html>

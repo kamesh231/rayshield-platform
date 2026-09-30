@@ -1,0 +1,11 @@
+{
+ "operationId": "updateDirectory",
+ "access": "deny",
+ "status": 403,
+ "headers": {},
+ "body": {
+  "error": "Role 'ciso' (Priscilla Goh) cannot call updateDirectory.",
+  "code": "FORBIDDEN",
+  "request_id": "req_yHg4p2Cf"
+ }
+}

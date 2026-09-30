@@ -1,0 +1,61 @@
+{
+ "operationId": "getDetection",
+ "access": "read",
+ "status": 200,
+ "headers": {},
+ "body": {
+  "detection_id": "det_01JAT8PZQXX",
+  "ts": 1790534880,
+  "rule_id": "PROHIBITED-SERVICE",
+  "rule_label": "Prohibited AI service",
+  "severity": "high",
+  "disposition": "blocked",
+  "device_id": "1f00e17c-459f-415b-84ef-e5e2bdf0b3d0",
+  "host": "LT-SG-5133",
+  "owner": "Hannah Lim",
+  "owner_kind": "person",
+  "department": "Treasury & Markets",
+  "group": {
+   "id": "grp_treasury",
+   "name": "Treasury & Markets"
+  },
+  "session_id": "sbx_9d5d7b2b4f46",
+  "teaser": "api.deepseek.com · DeepSeek is labelled Prohibited (blocked)",
+  "description": "Traffic to a service labelled Prohibited in Discover (data residency).",
+  "owasp": null,
+  "signal": "wire",
+  "classification": "transfer",
+  "backend": "aegis-engine 0.9.6",
+  "evidence": {
+   "type": "exfil",
+   "decoded_command": null,
+   "sensitive_content": null,
+   "exfil": {
+    "destination": "api.deepseek.com",
+    "bytes": 86993,
+    "classification": "prohibited AI service (data residency)"
+   },
+   "egress_spike": null,
+   "persistence": null,
+   "undisclosed_action": null
+  },
+  "chain": [
+   {
+    "ts": 1790534880,
+    "label": "Prohibited AI service",
+    "detail": "api.deepseek.com · DeepSeek is labelled Prohibited (blocked)",
+    "is_current": true,
+    "is_detection": true,
+    "severity": "high",
+    "disposition": "blocked"
+   }
+  ],
+  "signature": {
+   "alg": "ed25519",
+   "key_id": "aegis-smb-2026-09",
+   "value": "MEUCIQ1qb0zian1ll3…",
+   "signed_at": 1790534881,
+   "verify_hint": "aegis verify det_01JAT8PZQXX"
+  }
+ }
+}
