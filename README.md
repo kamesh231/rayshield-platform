@@ -182,7 +182,8 @@ rather than shipping a half-wired console.
 
 1. Push this folder to a Git repo.
 2. In Railway: **New Project → Deploy from GitHub repo**, pick it.
-3. Railway reads `railway.json`: it runs `npm ci && npm run build:console`, then `npm start`.
+3. Railway reads `railway.json`: Nixpacks installs dependencies, then it runs `npm run build:console` and `npm start`.
+   For the bank tenant, set the variable `DEMO_TENANT=straits-meridian` on the service.
 4. No environment variables are required. `PORT` is provided by Railway automatically.
 5. Open the generated URL → `/login`.
 
