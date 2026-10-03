@@ -59,9 +59,10 @@ Each beat lists what to do and what you should see. Numbers are for a freshly re
 - Deployment strip: **Step 3 of 4**. Deploy Shield ✓, Install Core ✓, **Add MCP Bridge (current stage)**, Full containment (next).
 - **Governance:** Services governed **23 of 27** · Shadow share **3.1%** (subtitle "5.4% in the previous 7 days") · Prohibited services blocked **3** (DeepSeek · Kimi · Qwen Chat).
 - **Protection:** Endpoints enforcing **90%** (371 of 412) · Critical detections contained **17 / 17** · Card or NRIC records that left the bank **0**.
-- **Decisions:** Decisions awaiting you **3** · Frameworks tracked **4** · MCP servers onboarded **4**.
+- **Decisions:** Decisions awaiting you **2** · Frameworks tracked **4** · MCP servers onboarded **4**.
+- Sidebar: **Inbox 1** (Rahul's confluence request, waiting 3 h).
 - Banner: **7** DLP-blocked agent runs in the last 7 days.
-- *Needs attention*: three **DECISION** rows (confluence, Payments CUE v4, unlabelled services) and four **FRAMEWORK** rows. The frameworks are named only, "mapping to be confirmed".
+- *Needs attention*: two **DECISION** rows (Rahul's confluence request, unlabelled services) and four **FRAMEWORK** rows. The frameworks are named only, "mapping to be confirmed". The Payments CUE v4 draft is not here yet: Arjun hasn't sent it for approval (Beat 3).
 
 ### Beat 2: the developer works (window B, `rahul`)
 **Do:** click **Terminal** (or go to http://localhost:3000/terminal). Type each command and press Enter:
@@ -106,9 +107,11 @@ BLOCKED — card PAN + NRIC in the tool result (dlp-card-pan, dlp-nric · Enforc
 | Home → click *Card data blocked on LT-SG-2231 … det_01JA4K9PAN1* | Detection page: **CRITICAL**, **↑ Escalated**. Matched content `pan=4539 •••• •••• 1187, nric=S•••••••D`, signed evidence `aegis-smb-2026-09`, OWASP "—". |
 | Protect → **Blast radius** → **Rahul Iyer** (LT-SG-2231) | Tree: LT-SG-2231 → `claude-code/payments-eng@v3` → postgres-mcp (Aegis Bridge) → .env credentials → **cards.txn_ledger — 1,240 rows** → **Card PAN + NRIC · blocked**. |
 | Control → **CUEs** → the Payments row marked *draft · not published* | Draft v4 by Arjun Menon adds **dlp-mask-query-results**. Inherited rows say *inherited from Bank baseline* and are locked. |
+| On the draft: **Edit** → **Continue** → **Continue** → **Publish and sign** | Arjun can't publish, so the **Inbox** panel opens: *Request approval · Publish Payments CUE v4*, the change (+ DLP dlp-mask-query-results · Enforce), and who approves. Add a reason → **Send for approval**. Toast: *Sent for approval · Tan Wei Ling and Priscilla Goh notified*. |
+| Window A (CISO) at the same moment | Toast *📥 Arjun Menon asks you to publish Payments CUE v4 · Open*; **Inbox 2**; *Decisions awaiting you* **3**. |
 | Discover → **AI services** → **DeepSeek** | Prohibited · 6 endpoints (Treasury). |
 | Discover → AI services → **Perplexity** → set **Under review** | Saved. Everyone's governed count becomes **24 of 27**. |
-| Control → **MCP Bridge** → confluence → **Approve** | **Refused.** Toast: *Only Tan Wei Ling (Admin) or Priscilla Goh (CISO) can approve or block MCP servers. Arjun Menon (Security) can triage and recommend.* confluence stays *Awaiting approval*. |
+| Control → **MCP Bridge** → confluence → **Approve** | Not approved. The panel offers **Recommend approve**. Add a note → **Send recommendation**. It is attached to Rahul's request; the CISO and Admin see *Arjun Menon recommends you approve confluence*. confluence stays *Awaiting approval*. |
 
 ### Beat 4: the developer asks (window B, `rahul`)
 
@@ -129,26 +132,33 @@ aegis mcp request confluence --reason "read runbooks while debugging settlement"
 **Expect:**
 
 ```text
+     request wf_confluence (opened 3 h ago from /me) — your terminal request is attached
      scan:   scanning… ✓ passed · read-only (search, get_page) · risk low
      status: awaiting decision — Tan Wei Ling (Admin) or Priscilla Goh (CISO)
+     inbox:  ✓ Tan Wei Ling and Priscilla Goh notified · Arjun Menon recommends approval
 ```
 
-- Window A (CISO) toast: *Rahul Iyer is asking for the confluence MCP server — waiting on your decision*. Window C (Security) is told who decides.
-- `/me` → *My MCP requests*: **confluence · awaiting decision**.
+- Confluence was already requested from `/me` 3 hours earlier, so the terminal **attaches** to that request instead of opening a second one. The CISO and Admin get *📥 Rahul Iyer asked again: confluence MCP server for Engineering — Payments*.
+- `/me` → *My MCP requests*: **confluence · awaiting decision**; *Inbox*: the request, waiting for Tan Wei Ling or Priscilla Goh.
 
 ### Beat 5: the CISO decides (window A, `priscilla`)
-**Do:** in the bottom-right bar click **Approve confluence MCP**, then **Publish Payments CUE v4**.
-(Or: Control → MCP Bridge → confluence → Approve; Control → CUEs → Payments draft → publish.)
+**Do:** open **Inbox** (sidebar, under Home).
+1. **Publish Payments CUE v4** (from Arjun): read *What changes if approved* → **Approve and publish**. (Or **Send back** with a note: Arjun sees *Sent back* and can **Resubmit**.)
+2. **confluence MCP server for Engineering — Payments** (from Rahul, with Arjun's recommendation): **Access lasts** → pick a duration (default **30 days**; **2 minutes (demo)** shows expiry live) → **Approve**.
+
+(Shortcut: the bottom-right bar's **Approve confluence MCP · 30 days** and **Publish Payments CUE v4** do the same and close the open requests.)
 
 **Expect:**
 - Toasts: *confluence approved by Priscilla Goh for Engineering — Payments*, then *Payments CUE v4 published by Priscilla Goh · signed and pushed*.
-- MCP Bridge: confluence **Onboarded**; *Access by group* shows **Allowed** for Engineering — Payments.
+- Arjun's inbox: *Priscilla Goh approved: Publish Payments CUE v4*. Rahul's inbox and `/me`: *approved for 30 days*; *MCP servers* shows **confluence · expires in 30 days**.
+- The request history reads *Arjun Menon requested → Priscilla Goh approved* (maker and checker).
+- MCP Bridge: confluence **Onboarded**, *Groups with access* **Engineering — Payments (30d left)**; *Access by group* shows **Allowed · 30d**.
 - CUEs: `claude-code/payments-eng@v4`, and the draft row is gone.
 - Home: *Decisions awaiting you* drops (confluence and CUE v4 disappear from the list).
 - Rahul's terminal (window B) announces:
 
 ```text
-aegis ▸ confluence approved by Priscilla Goh for Engineering — Payments — the MCP is now available through the Aegis Bridge (Priscilla Goh)
+aegis ▸ confluence approved by Priscilla Goh for Engineering — Payments for 30 days — the MCP is now available through the Aegis Bridge (Priscilla Goh)
 aegis ▸ signed CUE claude-code/payments-eng@v4 pushed — adds dlp-mask-query-results (query results are masked before they reach the model) (Priscilla Goh)
 ```
 
@@ -191,9 +201,47 @@ The detection count does **not** go up.
 - **Agents enforcing 371 / 412** · Agents offline **9**.
 - Finish with **Reset demo** → confirm. Every open window reloads to the seed.
 
+### Beat 8 (optional): short-lived access, suspend and deboard
+| Do | Expect |
+|---|---|
+| As `priscilla` or `weiling`: approve confluence with **2 minutes (demo)** | Bridge shows *(2m left)*. After 2 minutes the server removes it from Engineering — Payments. Everyone is told *confluence access for Engineering — Payments expired*. Rahul's terminal prints *confluence access … expired — run: aegis mcp request confluence … to renew*. |
+| Rahul: `aegis mcp request confluence --reason "renew"` | *requesting renewed access* → a new request in the approvers' inbox (Decline leaves the server as it is) |
+| CISO: MCP Bridge → an onboarded server → **Suspend** → reason → **Suspend** | Status **Suspended** for every group at once, no second approver. **Reinstate** restores the groups it had. |
+| CISO: **Deboard** | Removed from the MCP Bridge and from every group, at once |
+| Arjun: **Suspend** or **Deboard** | Opens *Request approval* instead. Admin or CISO approves suspend; deboard goes to Admin or CISO (both hold it). |
+
 ---
 
-## 3. Terminal simulation reference
+## 3. Approvals and the inbox
+
+When someone's role can't make a change, the console doesn't just refuse: it offers **Send for approval**. The request waits in the approvers' **Inbox** (sidebar under Home, and the **Inbox** button in the bottom-right bar). On approval, the server runs the same change the approver could have made directly, **as the approver**. Roles are still enforced on the server.
+
+**Rules**
+- **Admin and CISO act directly** on anything their role allows, including their own drafts. No second approver.
+- **Reducing access never waits.** Suspend, deboard, removing a group's access and blocking are immediate for Admin and CISO.
+- **Granting MCP access is time-limited by default.** Choose 2 minutes (demo), 1 hour, 8 hours, 24 hours, 7 days, **30 days** (default), 90 days or no expiry. The server removes expired grants and tells the requester and the approvers.
+- **One open request per subject.** Asking again (for example from the terminal) attaches to the open request.
+- **Nobody decides their own request.** A request is refused if the console area changed after it was sent; the requester is told to make the change again.
+
+**Flows that go through approval**
+
+| Flow | Who asks | Who approves | On approval |
+|---|---|---|---|
+| MCP access for a group (and renewal after expiry) | Developer (`/me` form or `aegis mcp request`) | Admin, CISO | Server onboarded + allowed for the group, for the chosen duration |
+| MCP decision + recommendation | Security (Approve or Reject on the Bridge becomes a recommendation) | Admin, CISO | Approve or block |
+| Onboard an MCP server | Security | Admin, CISO | Added to the Bridge and scanned |
+| Suspend an MCP server | Security | Admin, CISO | Blocked everywhere; Reinstate restores |
+| Deboard an MCP server | Security | Admin, CISO | Removed from the Bridge and every group |
+| Publish a CUE (maker–checker) | Security (drafts) | Admin, CISO | Signed and pushed |
+| Group MCP access, group edits, device groups | Security | Admin, CISO | Policy applied (granting access asks for a duration) |
+| Create a group, retire a CUE, settings (rates, budgets) | Security, CISO | Admin | Change applied |
+| Daily budget exception | Developer (`/me` → *Ask for a higher cap*) | Admin | Cap raised for 24 h, that developer only |
+
+Governance status (Approved, Under review…) needs no approval: Admin, CISO and Security can all set it.
+
+---
+
+## 4. Terminal simulation reference
 
 Sign in as `rahul` and open **/terminal**. Hosts: `LT-SG-2231` (MacBook) and `vm-dev-rahul-07` (dev VM; pick it in the drop-down at the top).
 Each host needs its own `aegis run …` first.
@@ -207,7 +255,7 @@ Each host needs its own `aegis run …` first.
 | `aegis run claude-code --src ./settlement-recon --writable` | Boots under `payments-eng@v3` (v4 after publish, adding `dlp-mask-query-results` and `confluence`) | — |
 | `claude "find why yesterday's card settlement is off by SGD 1,240"` | **After v4:** masked result, *Found it: batch B-0927-04…*, no detection | **Before v4:** **BLOCKED** (card PAN + NRIC), new critical detection. **Before `aegis run`:** *No sandbox yet.* |
 | `claude "summarise today's settlement exceptions"` | **After v4:** masked, *3 settlement exceptions today…*, no detection | **Before v4:** **BLOCKED** (86 rows with PAN + NRIC), new critical detection |
-| `aegis mcp request confluence --reason "…"` | *awaiting decision* and a live toast to Admin/CISO | **Already approved:** *confluence is already approved…* **Blocked:** *confluence was blocked by <name>. Reason: …* |
+| `aegis mcp request confluence --reason "…"` | *awaiting decision*; attaches to the open request; inbox notice to Admin and CISO | **Already approved:** *confluence is already approved… (expires in …)*. **Expired:** asks for renewed access. **Blocked:** *confluence was blocked by <name>…* **Suspended:** *confluence is suspended by <name>…* |
 | `claude "open the runbook for settlement retries"` | **After approval:** runbook PAY-RB-014 | **Before approval, or if blocked:** **BLOCKED — MCP server "confluence" is not allowed…**. **Before `aegis run`:** *No sandbox yet.* |
 | anything else (e.g. `ls -la`) | — | *ls -la: not one of the scripted commands. Type demo.* |
 
@@ -252,9 +300,33 @@ curl -s -b priscilla.txt -X PATCH -H 'content-type: application/json' -d '{"stat
 curl -s -b priscilla.txt -X POST http://localhost:3000/api/control/cues/cue_payments_v3/publish
 ```
 
+Approvals from a shell. Arjun asks, Priscilla reads her inbox and approves (use the `id` the first call returns):
+
+```bash
+curl -s -c arjun.txt -H 'content-type: application/json' -d '{"username":"arjun","password":"demo"}' http://localhost:3000/api/login
+```
+
+```bash
+curl -s -b arjun.txt -H 'content-type: application/json' -d '{"kind":"cue_publish","cue_id":"cue_payments_v3","reason":"mask query results"}' http://localhost:3000/api/workflows
+```
+
+```bash
+curl -s -b priscilla.txt http://localhost:3000/api/inbox
+```
+
+```bash
+curl -s -b priscilla.txt -H 'content-type: application/json' -d '{"decision":"approve"}' http://localhost:3000/api/workflows/<id>/decision
+```
+
+Approve Rahul's seeded confluence request for 2 minutes, to watch it expire:
+
+```bash
+curl -s -b priscilla.txt -H 'content-type: application/json' -d '{"decision":"approve","access_ttl_minutes":2}' http://localhost:3000/api/workflows/wf_confluence/decision
+```
+
 ---
 
-## 4. Positive test cases (should succeed)
+## 5. Positive test cases (should succeed)
 
 Run on a freshly reset demo, in order.
 
@@ -262,15 +334,15 @@ Run on a freshly reset demo, in order.
 |---|---|---|---|
 | P1 | any | Sign in at /login by typing the username and `demo` (the page lists no accounts) | Lands on the console (`weiling`, `arjun`, `priscilla`) or `/me` (`rahul`) |
 | P2 | any | Click **Sign out** (console: bottom-left under your name, or the dark bar; `/me`: bottom-left; terminal: top-right) | Back on the sign-in page; sign in as someone else works |
-| P3 | priscilla | Home | 23 of 27 governed · 3.1% · 90% · 17 / 17 · 0 records · 3 decisions (Beat 1) |
+| P3 | priscilla | Home | 23 of 27 governed · 3.1% · 90% · 17 / 17 · 0 records · 2 decisions · Inbox 1 (Beat 1) |
 | P4 | rahul | Terminal: `aegis run …` | Boots under `payments-eng@v3`, inherited egress + DLP listed |
 | P5 | rahul | Terminal: settlement question (before v4) | **BLOCKED**, masked match, *nothing transmitted*; consoles get a critical detection toast; badge 17 → 18 |
 | P6 | rahul | `/me` | Access (group, CUE v3 + pending draft v4, tools, models, MCP servers, egress, DLP), spend **USD 18.40 of USD 40.00**, blocked events with why and fix, devices LT-SG-2231 and vm-dev-rahul-07 |
 | P7 | arjun | Open det_01JA4K9PAN1 | Escalated, masked evidence, signature, event chain |
 | P8 | arjun | Protect → Blast radius → Rahul Iyer | Six-step tree ending in *Card PAN + NRIC · blocked* |
 | P9 | arjun | Perplexity → **Under review** | Saved; governed shows 24 of 27 for everyone; survives sign-out |
-| P10 | rahul | `aegis mcp request confluence --reason "…"` | *awaiting decision*; CISO/Admin toast; `/me` shows *awaiting decision* |
-| P11 | priscilla | **Approve confluence MCP** | confluence Onboarded, allowed for Engineering — Payments; terminal announces it |
+| P10 | rahul | `aegis mcp request confluence --reason "…"` | *awaiting decision*, attached to `wf_confluence`; CISO/Admin inbox notice; `/me` shows *awaiting decision* |
+| P11 | priscilla | Inbox → confluence → 30 days → **Approve** (or the bar's **Approve confluence MCP · 30 days**) | confluence Onboarded, allowed for Engineering — Payments for 30 days; terminal announces it; Rahul's inbox says approved |
 | P12 | priscilla | **Publish Payments CUE v4** | `payments-eng@v4` signed; draft gone; terminal announces v4 |
 | P13 | rahul | runbook command (after P11) | Runbook PAY-RB-014 shown |
 | P14 | rahul | exceptions command (after P12) | Masked result, task succeeds, **no** new detection |
@@ -280,8 +352,19 @@ Run on a freshly reset demo, in order.
 | P18 | weiling | Protect → Fleet → a device → change its group | Saved; device counts update for everyone |
 | P19 | priscilla | Detection det_01JA4K9PAN1 | Opens with evidence **redacted** (rule and target type only). Correct for the CISO (see N12). |
 | P20 | weiling | **Reset demo** | All windows reload; numbers back to Beat 1 |
+| P21 | arjun | CUE draft → Edit → Continue ×2 → **Publish and sign** → reason → **Send for approval** | Request *Publish Payments CUE v4* waiting; CISO and Admin get a live notice; CISO *Decisions awaiting you* 2 → 3 |
+| P22 | priscilla | Inbox → *Publish Payments CUE v4* → **Send back** with a note | Arjun sees *Sent back* with the note; **Resubmit** puts it back in her inbox |
+| P23 | priscilla | Inbox → the resubmitted request → **Approve and publish** | v4 published; history *requested → sent back → resubmitted → approved* |
+| P24 | arjun | MCP Bridge → confluence → **Approve** → **Send recommendation** | Recommendation shown on Rahul's request and in the terminal output |
+| P25 | priscilla | Approve confluence with **2 minutes (demo)**, wait 2 minutes | Expires: removed from Engineering — Payments; Rahul, Arjun (recommender) and approvers notified; terminal shows the expiry |
+| P26 | rahul | After P25: `aegis mcp request confluence --reason "renew"` | *requesting renewed access*; new request in the inbox; approve again |
+| P27 | priscilla | MCP Bridge → jira → **Suspend** → **Suspend**, then **Reinstate** | *Suspended* everywhere at once; Reinstate → *Onboarded* with the same groups |
+| P28 | priscilla | MCP Bridge → an onboarded server → **Deboard** | Removed from the Bridge and every group |
+| P29 | rahul | `/me` → *Ask for a higher cap* (USD 60) → Admin approves in her inbox | *My spend* shows USD 60, *raised from USD 40 by Tan Wei Ling · expires in 24 h* |
+| P30 | arjun | Groups → **Deactivate group** → **Send for approval**; Admin approves | The group is deactivated for everyone after approval |
+| P31 | any | Restart the server with requests open | Inbox, notices and grants are all still there (saved in `live-state.json`) |
 
-## 5. Negative test cases (must be refused or blocked)
+## 6. Negative test cases (must be refused or blocked)
 
 | ID | As | Steps | Expected result |
 |---|---|---|---|
@@ -291,18 +374,26 @@ Run on a freshly reset demo, in order.
 | N4 | rahul | Terminal: a `claude …` task before `aegis run` | *No sandbox yet. Run aegis run claude-code … first.* |
 | N5 | rahul | Terminal: `ls -la` (or any unscripted command) | *not one of the scripted commands. Type demo.* |
 | N6 | rahul | Terminal: exceptions command **before** v4 | **BLOCKED** (86 rows with PAN + NRIC); new critical detection |
-| N7 | arjun | MCP Bridge → confluence → **Approve** | Toast: *Only Tan Wei Ling (Admin) or Priscilla Goh (CISO) can approve or block MCP servers…*; status unchanged; server returns 403 |
-| N8 | arjun | Groups → select a group → **Deactivate group** | Toast: *Only Tan Wei Ling (Admin) or Priscilla Goh (CISO) can change groups. Your change was not saved.*; the group snaps back to active |
-| N9 | arjun | CUEs → Payments draft → publish | Toast: *Only … can publish CUEs.*; nothing published |
+| N7 | arjun | MCP Bridge → confluence → **Approve** | Not approved: offers **Recommend approve** instead; status unchanged. A direct API call returns 403 |
+| N8 | arjun | Groups → select a group → **Deactivate group** | Server refuses; the group snaps back to active; the *Request approval* panel offers to send it to Tan Wei Ling or Priscilla Goh (**Discard** leaves nothing behind) |
+| N9 | arjun | CUEs → Payments draft → publish | Nothing published; *Request approval* opens instead (P21) |
 | N10 | arjun | Open /terminal and try to type | Read-only replay; typing does nothing (server returns 403 *can view … as a read-only replay but cannot run commands*) |
 | N11 | priscilla | Open /terminal | Sent back to the console (no terminal) |
 | N12 | priscilla | Open any detection or session | Evidence and prompts redacted (*redacted for your role*) |
-| N13 | priscilla | Try to create a group, or retire a CUE; open Settings; look for Reset | Create group / retire → toast *Only Tan Wei Ling (Admin) can …*, nothing changes (API: 403). Settings fields are read-only for her. The demo bar has no **Reset demo** button (API reset → 403). |
+| N13 | priscilla | Try to create a group, or retire a CUE; open Settings; look for Reset | Create group / retire → refused and rolled back; *Request approval* sends it to Tan Wei Ling (Admin) only (API: 403). Settings fields are read-only for her. The demo bar has no **Reset demo** button (API reset → 403). |
 | N14 | rahul | Open http://localhost:3000/console | Redirected to `/me` (developers have no console) |
 | N15 | rahul | Anything outside his own data (other devices, Control) | 403 (see the API checks below); `/me` only ever shows LT-SG-2231 and vm-dev-rahul-07 |
 | N16 | priscilla then rahul | CISO blocks confluence (MCP Bridge → Reject), then Rahul runs `aegis mcp request confluence …` | *confluence was blocked by Priscilla Goh. Reason: …*; runbook stays **BLOCKED** |
 | N17 | rahul | `aegis mcp request confluence …` again after approval | *confluence is already approved for Engineering — Payments.* |
 | N18 | any | Evidence anywhere | Card numbers and NRICs are always masked (`4539 •••• •••• 1187`, `S•••••••D`); never a full number |
+| N19 | arjun | Open a request in the inbox | No Approve button: he can only recommend (MCP) or withdraw his own |
+| N20 | priscilla | Approve her own *create group* request | Not offered; API → 403 *You cannot decide your own request.* |
+| N21 | priscilla | Approve Rahul's budget exception | Not in her inbox (settings are Admin only); API → 403 |
+| N22 | priscilla | **Send back** without a note | *Say what should change before sending it back.* (API 400) |
+| N23 | weiling | `POST /api/workflows` (ask for approval) | 403: Admin holds every permission, so never needs to ask |
+| N24 | arjun | Approve a request that is already decided | 409 *This request is already approved by …* |
+| N25 | rahul | After the grant expired: runbook command | **BLOCKED** again until renewed |
+| N26 | rahul | `aegis mcp request confluence` while it's **suspended** | *confluence is suspended by <name> for every group.* |
 
 ### API-level negative checks (curl)
 
@@ -324,6 +415,11 @@ Sign in first as shown in *Simulating from a shell*. Every refusal uses the API 
 | `POST /api/terminal/exec` | arjun | **403** *Arjun Menon can view LT-SG-2231 as a read-only replay but cannot run commands.* |
 | `GET /api/terminal/hello?host=LT-SG-2231` | priscilla | **403** *Priscilla Goh has no terminal access to LT-SG-2231.* |
 | `GET /api/detections/det_01JA4K9PAN1` | priscilla | **200**, but `evidence` has every key `null` except `"type": "sensitive_content"` |
+| `POST /api/workflows/<id>/decision` `{"decision":"approve"}` | arjun | **403** *…cannot call decideWorkflow.* |
+| `POST /api/workflows/<id>/decision` `{"decision":"approve"}` on Rahul's budget request | priscilla | **403** *Only Tan Wei Ling (Admin) can decide this.* |
+| `POST /api/workflows/<id>/decision` `{"decision":"return"}` | priscilla | **400** *Say what should change when you send a request back.* |
+| `PATCH /api/control/mcp-bridge/mcp_jira` `{"status":"blocked","suspend":true}` | arjun | **403** *…cannot call decideBridgeMcp.* |
+| `POST /api/workflows` `{"kind":"budget_exception","cap_usd":500}` | rahul | **400** *cap_usd must be above USD 40 and at most USD 200.* |
 
 Example (Security trying to approve):
 
@@ -339,15 +435,15 @@ Expected: `{"error":"Role 'security' (Arjun Menon) cannot call decideBridgeMcp."
 
 ---
 
-## 6. Automated checks
+## 7. Automated checks
 
 With the bank server running (`npm run start:bank`) in another terminal:
 
 | Command | What it checks | Expected last line |
 |---|---|---|
 | `npm run validate:tenant` | JSON, API schemas, every number reconciles, ids exist, no unmasked PAN/NRIC (server not needed) | `ALL PASSED (35 passed, 4 notes)` |
-| `BASE=http://localhost:3000 npm run check:access` | Every API route × every persona against `access-matrix.json` | `ALL ROUTES MATCH THE ACCESS MATRIX` |
-| `BASE=http://localhost:3000 npm run check:storyline` | The 7 beats end to end (positive and negative) | `STORYLINE OK (27 checks passed)` |
+| `BASE=http://localhost:3000 npm run check:access` | Every API route (74, including the inbox and approvals) × every persona against `access-matrix.json` | `ALL ROUTES MATCH THE ACCESS MATRIX` |
+| `BASE=http://localhost:3000 npm run check:storyline` | The 7 beats end to end, plus approvals, send back, recommendations, a 4-second grant that expires, suspend, deboard and a budget exception | `STORYLINE OK (49 checks passed)` |
 | `BASE=http://localhost:3000 npm run check:persistence:write`, restart the server, then `…:verify` | Changes survive sign-out and restart; Security's edit refused | `PERSISTENCE WRITE OK` / `PERSISTENCE VERIFY OK` |
 | `BASE=http://localhost:3000 npm run shots:bank` | Screenshots to `design/bank-shot-*.png` (uses installed Google Chrome) | `no page errors` |
 
@@ -355,7 +451,7 @@ The access, storyline and persistence checks reset the demo themselves. Run them
 
 ---
 
-## 7. Troubleshooting
+## 8. Troubleshooting
 
 | Symptom | Fix |
 |---|---|

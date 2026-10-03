@@ -30,19 +30,23 @@
   "groups_with_access": [
    {
     "id": "grp_payments_eng",
-    "name": "Engineering — Payments"
+    "name": "Engineering — Payments",
+    "access_expires_at": null
    },
    {
     "id": "grp_digital_eng",
-    "name": "Engineering — Digital Banking"
+    "name": "Engineering — Digital Banking",
+    "access_expires_at": null
    },
    {
     "id": "grp_data",
-    "name": "Data & Analytics"
+    "name": "Data & Analytics",
+    "access_expires_at": null
    },
    {
     "id": "grp_soc",
-    "name": "Cyber Defence (SOC)"
+    "name": "Cyber Defence (SOC)",
+    "access_expires_at": null
    }
   ],
   "created_at": 1785376800

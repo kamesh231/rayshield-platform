@@ -24,6 +24,42 @@ components:
   securitySchemes:
     bearerAuth: { type: http, scheme: bearer, bearerFormat: JWT }
   schemas:
+    Workflow:
+      type: object
+      description: An approval request. Approving runs the same write the approver could make directly, as the approver.
+      required: [id, kind, status, title, requested_by, approver_permission]
+      properties:
+        id: { type: string, example: wf_confluence }
+        kind: { type: string, enum: [mcp_access, mcp_decision, mcp_onboard, mcp_remove, cue_publish, group_policy, console_change, budget_exception] }
+        kind_label: { type: string }
+        status: { type: string, enum: [pending, approved, rejected, returned, withdrawn, stale] }
+        title: { type: string, example: confluence MCP server for Engineering — Payments }
+        summary: { type: string }
+        changes: { type: array, items: { type: string }, description: "what changes if approved, one line each (+ added, − removed, = unchanged)" }
+        facts: { type: array, items: { type: array, items: { type: string }, minItems: 2, maxItems: 2 } }
+        reason: { type: string, nullable: true }
+        requested_by: { type: object, properties: { id: { type: string }, name: { type: string }, role: { type: string } } }
+        requested_at: { type: string, format: date-time }
+        via: { type: string, nullable: true, enum: [me, terminal, console, null] }
+        approver_permission: { type: string, description: "permission the approver must hold (decideMcp, publishCue, removeMcp, …)" }
+        approvers: { type: array, items: { type: string } }
+        recommendations: { type: array, items: { type: object, properties: { by: { type: string }, recommendation: { type: string, enum: [approve, block] }, note: { type: string, nullable: true } } } }
+        history: { type: array, items: { type: object, properties: { by: { type: string }, action: { type: string }, note: { type: string, nullable: true } } } }
+        decided_by: { type: string, nullable: true }
+        decided_at: { type: string, format: date-time, nullable: true }
+        decision_note: { type: string, nullable: true }
+        takes_duration: { type: boolean, description: "approving grants MCP access, so the approver picks how long it lasts" }
+        asked_duration_minutes: { type: integer, nullable: true }
+        can: { type: object, properties: { decide: { type: boolean }, recommend: { type: boolean }, withdraw: { type: boolean }, resubmit: { type: boolean } } }
+    Inbox:
+      type: object
+      properties:
+        unread: { type: integer }
+        pending_decisions: { type: integer }
+        needs_decision: { type: array, items: { $ref: '#/components/schemas/Workflow' } }
+        my_requests: { type: array, items: { $ref: '#/components/schemas/Workflow' } }
+        updates: { type: array, items: { type: object, properties: { id: { type: string }, at: { type: string, format: date-time }, kind: { type: string, enum: [action, update] }, by: { type: string }, text: { type: string }, workflow_id: { type: string }, read: { type: boolean } } } }
+        access_durations: { type: array, items: { type: object, properties: { minutes: { type: integer }, label: { type: string } } } }
     Error:
       type: object
       required: [error]
@@ -157,6 +193,103 @@ components:
         group: { $ref: '#/components/schemas/GroupRef' }
 
 paths:
+  /api/inbox:
+    get:
+      operationId: listInbox
+      x-status: proposed
+      x-min-role: self
+      summary: Approvals waiting for me, my own requests, and my notices (the mailbox)
+      responses:
+        '200': { description: OK, content: { application/json: { schema: { $ref: '#/components/schemas/Inbox' } } } }
+  /api/inbox/read:
+    post:
+      operationId: markInboxRead
+      x-status: proposed
+      x-min-role: self
+      requestBody: { content: { application/json: { schema: { type: object, properties: { ids: { type: array, items: { type: string } }, workflow_id: { type: string } } } } } }
+      responses:
+        '200': { description: OK }
+  /api/workflows:
+    post:
+      operationId: submitWorkflow
+      x-status: proposed
+      x-min-role: self
+      summary: Ask for something your role cannot do. One open request per subject; asking again attaches to it.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [kind]
+              properties:
+                kind: { type: string, enum: [mcp_access, mcp_decision, mcp_onboard, mcp_remove, cue_publish, group_policy, console_change, budget_exception] }
+                reason: { type: string, maxLength: 300 }
+                name: { type: string }
+                bridge_id: { type: string }
+                group_id: { type: string }
+                cue_id: { type: string }
+                action: { type: string, enum: [suspend, remove], description: "mcp_remove only" }
+                recommendation: { type: string, enum: [approve, block], description: "mcp_decision only" }
+                access_ttl_minutes: { type: integer, description: "mcp_access: how long the requester needs it" }
+                allow: { type: array, items: { type: string }, description: "group_policy only" }
+                slice: { type: string, description: "console_change only" }
+                op: { type: string }
+                value: { description: "console_change: the full new value of that console area" }
+                title: { type: string }
+                changes: { type: array, items: { type: string } }
+                cap_usd: { type: number, description: "budget_exception only" }
+      responses:
+        '200': { description: Requested, content: { application/json: { schema: { $ref: '#/components/schemas/Workflow' } } } }
+        '400': { description: Invalid, or you can do this directly, content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } } }
+        '409': { description: Someone already asked, or it is already decided, content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } } }
+  /api/workflows/{id}:
+    get:
+      operationId: getWorkflow
+      x-status: proposed
+      x-min-role: self
+      parameters: [ { name: id, in: path, required: true, schema: { type: string } } ]
+      responses:
+        '200': { description: OK, content: { application/json: { schema: { $ref: '#/components/schemas/Workflow' } } } }
+  /api/workflows/{id}/decision:
+    post:
+      operationId: decideWorkflow
+      x-status: proposed
+      x-min-role: admin
+      summary: Approve (runs the change as the approver), reject, or send back with a note. The approver must hold the permission the request needs and cannot be the requester.
+      parameters: [ { name: id, in: path, required: true, schema: { type: string } } ]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [decision]
+              properties:
+                decision: { type: string, enum: [approve, reject, return] }
+                note: { type: string, maxLength: 300, description: required when sending back }
+                access_ttl_minutes: { type: integer, description: "MCP access grants: 0 = no expiry" }
+      responses:
+        '200': { description: Decided, content: { application/json: { schema: { $ref: '#/components/schemas/Workflow' } } } }
+        '403': { description: Forbidden, content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } } }
+        '409': { description: Already decided, or the console area changed since the request (status becomes stale), content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } } }
+  /api/workflows/{id}/recommendation:
+    post:
+      operationId: recommendWorkflow
+      x-status: proposed
+      x-min-role: security
+      parameters: [ { name: id, in: path, required: true, schema: { type: string } } ]
+      requestBody: { required: true, content: { application/json: { schema: { type: object, properties: { recommendation: { type: string, enum: [approve, block] }, note: { type: string } } } } } }
+      responses:
+        '200': { description: Recorded, content: { application/json: { schema: { $ref: '#/components/schemas/Workflow' } } } }
+  /api/workflows/{id}/withdraw:
+    post:
+      operationId: withdrawWorkflow
+      x-status: proposed
+      x-min-role: self
+      parameters: [ { name: id, in: path, required: true, schema: { type: string } } ]
+      responses:
+        '200': { description: Withdrawn, content: { application/json: { schema: { $ref: '#/components/schemas/Workflow' } } } }
   /api/me/access:
     get:
       operationId: getMyAccess
@@ -258,3 +391,13 @@ paths:
       responses:
         '200': { description: Saved }
         '403': { description: Forbidden, content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } } }
+x-proposed-extensions:
+  description: Fields added to v2.2 operations for this tenant; not in rayshield-console-api-v2.2-control.yml.
+  decideBridgeMcp:
+    request: "access_ttl_minutes (integer) or access_expires_at (date-time) — the group grant expires; suspend: true with status blocked — kill switch that keeps group policy so status approved reinstates it"
+    response: "BridgeMcp.suspended, suspended_by, suspended_reason; groups_with_access[].access_expires_at"
+  setGroupMcpPolicy:
+    request: "expires: { <mcp id or name>: date-time | null }"
+    response: "McpPolicy.expires: { <mcp id>: date-time }"
+  getMyAccess:
+    response: "mcp_access[]: { name, expires_at }; budget.exception: { cap_usd, group_cap_usd, approved_by, expires_at }"

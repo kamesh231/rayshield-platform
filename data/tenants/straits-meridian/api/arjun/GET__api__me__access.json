@@ -29,6 +29,12 @@
   "mcp_servers": [
    "jira"
   ],
+  "mcp_access": [
+   {
+    "name": "jira",
+    "expires_at": null
+   }
+  ],
   "mcp_policy": {
    "allow": [
     "jira"

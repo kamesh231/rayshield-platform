@@ -1,12 +1,12 @@
 {
   "name": "rayshield-demo",
   "version": "1.0.0",
-  "description": "RayShield Console demo — Northwind Capital (default) and Straits Meridian Bank (fictional) tenants",
+  "description": "RayShield Console demo \u2014 Northwind Capital (default) and Straits Meridian Bank (fictional) tenants",
   "main": "index.js",
   "scripts": {
     "build:console": "node scripts/build-console.mjs",
     "build:tenant": "node scripts/gen-canonical.mjs && node scripts/build-tenant-fixtures.mjs",
-    "start": "node src/server.js",
+    "start": "node src/main.js",
     "start:bank": "DEMO_TENANT=straits-meridian node src/server.js",
     "dev": "node src/server.js",
     "validate:tenant": "node scripts/validate-tenant.mjs",
@@ -14,7 +14,8 @@
     "check:storyline": "node scripts/storyline-check.mjs",
     "shots:bank": "node scripts/shots-bank.mjs",
     "check:persistence:write": "PHASE=write node scripts/persistence-check.mjs",
-    "check:persistence:verify": "PHASE=verify node scripts/persistence-check.mjs"
+    "check:persistence:verify": "PHASE=verify node scripts/persistence-check.mjs",
+    "start:live": "DEMO_TENANT=fleet node src/main.js"
   },
   "keywords": [],
   "author": "",

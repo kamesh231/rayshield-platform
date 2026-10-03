@@ -2,6 +2,7 @@
   "version": "0.0.1",
   "configurations": [
     { "name": "straits-meridian", "runtimeExecutable": "node", "runtimeArgs": ["src/server.js"], "env": { "DEMO_TENANT": "straits-meridian", "PORT": "3000" }, "port": 3000 },
-    { "name": "northwind", "runtimeExecutable": "node", "runtimeArgs": ["src/server.js"], "env": { "DEMO_TENANT": "northwind", "PORT": "3002" }, "port": 3002 }
+    { "name": "northwind", "runtimeExecutable": "node", "runtimeArgs": ["src/server.js"], "env": { "DEMO_TENANT": "northwind", "PORT": "3002" }, "port": 3002 },
+    { "name": "fleet-live", "runtimeExecutable": "node", "runtimeArgs": ["src/main.js"], "env": { "DEMO_TENANT": "fleet", "PORT": "3004" }, "port": 3004 }
   ]
 }

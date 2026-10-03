@@ -33,19 +33,23 @@
   "groups_with_access": [
    {
     "id": "grp_payments_eng",
-    "name": "Engineering — Payments"
+    "name": "Engineering — Payments",
+    "access_expires_at": null
    },
    {
     "id": "grp_digital_eng",
-    "name": "Engineering — Digital Banking"
+    "name": "Engineering — Digital Banking",
+    "access_expires_at": null
    },
    {
     "id": "grp_contractors",
-    "name": "Vendor Engineering (contractors)"
+    "name": "Vendor Engineering (contractors)",
+    "access_expires_at": null
    },
    {
     "id": "grp_svc",
-    "name": "Service accounts (CI / ETL)"
+    "name": "Service accounts (CI / ETL)",
+    "access_expires_at": null
    }
   ],
   "created_at": 1783648800

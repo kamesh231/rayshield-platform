@@ -30,7 +30,8 @@
   "groups_with_access": [
    {
     "id": "grp_data",
-    "name": "Data & Analytics"
+    "name": "Data & Analytics",
+    "access_expires_at": null
    }
   ],
   "created_at": 1789178400

@@ -78,6 +78,55 @@ check((await call('weiling', 'POST', '/api/demo/reset')).status === 200, 'Reset 
 const s3 = (await call('weiling', 'GET', '/api/discovery/summary')).body;
 check(s3.services - s3.governance.unlabelled === 23, 'after reset: back to 23 of 27');
 
+beat('8 · Approvals, time-limited access, suspend and deboard (all four)');
+{
+  const inboxOf = async u => (await call(u, 'GET', '/api/inbox')).body;
+  check((await inboxOf('priscilla')).needs_decision.some(w => w.id === 'wf_confluence'), 'seeded: Rahul’s confluence request waits in the CISO inbox');
+  check((await call('arjun', 'POST', '/api/control/cues/cue_payments_v3/publish')).status === 403, 'Security cannot publish Payments CUE v4 directly (403)');
+  const sub = (await call('arjun', 'POST', '/api/workflows', { kind: 'cue_publish', cue_id: 'cue_payments_v3', reason: 'mask query results' })).body;
+  check(sub.status === 'pending' && sub.changes.some(c => /dlp-mask-query-results/.test(c)), 'Security sends CUE v4 for approval (+ dlp-mask-query-results)');
+  check((await inboxOf('priscilla')).updates.some(n => n.workflow_id === sub.id && !n.read), 'CISO gets an unread inbox notice');
+  check((await call('arjun', 'POST', `/api/workflows/${sub.id}/decision`, { decision: 'approve' })).status === 403, 'Security cannot approve it (403)');
+  check((await call('priscilla', 'POST', `/api/workflows/${sub.id}/decision`, { decision: 'return' })).status === 400, 'sending back needs a note (400)');
+  await call('priscilla', 'POST', `/api/workflows/${sub.id}/decision`, { decision: 'return', note: 'add the change ticket' });
+  check((await inboxOf('arjun')).my_requests.find(w => w.id === sub.id).status === 'returned', 'CISO sends it back; Security sees “sent back”');
+  await call('arjun', 'POST', '/api/workflows', { kind: 'cue_publish', cue_id: 'cue_payments_v3', reason: 'CHG-2231' });
+  const ok = (await call('priscilla', 'POST', `/api/workflows/${sub.id}/decision`, { decision: 'approve' })).body;
+  const cueNow = (await call('weiling', 'GET', '/api/control/cues')).body.find(c => c.id === 'cue_payments_v3');
+  check(ok.status === 'approved' && cueNow.latest_version === 4 && ok.history.map(h => h.action).join('>') === 'requested>sent back>resubmitted>approved', 'resubmitted, approved → Payments v4 published (maker Arjun, checker Priscilla)');
+  const t = await term('aegis mcp request confluence --reason "read runbooks while debugging settlement"');
+  check(/wf_confluence/.test(t) && /notified/.test(t), 'terminal request attaches to the open request and notifies both approvers');
+  const rec = (await call('arjun', 'POST', '/api/workflows/wf_confluence/recommendation', { recommendation: 'approve', note: 'read-only, scan passed' })).body;
+  check(rec.recommendations[0].by === 'Arjun Menon', 'Security recommends approval');
+  const g = (await call('weiling', 'POST', '/api/workflows/wf_confluence/decision', { decision: 'approve', access_ttl_minutes: 10080 })).body;
+  const acc = (await call('rahul', 'GET', '/api/me/access')).body.mcp_access.find(m => m.name === 'confluence');
+  const days = acc && Math.round((Date.parse(acc.expires_at) - Date.now()) / 86400000);
+  check(g.status === 'approved' && days === 7, `Admin approves confluence for 7 days → /me shows it expiring in ${days} days`);
+  const exp = new Date(Date.now() + 4000).toISOString();
+  await call('priscilla', 'PUT', '/api/control/groups/grp_soc/mcp-policy', { allow: ['mcp_jira'], expires: { mcp_jira: exp } });
+  check((await call('arjun', 'GET', '/api/control/groups/grp_soc/mcp-policy')).body.expires.mcp_jira === exp, 'CISO grants jira to Cyber Defence for 4 seconds');
+  await wait(11000);
+  const after = (await call('arjun', 'GET', '/api/control/groups/grp_soc/mcp-policy')).body;
+  check(!after.allow.includes('mcp_jira') && (await inboxOf('arjun')).updates.some(n => /jira access for Cyber Defence \(SOC\) expired/.test(n.text)), 'grant expires: jira removed from the group and people told');
+  check((await call('arjun', 'PATCH', '/api/control/mcp-bridge/mcp_github_enterprise', { status: 'blocked', suspend: true })).status === 403, 'Security cannot suspend directly (403)');
+  const sreq = (await call('arjun', 'POST', '/api/workflows', { kind: 'mcp_remove', action: 'suspend', bridge_id: 'mcp_github_enterprise', reason: 'vendor advisory' })).body;
+  await call('priscilla', 'POST', `/api/workflows/${sreq.id}/decision`, { decision: 'approve' });
+  const gh = (await call('arjun', 'GET', '/api/control/mcp-bridge/mcp_github_enterprise')).body;
+  check(gh.status === 'blocked' && gh.suspended && gh.suspended_by === 'Priscilla Goh', 'Security asks, CISO approves → github-enterprise suspended for every group');
+  const back = (await call('priscilla', 'PATCH', '/api/control/mcp-bridge/mcp_github_enterprise', { status: 'approved' })).body;
+  check(back.status === 'approved' && back.groups_with_access.length === 4, 'CISO reinstates it; its 4 groups keep access');
+  check((await call('priscilla', 'DELETE', '/api/control/mcp-bridge/mcp_warehouse')).status === 200 && !(await call('weiling', 'GET', '/api/control/mcp-bridge')).body.some(b => b.id === 'mcp_warehouse'), 'CISO deboards warehouse-mcp directly (reducing access needs no approval)');
+  const be = (await call('rahul', 'POST', '/api/workflows', { kind: 'budget_exception', cap_usd: 60, reason: 'month-end reconciliation' })).body;
+  check((await call('priscilla', 'POST', `/api/workflows/${be.id}/decision`, { decision: 'approve' })).status === 403, 'budget exception: CISO cannot approve (settings are Admin only)');
+  await call('weiling', 'POST', `/api/workflows/${be.id}/decision`, { decision: 'approve' });
+  check((await call('rahul', 'GET', '/api/me/access')).body.budget.cap_usd === 60, 'Admin approves → Rahul’s cap is USD 60 for 24 h');
+  const cc = (await call('priscilla', 'POST', '/api/workflows', { kind: 'console_change', slice: 'roles', op: 'createGroup', value: [], title: 'x', changes: [] })).body;
+  check(cc.approvers.length === 1 && /Tan Wei Ling/.test(cc.approvers[0]) && (await call('priscilla', 'POST', `/api/workflows/${cc.id}/decision`, { decision: 'approve' })).status === 403, 'CISO’s create-group request goes to Admin only; she cannot approve her own');
+  check((await call('weiling', 'POST', '/api/workflows', { kind: 'console_change', slice: 'roles', op: 'createGroup', value: [] })).status === 403, 'Admin never needs to ask (403)');
+  await call('weiling', 'POST', '/api/demo/reset');
+  check((await inboxOf('priscilla')).needs_decision.length === 1, 'after reset: only the seeded confluence request is waiting');
+}
+
 console.log(lines.join('\n'));
 console.log(`\n${bad ? bad + ' FAILED' : 'STORYLINE OK'} (${lines.filter(l => l.includes('PASS')).length} checks passed)`);
 process.exit(bad ? 1 : 0);

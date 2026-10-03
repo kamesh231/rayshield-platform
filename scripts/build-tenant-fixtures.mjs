@@ -57,6 +57,7 @@ for (const persona of Object.keys(P)) {
   const out = path.join(apiDir, persona); fs.mkdirSync(out, { recursive: true }); perPersona[persona] = { 200: 0, 403: 0, other: 0 };
   for (const op of MX.operations) {
     if (['login', 'refresh', 'logout'].includes(op.operationId)) continue;
+    if (op.live) continue; // inbox and approvals are live state only (src/workflows.js)
     const lv = op.access[persona];
     const isRead = op.method === 'GET';
     if (!isRead && lv !== 'deny') continue; // allowed writes are live-only (server mutates demo state)

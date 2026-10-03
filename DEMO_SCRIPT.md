@@ -83,9 +83,9 @@ Sign in as `weiling` once and click **Reset demo** before you start. The beats a
 > "Straits Meridian runs Shield, Core and the MCP Bridge — step 3 of 4; full containment is next.
 > **23 of 27** AI services have a governance decision. Shadow share is **3.1 %**, down from 5.4 % last week.
 > **90 %** of endpoints enforce (371 of 412). **17 of 17** critical detections were contained, and
-> **0 card or NRIC records left the bank**. Three decisions are waiting for me."
+> **0 card or NRIC records left the bank**. Two decisions are waiting for me."
 
-Point at *Needs attention*: the three DECISION rows and the four frameworks (named only — "mapping to be confirmed").
+Point at *Needs attention*: the DECISION rows (Rahul's confluence request, unlabelled services) and the four frameworks (named only — "mapping to be confirmed"). The sidebar shows **Inbox 1**.
 
 ### 2. A developer works (60s) — *window B, Terminal*
 Type: `aegis run claude-code --src ./settlement-recon --writable`
@@ -101,19 +101,25 @@ Switch to **My access** (`/me`): *My blocked events* explains why and how to fix
 ### 3. Security triages (75s) — *window C*
 Home → the card-data row (`det_01JA4K9PAN1`, escalated). Show masked evidence and the ed25519 signature.
 **Protect → Blast radius → Rahul Iyer**: LT-SG-2231 → Payments v3 → postgres-mcp (Aegis Bridge) → .env → cards.txn_ledger 1,240 rows → *Blocked before prompt left the sandbox*.
-**Control → CUEs → Payments draft v4** (by Arjun, adds `dlp-mask-query-results`).
+**Control → CUEs → Payments draft v4** (by Arjun, adds `dlp-mask-query-results`) → **Edit → Continue → Continue → Publish and sign**:
+> "Arjun wrote the fix, but he can't publish it. The console turns his click into a request: the change, the reason, and who approves. **Send for approval**, and it lands in Priscilla's and Wei Ling's inbox. Maker–checker, without a ticket queue."
+
+Window A shows a live 📥 toast; her Inbox goes to 2 and *Decisions awaiting you* to 3.
 **Discover → AI services**: DeepSeek (Prohibited, 6 Treasury endpoints); set **Perplexity → Under review** (governed becomes 24 of 27 everywhere).
-**Control → MCP Bridge → confluence → Approve**:
-> "Arjun can recommend, but the toast says only Tan Wei Ling or Priscilla Goh can approve. The server returns 403 even if he calls the API directly — maker-checker by design."
+**Control → MCP Bridge → confluence → Approve** → **Recommend approve**:
+> "He can't approve MCP servers either. The server returns 403 even on a direct API call. His recommendation is attached to Rahul's request, so the CISO sees the SOC's view before she decides."
 
 ### 4. The developer asks (30s) — *window B, Terminal*
 Type: `aegis mcp request confluence --reason "read runbooks while debugging settlement"`
-> "The scan passed; it's awaiting a decision." Windows A and the Admin console get a live toast; `/me` shows *confluence · awaiting decision*.
+> "Rahul asked from /me three hours ago; asking again from the terminal attaches to the same request. The scan passed and Security recommends it." The approvers get an inbox notice; `/me` shows *confluence · awaiting decision*.
 (Optional: `claude "open the runbook for settlement retries"` is blocked now.)
 
 ### 5. The CISO decides (45s) — *window A*
-Demo bar: **Approve confluence MCP**, then **Publish Payments CUE v4** (or use Control → MCP Bridge and Control → CUEs).
-> "One click adds confluence to the Payments group's MCP policy. Publishing signs v4 and pushes it — watch Rahul's terminal announce it."
+**Inbox** → *Publish Payments CUE v4* → **Approve and publish**. Then *confluence MCP server* → **Access lasts: 30 days** → **Approve**.
+(Shortcut: the demo bar's **Approve confluence MCP · 30 days** and **Publish Payments CUE v4**.)
+> "Approving runs the change as me: v4 is signed and pushed, and confluence joins the Payments group, for 30 days, not forever. When it expires the server takes it away and tells Rahul. Watch his terminal announce both."
+
+Optional: MCP Bridge → any onboarded server → **Suspend**. "Taking access away never waits for a second person." Then **Reinstate**.
 
 ### 6. The developer is unblocked (45s) — *window B, Terminal*
 Type: `claude "open the runbook for settlement retries"` — confluence answers.

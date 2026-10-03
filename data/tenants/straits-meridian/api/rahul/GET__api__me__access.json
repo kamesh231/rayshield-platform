@@ -39,6 +39,20 @@
    "github-enterprise",
    "jira"
   ],
+  "mcp_access": [
+   {
+    "name": "postgres-mcp",
+    "expires_at": null
+   },
+   {
+    "name": "github-enterprise",
+    "expires_at": null
+   },
+   {
+    "name": "jira",
+    "expires_at": null
+   }
+  ],
   "mcp_policy": {
    "allow": [
     "postgres-mcp",
@@ -67,6 +81,7 @@
    "cap_usd": 40,
    "cap_scope": "per_user_24h",
    "mode": "hard_stop",
+   "exception": null,
    "spend_today_usd": 18.4
   },
   "writable_mounts_note": "Writable paths are passed at launch with --src/--writable; they are not part of a CUE."

@@ -36,6 +36,7 @@ export function makeApi(canonical, personas, matrix) {
     const detections = [...(live.extraDetections || []), ...C.detections];
     const groups = [...C.groups, ...(live.apiGroups || [])].map(g => {
       let x = live.groupPolicy && live.groupPolicy[g.id] ? { ...g, ...live.groupPolicy[g.id] } : g;
+      if (live.mcpGrants && live.mcpGrants[g.id]) x = { ...x, _grants: live.mcpGrants[g.id] };
       const cid = live.groupCue && live.groupCue[g.id];
       if (cid) { const c = allCues.find(k => k.id === cid); x = { ...x, assigned_cue_id: cid, assigned_cue_name: c ? c.name + ' v' + c.version : cid }; }
       return x;
@@ -92,7 +93,8 @@ export function makeApi(canonical, personas, matrix) {
     if (redact) { origin = { ...origin, initial_prompt: null }; activity = activity.map(a => a.cat === 'prompt' ? { ...a, detail: null } : a); }
     return { session: s.sid, header, origin, boot, activity };
   }
-  const bridgeShape = (b, groups) => ({ id: b.id, name: b.name, source: b.source, kind: b.kind, status: b.status, risk_score: b.risk_score, risk_tier: b.risk_tier, capabilities: b.capabilities, findings: b.findings, approved_by: b.approved_by, approved_reason: b.approved_reason, groups_with_access: groups.filter(g => g.mcp_allow.includes(b.name)).map(g => groupRef(g.id)), created_at: b.created_at });
+  const bridgeShape = (b, groups) => ({ id: b.id, name: b.name, source: b.source, kind: b.kind, status: b.status, risk_score: b.risk_score, risk_tier: b.risk_tier, capabilities: b.capabilities, findings: b.findings, approved_by: b.approved_by, approved_reason: b.approved_reason, groups_with_access: groups.filter(g => g.mcp_allow.includes(b.name)).map(g => ({ ...groupRef(g.id), access_expires_at: expIso(g, b.name) })), created_at: b.created_at, ...(b.suspended ? { suspended: true, suspended_by: b.suspended_by, suspended_reason: b.suspended_reason || null } : {}) });
+  const expIso = (g, n) => { const x = (g._grants || {})[n]; return x && x.expires_at ? new Date(x.expires_at).toISOString() : null; };
   const cueField = (value, inheritedFrom) => ({ value, inherited: !!inheritedFrom, source: inheritedFrom || null });
   function cueDetail(c, cues, draft) {
     const base = c.base_cue_id ? cues.find(x => x.id === c.base_cue_id) : null;
@@ -104,7 +106,7 @@ export function makeApi(canonical, personas, matrix) {
   }
   const cueSummary = (c, draft) => ({ id: draft ? c.id.replace(/_v\d+$/, '') + '_v' + c.draft.version + '_draft' : c.id, name: c.name, tool: c.tool, scope: c.scope, scope_ref: c.scope_ref, base_cue_id: c.base_cue_id, latest_version: draft ? c.draft.version : c.version, endpoints_current: draft ? 0 : c.endpoints_current, endpoints_on_older: draft ? 0 : c.endpoints_on_older, state: draft ? 'draft' : c.state, updated_by: draft ? c.draft.by : c.updated_by, updated_at: draft ? c.draft.at : c.updated_at });
   const groupShape = g => ({ id: g.id, name: g.name, member_count: g.member_count, assigned_cue_id: g.assigned_cue_id, assigned_cue_name: g.assigned_cue_name, recert_due: g.recert_due, mcp_policy_id: 'mcpp_' + g.id.slice(4) });
-  const mcpPolicy = g => ({ group_id: g.id, allow: g.mcp_allow.map(n => (C.bridge.find(b => b.name === n) || {}).id || n), deny: g.mcp_deny.map(n => (C.bridge.find(b => b.name === n) || {}).id || n), updated_by: g.policy_updated_by || 'Tan Wei Ling', updated_at: g.policy_updated_at || NOW - 9 * 86400 });
+  const mcpPolicy = g => ({ group_id: g.id, allow: g.mcp_allow.map(n => (C.bridge.find(b => b.name === n) || {}).id || n), deny: g.mcp_deny.map(n => (C.bridge.find(b => b.name === n) || {}).id || n), updated_by: g.policy_updated_by || 'Tan Wei Ling', updated_at: g.policy_updated_at || NOW - 9 * 86400, expires: Object.fromEntries(g.mcp_allow.filter(n => expIso(g, n)).map(n => [(C.bridge.find(b => b.name === n) || {}).id || n, expIso(g, n)])) });
   const blastRoot = b => ({ execution_id: b.execution_id, ts: b.ts, owner: b.owner, host: b.host, cue_name: b.cue_name, tool: b.tool, worst_outcome: b.worst_outcome, dlp_label: b.dlp_label, node_count: b.node_count });
 
   // ---- self scope ----
@@ -293,14 +295,15 @@ export function makeApi(canonical, personas, matrix) {
     const allow = g ? g.mcp_allow : [];
     const approved = V.bridge.filter(b => b.status === 'approved' && allow.includes(b.name) && (!cue || cue.mcp_servers.includes(b.name) || b.name === 'confluence')).map(b => b.name);
     const budget = C.usage.by_group.find(x => x.group_id === gid);
+    const exc = ((live.budgetExceptions || {})[persona] || null) && live.budgetExceptions[persona].until > Date.now() ? live.budgetExceptions[persona] : null;
     return {
       user: { name: p.name, email: p.email, role: p.role_claim, group: groupRef(gid) },
       tools: [...new Set(C.endpoints.filter(x => x.user === p.name).flatMap(x => x.tools))],
       models: budget ? Object.keys(budget.models) : ['claude-sonnet-5'],
       cue: cue ? { id: cue.id, name: cue.name, version: cue.version, base: cue.base_cue_id ? V.cues.find(c => c.id === cue.base_cue_id).name : null, pending_draft: cue.draft ? { version: cue.draft.version, adds: cue.draft.add_dlp, by: cue.draft.by } : null } : null,
-      mcp_servers: approved, mcp_policy: g ? { allow: g.mcp_allow, deny: g.mcp_deny } : null,
+      mcp_servers: approved, mcp_access: approved.map(n => ({ name: n, expires_at: g ? expIso(g, n) : null })), mcp_policy: g ? { allow: g.mcp_allow, deny: g.mcp_deny } : null,
       egress_allow: cue ? cue.egress_allow : [], dlp_rules: cue ? cue.dlp_rules : [],
-      budget: budget && budget.cap_usd ? { cap_usd: budget.cap_usd, cap_scope: 'per_user_24h', mode: budget.mode, spend_today_usd: persona === 'rahul' ? C.usage.rahul_today.spend_usd + (live.rahulSpendExtra || 0) : null } : null,
+      budget: budget && budget.cap_usd ? { cap_usd: exc ? exc.cap_usd : budget.cap_usd, cap_scope: 'per_user_24h', mode: budget.mode, exception: exc ? { cap_usd: exc.cap_usd, group_cap_usd: budget.cap_usd, approved_by: exc.approved_by, expires_at: new Date(exc.until).toISOString() } : null, spend_today_usd: persona === 'rahul' ? C.usage.rahul_today.spend_usd + (live.rahulSpendExtra || 0) : null } : null,
       writable_mounts_note: 'Writable paths are passed at launch with --src/--writable; they are not part of a CUE.',
     };
   }

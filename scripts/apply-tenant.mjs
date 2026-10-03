@@ -56,6 +56,14 @@ template = once(template, 'Okta · northwind.okta.com', '{{ dirProvider }}', P(0
   template = template.slice(0, i) + row + template.slice(b); patched.push('sandbox row bound to tenant data'); }
 template = once(template, 'Partial coverage · sensor sase_zscaler has not reported for 3h 12m. Counts below reflect pcap only.', 'Partial coverage · sensor sase_zscaler (remote staff) has not reported for 2 h 40 m. Counts from that sensor stop at 07:20 SGT.', P(0, 'partial coverage banner'));
 
+// Inbox (approvals and notices) under Home; the panel itself is drawn by bridge-bank.js with the same tokens.
+template = once(template, `font-weight:400">posture</div></button>`, `font-weight:400">posture</div></button>
+  <button onClick="{{ openInbox }}" style="text-align:left;background:{{ inboxBg }};border:0;padding:8px 10px;border-radius:4px;cursor:pointer;color:{{ inboxColor }}"><div style="font-size:13px;font-weight:600;display:flex;justify-content:space-between;align-items:center">Inbox<span style="font-family:'JetBrains Mono',monospace;font-size:10.5px;color:#B4530A">{{ inboxBadge }}</span></div><div style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:400">approvals · updates</div></button>`, P(0, 'sidebar inbox'));
+// MCP Bridge: onboarded servers can be suspended (kill switch) or deboarded; same button style as Approve / Reject.
+template = once(template, `<sc-if value="{{ b.noDecide }}" hint-placeholder-val="{{ true }}"><span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#5b6773;text-align:right">{{ b.meta }}</span></sc-if>`,
+  `<sc-if value="{{ b.noDecide }}" hint-placeholder-val="{{ true }}"><span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#5b6773;text-align:right">{{ b.meta }}</span></sc-if>
+              <sc-if value="{{ b.canManage }}" hint-placeholder-val="{{ false }}"><span title="{{ b.meta }}" style="display:flex;gap:6px"><button onClick="{{ b.manage }}" disabled="{{ bridgeRO }}" style="border:1px solid #d5dce3;background:#fff;border-radius:4px;padding:4px 8px;cursor:pointer;font-size:12px;color:{{ b.manageColor }}">{{ b.manageLabel }}</button><button onClick="{{ b.deboard }}" disabled="{{ bridgeRO }}" style="border:1px solid #d5dce3;background:#fff;border-radius:4px;padding:4px 8px;cursor:pointer;font-size:12px;color:#C4293A">Deboard</button></span></sc-if>`, P(0, 'bridge suspend / deboard'));
+
 // ---------------------------------------------------------------- component logic patches
 const appRe = /(<script type="text\/x-dc"[^>]*>)([\s\S]*?)(<\/script>)/;
 let app = template.match(appRe)[2];
@@ -95,7 +103,7 @@ for (const d of ["'24 Sep 2026'", "'27 Sep 2026'"]) { const n = count(app.slice(
 app = once(app, "page: 'home', window: 'Daily',", "page: 'home', window: __S.DEFAULT_WINDOW || 'Daily',", P(0, 'default window'));
 app = once(app, "radSel: 'k', radRun: 'run-7f3a21',", "radSel: (RADIUS[0] || {}).id, radRun: ((RADIUS[0] || { runs: [{}] }).runs[0] || {}).id,", P(0, 'radius default'));
 app = once(app, "selRole: 'contractor',", "selRole: (ROLES0[0] || {}).id,", P(0, 'group default'));
-app = once(app, "cueSel: 'cc-eng',", "cueSel: (CUES0[1] || CUES0[0]).id,", P(0, 'cue default'));
+app = once(app, "cueSel: 'cc-eng',", "cueSel: ((CUES0[1] || CUES0[0]) || {}).id,", P(0, 'cue default'));
 app = once(app, "dirSynced: '14:00',", "dirSynced: (__S.TEXT ? __S.TEXT.directory.synced : '14:00'),", P(0, 'directory sync time'));
 
 // 4. role, data state, group names, CUE counts, drafts, drift per tool
@@ -197,6 +205,22 @@ app = once(app, "'unapproved-ai-record' : 'dlp-source-code';", "'unapproved-ai-r
 app = once(app, "const AGSVC = { 'claude-code': 'Anthropic Claude', 'gemini-cli': 'Google Gemini', 'codex-cli': 'OpenAI ChatGPT' };", "const AGSVC = (__S.TEXT && __S.TEXT.deviceDetail.agentSvc) || { 'claude-code': 'Anthropic Claude', 'gemini-cli': 'Google Gemini', 'codex-cli': 'OpenAI ChatGPT' };", P(0, 'device feed agent services'));
 app = once(app, "let tMin = 13 * 60 + 58;", "let tMin = __S.CLOCK ? 9 * 60 + 58 : 13 * 60 + 58;", P(0, 'device feed clock'));
 app = once(app, "new Date(2026, 8, 24 - Math.floor(", "new Date(2026, 8, (__S.CLOCK ? 28 : 24) - Math.floor(", P(0, 'device feed dates'));
+
+// 14. MCP Bridge: suspend / deboard onboarded servers, time-limited group access shown next to each grant
+app = once(app, "Rejected: 'Prohibited' };", "Rejected: 'Prohibited', Suspended: 'Prohibited' };", P(0, 'suspended chip'));
+app = once(app, "canDecide: b.status === 'Awaiting approval', noDecide: b.status !== 'Awaiting approval', meta: b.date + ' · ' + b.by,",
+  "canDecide: b.status === 'Awaiting approval', canManage: !!window.__demoBridge && ['Onboarded', 'Suspended'].includes(b.status), noDecide: b.status !== 'Awaiting approval' && !(window.__demoBridge && ['Onboarded', 'Suspended'].includes(b.status)), meta: b.date + ' · ' + b.by, manageLabel: b.status === 'Suspended' ? 'Reinstate' : 'Suspend', manageColor: b.status === 'Suspended' ? '#157F4E' : '#B4530A', manage: () => window.__demoBridge.onSuspendMcp(b), deboard: () => window.__demoBridge.onDeboardMcp(b),", P(0, 'bridge row actions'));
+app = once(app, "gp => gp.name).join(', ') || 'no group yet'", "gp => gp.name + (window.__rsExp ? window.__rsExp(b.name, gp.id) : '')).join(', ') || 'no group yet'", P(0, 'bridge access expiry'));
+app = once(app, "label: on ? 'Allowed' : 'Denied'", "label: on ? 'Allowed' + (window.__rsExp ? window.__rsExp(b.name, gp.id, true) : '') : 'Denied'", P(0, 'access grid expiry'));
+
+// 15. live mode (Fleet data): open a session's own activity when the seed has it, not only the three samples
+app = once(app, "const c = st.cues.find(x => x.id === st.cueSel) || st.cues[0], n = this.cueCounts(c);", "const c = st.cues.find(x => x.id === st.cueSel) || st.cues[0] || { id: '', tool: TOOL_IDS[0], role: (ROLES0[0] || {}).id, v: 0, state: 'unsigned', pub: '—', by: '—', how: 'No CUE yet', env: [], hist: [] }, n = this.cueCounts(c);", P(0, 'cue empty state'));
+app = once(app, "const e = FLEET.find(x => x.id === st.detailId) || FLEET.find(x => x.behind && x.user && x.tools.length > 1) || FLEET[0];", "const e = FLEET.find(x => x.id === st.detailId) || FLEET.find(x => x.behind && x.user && x.tools.length > 1) || FLEET[0] || { id: '', endpoint_id: '', type: 'laptop', host: 'No devices enrolled yet', ip: '—', user: null, dept: '—', svcCount: 0, daily: 0, firstSeen: '—', ephemeral: false, lastMin: 0, sensor: '—', noAgent: true, recordOnly: false, offline: false, bundleV: null, allowed: 0, blocked: 0, recorded: 0, checkin: '—', role: null, tools: [], devId: 'dev-none', behind: false, behindTool: null };", P(0, 'device empty state'));
+app = once(app, "const R = RADIUS.find(r => r.id === st.radSel) || RADIUS[0];", "const R = RADIUS.find(r => r.id === st.radSel) || RADIUS[0] || { id: '', user: '—', ep: '—', cue: '—', total: 0, last: '—', runs: [] };", P(0, 'radius empty state'));
+app = once(app, "for (let i = 0; i < 14; i++) {", "for (let i = 0; i < (evGroups.length ? 14 : 0); i++) {", P(0, 'budget stops need groups'));
+app = once(app, "const epSel = MCP_EPS[st.mdEp || 0];", "const epSel = MCP_EPS[st.mdEp || 0] || { label: 'No endpoint scans yet', type: '—', items: [] };", P(0, 'MCP scan empty state'));
+app = once(app, "const run = allRuns.find(x => x.id === st.radRun) || allRuns[0];", "const run = allRuns.find(x => x.id === st.radRun) || allRuns[0] || { id: '', when: '—', cue: '—', mcp: '—', sbx: '—', cred: '—', data: '—', action: '—', dlpLong: '—' };", P(0, 'radius run empty state'));
+app = once(app, "const b = sel ? this.buildFeed(SESSIONS[sel.shape]) : null;", "const b = sel ? this.buildFeed(SESSIONS[sel.id] || SESSIONS[sel.shape]) : null;", P(0, 'session feed by id'));
 
 // 13. settings directory
 app = once(app, "dirMapped: directory ? '96 of 133' : '0 of 133',", "dirMapped: directory ? (__S.TEXT ? __S.TEXT.directory.mapped : '96 of 133') : '0 of ' + ENDPOINTS.length,", P(0, 'directory mapped'));

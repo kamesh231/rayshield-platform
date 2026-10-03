@@ -4,6 +4,7 @@
 import crypto from 'node:crypto';
 import { getState, emit } from '../state.js';
 import { BANK } from '../tenants/index.js';
+import { workflows } from '../workflows.js';
 
 const C = { r: '\x1b[0m', b: '\x1b[1m', d: '\x1b[2m', red: '\x1b[31m', grn: '\x1b[32m', yel: '\x1b[33m', blu: '\x1b[34m', mag: '\x1b[35m', cyn: '\x1b[36m', gry: '\x1b[90m' };
 const A = `${C.cyn}aegis ▸${C.r}`, OK = `${C.grn}✓${C.r}`;
@@ -12,6 +13,8 @@ const line = (s = '') => s + '\r\n';
 const sid = () => 'sbx_' + crypto.randomBytes(6).toString('hex');
 const CAN = () => BANK.canonical;
 const DOMAIN = () => CAN().meta.domain;
+const ago = ms => { const m = Math.max(0, Math.round((Date.now() - ms) / 60000)); return m < 1 ? 'just now' : m < 60 ? m + ' min ago' : Math.round(m / 60) + ' h ago'; };
+const expLabel = ms => { const m = Math.max(1, Math.round((ms - Date.now()) / 60000)); return 'expires in ' + (m < 60 ? m + ' min' : m < 2880 ? Math.round(m / 60) + ' h' : Math.round(m / 1440) + ' days'); };
 const PAN = '4539 •••• •••• 1187', NRIC = 'S•••••••D';
 
 export const HOSTS = {
@@ -109,20 +112,31 @@ function h_settlement(h, cmd) {
     line(`${C.gry}Why and how to fix: open ${C.r}${C.b}/me${C.r}${C.gry} → My blocked events. Security sees ${rowId} in Protect → Detections.${C.r}`) };
 }
 
-function h_request(h, cmd) {
+function h_request(h, cmd, who) {
   const b = getState().bank;
   const reason = (cmd.match(/--reason\s+"([^"]+)"/) || cmd.match(/--reason\s+(.+)$/) || [])[1] || 'read runbooks while debugging settlement';
-  if ((b.bridge.mcp_confluence || {}).status === 'approved') return { out: line(`${A} confluence is already approved for Engineering — Payments. Try: ${C.b}claude "open the runbook for settlement retries"${C.r}`) };
-  if ((b.bridge.mcp_confluence || {}).status === 'blocked') return { out: line(`${A} confluence was blocked by ${b.bridge.mcp_confluence.approved_by}. Reason: ${b.bridge.mcp_confluence.approved_reason || '—'}`) };
+  const bc = b.bridge.mcp_confluence || {};
+  if (bc.suspended) return { out: line(`${A} confluence is ${C.red}suspended${C.r} by ${bc.suspended_by} for every group. Ask the SOC or your admin why.`) };
+  if (confluenceOk()) { const g = ((b.mcpGrants || {}).grp_payments_eng || {}).confluence; return { out: line(`${A} confluence is already approved for Engineering — Payments${g && g.expires_at ? ` (${expLabel(g.expires_at)})` : ''}. Try: ${C.b}claude "open the runbook for settlement retries"${C.r}`) }; }
+  if (bc.status === 'blocked') return { out: line(`${A} confluence was blocked by ${bc.approved_by}. Reason: ${bc.approved_reason || '—'}`) };
+  if (bc.status === 'approved') { // approved in the Bridge but the group's access expired or was removed: ask for a renewal
+    const W = workflows(), r = W && who ? W.submit(who, { kind: 'mcp_access', name: 'confluence', reason, via: 'terminal' }) : null;
+    return { out: line(`${A} requesting ${C.b}renewed${C.r} access to confluence for Engineering — Payments`) + line(`     reason: “${reason}”`) +
+      line(`     status: ${C.yel}${C.b}awaiting decision${C.r} — Tan Wei Ling (Admin) or Priscilla Goh (CISO)${r && r.status === 200 ? ` · request ${r.body.id}` : ''}`) + line(`     inbox:  ${OK} Tan Wei Ling and Priscilla Goh notified`) }; }
   if (!b.myRequests.some(r => r.name === 'confluence')) b.myRequests.push({ by: 'rahul', name: 'confluence', reason, at: Date.now(), via: 'terminal' });
   emit({ type: 'mcpRequest', mcpId: 'm-confluence', bridgeId: 'mcp_confluence', name: 'confluence', by: 'Rahul Iyer', host: h.hostId, reason, tool: 'claude-code', role: 'payments-eng' });
+  // Attach to the open approval request (seeded 3 h ago from /me); the approvers get an inbox notice.
+  const W = workflows(), before = W && W.openFor('mcp:mcp_confluence');
+  const r = W && who && who.id === 'rahul' ? W.submit(who, { kind: 'mcp_access', name: 'confluence', reason, via: 'terminal' }) : null;
+  const wf = r && r.status === 200 ? r.body : null;
   return { out:
     line(`${A} requesting MCP server ${C.b}confluence${C.r} for Engineering — Payments`) +
     line(`     reason: “${reason}”`) +
-    line(`     ${C.gry}MCP Bridge: confluence (requested 3 h ago from the console) — your terminal request is attached${C.r}`) +
+    line(`     ${C.gry}${before ? `request ${before.id} (opened ${ago(before.requested_at)} from /me) — your terminal request is attached` : wf ? `request ${wf.id} opened` : 'MCP Bridge: confluence'}${C.r}`) +
     line(`     scan:   ${C.yel}scanning…${C.r} ${OK} passed · read-only (search, get_page) · risk low`) +
     line(`     status: ${C.yel}${C.b}awaiting decision${C.r} — Tan Wei Ling (Admin) or Priscilla Goh (CISO)`) +
-    line(`${C.gry}Track it on /me → My MCP requests. The terminal announces the decision.${C.r}`) };
+    line(`     inbox:  ${OK} Tan Wei Ling and Priscilla Goh notified${wf && wf.recommendations.length ? ` · ${wf.recommendations.map(x => x.by + ' recommends ' + (x.recommendation === 'block' ? 'blocking' : 'approval')).join(' · ')}` : ''}`) +
+    line(`${C.gry}Track it on /me → Inbox. The terminal announces the decision.${C.r}`) };
 }
 
 function h_runbook(h) {

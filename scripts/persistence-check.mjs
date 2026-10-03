@@ -20,7 +20,7 @@ const browser = await chromium.launch({ channel: process.env.PW_CHANNEL === unde
 const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } });
 const page = await ctx.newPage(); page.setDefaultTimeout(8000);
 const signIn = async (u) => { await page.goto(BASE + '/login'); await page.fill('#u', u); await page.fill('#p', 'demo'); await page.click('button.go'); await page.waitForURL(/\/(console|me)/); await page.waitForTimeout(1500); };
-const signOut = async () => { await page.getByRole('button', { name: 'Sign out', exact: true }).click(); await page.waitForURL(/\/login/); };
+const signOut = async () => { await page.getByRole('button', { name: 'Sign out', exact: true }).first().click(); await page.waitForURL(/\/login/); };
 const nav = async (top, sub) => { await page.locator('aside button').filter({ hasText: new RegExp('^\\s*' + top) }).first().click(); await page.waitForTimeout(400); if (sub) { await page.locator('aside button').filter({ hasText: new RegExp('^\\s*' + sub) }).first().click(); await page.waitForTimeout(500); } };
 const main = () => page.locator('main').innerText();
 const apiAs = async (u, method, url, body) => { const c = await browser.newContext(); await c.request.post(BASE + '/api/login', { data: { username: u, password: 'demo' } }); const r = await c.request.fetch(BASE + url, { method, data: body }); const j = await r.json().catch(() => null); await c.close(); return { status: r.status(), body: j }; };
@@ -50,8 +50,10 @@ if (PHASE === 'write') {
   await signIn('arjun'); await nav('Control', 'Groups');
   await page.locator('main').getByText('Retail Banking Operations', { exact: true }).first().click(); await page.waitForTimeout(300);
   await page.getByRole('button', { name: 'Deactivate group' }).click(); await page.waitForTimeout(1800);
-  const toast = await page.locator('[role=status]').innerText().catch(() => '');
-  check(/Only .* can change groups/.test(toast), `Security's edit refused: "${toast.slice(0, 90)}"`);
+  // The server refuses it; the console puts the old value back and offers to send the change for approval.
+  const ask = await page.locator('aside[aria-label=Inbox]').innerText().catch(() => '');
+  check(/request approval/i.test(ask) && /deactivate group Retail Banking Operations/i.test(ask) && /Tan Wei Ling \(Admin\) or Priscilla Goh \(CISO\)/.test(ask), 'Security\'s edit refused → approval prompt names the change and who approves');
+  await page.locator('aside[aria-label=Inbox]').getByRole('button', { name: 'Discard' }).click();
   check((await groupActive('Retail Banking Operations')) !== false && (await page.getByRole('button', { name: 'Deactivate group' }).count()) === 1, 'console rolled back — Retail Banking Operations still active');
   await signOut();
   // an API write is saved too

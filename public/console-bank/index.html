@@ -24,6 +24,7 @@ input,select,textarea{font-family:inherit;color:#0B1220}
 <aside style="width:212px;flex:none;background:#fff;border-right:1px solid #d5dce3;padding:20px 12px;display:{{ railDisplay }};flex-direction:column;gap:2px;position:sticky;top:0;height:100vh;box-sizing:border-box;overflow:auto">
   <div style="display:flex;align-items:center;padding:0 10px 18px"><img src="/console-bank/assets/rayshield-logo-light.svg" alt="RayShield" style="height:26px;width:auto;display:block"></div>
   <button onClick="{{ goHome }}" style="text-align:left;background:{{ navHomeBg }};border:0;padding:8px 10px;border-radius:4px;cursor:pointer;color:{{ navHomeColor }}"><div style="font-size:13px;font-weight:600">Home</div><div style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:400">posture</div></button>
+  <button onClick="{{ openInbox }}" style="text-align:left;background:{{ inboxBg }};border:0;padding:8px 10px;border-radius:4px;cursor:pointer;color:{{ inboxColor }}"><div style="font-size:13px;font-weight:600;display:flex;justify-content:space-between;align-items:center">Inbox<span style="font-family:'JetBrains Mono',monospace;font-size:10.5px;color:#B4530A">{{ inboxBadge }}</span></div><div style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:400">approvals · updates</div></button>
   <button onClick="{{ goOverview }}" style="text-align:left;background:{{ navDiscoverBg }};border:0;padding:8px 10px;border-radius:4px;cursor:pointer;color:{{ navDiscoverColor }}"><div style="font-size:13px;font-weight:600">Discover</div><div style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:400">inventory · reach</div></button>
   <sc-if value="{{ discoverOpen }}" hint-placeholder-val="{{ true }}">
   <div style="display:flex;flex-direction:column;gap:1px;padding:2px 0 6px 10px;border-left:1px solid #e3e8ed;margin-left:14px">
@@ -778,6 +779,7 @@ input,select,textarea{font-family:inherit;color:#0B1220}
             <span style="display:flex;gap:6px;justify-content:flex-end;align-items:center">
               <sc-if value="{{ b.canDecide }}" hint-placeholder-val="{{ false }}"><button onClick="{{ b.approve }}" disabled="{{ bridgeRO }}" style="border:1px solid #d5dce3;background:#fff;border-radius:4px;padding:4px 10px;cursor:pointer;font-size:12px;color:#157F4E">Approve</button><button onClick="{{ b.reject }}" disabled="{{ bridgeRO }}" style="border:1px solid #d5dce3;background:#fff;border-radius:4px;padding:4px 10px;cursor:pointer;font-size:12px;color:#C4293A">Reject</button></sc-if>
               <sc-if value="{{ b.noDecide }}" hint-placeholder-val="{{ true }}"><span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#5b6773;text-align:right">{{ b.meta }}</span></sc-if>
+              <sc-if value="{{ b.canManage }}" hint-placeholder-val="{{ false }}"><span title="{{ b.meta }}" style="display:flex;gap:6px"><button onClick="{{ b.manage }}" disabled="{{ bridgeRO }}" style="border:1px solid #d5dce3;background:#fff;border-radius:4px;padding:4px 8px;cursor:pointer;font-size:12px;color:{{ b.manageColor }}">{{ b.manageLabel }}</button><button onClick="{{ b.deboard }}" disabled="{{ bridgeRO }}" style="border:1px solid #d5dce3;background:#fff;border-radius:4px;padding:4px 8px;cursor:pointer;font-size:12px;color:#C4293A">Deboard</button></span></sc-if>
             </span>
           </div>
         </sc-for>
@@ -2110,7 +2112,7 @@ const cueRef = (c, v) => c.tool + '/' + c.role + '@v' + (v ?? c.v);
 const defaultRows = t => TOOLS[t].rows.filter(r => r[0] !== 'mount').map(r => ({ sec: r[0], value: r[1], detail: r[2], origin: 'default', since: 'v1', ref: 'shipped with ' + t, b: null }));
 const MCP_CATALOG = (__S.MCP_CATALOG !== undefined) ? __S.MCP_CATALOG : [['github','search_code · get_file · create_pull_request','repo.read'],['sentry','list_issues · get_issue',null],['postgres-mcp','query · list_tables · describe_table','db.write'],['notion','search · read_page',null],['filesystem','read_file · list_directory · write_file',null],['redis-mcp','get · set · scan · del',null]];
 
-const MCP_CHIP = { Onboarded: 'Approved', Reviewed: 'Approved', 'Not onboarded': 'Unapproved', Vulnerable: 'Prohibited', Unreviewed: 'Unlabelled', 'Awaiting approval': 'Under review', Scanning: 'Unlabelled', Rejected: 'Prohibited' };
+const MCP_CHIP = { Onboarded: 'Approved', Reviewed: 'Approved', 'Not onboarded': 'Unapproved', Vulnerable: 'Prohibited', Unreviewed: 'Unlabelled', 'Awaiting approval': 'Under review', Scanning: 'Unlabelled', Rejected: 'Prohibited', Suspended: 'Prohibited' };
 const PROVIDERS = (__S.PROVIDERS !== undefined) ? __S.PROVIDERS : [
   { id: 'p-openai', name: 'OpenAI', svc: 0, eps: 88, tools: [['ChatGPT','browser · desktop app',71,4380],['Codex','web · cloud tasks',16,640],['Codex CLI','terminal',23,1080]] },
   { id: 'p-anthropic', name: 'Anthropic', svc: 2, eps: 37, tools: [['Claude Web','browser · desktop app',29,690],['Claude Code','IDE extension',18,380],['Claude Code CLI','terminal',21,230]] },
@@ -2272,7 +2274,7 @@ class Component extends DCLogic {
   state = {
     page: 'home', window: __S.DEFAULT_WINDOW || 'Daily', editing: false, dragId: null,
     layouts: this.loadLayouts(), panel: null, statusFilter: 'all', typeFilter: 'all', search: '',
-    graphMode: 'users', selectedNode: null, policies: POLICIES.map(p => ({ ...p, active: true, edges: (BLAST_POLICIES.find(b => b.name === p.name) || { edges: [] }).edges })), pf: null, roles: ROLES0, provOpen: { 'p-anthropic': true }, bridge: BRIDGE0, access: ACCESS0, mdFilter: 'all', mdEp: 0, radSel: (RADIUS[0] || {}).id, radRun: ((RADIUS[0] || { runs: [{}] }).runs[0] || {}).id, radView: 'graph', obOpen: false, obName: '', obSource: '', selRole: (ROLES0[0] || {}).id, controlTab: 'roles', showNewRole: false, nr: { name: '', desc: '', owner: __WHO, review: '22 Dec 2026' }, importStep: 0, importSrc: 0, blastSubject: null, fleetFilter: 'all', fleetLimit: 14, detailId: null, outcomeFilter: 'all', pushed: null, mcp: MCP0.map(m => ({ ...m, roleScope: 0, toolScope: 0, decision: null })), mcpTab: 'pending', mcpLast: null, setTab: 'sensors', dirSyncing: false, dirSynced: (__S.TEXT ? __S.TEXT.directory.synced : '14:00'), blastQuery: '', blastInactive: false, dsRole: 'all', dsCue: 'live', cues: CUES0, cueGroup: 'tool', cueSel: (CUES0[1] || CUES0[0]).id, gen: null, cuePub: null, retireOpen: false, v2Node: null, v2Edge: null, v2Focus: null, v2Removals: [], v2Q: null, v2Asset: null, v2OnlyNew: false, v2OnlyUnmon: false, dsPolicies: ['dlp-pii-outbound','ledger-read-mfa','ci-model-egress','dlp-source-code'], bundle: 42, undoUntil: false, hoverEdge: null, overrides: {}, decisions: [],
+    graphMode: 'users', selectedNode: null, policies: POLICIES.map(p => ({ ...p, active: true, edges: (BLAST_POLICIES.find(b => b.name === p.name) || { edges: [] }).edges })), pf: null, roles: ROLES0, provOpen: { 'p-anthropic': true }, bridge: BRIDGE0, access: ACCESS0, mdFilter: 'all', mdEp: 0, radSel: (RADIUS[0] || {}).id, radRun: ((RADIUS[0] || { runs: [{}] }).runs[0] || {}).id, radView: 'graph', obOpen: false, obName: '', obSource: '', selRole: (ROLES0[0] || {}).id, controlTab: 'roles', showNewRole: false, nr: { name: '', desc: '', owner: __WHO, review: '22 Dec 2026' }, importStep: 0, importSrc: 0, blastSubject: null, fleetFilter: 'all', fleetLimit: 14, detailId: null, outcomeFilter: 'all', pushed: null, mcp: MCP0.map(m => ({ ...m, roleScope: 0, toolScope: 0, decision: null })), mcpTab: 'pending', mcpLast: null, setTab: 'sensors', dirSyncing: false, dirSynced: (__S.TEXT ? __S.TEXT.directory.synced : '14:00'), blastQuery: '', blastInactive: false, dsRole: 'all', dsCue: 'live', cues: CUES0, cueGroup: 'tool', cueSel: ((CUES0[1] || CUES0[0]) || {}).id, gen: null, cuePub: null, retireOpen: false, v2Node: null, v2Edge: null, v2Focus: null, v2Removals: [], v2Q: null, v2Asset: null, v2OnlyNew: false, v2OnlyUnmon: false, dsPolicies: ['dlp-pii-outbound','ledger-read-mfa','ci-model-egress','dlp-source-code'], bundle: 42, undoUntil: false, hoverEdge: null, overrides: {}, decisions: [],
   };
   componentDidMount() {
     if (window.__demoBridge) window.__demoBridge.attach(this);
@@ -2621,7 +2623,7 @@ class Component extends DCLogic {
     const sel = filtered.find(s => s.id === st.sessSel) || filtered[0] || all[0];
     const chip = (k, label) => ({ label, n: String(__S.SESSION_TOTALS ? __S.SESSION_TOTALS[k === 'all' ? 'total' : k].toLocaleString() : k === 'all' ? all.length : all.filter(s => s.shape === k).length), on: oc === k, select: () => this.setState({ sessOutcomeFilter: k }), color: k === 'all' ? mute : OUT[k].color });
     const slRows = filtered.map(s => ({ id: s.id, host: s.host, owner: s.owner, group: s.group, start: fmtDay(s.ts), events: String(s.ev), detBlk: s.det || s.blk ? (s.det ? s.det + ' det' : '') + (s.det && s.blk ? ' · ' : '') + (s.blk ? s.blk + ' blk' : '') : '—', outLabel: OUT[s.shape].label, outColor: OUT[s.shape].color, outBg: OUT[s.shape].bg, outBd: OUT[s.shape].bd, sel: sel && s.id === sel.id, rowBg: sel && s.id === sel.id ? '#ECEEFF' : 'transparent', select: () => this.setState({ sessSel: s.id }) }));
-    const b = sel ? this.buildFeed(SESSIONS[sel.shape]) : null;
+    const b = sel ? this.buildFeed(SESSIONS[sel.id] || SESSIONS[sel.shape]) : null;
     return {
       isSessions: true,
       sessQ: st.sessQ || '', setSessQ: e => this.setState({ sessQ: e.target.value }),
@@ -2715,7 +2717,7 @@ class Component extends DCLogic {
     const evGroups = withRank.filter(g => g.stops > 0);
     const stopEvents = [];
     const rr = rng(90210);
-    for (let i = 0; i < 14; i++) {
+    for (let i = 0; i < (evGroups.length ? 14 : 0); i++) {
       const g = evGroups[Math.floor(Math.pow(rr(), 1.3) * evGroups.length) % evGroups.length];
       const names = NAMES[g.roleId] || ['unmapped'];
       const person = names[Math.floor(rr() * names.length)];
@@ -2914,7 +2916,7 @@ class Component extends DCLogic {
     const enforcing = FLEET.filter(e => !e.noAgent && !e.recordOnly && !e.offline && !behindOf(e)).length;
     const sum = k => FLEET.reduce((a, e) => a + e[k], 0);
     const chip = (k, label) => { const on = st.fleetFilter === k; return { label, count: String(FLEET.filter(F[k]).length), bg: on ? '#ECEEFF' : 'transparent', border: on ? '#d5dce3' : 'transparent', color: on ? '#4F5BD5' : mute, select: () => this.setState({ fleetFilter: k, fleetLimit: 14 }) }; };
-    const e = FLEET.find(x => x.id === st.detailId) || FLEET.find(x => x.behind && x.user && x.tools.length > 1) || FLEET[0];
+    const e = FLEET.find(x => x.id === st.detailId) || FLEET.find(x => x.behind && x.user && x.tools.length > 1) || FLEET[0] || { id: '', endpoint_id: '', type: 'laptop', host: 'No devices enrolled yet', ip: '—', user: null, dept: '—', svcCount: 0, daily: 0, firstSeen: '—', ephemeral: false, lastMin: 0, sensor: '—', noAgent: true, recordOnly: false, offline: false, bundleV: null, allowed: 0, blocked: 0, recorded: 0, checkin: '—', role: null, tools: [], devId: 'dev-none', behind: false, behindTool: null };
     const eCues = this.epCues(e);
     const r = rng(e.host.length * 97 + e.daily);
     const svcs = SERVICES.slice(0, 16);
@@ -3193,7 +3195,7 @@ class Component extends DCLogic {
     const keys = byTool ? TOOL_IDS : [...new Set(st.cues.map(c => c.role))];
     const cueGroups = keys.map(k => { const cs = st.cues.filter(c => (byTool ? c.tool : c.role) === k && (!cq || [c.tool, RN(c.role), cueRef(c), c.by, c.how, ...c.env.map(r => r.value)].some(v => v.toLowerCase().includes(cq)))), live = cs.filter(c => c.state !== 'retired').length; return { label: byTool ? k : RN(k), sub: live + (live === 1 ? ' CUE' : ' CUEs') + (byTool ? ' · one per group' : ' · one per tool'), rows: cs.map(listRow) }; }).filter(x => x.rows.length);
     const gb = k => ({ bg: st.cueGroup === k ? '#ECEEFF' : 'transparent', color: st.cueGroup === k ? teal : muted });
-    const c = st.cues.find(x => x.id === st.cueSel) || st.cues[0], n = this.cueCounts(c);
+    const c = st.cues.find(x => x.id === st.cueSel) || st.cues[0] || { id: '', tool: TOOL_IDS[0], role: (ROLES0[0] || {}).id, v: 0, state: 'unsigned', pub: '—', by: '—', how: 'No CUE yet', env: [], hist: [] }, n = this.cueCounts(c);
     const pub = st.cuePub, pubEps = pub ? st.cues.filter(x => pub.ids.includes(x.id)).reduce((a, x) => a + this.cueCounts(x).running, 0) : 0;
     const g = st.gen, setGen = patch => this.setState(s => ({ gen: { ...s.gen, ...patch } }));
     const conflict = g && g.mode === 'new' && g.tool && g.role ? this.cueFor(g.role, g.tool) : null;
@@ -3273,18 +3275,18 @@ class Component extends DCLogic {
     const fk = st.mdFilter || 'all';
     const mf = (m, k) => k === 'all' || (k === 'mcp' ? m.kind === 'MCP' : k === 'skill' ? m.kind === 'Skill' : m.flag);
     const mdRow = m => ({ name: m.name, kind: m.kind, tools: m.tools, endpoints: String(m.eps), last: m.last, note: m.vuln || '', hasNote: !!m.vuln, ...chipOf(m.s) });
-    const epSel = MCP_EPS[st.mdEp || 0];
+    const epSel = MCP_EPS[st.mdEp || 0] || { label: 'No endpoint scans yet', type: '—', items: [] };
     const cur = core ? 3 : 1;
     const JR = [['Deploy Shield', 'network discovery'], ['Install Core', 'endpoint discovery'], ['Add MCP Bridge', 'sandboxed MCP servers'], ['Full containment', 'every agent in a CUE']];
     const setB = (id, patch) => this.setState(s => ({ bridge: s.bridge.map(b => b.id === id ? { ...b, ...patch } : b) }));
     const groups = CUE_ROLES.map(id => ({ id, name: this.roleName(id) }));
     const acc = st.access;
     const cuesOf = r => [{ cue: r.cue, total: r.total, last: r.last, runs: r.runs }, ...(r.more || [])];
-    const R = RADIUS.find(r => r.id === st.radSel) || RADIUS[0];
+    const R = RADIUS.find(r => r.id === st.radSel) || RADIUS[0] || { id: '', user: '—', ep: '—', cue: '—', total: 0, last: '—', runs: [] };
     const RC = cuesOf(R), rcSel = st.radCue ?? 'all';
     const shownC = rcSel === 'all' ? RC : [RC[rcSel] || RC[0]];
     const allRuns = shownC.flatMap(c => c.runs.map(x => ({ ...x, cue: c.cue })));
-    const run = allRuns.find(x => x.id === st.radRun) || allRuns[0];
+    const run = allRuns.find(x => x.id === st.radRun) || allRuns[0] || { id: '', when: '—', cue: '—', mcp: '—', sbx: '—', cred: '—', data: '—', action: '—', dlpLong: '—' };
     const full = page === 'radius' && !!st.radFull;
     const rv = st.radView || 'graph';
     const g = st.gen;
@@ -3319,9 +3321,9 @@ class Component extends DCLogic {
       obOpen: !!st.obOpen, obToggle: () => this.setState(s => ({ obOpen: !s.obOpen })), obName: st.obName || '', obSource: st.obSource || '',
       setObName: ev => this.setState({ obName: ev.target.value }), setObSource: ev => this.setState({ obSource: ev.target.value }),
       obSubmit: () => { if (window.__demoBridge) { window.__demoBridge.onOnboard((st.obName || '').trim(), (st.obSource || '').trim()); return; } const name = (st.obName || '').trim(); if (!name || st.bridge.some(b => b.name === name)) return; const id = 'b' + Date.now(); this.setState(s => ({ obOpen: false, obName: '', obSource: '', bridge: [...s.bridge, { id, name, source: (s.obSource || '').trim() || 'custom', scan: 'running · 2 of 5 checks', lvl: 'ok', tools: 'discovering tools…', status: 'Scanning', date: 'today', by: __WHO }] })); if (!MCP_CATALOG.some(m => m[0] === name)) MCP_CATALOG.push([name, 'tools found at scan', null]); setTimeout(() => setB(id, { status: 'Awaiting approval', scan: 'passed · 0 findings', tools: '4 tools found at scan', date: 'scanned today', by: 'added by ' + __WHO }), 2200); },
-      bRows: st.bridge.map(b => ({ ...b, ...chipOf(b.status), scanColor: b.lvl === 'high' ? red : b.lvl === 'medium' ? warn : muted, access: b.status === 'Onboarded' ? (groups.filter(gp => acc[b.name] && acc[b.name][gp.id]).map(gp => gp.name).join(', ') || 'no group yet') : '—', canDecide: b.status === 'Awaiting approval', noDecide: b.status !== 'Awaiting approval', meta: b.date + ' · ' + b.by, approve: () => { if (ro) return; const B = window.__demoBridge; if (B && !B.onBridgeDecision(b, 'approved')) return; setB(b.id, { status: 'Onboarded', date: __TODAY, by: __WHO }); this.setState(s => ({ access: { ...s.access, [b.name]: s.access[b.name] || {} } })); }, reject: () => { const B = window.__demoBridge; if (B && !B.onBridgeDecision(b, 'blocked')) return; if (!ro) setB(b.id, { status: 'Rejected', date: __TODAY, by: __WHO }); } })),
+      bRows: st.bridge.map(b => ({ ...b, ...chipOf(b.status), scanColor: b.lvl === 'high' ? red : b.lvl === 'medium' ? warn : muted, access: b.status === 'Onboarded' ? (groups.filter(gp => acc[b.name] && acc[b.name][gp.id]).map(gp => gp.name + (window.__rsExp ? window.__rsExp(b.name, gp.id) : '')).join(', ') || 'no group yet') : '—', canDecide: b.status === 'Awaiting approval', canManage: !!window.__demoBridge && ['Onboarded', 'Suspended'].includes(b.status), noDecide: b.status !== 'Awaiting approval' && !(window.__demoBridge && ['Onboarded', 'Suspended'].includes(b.status)), meta: b.date + ' · ' + b.by, manageLabel: b.status === 'Suspended' ? 'Reinstate' : 'Suspend', manageColor: b.status === 'Suspended' ? '#157F4E' : '#B4530A', manage: () => window.__demoBridge.onSuspendMcp(b), deboard: () => window.__demoBridge.onDeboardMcp(b), approve: () => { if (ro) return; const B = window.__demoBridge; if (B && !B.onBridgeDecision(b, 'approved')) return; setB(b.id, { status: 'Onboarded', date: __TODAY, by: __WHO }); this.setState(s => ({ access: { ...s.access, [b.name]: s.access[b.name] || {} } })); }, reject: () => { const B = window.__demoBridge; if (B && !B.onBridgeDecision(b, 'blocked')) return; if (!ro) setB(b.id, { status: 'Rejected', date: __TODAY, by: __WHO }); } })),
       accGroups: groups,
-      accRows: onboarded.map(b => ({ name: b.name, cells: groups.map(gp => { const on = !!(acc[b.name] && acc[b.name][gp.id]); return { label: on ? 'Allowed' : 'Denied', bg: on ? '#E7F6EE' : '#f4f6f8', color: on ? '#157F4E' : muted, toggle: () => { if (ro) return; const B = window.__demoBridge; if (B && !B.onAccessToggle(b.name, gp.id, !on)) return; this.setState(s => ({ access: { ...s.access, [b.name]: { ...(s.access[b.name] || {}), [gp.id]: on ? 0 : 1 } } })); } }; }) })),
+      accRows: onboarded.map(b => ({ name: b.name, cells: groups.map(gp => { const on = !!(acc[b.name] && acc[b.name][gp.id]); return { label: on ? 'Allowed' + (window.__rsExp ? window.__rsExp(b.name, gp.id, true) : '') : 'Denied', bg: on ? '#E7F6EE' : '#f4f6f8', color: on ? '#157F4E' : muted, toggle: () => { if (ro) return; const B = window.__demoBridge; if (B && !B.onAccessToggle(b.name, gp.id, !on)) return; this.setState(s => ({ access: { ...s.access, [b.name]: { ...(s.access[b.name] || {}), [gp.id]: on ? 0 : 1 } } })); } }; }) })),
       radStats: (__S.RAD_STATS ? [['DLP-blocked runs', String(RADIUS.reduce((n, r) => n + r.total, 0)), 'last 7 days', red], ['Users', String(new Set(RADIUS.map(r => r.user)).size), 'with a blocked run', '#0B1220'], ['CUEs involved', String(__S.RAD_STATS.cues), 'of ' + __S.RAD_STATS.cuesLive + ' live', '#0B1220'], ['MCP sandboxes', String(__S.RAD_STATS.sandboxes), 'reached by a blocked run', '#0B1220']] : [['DLP-blocked runs', '249', 'last 30 days', red], ['Users', '38', 'with a blocked run', '#0B1220'], ['CUEs involved', '11', 'of 14 live', '#0B1220'], ['MCP sandboxes', '6', 'reached by a blocked run', '#0B1220']]).map(([label, value, sub, color]) => ({ label, value, sub, color })),
       radRoots: RADIUS.map(r => { const cs = cuesOf(r), tot = cs.reduce((a, c) => a + c.total, 0), hot = tot >= 9; return { user: r.user, ep: r.ep, cue: cs.length > 1 ? cs.length + ' CUEs' : r.cue, cueSub: cs.length > 1 ? cs.map(c => c.cue.split('@')[0]).join(' · ') : 'latest ' + r.runs.length + ' of ' + r.total + ' runs', total: String(tot), last: r.last, edge: hot ? red : 'transparent', countColor: hot ? red : '#0B1220', open: () => { this.setState({ radSel: r.id, radRun: r.runs[0].id, radCue: 'all', radFull: true }); window.scrollTo(0, 0); } }; }),
       rad: { user: R.user, cue: R.cue, ep: R.ep, epName: R.ep.split(' · ')[0], epSub: R.ep.split(' · ').slice(1).join(' · '), shownLine: 'latest ' + R.runs.length + ' of ' + R.total + ' blocked runs', totalLine: RC.reduce((a, c) => a + c.total, 0) + ' blocked runs · ' + RC.length + (RC.length === 1 ? ' CUE' : ' CUEs') + ' · showing latest ' + allRuns.length },

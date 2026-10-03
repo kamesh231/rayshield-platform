@@ -9,6 +9,7 @@ import { runCommand, terminalHello, HOSTS } from './terminal.js';
 import { TENANT, IS_BANK, BANK, HOSTS_LIST, tenant } from './tenants/index.js';
 import { matchOp } from '../scripts/lib/tenant-api.mjs';
 import { cuePushMessage } from './terminals/straits-meridian.js';
+import { makeWorkflows } from './workflows.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, '..');
@@ -158,13 +159,40 @@ if (IS_BANK) {
   const fixturesDir = path.join(root, 'data/tenants/straits-meridian/api');
   const bankState = () => getState().bank;
   const pristine = () => { const b = bankState(); return !Object.keys(b.serviceStatus).length && !Object.keys(b.bridge).length && !Object.keys(b.groupPolicy).length && b.payCueVersion === 3 && !b.extraDetections.length && !b.myRequests.length && !(b.newBridge || []).length && !b.rahulSpendExtra
-    && !Object.keys(b.slices || {}).length && !(b.apiGroups || []).length && !(b.createdCues || []).length && !(b.deletedCues || []).length && !Object.keys(b.cueEdits || {}).length && !Object.keys(b.groupCue || {}).length && !(b.removedBridge || []).length; };
+    && !Object.keys(b.slices || {}).length && !(b.apiGroups || []).length && !(b.createdCues || []).length && !(b.deletedCues || []).length && !Object.keys(b.cueEdits || {}).length && !Object.keys(b.groupCue || {}).length && !(b.removedBridge || []).length && !Object.keys(b.budgetExceptions || {}).length && !Object.keys(b.mcpGrants || {}).length; };
   const live = () => { const b = bankState(); return { serviceStatus: b.serviceStatus, bridge: b.bridge, groupPolicy: b.groupPolicy, payCueVersion: b.payCueVersion, payCuePublishedBy: b.payCuePublishedBy, payCuePublishedAt: b.payCuePublishedAt, extraDetections: b.extraDetections, myRequests: b.myRequests, newBridge: b.newBridge || [], rahulSpendExtra: b.rahulSpendExtra,
-    slices: b.slices || {}, slicesSavedAt: b.slicesSavedAt || null, apiGroups: b.apiGroups || [], createdCues: b.createdCues || [], deletedCues: b.deletedCues || [], cueEdits: b.cueEdits || {}, groupCue: b.groupCue || {}, removedBridge: b.removedBridge || [] }; };
+    slices: b.slices || {}, slicesSavedAt: b.slicesSavedAt || null, apiGroups: b.apiGroups || [], createdCues: b.createdCues || [], deletedCues: b.deletedCues || [], cueEdits: b.cueEdits || {}, groupCue: b.groupCue || {}, removedBridge: b.removedBridge || [], budgetExceptions: b.budgetExceptions || {}, mcpGrants: b.mcpGrants || {} }; };
   const fileName = (method, p) => method + '__' + p.replace(/^\//, '').replace(/\//g, '__').replace(/[^A-Za-z0-9_.-]/g, '_') + '.json';
   const send = (res, r, src) => { for (const [k, v] of Object.entries(r.headers || {})) res.setHeader(k, v); res.setHeader('X-Fixture', src); res.setHeader('Access-Control-Expose-Headers', 'X-Window-From, X-Window-To, X-Data-As-Of, X-Total-Count, X-Next-Cursor'); res.status(r.status).json(r.body); };
   const group = id => CAN.groups.find(g => g.id === id);
   const allowOf = gid => (bankState().groupPolicy[gid] || {}).mcp_allow || group(gid).mcp_allow;
+
+  // Time-limited MCP access per group: bank.mcpGrants[groupId][mcpName] = { expires_at (ms) | null, granted_by, granted_at }.
+  const grantsOf = gid => { const m = (bankState().mcpGrants || {})[gid] || {}; const o = {}; for (const [n, x] of Object.entries(m)) o[n] = x.expires_at ? new Date(x.expires_at).toISOString() : null; return o; };
+  const grant = (gid, n, expMs, by) => { const bs = bankState(); bs.mcpGrants = bs.mcpGrants || {}; bs.mcpGrants[gid] = { ...(bs.mcpGrants[gid] || {}), [n]: { expires_at: expMs || null, granted_by: by, granted_at: Date.now() } }; };
+  const ungrant = (gid, n) => { const m = (bankState().mcpGrants || {})[gid]; if (m) delete m[n]; };
+  // Relative, because the demo's calendar is frozen (28 Sep) while grants expire in real time.
+  const fmtExp = ms => { const m = Math.max(1, Math.round((ms - Date.now()) / 60000)); return m < 60 ? m + ' min' : m < 2880 ? Math.round(m / 60) + ' h' : Math.round(m / 1440) + ' days'; };
+  // access_expires_at (ISO) or access_ttl_minutes; returns ms, null (no expiry) or false (invalid).
+  const expiryOf = body => {
+    if (body.access_expires_at != null) { const t = Date.parse(body.access_expires_at); return t > Date.now() ? t : false; }
+    if (body.access_ttl_minutes != null) { const m = Number(body.access_ttl_minutes); return m > 0 && m <= 366 * 24 * 60 ? Date.now() + m * 60000 : false; }
+    return null;
+  };
+  // Expiry sweep: an expired grant is removed from the group policy, and the people involved are told.
+  setInterval(() => {
+    const bs = bankState(), now = Date.now(); let n = 0;
+    for (const [gid, m] of Object.entries(bs.mcpGrants || {})) for (const [name, x] of Object.entries(m)) {
+      if (!x.expires_at || x.expires_at > now) continue;
+      delete m[name]; n++;
+      const g = api.view(live()).groups.find(k => k.id === gid); if (!g) continue;
+      bs.groupPolicy[gid] = { mcp_allow: g.mcp_allow.filter(k => k !== name), mcp_deny: g.mcp_deny, policy_updated_by: 'expiry', policy_updated_at: NOW };
+      emit({ type: 'accessChanged', groupId: gid, groupConsoleId: g.console_id, allow: bs.groupPolicy[gid].mcp_allow, expires: grantsOf(gid), by: 'Expiry', expired: name });
+      WF.expired(gid, g.name, name, x.granted_by);
+      if (gid === 'grp_payments_eng') for (const host of ['LT-SG-2231', 'vm-dev-rahul-07']) emit({ type: 'cuePushed', host, kind: 'mcp-expired', message: `${name} access for Engineering — Payments expired — run: aegis mcp request ${name} --reason "…" to renew`, by: 'Expiry' });
+    }
+    if (n) persist();
+  }, 5000).unref();
 
   // Write operations: permission is checked before this runs; these mutate demo state and emit events.
   const WRITES = {
@@ -176,13 +204,29 @@ if (IS_BANK) {
       return { status: 200, body: { service_id: s.service_id, status, reviewed_by: u.name, reviewed_at: NOW } };
     },
     decideBridgeMcp(u, p, body) {
-      const b = [...CAN.bridge, ...(bankState().newBridge || [])].find(x => x.id === p.id); if (!b) return { status: 404, body: { error: 'No MCP with that id.', code: 'NOT_FOUND', request_id: rid() } };
+      const b = api.view(live()).bridge.find(x => x.id === p.id); if (!b) return { status: 404, body: { error: 'No MCP with that id.', code: 'NOT_FOUND', request_id: rid() } };
       const status = body.status; if (!['approved', 'blocked'].includes(status)) return { status: 400, body: { error: 'status must be approved or blocked.', code: 'INVALID_PARAMETER', request_id: rid() } };
+      const exp = expiryOf(body); if (exp === false) return { status: 400, body: { error: 'access_expires_at must be a future ISO time, or access_ttl_minutes a positive number.', code: 'INVALID_PARAMETER', request_id: rid() } };
+      const bs = bankState();
+      // Suspend (kill switch): an approved server is blocked everywhere but keeps its group policy, so Reinstate restores it.
+      if (status === 'blocked' && (body.suspend || b.status === 'approved')) {
+        bs.bridge[b.id] = { ...(bs.bridge[b.id] || {}), status: 'blocked', suspended: true, suspended_by: u.name, suspended_at: NOW, suspended_reason: body.approved_reason || null };
+        emit({ type: 'mcpSuspended', bridgeId: b.id, name: b.name, suspended: true, by: u.name, reason: body.approved_reason || null });
+        return api.handle(u.id, 'getBridgeMcp', { id: b.id }, live());
+      }
+      if (status === 'approved' && b.suspended) {
+        bs.bridge[b.id] = { ...(bs.bridge[b.id] || {}), status: 'approved', suspended: false, reinstated_by: u.name };
+        emit({ type: 'mcpSuspended', bridgeId: b.id, name: b.name, suspended: false, by: u.name });
+        if (!body.group_id) return api.handle(u.id, 'getBridgeMcp', { id: b.id }, live());
+      }
       const gid = body.group_id || (b.name === 'confluence' ? 'grp_payments_eng' : null);
-      bankState().bridge[b.id] = { status, approved_by: u.name, approved_reason: body.approved_reason || (status === 'approved' ? `Approved for ${gid ? group(gid).name : 'selected groups'}` : 'Blocked'), decided_at: NOW, findings: { ...b.findings, summary: status === 'approved' ? 'Scan passed · approved' : 'Blocked', scan_complete: true } };
-      if (status === 'approved' && gid && !allowOf(gid).includes(b.name)) bankState().groupPolicy[gid] = { mcp_allow: [...allowOf(gid), b.name], mcp_deny: ((bankState().groupPolicy[gid] || {}).mcp_deny || group(gid).mcp_deny).filter(n => n !== b.name), policy_updated_by: u.name, policy_updated_at: NOW };
-      emit({ type: 'mcpDecision', mcpId: 'm-' + b.name, bridgeId: b.id, name: b.name, decision: status === 'approved' ? 'approved' : 'denied', by: u.name, groupId: gid, groupConsoleId: gid ? group(gid).console_id : null });
-      if (b.name === 'confluence' && status === 'approved') for (const host of ['LT-SG-2231', 'vm-dev-rahul-07']) emit({ type: 'cuePushed', host, kind: 'mcp', message: `confluence approved by ${u.name} for Engineering — Payments — the MCP is now available through the Aegis Bridge`, by: u.name }, 900);
+      bs.bridge[b.id] = { ...(bs.bridge[b.id] || {}), status, suspended: false, approved_by: u.name, approved_reason: body.approved_reason || (status === 'approved' ? `Approved for ${gid ? group(gid).name : 'selected groups'}` : 'Blocked'), decided_at: NOW, findings: { ...b.findings, summary: status === 'approved' ? 'Scan passed · approved' : 'Blocked', scan_complete: true } };
+      if (status === 'approved' && gid) {
+        if (!allowOf(gid).includes(b.name)) bs.groupPolicy[gid] = { mcp_allow: [...allowOf(gid), b.name], mcp_deny: ((bs.groupPolicy[gid] || {}).mcp_deny || group(gid).mcp_deny).filter(n => n !== b.name), policy_updated_by: u.name, policy_updated_at: NOW };
+        grant(gid, b.name, exp, u.name);
+      }
+      emit({ type: 'mcpDecision', mcpId: 'm-' + b.name, bridgeId: b.id, name: b.name, decision: status === 'approved' ? 'approved' : 'denied', by: u.name, groupId: gid, groupConsoleId: gid ? group(gid).console_id : null, expiresAt: status === 'approved' && gid ? exp : null });
+      if (b.name === 'confluence' && status === 'approved') for (const host of ['LT-SG-2231', 'vm-dev-rahul-07']) emit({ type: 'cuePushed', host, kind: 'mcp', message: `confluence approved by ${u.name} for Engineering — Payments${exp ? ' for ' + fmtExp(exp) : ''} — the MCP is now available through the Aegis Bridge`, by: u.name }, 900);
       return api.handle(u.id, 'getBridgeMcp', { id: b.id }, live());
     },
     publishCue(u, p) {
@@ -201,9 +245,14 @@ if (IS_BANK) {
     },
     setGroupMcpPolicy(u, p, body) {
       const g = group(p.id); if (!g) return { status: 404, body: { error: 'No group with that id.', code: 'NOT_FOUND', request_id: rid() } };
-      const name = x => (CAN.bridge.find(b => b.id === x) || {}).name || x;
-      bankState().groupPolicy[g.id] = { mcp_allow: (body.allow || []).map(name), mcp_deny: (body.deny || g.mcp_deny).map(name), policy_updated_by: u.name, policy_updated_at: NOW };
-      emit({ type: 'accessChanged', groupId: g.id, groupConsoleId: g.console_id, allow: bankState().groupPolicy[g.id].mcp_allow, by: u.name });
+      const name = x => (api.view(live()).bridge.find(b => b.id === x) || {}).name || x;
+      const allow = (body.allow || []).map(name);
+      const exp = {}; for (const [k, v] of Object.entries(body.expires || {})) { const t = v == null ? null : Date.parse(v); if (t !== null && !(t > Date.now())) return { status: 400, body: { error: 'expires values must be future ISO times or null.', code: 'INVALID_PARAMETER', request_id: rid() } }; exp[name(k)] = t; }
+      const before = allowOf(g.id);
+      bankState().groupPolicy[g.id] = { mcp_allow: allow, mcp_deny: (body.deny || g.mcp_deny).map(name), policy_updated_by: u.name, policy_updated_at: NOW };
+      for (const n of before.filter(n => !allow.includes(n))) ungrant(g.id, n);
+      for (const n of allow) if (Object.prototype.hasOwnProperty.call(exp, n) || !before.includes(n)) grant(g.id, n, exp[n] ?? null, u.name);
+      emit({ type: 'accessChanged', groupId: g.id, groupConsoleId: g.console_id, allow, expires: grantsOf(g.id), by: u.name });
       return api.handle(u.id, 'getGroupMcpPolicy', { id: g.id }, live());
     },
     assignGroupCue(u, p, body) {
@@ -233,8 +282,12 @@ if (IS_BANK) {
       bankState().deletedCues.push(p.id); emit({ type: 'audit', action: 'deleteCue', target: p.id, by: u.name }); return { status: 200, body: { deleted: true } };
     },
     removeBridgeMcp(u, p) {
-      if (!api.view(live()).bridge.some(b => b.id === p.id)) return { status: 404, body: { error: 'No MCP with that id.', code: 'NOT_FOUND', request_id: rid() } };
-      bankState().removedBridge.push(p.id); emit({ type: 'audit', action: 'removeBridgeMcp', target: p.id, by: u.name }); return { status: 200, body: { deleted: true } };
+      const b = api.view(live()).bridge.find(x => x.id === p.id); if (!b) return { status: 404, body: { error: 'No MCP with that id.', code: 'NOT_FOUND', request_id: rid() } };
+      // Deboard: gone from the Bridge and from every group that allowed it; running sessions lose it at once.
+      const bs = bankState(); bs.removedBridge.push(p.id);
+      for (const g of api.view(live()).groups.filter(x => x.mcp_allow.includes(b.name))) { bs.groupPolicy[g.id] = { mcp_allow: g.mcp_allow.filter(n => n !== b.name), mcp_deny: g.mcp_deny, policy_updated_by: u.name, policy_updated_at: NOW }; ungrant(g.id, b.name); }
+      emit({ type: 'mcpRemoved', bridgeId: b.id, name: b.name, by: u.name });
+      emit({ type: 'audit', action: 'removeBridgeMcp', target: p.id, by: u.name }); return { status: 200, body: { deleted: true } };
     },
     onboardMcp(u, p, body) {
       if (!body.name) return { status: 400, body: { error: 'name is required.', code: 'INVALID_PARAMETER', request_id: rid() } };
@@ -271,6 +324,7 @@ if (IS_BANK) {
       if (!existing) b.newBridge = [...(b.newBridge || []), { id: 'mcp_' + name.replace(/[^a-z0-9]/gi, '_').toLowerCase(), name, source: body.source || 'requested from /me', kind: 'remote', status: 'scanning', risk_score: null, risk_tier: null, capabilities: null, findings: { scan_complete: false, summary: 'Scan running' }, approved_by: null, approved_reason: null, created_at: NOW, requested_by: u.name, request_reason: reason }];
       const rec = [...CAN.bridge, ...(b.newBridge || [])].find(x => x.name === name);
       emit({ type: 'mcpRequest', mcpId: 'm-' + name, bridgeId: rec.id, name, by: u.name, reason, host: (CAN.endpoints.find(e => e.user === u.name) || {}).host || null, tool: 'claude-code', role: 'payments-eng' });
+      if (!u.perms.decideMcp) WF.submit(u, { kind: 'mcp_access', bridge_id: rec.id, reason, via: 'me' }); // approvers get it in their inbox
       return { status: 200, body: api.myRequests(u.id, api.view(live()), live()).find(r => r.name === name) };
     },
     updateSensor(u, p) { emit({ type: 'audit', action: 'updateSensor', target: p.id, by: u.name }); return { status: 200, body: { ok: true, id: p.id } }; },
@@ -281,6 +335,19 @@ if (IS_BANK) {
     refresh() { return { status: 200, body: { access_token: 'demo-cookie-session', token_type: 'Bearer', expires_in: 900 } }; },
   };
 
+  // Approvals: a request runs the same write as the approver once it is approved (src/workflows.js).
+  const run = (opId, u, params, body, wfId) => { const r = WRITES[opId](u, params, body || {}); if (r.status < 300) WF.onDirect(opId, u, params, body || {}, !!wfId); return r; };
+  const WF = makeWorkflows({ bank: bankState, CAN, USERS, holders: BANK.holders, notify, emit, run, view: () => api.view(live()), rid });
+  const LIVE = {
+    listInbox: u => WF.inbox(u.id),
+    markInboxRead: (u, p, body) => WF.markRead(u.id, body),
+    getWorkflow: (u, p) => WF.get(u.id, p.id),
+    submitWorkflow: (u, p, body) => WF.submit(u, body),
+    decideWorkflow: (u, p, body) => WF.decide(u, p.id, body),
+    recommendWorkflow: (u, p, body) => WF.recommend(u, p.id, body),
+    withdrawWorkflow: (u, p) => WF.withdraw(u, p.id),
+  };
+
   app.all('/api/*', (req, res, next) => {
     const m = matchOp(matrix.operations, req.method, req.path);
     if (!m) return apiErr(res, 404, 'NOT_FOUND', `No route ${req.method} ${req.path}.`);
@@ -288,6 +355,7 @@ if (IS_BANK) {
     const u = requireUser(req, res); if (!u) return;
     const lv = m.op.access[u.id] || 'deny';
     if (lv === 'deny') return send(res, api.forbidden(u.id, m.op.operationId), 'live');
+    if (LIVE[m.op.operationId]) { const r = LIVE[m.op.operationId](u, m.params, req.body || {}); if (req.method !== 'GET') persist(); return send(res, { headers: {}, ...r }, 'live'); }
     if (req.method === 'GET') {
       const noQuery = !Object.keys(req.query).length;
       const f = path.join(fixturesDir, u.id, fileName('GET', req.path));
@@ -298,6 +366,7 @@ if (IS_BANK) {
     const w = WRITES[m.op.operationId];
     if (!w) return apiErr(res, 404, 'NOT_FOUND', 'Not implemented.');
     const r = w(u, m.params, req.body || {});
+    if (r.status < 300) WF.onDirect(m.op.operationId, u, m.params, req.body || {}, false);
     persist();
     send(res, { headers: {}, ...r }, 'live');
   });

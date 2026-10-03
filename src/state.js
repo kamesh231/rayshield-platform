@@ -57,6 +57,10 @@ function freshBankState() {
     slices: {},               // console edits saved by the server (groups, policies, CUEs, settings, device groups)
     apiGroups: [],            // groups created through the API
     createdCues: [], deletedCues: [], cueEdits: {}, groupCue: {}, removedBridge: [], newBridge: [],
+    workflows: null,          // approval requests (src/workflows.js seeds them on first use)
+    notices: [],              // inbox notices: who was told what, and who has read it
+    budgetExceptions: {},
+    mcpGrants: {},            // groupId -> mcpName -> { expires_at, granted_by } (time-limited MCP access)     // uid -> { cap_usd, approved_by, until } granted through an approval
   };
 }
 

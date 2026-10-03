@@ -132,11 +132,13 @@
       if (!readOnly) prompt();
     }
     if (readOnly && evt.host === host && evt.type !== 'cuePushed') { reset(); }
-    var cls = evt.severity === 'critical' ? 'crit' : evt.type === 'detection' ? 'warn' : evt.type === 'mcpDecision' && evt.decision === 'approved' ? 'ok' : '';
+    var cls = evt.severity === 'critical' ? 'crit' : evt.type === 'detection' ? 'warn' : evt.type === 'mcpDecision' && evt.decision === 'approved' ? 'ok' : evt.kind === 'mcp-expired' || evt.type === 'mcpSuspended' && evt.suspended ? 'warn' : '';
     var title = evt.type === 'detection' ? ((evt.severity || '') + ' detection · ' + evt.rule)
       : evt.type === 'mcpRequest' ? 'MCP request · ' + evt.name
       : evt.type === 'mcpDecision' ? 'MCP ' + evt.decision + ' · ' + evt.name
-      : evt.type === 'cuePushed' ? 'CUE pushed · v' + evt.cueVersion : null;
+      : evt.type === 'cuePushed' ? (evt.cueVersion ? 'CUE pushed · v' + evt.cueVersion : evt.kind === 'mcp-expired' ? 'MCP access expired' : 'MCP available')
+      : evt.type === 'mcpSuspended' ? 'MCP ' + (evt.suspended ? 'suspended' : 'reinstated') + ' · ' + evt.name
+      : evt.type === 'mcpRemoved' ? 'MCP deboarded · ' + evt.name : null;
     if (!title) return;
     var d = document.createElement('div'); d.className = 'evt ' + cls;
     d.innerHTML = '<div class="t">' + new Date(evt.at || Date.now()).toLocaleTimeString() + '</div>' + esc(title) + (evt.teaser ? '<br><span style="color:#8b97a7">' + esc(evt.teaser) + '</span>' : '');

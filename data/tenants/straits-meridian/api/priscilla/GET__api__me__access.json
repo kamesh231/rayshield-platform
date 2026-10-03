@@ -24,6 +24,7 @@
    "pending_draft": null
   },
   "mcp_servers": [],
+  "mcp_access": [],
   "mcp_policy": null,
   "egress_allow": [
    "api.anthropic.com",

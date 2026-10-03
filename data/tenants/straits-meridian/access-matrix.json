@@ -480,7 +480,8 @@
     "arjun": "deny",
     "priscilla": "full",
     "rahul": "deny"
-   }
+   },
+   "note": "expires { mcp: ISO | null } makes a grant time-limited (proposed extension); the server removes expired grants."
   },
   {
    "operationId": "listCues",
@@ -623,7 +624,8 @@
     "arjun": "deny",
     "priscilla": "full",
     "rahul": "deny"
-   }
+   },
+   "note": "Approve/block; also suspend (status blocked + suspend) and reinstate. access_ttl_minutes / access_expires_at give the group a time-limited grant (proposed extension)."
   },
   {
    "operationId": "removeBridgeMcp",
@@ -634,9 +636,10 @@
    "access": {
     "weiling": "full",
     "arjun": "deny",
-    "priscilla": "deny",
+    "priscilla": "full",
     "rahul": "deny"
-   }
+   },
+   "note": "Deboard. Admin and CISO act directly (reducing access needs no approval); Security asks through submitWorkflow (kind mcp_remove)."
   },
   {
    "operationId": "getBridgeScan",
@@ -886,6 +889,111 @@
     "priscilla": "deny",
     "rahul": "deny"
    }
+  },
+  {
+   "operationId": "listInbox",
+   "method": "GET",
+   "path": "/api/inbox",
+   "spec": "me (proposed)",
+   "x_min_role": "self",
+   "access": {
+    "weiling": "self",
+    "arjun": "self",
+    "priscilla": "self",
+    "rahul": "self"
+   },
+   "live": true,
+   "note": "Approvals waiting for me, my requests and my notices"
+  },
+  {
+   "operationId": "markInboxRead",
+   "method": "POST",
+   "path": "/api/inbox/read",
+   "spec": "me (proposed)",
+   "x_min_role": "self",
+   "access": {
+    "weiling": "self",
+    "arjun": "self",
+    "priscilla": "self",
+    "rahul": "self"
+   },
+   "live": true,
+   "note": "Mark notices read (all, by ids, or for one request)"
+  },
+  {
+   "operationId": "submitWorkflow",
+   "method": "POST",
+   "path": "/api/workflows",
+   "spec": "me (proposed)",
+   "x_min_role": "self",
+   "access": {
+    "weiling": "deny",
+    "arjun": "self",
+    "priscilla": "self",
+    "rahul": "self"
+   },
+   "live": true,
+   "note": "Ask for something your role cannot do; Admin holds every permission so never needs to ask"
+  },
+  {
+   "operationId": "getWorkflow",
+   "method": "GET",
+   "path": "/api/workflows/{id}",
+   "spec": "me (proposed)",
+   "x_min_role": "self",
+   "access": {
+    "weiling": "read",
+    "arjun": "read",
+    "priscilla": "read",
+    "rahul": "self"
+   },
+   "live": true,
+   "note": "One request with its history; developers see only their own"
+  },
+  {
+   "operationId": "decideWorkflow",
+   "method": "POST",
+   "path": "/api/workflows/{id}/decision",
+   "spec": "me (proposed)",
+   "x_min_role": "admin",
+   "access": {
+    "weiling": "full",
+    "arjun": "deny",
+    "priscilla": "full",
+    "rahul": "deny"
+   },
+   "live": true,
+   "note": "Approve (runs the change as the approver), reject, or send back with a note; the approver must hold the permission the request needs"
+  },
+  {
+   "operationId": "recommendWorkflow",
+   "method": "POST",
+   "path": "/api/workflows/{id}/recommendation",
+   "spec": "me (proposed)",
+   "x_min_role": "security",
+   "access": {
+    "weiling": "deny",
+    "arjun": "full",
+    "priscilla": "deny",
+    "rahul": "deny"
+   },
+   "live": true,
+   "note": "Security recommends approve or block on a pending MCP request"
+  },
+  {
+   "operationId": "withdrawWorkflow",
+   "method": "POST",
+   "path": "/api/workflows/{id}/withdraw",
+   "spec": "me (proposed)",
+   "x_min_role": "self",
+   "access": {
+    "weiling": "deny",
+    "arjun": "self",
+    "priscilla": "self",
+    "rahul": "self"
+   },
+   "live": true,
+   "note": "The person who asked withdraws it"
   }
  ]
 }

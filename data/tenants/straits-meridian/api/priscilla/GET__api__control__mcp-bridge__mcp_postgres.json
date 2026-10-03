@@ -31,7 +31,8 @@
   "groups_with_access": [
    {
     "id": "grp_payments_eng",
-    "name": "Engineering — Payments"
+    "name": "Engineering — Payments",
+    "access_expires_at": null
    }
   ],
   "created_at": 1787104800

@@ -56,6 +56,7 @@
   <aside>
     <img src="/console-bank/assets/rayshield-logo-light.svg" alt="RayShield">
     <a class="nav on" href="/me">My access</a>
+    <a class="nav" href="#inbox" id="navInbox">Inbox <span id="inboxBadge" style="font-family:var(--mono);font-size:10.5px;color:var(--warn);float:right"></span></a>
     <a class="nav" href="/terminal">Terminal</a>
     <div class="who"><div class="n" id="whoName">—</div><div class="r" id="whoRole">Developer · Straits Meridian Bank</div>
       <button class="nav" id="signout" style="padding:6px 0">Sign out</button></div>
@@ -70,6 +71,7 @@
       <section class="card wide"><header><b>My blocked events</b><span>last 7 days · why and how to fix</span></header><div class="body" id="blocked">Loading…</div></section>
       <section class="card"><header><b>My MCP requests</b><span>MCP Bridge</span></header><div class="body" id="requests">Loading…</div></section>
       <section class="card"><header><b>My devices</b><span>Aegis agent</span></header><div class="body" id="devices">Loading…</div></section>
+      <section class="card wide" id="inbox"><header><b>Inbox</b><span>my requests · decisions · updates</span></header><div class="body" id="inboxBody">Loading…</div></section>
       <section class="card wide"><header><b>My recent sessions</b><span>agent runs</span></header><div class="body" id="sessions">Loading…</div></section>
     </div>
     <footer><span>Demo data · fictional</span><span>RayShield Aegis · Straits Meridian Bank (fictional)</span></footer>
@@ -82,6 +84,28 @@
   function $(id) { return document.getElementById(id); }
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
   function when(ts) { var d = new Date((ts + TZ) * 1000), M = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']; return d.getUTCDate() + ' ' + M[d.getUTCMonth()] + ' · ' + String(d.getUTCHours()).padStart(2, '0') + ':' + String(d.getUTCMinutes()).padStart(2, '0') + ' SGT'; }
+  function leftIso(iso) { var m = Math.max(1, Math.round((new Date(iso).getTime() - Date.now()) / 60000)); return m < 60 ? m + ' min' : m < 2880 ? Math.round(m / 60) + ' h' : Math.round(m / 1440) + ' days'; }
+  function ago(iso) { var m = Math.max(0, Math.round((Date.now() - new Date(iso).getTime()) / 60000)); return m < 1 ? 'just now' : m < 60 ? m + ' min ago' : m < 1440 ? Math.round(m / 60) + ' h ago' : Math.round(m / 1440) + ' d ago'; }
+  function post(u, body) { return fetch(u, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body || {}) }).then(function (r) { return r.json(); }); }
+  var ST = { pending: ['Waiting', 'rev'], approved: ['Approved', 'ok'], rejected: ['Rejected', 'bad'], returned: ['Sent back', 'warn'], withdrawn: ['Withdrawn', ''], stale: ['Out of date', ''] };
+  function renderInbox(d) {
+    var unread = d.updates.filter(function (n) { return !n.read; }).length;
+    $('inboxBadge').textContent = unread ? unread : '';
+    $('inboxBody').innerHTML = '<div style="display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:16px">' +
+      '<div><div class="kick" style="margin-bottom:6px">My requests</div>' + (d.my_requests.length ? d.my_requests.map(function (w) {
+        var last = w.history[w.history.length - 1] || {};
+        return '<div style="border:1px solid var(--line);border-radius:4px;padding:9px 11px;margin-bottom:8px"><div style="display:flex;justify-content:space-between;gap:8px;align-items:center"><b style="font-size:12.5px;font-weight:600">' + esc(w.title) + '</b><span class="chip ' + (ST[w.status] || ST.pending)[1] + '"><i></i>' + (ST[w.status] || [w.status])[0] + '</span></div>' +
+          '<div class="muted" style="font-size:11.5px;margin-top:2px">asked ' + ago(w.requested_at) + ' · ' + (w.status === 'pending' ? 'waiting for ' + esc(w.approvers.map(function (a) { return a.split(' (')[0]; }).join(' or ')) : esc(last.by + ' ' + last.action)) + (w.recommendations.length ? ' · ' + esc(w.recommendations.map(function (r) { return r.by + ' recommends ' + r.recommendation; }).join(', ')) : '') + '</div>' +
+          (w.decision_note ? '<div style="font-size:12px;margin-top:4px">“' + esc(w.decision_note) + '”</div>' : '') +
+          (w.can.withdraw ? '<div style="text-align:right;margin-top:4px"><button data-withdraw="' + w.id + '" class="nav" style="display:inline;padding:0;color:var(--accent)">Withdraw</button></div>' : '') + '</div>';
+      }).join('') : '<span class="empty">No requests yet.</span>') + '</div>' +
+      '<div><div class="kick" style="margin-bottom:6px;display:flex;justify-content:space-between">Updates' + (unread ? '<button id="readAll" class="nav" style="display:inline;padding:0;color:var(--accent);font-size:11px;text-transform:none;letter-spacing:0">Mark all read</button>' : '') + '</div>' + (d.updates.length ? d.updates.slice(0, 12).map(function (n) {
+        return '<div style="display:flex;gap:8px;padding:7px 0;border-bottom:1px solid #f1f3f5"><span style="width:6px;height:6px;border-radius:50%;margin-top:6px;flex:none;background:' + (n.read ? 'transparent' : 'var(--accent)') + '"></span><span style="font-size:12.5px;' + (n.read ? '' : 'font-weight:500') + '">' + esc(n.text) + '<span class="mono muted" style="display:block;font-size:10.5px;font-weight:400">' + esc(n.by) + ' · ' + ago(n.at) + '</span></span></div>';
+      }).join('') : '<span class="empty">No updates yet.</span>') + '</div></div>';
+    Array.prototype.forEach.call(document.querySelectorAll('[data-withdraw]'), function (b) { b.onclick = function () { post('/api/workflows/' + b.getAttribute('data-withdraw') + '/withdraw').then(function () { toast('Request withdrawn'); load(); }); }; });
+    if ($('readAll')) $('readAll').onclick = function () { post('/api/inbox/read', {}).then(loadInbox); };
+  }
+  function loadInbox() { return get('/api/inbox').then(renderInbox); }
   function get(u) { return fetch(u).then(function (r) { if (r.status === 401) { location.href = '/login'; throw 0; } return r.json(); }); }
   function toast(m) { var t = $('toast'); t.textContent = m; t.style.opacity = 1; clearTimeout(t._h); t._h = setTimeout(function () { t.style.opacity = 0; }, 3800); }
   function chips(list, cls) { return list.length ? '<div class="chips">' + list.map(function (x) { return '<span class="chip ' + (cls || '') + '"><i></i>' + esc(x) + '</span>'; }).join('') + '</div>' : '<span class="empty">none</span>'; }
@@ -93,7 +117,7 @@
       '<dt>CUE</dt><dd>' + (a.cue ? esc(a.cue.name) + ' <span class="mono">v' + a.cue.version + '</span>' + (a.cue.base ? '<div class="muted" style="font-size:12px">inherits ' + esc(a.cue.base) + ' (locked)</div>' : '') + (a.cue.pending_draft ? '<div style="font-size:12px;color:#7C8CFF">draft v' + a.cue.pending_draft.version + ' pending: ' + esc(a.cue.pending_draft.adds.join(', ')) + '</div>' : '') : '—') + '</dd>' +
       '<dt>Tools</dt><dd>' + chips(a.tools, 'ok') + '</dd>' +
       '<dt>Models</dt><dd>' + chips(a.models) + '</dd>' +
-      '<dt>MCP servers</dt><dd>' + chips(a.mcp_servers, 'ok') + (a.mcp_policy ? '<div class="muted" style="font-size:12px;margin-top:4px">denied for your group: ' + esc(a.mcp_policy.deny.join(', ') || 'none') + '</div>' : '') + '</dd>' +
+      '<dt>MCP servers</dt><dd>' + chips((a.mcp_access || a.mcp_servers.map(function (n) { return { name: n }; })).map(function (m) { return m.name + (m.expires_at ? ' · expires in ' + leftIso(m.expires_at) : ''); }), 'ok') + (a.mcp_policy ? '<div class="muted" style="font-size:12px;margin-top:4px">denied for your group: ' + esc(a.mcp_policy.deny.join(', ') || 'none') + '</div>' : '') + '</dd>' +
       '<dt>Egress allowed</dt><dd class="mono">' + esc(a.egress_allow.join(' · ')) + '</dd>' +
       '<dt>DLP (Enforce)</dt><dd class="mono">' + esc(a.dlp_rules.join(' · ')) + '</dd>' +
       '<dt>Writable paths</dt><dd class="muted" style="font-size:12px">' + esc(a.writable_mounts_note) + '</dd></dl>';
@@ -101,7 +125,10 @@
       var pct = Math.min(100, a.budget.spend_today_usd / a.budget.cap_usd * 100);
       $('spend').innerHTML = '<div style="font-size:22px;font-weight:600">USD ' + a.budget.spend_today_usd.toFixed(2) + ' <span class="muted" style="font-size:13px;font-weight:400">of USD ' + a.budget.cap_usd.toFixed(2) + ' today</span></div>' +
         '<div class="bar"><div style="width:' + pct.toFixed(1) + '%;background:' + (pct > 85 ? 'var(--warn)' : 'var(--accent)') + '"></div></div>' +
-        '<div class="muted" style="font-size:12px">' + (a.budget.mode === 'hard_stop' ? 'Hard stop' : 'Warning') + ' at USD ' + a.budget.cap_usd + ' per user per 24 h. When you hit it, the running session stops and resumes after the window rolls.</div>';
+        '<div class="muted" style="font-size:12px">' + (a.budget.mode === 'hard_stop' ? 'Hard stop' : 'Warning') + ' at USD ' + a.budget.cap_usd + ' per user per 24 h. When you hit it, the running session stops and resumes after the window rolls.</div>' +
+        (a.budget.exception ? '<div style="font-size:12px;margin-top:6px;color:var(--ok)">Raised from USD ' + a.budget.exception.group_cap_usd + ' by ' + esc(a.budget.exception.approved_by) + ' · expires in ' + esc(leftIso(a.budget.exception.expires_at)) + '</div>' :
+        '<form class="req" id="capForm"><select id="capUsd" style="border:1px solid var(--line);border-radius:4px;padding:6px 8px;font:13px Poppins,sans-serif"><option value="60">USD 60 for 24 h</option><option value="80">USD 80 for 24 h</option><option value="120">USD 120 for 24 h</option></select><input id="capReason" placeholder="Why?" style="flex:1;min-width:120px"><button>Ask for a higher cap</button></form><div class="muted" style="font-size:11.5px;margin-top:4px">Tan Wei Ling (Admin) decides.</div>');
+      var cf = $('capForm'); if (cf) cf.onsubmit = function (e) { e.preventDefault(); post('/api/workflows', { kind: 'budget_exception', cap_usd: Number($('capUsd').value), reason: $('capReason').value.trim() || undefined }).then(function (j) { toast(j.error || 'Sent for approval · Tan Wei Ling notified'); loadInbox(); }); };
     } else $('spend').innerHTML = '<span class="empty">No budget cap for your group.</span>';
   }
   function renderBlocked(list) {
@@ -147,10 +174,12 @@
     get('/api/me/mcp-requests').then(renderRequests);
     get('/api/me/devices').then(renderDevices);
     get('/api/me/sessions').then(renderSessions);
+    loadInbox();
   }
-  get('/api/me').then(function (me) { if (!me.user) { location.href = '/login'; return; } $('whoName').textContent = me.name; $('whoRole').textContent = (me.title || 'Developer') + ' · Straits Meridian Bank'; load(); });
+  var ME = null;
+  get('/api/me').then(function (me) { if (!me.user) { location.href = '/login'; return; } ME = me.user.id; $('whoName').textContent = me.name; $('whoRole').textContent = (me.title || 'Developer') + ' · Straits Meridian Bank'; load(); });
   $('signout').onclick = function () { fetch('/api/logout', { method: 'POST' }).then(function () { location.href = '/login'; }); };
-  try { var es = new EventSource('/api/stream'); es.onmessage = function (e) { try { var ev = JSON.parse(e.data); if (ev.type === 'reset') return location.reload(); if (['detection', 'mcpRequest', 'mcpDecision', 'cuePublished', 'accessChanged', 'cuePushed'].indexOf(ev.type) >= 0) { if (ev.type === 'mcpDecision') toast(ev.name + ' ' + ev.decision + ' by ' + ev.by); if (ev.type === 'cuePublished') toast('Payments CUE v' + ev.version + ' published by ' + ev.by); setTimeout(load, 300); } } catch (x) {} }; } catch (x) {}
+  try { var es = new EventSource('/api/stream'); es.onmessage = function (e) { try { var ev = JSON.parse(e.data); if (ev.type === 'reset') return location.reload(); if (ev.type === 'notice' && ev.to && ev.to.indexOf(ME) >= 0) { toast('📥 ' + ev.text); setTimeout(load, 300); return; } if (ev.type === 'workflow' || ev.type === 'noticeRead') { loadInbox(); return; } if (['detection', 'mcpRequest', 'mcpDecision', 'cuePublished', 'accessChanged', 'cuePushed', 'mcpSuspended', 'mcpRemoved', 'budgetException'].indexOf(ev.type) >= 0) { if (ev.type === 'mcpDecision') toast(ev.name + ' ' + ev.decision + ' by ' + ev.by); if (ev.type === 'cuePublished') toast('Payments CUE v' + ev.version + ' published by ' + ev.by); setTimeout(load, 300); } } catch (x) {} }; } catch (x) {}
 })();
 </script>
 </body>

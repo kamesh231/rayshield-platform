@@ -35,7 +35,7 @@
       "overview_layout": [["W1", "L"], ["W7", "M"], ["W2", "M"], ["W5", "M"], ["W9", "M"], ["W8", "M"], ["W3", "M"], ["W6", "M"], ["W4", "L"]],
       "data_scope": "org", "evidence": "redacted",
       "redaction": "x-viewer-redaction (assumption, confirm): teaser = rule label + target type; evidence keys other than type = null; chain[].detail = null; origin.initial_prompt = null",
-      "perms": { "approveMcp": true, "onboardMcp": true, "decideMcp": true, "removeMcp": false, "editCue": true, "publishCue": true, "deleteCue": false, "assignPolicy": true, "createGroup": false, "setStatus": true, "settingsWrite": false, "reset": false, "viewAll": true, "scope": "org", "terminal": [], "terminalMode": "none" },
+      "perms": { "approveMcp": true, "onboardMcp": true, "decideMcp": true, "removeMcp": true, "editCue": true, "publishCue": true, "deleteCue": false, "assignPolicy": true, "createGroup": false, "setStatus": true, "settingsWrite": false, "reset": false, "viewAll": true, "scope": "org", "terminal": [], "terminalMode": "none" },
       "demo_bar": ["approve-confluence", "publish-cue-v4", "switch-user"]
     },
     "rahul": {

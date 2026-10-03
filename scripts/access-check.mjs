@@ -34,12 +34,23 @@ const BODY = {
   updateCue: { dlp_rules: ['dlp-card-pan'] }, onboardMcp: { name: 'access-check-mcp', source: 'github:example/access-check', kind: 'remote' }, decideBridgeMcp: { status: 'blocked', approved_reason: 'access check' },
   createMyMcpRequest: { name: 'jira', reason: 'access check' }, saveConsoleState: { slice: 'fleetRoles', op: 'edit', value: {} }, updateSensor: { enabled: true }, updateDirectory: { provider: 'Entra ID' }, updateConsoleUser: { role: 'security' },
 };
+// Inbox and approvals: each persona gets a fresh request of its own, so every call has something to act on.
+const uniq = () => Math.random().toString(36).slice(2, 7);
+const SUBMIT = { arjun: () => ({ kind: 'mcp_onboard', name: 'access-check-' + uniq(), source: 'github:example/access-check' }), priscilla: () => ({ kind: 'console_change', slice: 'roles', op: 'createGroup', value: [], title: 'Access check', changes: ['+ access check'] }), rahul: () => ({ kind: 'budget_exception', cap_usd: 60 }), weiling: () => ({ kind: 'mcp_onboard', name: 'x' }) };
+BODY.submitWorkflow = null; BODY.decideWorkflow = { decision: 'return', note: 'access check' }; BODY.recommendWorkflow = { recommendation: 'approve', note: 'access check' };
+async function prepId(op, p) {
+  if (op.operationId === 'getWorkflow' || op.operationId === 'recommendWorkflow') return 'wf_confluence';
+  if (op.operationId === 'decideWorkflow') return (await call('arjun', 'POST', '/api/workflows', SUBMIT.arjun())).body.id;
+  if (op.operationId === 'withdrawWorkflow') return op.access[p] === 'deny' ? 'wf_confluence' : (await call(p, 'POST', '/api/workflows', SUBMIT[p]())).body.id;
+  return null;
+}
 const SKIP = new Set(['login', 'refresh', 'logout', 'resetDemo']); // auth covered by the session; reset runs last
 
 async function login(u) { const r = await fetch(BASE + '/api/login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ username: u, password: 'demo' }) }); if (!r.ok) throw new Error('login ' + u); return r.headers.get('set-cookie').split(';')[0]; }
 const jar = {}; for (const p of PERSONAS) jar[p] = await login(p);
 const call = async (p, method, url, body) => { const r = await fetch(BASE + url, { method, headers: { Cookie: jar[p], 'Content-Type': 'application/json' }, body: body ? JSON.stringify(body) : undefined }); let j = null; try { j = await r.json(); } catch {} return { status: r.status, body: j }; };
 
+await call('weiling', 'POST', '/api/demo/reset'); // start from the seed (e.g. the seeded confluence request is pending)
 const rows = []; let bad = 0;
 const ordered = [...MX.operations.filter(o => o.method === 'GET'), ...MX.operations.filter(o => o.method !== 'GET')];
 for (const op of ordered) {
@@ -47,14 +58,16 @@ for (const op of ordered) {
   const url = concrete(op); const cells = [];
   for (const p of PERSONAS) {
     const lv = op.access[p];
-    const r = await call(p, op.method, url, BODY[op.operationId]);
+    const wid = await prepId(op, p);
+    const target = op.operationId === 'removeBridgeMcp' && p === 'priscilla' ? url.replace('mcp_slack', 'mcp_filesystem') : url; // each deboard needs its own server
+    const r = await call(p, op.method, wid ? op.path.replace('{id}', wid) : target, op.operationId === 'submitWorkflow' ? SUBMIT[p]() : BODY[op.operationId]);
     const expectDeny = lv === 'deny';
     const shapeOk = !expectDeny || (r.body && r.body.code === 'FORBIDDEN' && typeof r.body.error === 'string' && typeof r.body.request_id === 'string');
     const ok = expectDeny ? r.status === 403 && shapeOk : (r.status >= 200 && r.status < 300) || (op.operationId === 'blastRadiusDesignTimeDeprecated' && r.status === 410);
     if (!ok) bad++;
     cells.push(`${r.status}${ok ? '' : '✗'}`);
   }
-  rows.push([op.operationId, `${op.method} ${url}`, ...cells]);
+  rows.push([op.operationId, `${op.method} ${url.replace('/undefined', '/{id}')}`, ...cells]);
 }
 // reset: only Admin may (non-admins first so the Admin reset is the one that runs)
 { const lvl = MX.operations.find(o => o.operationId === 'resetDemo').access; const st = {};

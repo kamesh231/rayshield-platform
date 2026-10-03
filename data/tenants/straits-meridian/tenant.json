@@ -8,39 +8,109 @@
   "domain": "straitsmeridian.example",
   "org_id": "org_straits_meridian",
   "timezone": "Asia/Singapore",
-  "time_anchor": { "now": 1790560800, "label": "Mon 28 Sep 2026, 10:00 SGT" },
-  "window": { "days": 7, "from": 1789956000, "to": 1790560800, "time_series": false },
+  "time_anchor": {
+    "now": 1790560800,
+    "label": "Mon 28 Sep 2026, 10:00 SGT"
+  },
+  "window": {
+    "days": 7,
+    "from": 1789956000,
+    "to": 1790560800,
+    "time_series": false
+  },
   "deployment": {
-    "packages": ["Shield", "Core", "MCP Bridge"],
+    "packages": [
+      "Shield",
+      "Core",
+      "MCP Bridge"
+    ],
     "journey_step": 3,
     "journey_total": 4,
-    "journey": ["Deploy Shield", "Install Core", "Add MCP Bridge", "Full containment"],
+    "journey": [
+      "Deploy Shield",
+      "Install Core",
+      "Add MCP Bridge",
+      "Full containment"
+    ],
     "next": "Full containment"
   },
   "frameworks": [
-    { "id": "mas-trm", "name": "MAS Technology Risk Management Guidelines" },
-    { "id": "mas-cyber-hygiene", "name": "MAS Notice on Cyber Hygiene" },
-    { "id": "pdpa", "name": "Personal Data Protection Act (PDPA)" },
-    { "id": "pci-dss-4", "name": "PCI DSS v4.0" }
+    {
+      "id": "mas-trm",
+      "name": "MAS Technology Risk Management Guidelines"
+    },
+    {
+      "id": "mas-cyber-hygiene",
+      "name": "MAS Notice on Cyber Hygiene"
+    },
+    {
+      "id": "pdpa",
+      "name": "Personal Data Protection Act (PDPA)"
+    },
+    {
+      "id": "pci-dss-4",
+      "name": "PCI DSS v4.0"
+    }
   ],
   "internal_systems": [
-    { "id": "payments-replica", "label": "payments-replica (Postgres, read-only)" },
-    { "id": "cards.txn_ledger", "label": "cards.txn_ledger" },
-    { "id": "customer_360", "label": "customer_360 warehouse" },
-    { "id": "settlement-recon", "label": "settlement-recon job" },
-    { "id": "fast-paynow-adapter", "label": "FAST/PayNow transfer adapter" },
-    { "id": "swift-gateway", "label": "SWIFT gateway" },
-    { "id": "fx-rates-svc", "label": "fx-rates-svc" }
+    {
+      "id": "payments-replica",
+      "label": "payments-replica (Postgres, read-only)"
+    },
+    {
+      "id": "cards.txn_ledger",
+      "label": "cards.txn_ledger"
+    },
+    {
+      "id": "customer_360",
+      "label": "customer_360 warehouse"
+    },
+    {
+      "id": "settlement-recon",
+      "label": "settlement-recon job"
+    },
+    {
+      "id": "fast-paynow-adapter",
+      "label": "FAST/PayNow transfer adapter"
+    },
+    {
+      "id": "swift-gateway",
+      "label": "SWIFT gateway"
+    },
+    {
+      "id": "fx-rates-svc",
+      "label": "fx-rates-svc"
+    }
   ],
   "sensors": {
     "discovery": [
-      { "name": "Shield · pcap", "where": "Tampines DC core switch span port", "health": "ok", "endpoints": 366 },
-      { "name": "Shield · sase_zscaler", "where": "Zscaler web logs, remote staff", "health": "silent", "silent_for": "2 h 40 m", "endpoints": 46 }
+      {
+        "name": "Shield · pcap",
+        "where": "Tampines DC core switch span port",
+        "health": "ok",
+        "endpoints": 366
+      },
+      {
+        "name": "Shield · sase_zscaler",
+        "where": "Zscaler web logs, remote staff",
+        "health": "silent",
+        "silent_for": "2 h 40 m",
+        "endpoints": 46
+      }
     ],
-    "endpoint": ["aegis-sandbox"],
-    "directory": { "provider": "Entra ID", "mapped": 371, "total": 412 }
+    "endpoint": [
+      "aegis-sandbox"
+    ],
+    "directory": {
+      "provider": "Entra ID",
+      "mapped": 371,
+      "total": 412
+    }
   },
-  "signing": { "alg": "ed25519", "key_id": "aegis-smb-2026-09" },
+  "signing": {
+    "alg": "ed25519",
+    "key_id": "aegis-smb-2026-09"
+  },
   "open_items": [
     "API role enum is admin | security | viewer. `ciso` and `developer` are new role claims and need backend support.",
     "/api/me/* endpoints are proposed (docs/api/me-endpoints.yml, x-status: proposed); they are not in the v2.1 or v2.2 specs.",
@@ -50,6 +120,10 @@
     "Whether Security should also be able to approve MCPs in a real bank rollout (maker-checker). In this tenant Admin and CISO approve; Security triages and recommends.",
     "Brief listed CARD-PAN as 6 hits (6 blocked / 0 recorded / 1 escalated), which sums to 7. Each detection has one disposition, so the tenant uses 5 blocked + 1 escalated = 6. Confirm.",
     "The v2.2 BridgeMcp.status enum has no 'awaiting decision' state. confluence is `scanning` with findings.scan_complete = true (an invented field) while it waits for Admin/CISO; the console shows it as 'Awaiting approval'.",
-    "Settings writes (sensors, directory, console users) and demo reset have no API operation; they are proposed as demo-only operations in docs/api/me-endpoints.yml."
+    "Settings writes (sensors, directory, console users) and demo reset have no API operation; they are proposed as demo-only operations in docs/api/me-endpoints.yml.",
+    "Approvals (inbox) are proposed endpoints: /api/inbox and /api/workflows (docs/api/me-endpoints.yml). Decided with the product owner (30 Sep 2026): Admin and CISO publish their own drafts without a second approver; people without a permission send the change for approval.",
+    "The v2.2 BridgeMcp.status enum has no 'suspended'. Suspend is status blocked + suspended: true (invented field) so Reinstate can restore the group policy; the console shows it as 'Suspended'.",
+    "Time-limited MCP access per group is a proposed extension (decideBridgeMcp access_ttl_minutes / access_expires_at, setGroupMcpPolicy expires, McpPolicy.expires). Default in the console: 30 days. Expiry runs on real time, while the demo calendar stays frozen at 28 Sep, so the UI shows relative times ('expires in 7 days').",
+    "CISO can now deboard (removeBridgeMcp) as well as suspend: reducing access needs no second approver. Confirm this matches the bank's operating model."
   ]
 }
